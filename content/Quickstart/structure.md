@@ -69,14 +69,19 @@ Finally, guiConfig, storySetup and storyText are the files that make up your sto
 
 The files on the RenJS folder constitute the core of the game engine, the code that interprets your story and shows it to the players. The only one you need to take into account for now is RenJSBootstrap.js. This file is in charge of loading all the other .js files, and also every asset (images, music, etc) used by your game. If you know javascript programming and want to learn more about how it works, the [Engine](../engine) section has comprehensive documentation of the library.
 
-## Libs
+## Other Libraries
 
 The files on the libs folder are external libraries that RenJS needs to work properly, the most importan being PhaserJS, the "parent" engine, that provides the methods for showing images, playing music, etc. 
 
-## Assets
+## The Story and its Assets
 
 The assets folder contains all the resources used by your game. This includes the character images, backgrounds, music, etc, and also everything that makes up the GUI, like the menus backgrounds, buttons and everything else. This folder is not mandatory for every game, and neither is the structure followed by this quickstart. Your assets can be anywhere inside the root folder, and organized however you like.
 
-## Story
+Inside the story folder there are three .yaml files. As with the assets, you don't really need to have them inside this or any folder, but it's a good practice. These three files contain the story, its text and its configuration. You should have one GUI configuration file, one story setup file and as many story text files as you want. You can name these files whatever you like, and it'd be a good idea to have descriptive names for each one. The text of your story could be separated in many different files named after the sections of the game it contains, for example:
 
-Inside this folder there should be at least three .yaml files. These are the file that contain your story. As with the assets, you don't really need to have them inside a folder, but it's a good practice. 
+* intro.yaml
+* path1.yaml
+* path2.yaml
+* endings.yaml
+
+In the next chapter, we'll take a look at the contents of these three files.
