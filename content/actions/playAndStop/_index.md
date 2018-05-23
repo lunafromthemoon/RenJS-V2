@@ -18,3 +18,10 @@ These actions allow you to play and stop background music. Play can be used to p
 ```
 
 If no transition is specified, default transition is **FADE** (can be changed). The only other transition available is CUT.
+
+## Examples
+```yaml  
+  - play morningBGM: WITH FADE
+  - play ringtone:
+  - stop morningBGM:
+```

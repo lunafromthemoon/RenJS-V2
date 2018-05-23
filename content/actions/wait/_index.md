@@ -12,3 +12,9 @@ The _wait_ action allows you to force the player to wait for some time or until 
 
 ```
 
+## Examples
+```yaml  
+  - deuzi says: Ok, tell me when you're ready!
+  - wait: click
+  - deuzi says: Let's go then!!!
+```

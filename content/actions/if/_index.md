@@ -21,3 +21,12 @@ The _if_ action allows you to branch your story. The _if_ action contains a cond
 ```
 
 The condition can be any boolean variable or operation, as seen in the [variables](../var/) section. 
+
+## Examples
+```yaml  
+  - if (partner == "deuzi"):
+    - show deuzi: happy
+    - deuzi says: I knew it would be me!
+  - else:
+    - text: Deuzilene looks disappointed but tries to hide it.
+```

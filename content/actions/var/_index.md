@@ -110,3 +110,20 @@ As with the previous operations, parenthesis () are allowed.
 ```
 
 String variables can also be compared in this way using the equal operator.
+
+## Examples
+```yaml  
+  - choice:
+    - Choose Deuzilene:
+      - marco says: Good choice
+      - var partner: "deuzi"
+    - Choose Jair:
+      - marco says: You really like a challenge, right?
+      - var partner: "jair"
+    - Choose no one:
+      - show marco: surprise
+      - marco says: No one has ever completed this task alone before!
+      - var partner: "no one"
+      - show marco: normal
+  - marco: So you've chosen {partner}, are you happy with it?
+```

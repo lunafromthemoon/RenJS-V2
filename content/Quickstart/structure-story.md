@@ -66,7 +66,7 @@ Finally, one of the most important aspects of Visual novels is that the characte
 
 ### The Story
 
-The quickstarts story is really really simple, basically:
+The quickstarts story is really simple, basically:
 
 1. We start playing the music "morningBGM"
 2. We show the background "room"
@@ -106,15 +106,12 @@ start:
 
 The keyword "start" is the name of the scene. You can have as many scenes as you like and call them whatever you like, but you always need a scene called "start", that will be the starting scene of your game.
 After the scene name, indented by two spaces, and sufixed by one dash, you can start listing all the actions of the scene. The actions are things that RenJS will execute one after the other. There should be an action for anything you want to do in your story. For example, "play" is an action that will play music, "show" is an action that will show an image.
-You can find a list with all the actions in the [actions section](../../actions), and how to use them, but here's the most important actions you can use:
+One importan thing to remember is indentation, at level 0 there will be the names of the scenes, preceded by all of its actions, indented by two spaces. Every kind of action has it's own format, but usually it's something like this:
+```yaml
+  action actor: extra parameters
+```
+The "action" will be the name of the action, the "actor" the object over whom it will do the action, and the extra parameters can be anything. For example, the actions show, hide and play all follow this format. There are some exceptions, like the actions text, that doesn't require an actor, or say, that is inverted as "actor says" to be written more naturally. You can find a list with all the actions, their formats and parameters in the [actions section](../../actions).
 
-* show: shows images, either backgrounds, characters, cgs, etc.
-* hide: hide images.
-* says: shows some text in the dialog box, displaying the character name into the name box.
-* text: shows only text in the dialog box
-* play: plays music or sound effects
-* stop: stops the music
-* choice: shows options for the player to choose and branch the story
-* scene: change to another scene
+All of the actions in a given scene are a written as a sorted list, that means the order is very important for it's execution. To let yaml know this, we have to prefix each action with a dash.
 
-You're now ready to start your own game, if you still have doubts, play the [tutorial game](https://lunafromthemoon.itch.io/renjs) or check the [demos archive](../../demo)!
+You're now ready to start your own game, if you still have doubts, play the [tutorial game](https://lunafromthemoon.itch.io/renjs) or check the [games archive](../../games)!

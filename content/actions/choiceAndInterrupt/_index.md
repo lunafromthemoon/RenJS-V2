@@ -70,3 +70,20 @@ The _interrupt_ action is very similar to the _choice_ action, but the story wil
 ```
 
 Sometimes you need to show an option only if a condition is met. In these cases, the conditional option can be used for either choices or interrupts. If the condition is not satisfied, that option will not be shown. Check more about how to make [conditions](../if/).
+
+## Examples
+```yaml  
+  - choice:
+    - Choose Deuzilene:
+      - marco says: Good choice
+      - var partner: "deuzi"
+    - Choose Jair:
+      - marco says: You really like a challenge, right?
+      - var partner: "jair"
+    - Choose no one:
+      - show marco: surprise
+      - marco says: No one has ever completed this task alone before!
+      - var partner: "no one"
+      - show marco: normal
+
+```

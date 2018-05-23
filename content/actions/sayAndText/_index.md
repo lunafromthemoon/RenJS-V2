@@ -17,3 +17,11 @@ These actions let you show text inside the text box. The difference between them
 ```
 
 The text will be shown letter by letter inside the text box and after it is displayed whole, the _ctc_ (click to continue) will be shown. After this the game will wait until the player clicks anywhere on the screen to continue with the next action.
+
+## Examples
+```yaml  
+  - text: It's the first day of school and you're wondering who's that girl that's been looking at you all morning
+  - deuzi says: Welcome {name}!
+  - deuzi says: How are you today?
+  - text: How does she know your name?
+```

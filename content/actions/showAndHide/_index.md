@@ -66,3 +66,13 @@ The cgs will always be on top of characters and cgs.
 ```
 
 If no transition is specified, default transition is **FADE** (can be changed). Check what other [transitions](../transitions/) are available.
+
+## Examples
+```yaml
+  - show bedroom_lamp_off:
+  - show deuzi: AT CENTER WITH FADE
+  - show bedroom_lamp_on: WITH FUSION
+  - show jair: AT OUTLEFT
+  - show jair: AT LEFT WITH MOVE
+  - hide deuzi: WITH FADE
+```

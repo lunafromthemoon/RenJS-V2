@@ -16,9 +16,13 @@ Let's take a look at these files:
 * index.html
 * config.js
 
-## Index and Config
+## Index
 
-The index.html file is what the web page where the game will be shown. It's contents are minimal. First, it loads the most important library, Phaser, and then the bootstrap for RenJS. In the body of the webpage, the only important element is a div with the id "RenJS", which will be used to load the game. 
+The index.html file is the web page where the game will be shown. The contents are minimal, the only thing we need to do here is to call the files that will load the game. Those files are:
+
+* Phaser: The most important library of the engine, it takes care of the low level parts of the game like showing images, reproducing sound, etc.
+* Config: The global configuration for the game, many important parameters for booting up are here, like screen size, the splash screen and the location of your story files.
+* RenJSBootstrap: The bootstrap for RenJS, it sets up the splash screen and loading bar to let the player know resources are being loaded, and starts loading them.
 
 ```html
     <!DOCTYPE html>
@@ -30,11 +34,12 @@ The index.html file is what the web page where the game will be shown. It's cont
 			<script type="text/javascript" src="config.js"></script>     
 			<script type="text/javascript" src="RenJS/RenJSBootstrap.js"></script>
 		</head>
-		<body>		
-			<div id="RenJS"> </div>
-		</body>
+		<body></body>
 	</html>
 ```
+
+## Config
+
 The config file contains very important configuration parameters for starting the game. These are the minimal requirements to create the frame in the web page and start loading its contents.
 
 ```js
@@ -42,6 +47,7 @@ The config file contains very important configuration parameters for starting th
 	  w:800,
 	  h:600,
 	  mode: "AUTO",
+	  scaleMode: "SHOW_ALL", //SHOW_ALL, EXACT_FIT
 	  splash: { //The "Loading" page for your game
 	    loadingScreen: "assets/gui/splash.png", //splash background
 	    loadingBar: {
@@ -58,12 +64,14 @@ The config file contains very important configuration parameters for starting th
 	    ],
 	}
 ```
+Let's check what each of these parameters mean:
 
-First, width and height of the game. You can use any resolution you want, but you'll have to make sure your GUI, backgrounds and other images matchs with it.
-The mode refers to Phaser's rendering mode. Unless you need to extend RenJS, you shouldn't touch this option.
-Splash is an image that will be shown while the game is loading. Depending on the size of the assets, it might take a while, so you can also add a loading bar, that will fill up from left to right to show the loading progress. If you show a bar, you will also need to specify where to show it, with the option "position".
-The fonts parameter specifies where to find the fonts.css file. This file is just to load your fonts onto the web page, and make it easier for Phaser to find it and use it to show all the texts in the game.
-Finally, guiConfig, storySetup and storyText are the files that make up your story, and usually, the files that will change the most (along with the assets) from story to story.
+* Screen size: w and h parameters are the resolution of the game, as width and height in pixels. You can use any resolution you want, but you'll have to make sure your GUI, backgrounds and other images matches with it.
+* Mode: Phaser's rendering mode, unless you need to extend RenJS, you shouldn't touch this option.
+* ScaleMode: It's related to the scaling of the game. The default option is "SHOW_ALL", that will scale the game to fit the whole screen (either in the computer or in a mobile device) but keeping the aspect ratio. Another interesting option could be "EXACT_FIT", that would strech the game to fit the screen, not keeping the aspect ratio.
+* Splash: It's the image that will be shown while the game is loading. Depending on the size of the assets, it might take a while, so you can also add a loading bar, that will fill up from left to right to show the loading progress. If you show a bar, you will also need to specify where to show it, with the option "position".
+* Fonts: This parameter specifies where to find the fonts.css file. This file is just to load your fonts onto the web page, and make it easier for Phaser to find it and use it to show all the texts in the game.
+* Game scripts: guiConfig, storySetup and storyText are the files that make up your story, and usually, the files that will change the most (along with the assets) from story to story. You need to always have one guiConfig and storySetup, but you can have as many storyText files as you want. 
 
 ## RenJS
 

@@ -23,3 +23,20 @@ If no scene is called before the end of the scene, the game will return to the m
       ...
 
 ```
+
+## Examples
+```yaml  
+start:
+  - show marco: WITH FADE
+  - marco says: Good morning student, are you ready to choose your partner?
+  - choice:
+    - Yes:
+      - scene: choosePartner
+    - No:
+      marco says: What's the problem?
+
+choosePartner: 
+  - marco says: We should go to the teachers room
+  - show teachersRoom:
+
+```
