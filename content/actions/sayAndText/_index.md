@@ -2,6 +2,7 @@
 title = "Say and Text"
 date =  2017-09-26T12:44:23-03:00
 weight = 2
+pre = "<b>2.2 </b>"
 +++
 
 These actions let you show text inside the text box. The difference between them is that the _say_ action will also display the name of the character inside the name box, in the colour of the propery _speechText_ defined for that character.

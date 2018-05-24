@@ -2,9 +2,10 @@
 title = "Effects and Ambients"
 date =  2017-09-26T13:14:50-03:00
 weight = 11
+pre = "<b>2.11 </b>"
 +++
 
-These actions allow you to show visual and sound effects. The difference between them is _effect_ action is an instant effect that ends after its execution, and _ambient_ effects perdure over time. For example, an _effect_ can be a thunder, while an _ambient_ can be rain.
+These actions allow you to show visual and sound effects. The difference between them is that _effect_ is a nuclear action that ends after its execution, while _ambient_ effects perdure over time. For example, an _effect_ can be a thunder, while an _ambient_ can be rain.
 
 
 ```yaml
@@ -19,7 +20,7 @@ These actions allow you to show visual and sound effects. The difference between
 ```
 
 There are a few ambients and effects already coded, but these depend almost entirely on the kind of game you're making. You can check the defined ambients and effects and tailor them to your needs.
-The effects and ambients usually use extra assets, either images, spritesheets, music and even code. All of this should be loaded in the _extra_ section of the setup file. Check the [Setup Guide](/../../Setup) for more info about this file.
+The effects and ambients usually use extra assets, either images, spritesheets, music and even code. All of this should be loaded in the _extra_ section of the setup file. Check the [Setup Guide](/../../setup) for more info about this file.
 
 ### Ambients
 

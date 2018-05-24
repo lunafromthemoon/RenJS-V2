@@ -2,6 +2,7 @@
 title = "Choice and Interrupt"
 date =  2017-09-26T13:12:48-03:00
 weight = 4
+pre = "<b>2.4 </b>"
 +++
 
 The _choice_ action allows you to show a menu of text options. The story will then pause and wait for the player to make a decision. 
@@ -80,10 +81,11 @@ Sometimes you need to show an option only if a condition is met. In these cases,
     - Choose Jair:
       - marco says: You really like a challenge, right?
       - var partner: "jair"
-    - Choose no one:
+    - Choose no one !if ({readBook}):
       - show marco: surprise
       - marco says: No one has ever completed this task alone before!
       - var partner: "no one"
       - show marco: normal
+  - marco: So you've chosen {partner}, are you happy with it?
 
 ```

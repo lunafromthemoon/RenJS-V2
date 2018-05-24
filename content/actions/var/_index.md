@@ -2,6 +2,7 @@
 title = "Variables"
 date =  2017-09-26T13:13:15-03:00
 weight = 5
+pre = "<b>2.5 </b>"
 +++
 
 The var action allows you to store important values during the story. This values then can be display as text or dialogue and can be used to compare and form conditions.
@@ -120,7 +121,7 @@ String variables can also be compared in this way using the equal operator.
     - Choose Jair:
       - marco says: You really like a challenge, right?
       - var partner: "jair"
-    - Choose no one:
+    - Choose no one !if ({readBook}):
       - show marco: surprise
       - marco says: No one has ever completed this task alone before!
       - var partner: "no one"

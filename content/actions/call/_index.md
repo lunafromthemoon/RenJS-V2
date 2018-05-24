@@ -2,6 +2,7 @@
 title = "Call"
 date =  2017-09-26T13:15:03-03:00
 weight = 10
+pre = "<b>2.10 </b>"
 +++
 
 The _call_ action allows you to call your very own javascript functions. 
@@ -37,9 +38,9 @@ The _RenJS.resolve()_ function tells the automat that it can continue with the s
 
 RenJS provides all of the information and state of the game for you to use in your own function, some of the most important things to check are:
 
-* **RenJS.waitForClick(callback)**: This function will make the game wait until the player clicks anywhere on the screen. If callback is not defined, the action executed after the click will be RenJS.resolve(). Similar to this function there's also  **waitTimeout(time,callback)** and **waitForClickOrTimeout(time,callback)*s*.
+* **RenJS.waitForClick(callback)**: This function will make the game wait until the player clicks anywhere on the screen. If callback is not defined, the action executed after the click will be RenJS.resolve(). Similar to this function there's also  **waitTimeout(time,callback)** and **waitForClickOrTimeout(time,callback)**.
 * **RenJS.logicManager.vars**: This is the map of all the story variables set during the game with the action _var_.
-* **RenJS.bgManager.current**: The current background sprite. *RenJS.bgManager.backgrounds** contains all of the backgrounds.
+* **RenJS.bgManager.current**: The current background sprite. **RenJS.bgManager.backgrounds** contains all of the backgrounds.
 * **RenJS.bgManager.showing**: A map with all the characters currently on screen with look, position and if it's flipped. **RenJS.bgManager.characters** contains all of the characters, with name, speechColour and looks (as a map of Sprites).
 * **RenJS.cgsManager.current**: A map with all the cgs currently on screen. **RenJS.bgManager.cgs** contains all of the cgs sprites.
 * **RenJS.save(slot)** and **RenJS.load(slot)**: Saves and load on a specific slot.
