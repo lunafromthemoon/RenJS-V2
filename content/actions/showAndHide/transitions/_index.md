@@ -2,7 +2,7 @@
 title = "Transitions"
 date =  2017-09-26T19:40:52-03:00
 weight = 12
-pre = "<b>2.12 </b>"
+pre = "<b>2.1.1 </b>"
 +++
 
 The transitions are used everytime we show, hide or change an image. This affects how that will be achieved. There are a few usual transitions ready to use with the game, but you can check the file RenJS/Transitions.js to see how to create your own transition.

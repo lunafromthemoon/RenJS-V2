@@ -21,7 +21,7 @@ The backgrounds will always be behind characters and cgs.
 ```yaml
     - hide background_id: [WITH transition_id]
 ```
-If no transition is specified, default transition is **FADE** (can be changed). Check what other [transitions](../transitions/) are available.
+If no transition is specified, default transition is **FADE** (can be changed). Check what other [transitions](transitions) are available.
 
 ### Characters
 
@@ -47,7 +47,7 @@ If no position is specified, default position is **CENTER.** A position can be a
     - hide character_id: [WITH transition_id]
 ```
 
-If no transition is specified, default transition is **CUT** (can be changed). Check what other [transitions](../transitions/) are available.
+If no transition is specified, default transition is **CUT** (can be changed). Check what other [transitions](transitions) are available.
 
 ### Show CGS
 
@@ -66,7 +66,7 @@ The cgs will always be on top of characters and cgs.
     - hide cgs_id: [WITH transition_id]
 ```
 
-If no transition is specified, default transition is **FADE** (can be changed). Check what other [transitions](../transitions/) are available.
+If no transition is specified, default transition is **FADE** (can be changed). Check what other [transitions](transitions) are available.
 
 ## Examples
 ```yaml
