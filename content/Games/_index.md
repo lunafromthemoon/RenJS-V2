@@ -1,9 +1,9 @@
 +++
 title = "Games"
 date = 2017-09-25T23:26:49-03:00
-weight = 7
+weight = 8
 chapter = true
-pre = "<b>7. </b>"
+pre = "<b>8. </b>"
 +++
 
 # Games made with RenJS
