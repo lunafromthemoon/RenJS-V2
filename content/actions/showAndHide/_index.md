@@ -1,6 +1,5 @@
 +++
 title = "Show and Hide"
-date =  2017-09-26T12:44:07-03:00
 weight = 1
 pre = "<b>2.1 </b>"
 +++

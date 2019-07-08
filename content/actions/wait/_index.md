@@ -1,6 +1,5 @@
 +++
 title = "Wait time or click"
-date =  2017-09-26T13:14:26-03:00
 weight = 8
 pre = "<b>2.8 </b>"
 +++

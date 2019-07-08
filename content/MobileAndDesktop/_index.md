@@ -1,6 +1,5 @@
 +++
 title = "Mobile and Desktop"
-date = 2017-09-25T23:26:49-03:00
 weight = 5
 chapter = true
 pre = "<b>5. </b>"

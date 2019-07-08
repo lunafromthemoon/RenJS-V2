@@ -1,6 +1,5 @@
 +++
 title = "Effects and Ambients"
-date =  2017-09-26T13:14:50-03:00
 weight = 11
 pre = "<b>2.11 </b>"
 +++

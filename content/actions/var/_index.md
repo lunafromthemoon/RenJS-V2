@@ -1,6 +1,5 @@
 +++
 title = "Variables"
-date =  2017-09-26T13:13:15-03:00
 weight = 5
 pre = "<b>2.5 </b>"
 +++
@@ -69,9 +68,9 @@ The operations also can use parenthesis () to change the solving order of the op
     - var var3: "({var1} - {var2})/3"
 ```
 
-{{% notice warning %}}
-The _right_ part should usually be between inverted commas. This is because the parser will sometimes freakout if if finds strange symbols. To ensure it reads the whole line as one, better to be safe and surround it by inverted commas.
-{{% /notice %}}
+
+> The _right_ part should usually be between inverted commas. This is because the parser will sometimes freakout if if finds strange symbols. To ensure it reads the whole line as one, better to be safe and surround it by inverted commas.
+
 
 #### Boolean Operations
 

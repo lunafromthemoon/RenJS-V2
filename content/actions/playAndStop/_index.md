@@ -1,6 +1,5 @@
 +++
 title = "Play and Stop"
-date =  2017-09-26T13:12:33-03:00
 weight = 3
 pre = "<b>2.3 </b>"
 +++

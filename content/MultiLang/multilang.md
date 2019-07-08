@@ -1,6 +1,5 @@
 +++
 title = "MultiLanguage Quickstart"
-date =  2018-05-16T15:27:25+02:00
 weight = 6
 pre = "<b>6.1 </b>"
 +++

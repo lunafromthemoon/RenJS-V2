@@ -1,6 +1,5 @@
 +++
 title = "Adding New Transitions"
-date =  2018-05-16T14:41:12+02:00
 weight = 5
 pre = "<b>6.1 </b>"
 +++

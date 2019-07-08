@@ -1,6 +1,5 @@
 +++
 title = "Extending RenJS"
-date = 2017-09-25T23:27:00-03:00
 weight = 7
 chapter = true
 pre = "<b>7. </b>"

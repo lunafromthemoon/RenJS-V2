@@ -1,6 +1,5 @@
 +++
 title = "Choice and Interrupt"
-date =  2017-09-26T13:12:48-03:00
 weight = 4
 pre = "<b>2.4 </b>"
 +++

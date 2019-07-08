@@ -1,6 +1,5 @@
 +++
 title = "Say and Text"
-date =  2017-09-26T12:44:23-03:00
 weight = 2
 pre = "<b>2.2 </b>"
 +++

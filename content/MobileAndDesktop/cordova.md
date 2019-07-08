@@ -1,6 +1,5 @@
 +++
 title = "Cordova"
-date =  2018-05-16T14:41:12+02:00
 weight = 6
 pre = "<b>5.2 </b>"
 +++

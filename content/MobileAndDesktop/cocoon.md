@@ -1,6 +1,5 @@
 +++
 title = "Cocoon"
-date =  2018-05-16T14:41:12+02:00
 weight = 7
 pre = "<b>5.3 </b>"
 +++
