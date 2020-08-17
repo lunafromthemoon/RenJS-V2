@@ -1,0 +1,43 @@
+{
+  "name": "renjs",
+  "version": "1.0.0",
+  "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.dev.js --open --hot ",
+    "build": "webpack --config webpack.prod.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lunafromthemoon/RenJS.git"
+  },
+  "keywords": [
+    "engine",
+    "visual",
+    "novel",
+    "phaser"
+  ],
+  "author": "lunafromthemoon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lunafromthemoon/RenJS/issues"
+  },
+  "homepage": "https://github.com/lunafromthemoon/RenJS#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.3",
+    "expose-loader": "^1.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "ts-loader": "^8.0.2",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.1.1"
+  },
+  "dependencies": {
+    "js-yaml": "^3.14.0",
+    "phaser-ce": "^2.16.0"
+  }
+}

@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'audimat-mono';
+  src: url('audimat-mono.ttf');
+  src: url('audimat-mono.ttf').format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

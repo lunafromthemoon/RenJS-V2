@@ -1,0 +1,58 @@
+
+start:
+  - play morningBGM:
+  - show room: WITH FADE CONTINUE
+  - show deuzi: happy AT CENTER WITH FADE
+  - text: Hello World
+  - deuzi says normal: Welcome to the Quickstart!
+  # - hide ALL: WITH FADE
+  - scene: longscene
+
+longscene:
+  # - play morningBGM:
+  # - show room: WITH FADE CONTINUE
+  # - show deuzi: happy AT RIGHT WITH FADE
+  # - text: Hello World
+  - deuzi says normal: 1!
+  - deuzi says normal: 2!
+  - deuzi says normal: 3!
+  - deuzi says normal: 4!
+  - deuzi says normal: 5!
+  - choice:
+    - 'a' :
+      - var firstChoice: 'a'
+    - 'b' :
+      - var firstChoice: 'b'
+  - text: You choose {firstChoice}
+  - deuzi says normal: 6!
+  - deuzi says normal: 7!
+  - deuzi says normal: 8!
+  - deuzi says normal: 9!
+  - choice:
+    - 'c' :
+      - var secChoice: 'c'
+    - 'd' :
+      - var secChoice: 'd'
+  - text: You choose {secChoice}
+  - scene: end
+
+end:
+  - text: this is the end
+  - effect ROLLINGCREDITS:
+    endGame: true
+    text:
+      - RenJS developed by
+      - lunafromthemoon
+      - null
+      - Inspired by Ren'Py
+      - Powered by PhaserJS
+      - null
+      - null
+      - background art and cgs by
+      - konett
+      - null
+      - characters by
+      - Shida
+      - null
+      - music by
+      - Evan Schaeffer
