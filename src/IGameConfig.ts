@@ -1,0 +1,37 @@
+import Phaser from "phaser-ce";
+
+export interface i18nInterface {
+    langs: string[],
+    path: string,
+    format: string,
+    w: number,
+    h: number
+    current?: string
+}
+
+export interface GameConfig extends Phaser.IGameConfig {
+    name: string,
+    w: number,
+    h: number,
+    splash: {
+        loadingScreen: string,
+        loadingBar: {
+            asset: string,
+            position: {
+                x: number,
+                y: number
+            },
+            size: {
+                w: number,
+                h: number
+            },
+            fullBar?: string
+        }
+    },
+    logChoices: boolean,
+    fonts: string,
+    guiConfig: string,
+    storySetup: string,
+    storyText: string[],
+    i18n?: i18nInterface
+}

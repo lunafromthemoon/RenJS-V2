@@ -10,7 +10,7 @@ const p2 = path.join(phaserModule, 'build/custom/p2.js')
 
 module.exports = merge(common, {
     entry: {
-        index: path.join(__dirname, 'src/to-migrate/RenJSBootstrap')
+        index: path.join(__dirname, 'src/dev-only/index.ts')
     },
     mode: 'development',
     devtool: "inline-source-map",

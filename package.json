@@ -2,9 +2,8 @@
   "name": "renjs",
   "version": "1.0.0",
   "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
-  "main": "src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --open --hot ",
+    "start": "webpack-dev-server --config webpack.dev.js --hot --progress",
     "build": "webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -37,9 +36,7 @@
   },
   "dependencies": {
     "js-yaml": "^3.14.0",
-    "p2": "^0.7.1",
     "phaser-ce": "^2.16.0",
-    "pixi": "^0.3.1",
     "underscore": "^1.10.2"
   }
 }

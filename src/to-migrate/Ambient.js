@@ -2,6 +2,7 @@ import _ from 'underscore'
 import {game} from "./RenJSBootstrap";
 import {RenJS} from "./RenJS";
 import {globalConfig} from "../dev-only/config";
+
 export const ambient = {
     emitters: [],
     clearFunctions: [],

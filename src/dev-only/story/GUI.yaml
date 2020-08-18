@@ -22,7 +22,7 @@ assets:
     choice: assets/gui/choice.png 716 65
     interrupt: assets/gui/interrupt.png 716 95
   audio:
-    mainMusic: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+#    mainMusic: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
 hud:
   area:
     - 640 450 748 554
