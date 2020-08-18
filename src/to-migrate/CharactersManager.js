@@ -1,5 +1,8 @@
+import _ from 'underscore'
+import {RenJS, config} from "./RenJS";
+
 function Character(name,speechColour){
-    
+
     this.name = name;
     // RenJS.characters[this.name] = this;
     this.looks = {};
@@ -7,7 +10,7 @@ function Character(name,speechColour){
     this.speechColour = speechColour;
     this.lastScale = 1;
 
-    this.addLook = function(lookName,image){        
+    this.addLook = function(lookName,image){
         var look = RenJS.storyManager.characterSprites.create(config.positions.CENTER.x,config.positions.CENTER.y,(image ? image : lookName));
         look.anchor.set(0.5,1);
         look.alpha = 0;
@@ -19,10 +22,10 @@ function Character(name,speechColour){
     }
 }
 
-function CharactersManager(){
+export function CharactersManager(){
     this.characters = {};
     this.showing = {};
-    
+
     this.add = function(name,displayName,speechColour,looks){
         this.characters[name] = new Character(displayName,speechColour);
         _.each(looks,function(filename,look){
@@ -30,7 +33,7 @@ function CharactersManager(){
         },this);
     }
 
-    this.show = function(name,transition,props){        
+    this.show = function(name,transition,props){
         var ch = this.characters[name];
         var oldLook = ch.currentLook;
         ch.currentLook = props.look ? ch.looks[props.look] : ch.looks.normal;
@@ -47,7 +50,7 @@ function CharactersManager(){
 
     this.hide = function(name,transition){
         var ch = this.characters[name];
-        var oldLook = ch.currentLook;        
+        var oldLook = ch.currentLook;
         ch.currentLook = null;
         delete this.showing[name];
         return transition(oldLook,null);
@@ -59,7 +62,7 @@ function CharactersManager(){
         _.each(this.showing,function(ch,name) {
             var character = this.characters[name];
             character.currentLook = character.looks[ch.look];
-            character.currentLook.x = ch.position.x; 
+            character.currentLook.x = ch.position.x;
             character.currentLook.y = ch.position.y;
             character.currentLook.scaleX = ch.flipped ? -1 : 1;
             character.currentLook.alpha = 1;

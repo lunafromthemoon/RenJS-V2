@@ -1,5 +1,12 @@
-var preload = {
+import {game, preparePath} from "./RenJSBootstrap";
+import jsyaml from 'js-yaml'
+import _ from 'underscore'
+import {RenJS} from "./RenJS";
+import {RenJSBuilderMadeGUI} from "./RenJSBuilderMadeGUI";
+import {globalConfig} from "../dev-only/config";
+import {SimpleGUI} from "./SimpleGUI";
 
+export const preload = {
   init: createLoadingPage,
   // function () {
   //   //TODO: LOAD RENJS OWN SPLASH SCREEN
@@ -18,33 +25,33 @@ var preload = {
   preload: function () {
     this.load.setPreloadSprite(this.loadingBar);
     //load external libraries
-    game.load.script('esprima',  'libs/esprima.js');
-    game.load.script('yaml',  'libs/js-yaml.min.js');
-    game.load.script('underscore',  'libs/underscore-min.js');
+    // game.load.script('esprima',  'libs/esprima.js');
+    // game.load.script('yaml',  'libs/js-yaml.min.js');
+    // game.load.script('underscore',  'libs/underscore-min.js');
     //load RenJS
-    game.load.script('Defaults',  'RenJS/Defaults.js');
-    game.load.script('RenJSBuilderMadeGUI',  'RenJS/RenJSBuilderMadeGUI.js');
-    game.load.script('SimpleGUI',  'RenJS/SimpleGUI.js');
-    game.load.script('AudioManager',  'RenJS/AudioManager.js');
-    game.load.script('BackgroundManager',  'RenJS/BackgroundManager.js');
-    game.load.script('CGSManager',  'RenJS/CGSManager.js');
-    game.load.script('CharactersManager',  'RenJS/CharactersManager.js');
-    game.load.script('LogicManager',  'RenJS/LogicManager.js');
-    game.load.script('TextManager',  'RenJS/TextManager.js');
-    game.load.script('TweenManager',  'RenJS/TweenManager.js');
-    game.load.script('StoryManager',  'RenJS/StoryManager.js');
-    game.load.script('RenJS',  'RenJS/RenJS.js');
-    game.load.script('Effects',  'RenJS/Effects.js');
-    game.load.script('Ambient',  'RenJS/Ambient.js');
-    game.load.script('Transitions',  'RenJS/Transitions.js');
-    game.load.script('CustomContent',  'RenJS/CustomContent.js');
+    // game.load.script('Defaults',  'RenJS/Defaults.js');
+    // game.load.script('RenJSBuilderMadeGUI',  'RenJS/RenJSBuilderMadeGUI.js');
+    // game.load.script('SimpleGUI',  'RenJS/SimpleGUI.js');
+    // game.load.script('AudioManager',  'RenJS/AudioManager.js');
+    // game.load.script('BackgroundManager',  'RenJS/BackgroundManager.js');
+    // game.load.script('CGSManager',  'RenJS/CGSManager.js');
+    // game.load.script('CharactersManager',  'RenJS/CharactersManager.js');
+    // game.load.script('LogicManager',  'RenJS/LogicManager.js');
+    // game.load.script('TextManager',  'RenJS/TextManager.js');
+    // game.load.script('TweenManager',  'RenJS/TweenManager.js');
+    // game.load.script('StoryManager',  'RenJS/StoryManager.js');
+    // game.load.script('RenJS',  'RenJS/RenJS.js');
+    // game.load.script('Effects',  'RenJS/Effects.js');
+    // game.load.script('Ambient',  'RenJS/Ambient.js');
+    // game.load.script('Transitions',  'RenJS/Transitions.js');
+    // game.load.script('CustomContent',  'RenJS/CustomContent.js');
     //load Story Files
     loadStyle(preparePath(globalConfig.fonts));
     game.load.text("guiConfig", preparePath(globalConfig.guiConfig));
     game.load.text("storySetup", preparePath(globalConfig.storySetup));
-    for (var i = globalConfig.storyText.length - 1; i >= 0; i--) {
+    for (let i = globalConfig.storyText.length - 1; i >= 0; i--) {
       game.load.text("story"+i, preparePath(globalConfig.storyText[i]));
-    };
+    }
   },
 
   create: function () {
@@ -56,16 +63,15 @@ var preload = {
         var text = jsyaml.load(game.cache.getText("story"+index));
         story = _.extend(story,text);
     });
-    RenJS.story = story;  
+    RenJS.story = story;
     //load and create the GUI
     var gui = jsyaml.load(game.cache.getText("guiConfig"));
-    console.log(gui)
     if (gui.madeWithRenJSBuilder){
         RenJS.gui = new RenJSBuilderMadeGUI(gui);
     } else {
         RenJS.gui = new SimpleGUI(gui);
     }
-    
+
     //preload the fonts by adding text, else they wont be fully loaded :\
     _.each(RenJS.gui.getFonts(),function(font){
         // console.log("loading" + font)
@@ -114,11 +120,11 @@ var preloadStory = {
             // normal cgs
             game.load.image(key, preparePath(cgs));
         } else {
-            // spritesheet animation      
-            var str = cgs.spritesheet.split(" ");            
+            // spritesheet animation
+            var str = cgs.spritesheet.split(" ");
             game.load.spritesheet(key, preparePath(str[0]), parseInt(str[1]),parseInt(str[2]));
         }
-        
+
     });
     // preload background music
     _.each(RenJS.setup.music,function(filename,music){
@@ -159,12 +165,12 @@ var preloadStory = {
 }
 
 var init = {
-  create:function(){            
+  create:function(){
     RenJS.storyManager.setupStory();
     RenJS.gui.init();
     RenJS.initInput();
     RenJS.audioManager.init(function(){
-        RenJS.gui.showMenu("main");    
+        RenJS.gui.showMenu("main");
     });
   },
 

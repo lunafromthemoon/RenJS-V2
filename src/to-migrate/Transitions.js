@@ -1,4 +1,8 @@
-RenJS.transitions = {
+import {RenJS, config} from "./RenJS";
+import {game} from "./RenJSBootstrap";
+import {globalConfig} from "../dev-only/config";
+
+export const transitions = {
     CUT: function(from,to,position,scaleX){
         return new Promise(function(resolve, reject) {
             if (from){
@@ -31,13 +35,13 @@ RenJS.transitions = {
     FADEIN: function(to,position,scaleX){
         return new Promise(function(resolve, reject) {
             setNewProperties(to,position,scaleX);
-            RenJS.tweenManager.tween(to,{ alpha: 1 },resolve,config.fadetime,true);     
-        });   
+            RenJS.tweenManager.tween(to,{ alpha: 1 },resolve,config.fadetime,true);
+        });
     },
     FUSION: function(from,to,position,scaleX,group){
         if (!from || !to){
             return RenJS.transitions.FADE(from,to,position);
-        }   
+        }
         return new Promise(function(resolve, reject) {
             if (group) {
                 group.bringToTop(to);
@@ -52,7 +56,7 @@ RenJS.transitions = {
     MOVE: function(from,to,position,scaleX){
         if (!from || !to){
             return RenJS.transitions.CUT(from,to,position);
-        } 
+        }
         return new Promise(function(resolve, reject) {
             RenJS.tweenManager.tween(from,{ x:position.x,y:position.y },function(){
                 setNewProperties(to,position,scaleX);

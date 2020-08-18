@@ -1,4 +1,8 @@
-function BackgroundManager(){
+import _ from 'underscore'
+import {RenJS} from "./RenJS";
+import {game} from "./RenJSBootstrap";
+
+export function BackgroundManager(){
 
     this.backgrounds = {};
     this.current = null;
@@ -25,7 +29,7 @@ function BackgroundManager(){
         }
     }
 
-    this.show = function(name,transition){   
+    this.show = function(name,transition){
         var oldBg = this.current;
         this.current = name ? this.backgrounds[name] : null;
         // console.log("showing bg "+name);
@@ -33,10 +37,10 @@ function BackgroundManager(){
         if (this.current.animated){
             this.current.animations.play("run",null,true);
         }
-        return transition(oldBg,this.current,{x:game.world.centerX,y:game.world.centerY},1,RenJS.storyManager.backgroundSprites);        
+        return transition(oldBg,this.current,{x:game.world.centerX,y:game.world.centerY},1,RenJS.storyManager.backgroundSprites);
     }
 
-    this.hide = function(bg,transition){   
+    this.hide = function(bg,transition){
         return this.show(null,transition ? transition : RenJS.transitions.FADEOUT);
     }
 

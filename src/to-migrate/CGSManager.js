@@ -1,6 +1,12 @@
-function CGSManager(){
+import _ from 'underscore'
+import {RenJS} from "./RenJS";
+import {game} from "./RenJSBootstrap";
+
+export function CGSManager(){
     this.cgs = {};
     this.current = {};
+
+    let str
 
     this.set = function (current) {
         this.hideAll('CUT');
@@ -12,21 +18,22 @@ function CGSManager(){
 
     this.show = function(name,transition,props){
         var position = props.position ? props.position : {x:game.world.centerX,y:game.world.centerY};
-        this.cgs[name] = RenJS.storyManager.cgsSprites.create(position.x,position.y,name);            
-        this.cgs[name].anchor.set(0.5);        
+        this.cgs[name] = RenJS.storyManager.cgsSprites.create(position.x,position.y,name);
+        this.cgs[name].anchor.set(0.5);
         this.cgs[name].alpha = 0;
         if (props.zoom){
-            this.cgs[name].scale.set(props.zoom);    
-        }        
+            this.cgs[name].scale.set(props.zoom);
+        }
         if (props.angle){
             this.cgs[name].angle = props.angle;
-        }    
+        }
         if (RenJS.setup.cgs[name].animations){
             console.log("Adding animation to "+name)
             _.each(RenJS.setup.cgs[name].animations,function(anim,key){
-                var str = anim.split(" ");
+                str = anim.split(" ");
                 var frames = _.range(parseInt(str[0]),parseInt(str[1]))
-                frameRate = 24;
+                // let added
+                let frameRate = 24;
                 if (str.length>2){
                     frameRate = parseInt(str[2])
                 }
@@ -67,8 +74,10 @@ function CGSManager(){
                     this.cgs[name].frame = 0;
                 } else {
                     str = toAnimate.spritesheet.split(" ");
-                    animName = str[0];
-                    looped = str.length > 1 && str[1] == "looped";
+                    // let added
+                    let animName = str[0];
+                    // let added
+                    let looped = str.length > 1 && str[1] == "looped";
                     this.cgs[name].animations.play(animName,null,looped);
                     resolveFunction = function(){
                         RenJS.cgsManager.cgs[name].animations.stop();
@@ -117,7 +126,7 @@ function CGSManager(){
         });
     }
 
-    this.isCGS = function(actor){    
+    this.isCGS = function(actor){
         return _.has(this.cgs,actor);
     }
 }

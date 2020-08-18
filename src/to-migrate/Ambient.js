@@ -1,37 +1,41 @@
-RenJS.ambient = {
+import _ from 'underscore'
+import {game} from "./RenJSBootstrap";
+import {RenJS} from "./RenJS";
+import {globalConfig} from "../dev-only/config";
+export const ambient = {
     emitters: [],
     clearFunctions: [],
     addEmitter: function(options){
         var emitter = game.add.emitter(game.world.centerX, -32, options.maxParticles);
         emitter.width = game.world.width * 1.5;
-        emitter.makeParticles(options.sprite, options.frames);        
+        emitter.makeParticles(options.sprite, options.frames);
         if (options.scale){
             emitter.maxParticleScale = options.scale[1];
-            emitter.minParticleScale = options.scale[0];    
+            emitter.minParticleScale = options.scale[0];
         }
         if (options.speed && options.speed.y){
             emitter.setYSpeed(options.speed.y[0], options.speed.y[1]);
         }
         if (options.speed && options.speed.x){
             emitter.setXSpeed(options.speed.x[0], options.speed.x[1]);
-        }        
+        }
         emitter.gravity = options.gravity ? options.gravity : 0;
         if (options.rotation) {
             emitter.minRotation = options.rotation[0];
-            emitter.maxRotation = options.rotation[1];    
+            emitter.maxRotation = options.rotation[1];
         }
         RenJS.ambient.emitters.push(emitter);
     },
     BGS: function(sound){
         if (sound) {
-            RenJS.audioManager.play(sound,"bgs",true,"FADE");   
+            RenJS.audioManager.play(sound,"bgs",true,"FADE");
         }
     },
     CLEAR: function(){
         if (RenJS.ambient.maxLifespan){
             _.each(RenJS.ambient.emitters,function(emitter){
                 emitter.on = false;
-            });            
+            });
             setTimeout(function() {
                 _.invoke(RenJS.ambient.emitters,"destroy");
                 RenJS.ambient.emitters = [];
@@ -47,18 +51,18 @@ RenJS.ambient = {
         });
         RenJS.ambient.clearFunctions = [];
         RenJS.audioManager.stop("bgs","FADE");
-    },   
+    },
     STATIC: function(){
-        var static = RenJS.storyManager.behindCharactersSprites.create(game.world.centerX,game.world.centerY, 'static');
-        static.anchor.set(0.5);
-        static.scale.set(2.5);
-        RenJS.ambient.animation = static.animations.add('static');
-        RenJS.audioManager.play("staticSound","bgs",true,"CUT"); 
+        var Static = RenJS.storyManager.behindCharactersSprites.create(game.world.centerX,game.world.centerY, 'static');
+        Static.anchor.set(0.5);
+        Static.scale.set(2.5);
+        RenJS.ambient.animation = Static.animations.add('static');
+        RenJS.audioManager.play("staticSound","bgs",true,"CUT");
         RenJS.ambient.animation.play(10, true,true);
-        RenJS.ambient.animation.spriteParent = static;
+        RenJS.ambient.animation.spriteParent = Static;
     },
     RAIN: function() {
-        RenJS.audioManager.play("rain","bgs",true,"FADE"); 
+        RenJS.audioManager.play("rain","bgs",true,"FADE");
         RenJS.ambient.addEmitter({
             maxParticles: 400,
             sprite:"rain",
@@ -66,7 +70,7 @@ RenJS.ambient = {
             scale: [0.1,0.5],
             speed: {y:[300,500],x:[-5,5]},
             rotation: [0,0]
-        });        
+        });
         RenJS.ambient.emitters[0].start(false, 1600, 5,0);
         RenJS.ambient.maxLifespan = 1600;
     },
@@ -96,7 +100,7 @@ RenJS.ambient = {
     },
     DRUGS: function(){
         console.log("doing drugs");
-        
+
         var bg = RenJS.storyManager.behindCharactersSprites.create(0,0);
         bg.width = globalConfig.w;
         bg.height = globalConfig.h;
@@ -136,19 +140,19 @@ RenJS.ambient = {
 
             "void main(void)",
             "{",
-                
+
                 "vec2 uv = gl_FragCoord.xy / resolution.xy;",
                 "vec2 p=(4.0*gl_FragCoord.xy-resolution.xy)/max(resolution.x,resolution.y)+3.*(0.1/time);",
-                
+
                 "float ct = time * speed * 2. * mouse[1];",
-                
+
                " for(int i=1;i<zoom;i++) {",
                     "vec2 newp=p;",
                     "newp.x+=0.25/float(i)*cos(float(i)*p.y+time*cos(ct)*0.3/40.0+0.03*float(i))*fScale+10.0;        ",
                     "newp.y+=0.5/float(i)*cos(float(i)*p.x+time*ct*0.3/50.0+0.03*float(i+10))*fScale+15.0;",
                     "p=newp;",
                 "}",
-                
+
                 "vec3 col=vec3(1.5*sin(1.0*p.x)+0.5, 0.5*cos(3.0*p.y)+0.3, cos(p.x+p.y))-mouse[0];",
                 "gl_FragColor=vec4(col, 0.0);",
             "}"
@@ -163,9 +167,9 @@ RenJS.ambient = {
         var counter = 2000;
         RenJS.ambient.drugsFlag = 1;
         RenJS.ambient.drugsState = 0;
-        var interval = setInterval(function(){ 
+        var interval = setInterval(function(){
             var speed = RenJS.ambient.drugsFlag == 1 ? 1 : game.rnd.integerInRange(1,10);
-            filter.update({x:counter,y:speed}); 
+            filter.update({x:counter,y:speed});
             // console.log(game.input.activePointer.x);
             // console.log(counter);
             if (RenJS.ambient.drugsState == 0){
@@ -175,17 +179,17 @@ RenJS.ambient = {
                 }
             } else if (RenJS.ambient.drugsState == 2){
                 counter += 25;
-                if (counter >= 2200){                    
+                if (counter >= 2200){
                     RenJS.storyManager.behindCharactersSprites.remove(bg,true);
                     clearInterval(interval);
                 }
             }
 
-            
+
         }, 60);
         RenJS.ambient.clearFunctions.push(function(){
             RenJS.ambient.drugsState = 2;
-        });  
+        });
     },
     SNOW: function(){
         RenJS.ambient.addEmitter({

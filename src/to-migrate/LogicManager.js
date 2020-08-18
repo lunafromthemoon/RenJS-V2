@@ -1,4 +1,8 @@
-function LogicManager(){
+import _ from 'underscore'
+import {RenJS} from "./RenJS";
+import {game} from "./RenJSBootstrap";
+import {globalConfig} from "../dev-only/config";
+export function LogicManager(){
 
     this.vars = {};
 
@@ -16,7 +20,7 @@ function LogicManager(){
             this.visualChoices.destroy();
         }
     }
-    
+
     this.setVar = function(name,value){
         value = value+"";
         value = this.parseVars(value);
@@ -44,7 +48,7 @@ function LogicManager(){
         var actions;
         if (val && branches.ISTRUE){
             actions = branches.ISTRUE;
-        } 
+        }
         if (!val && branches.ISFALSE){
             RenJS.control.execStack[0].c++;
             actions = branches.ISFALSE;
@@ -52,7 +56,7 @@ function LogicManager(){
         if(actions){
             RenJS.storyManager.currentScene = _.union(actions,RenJS.storyManager.currentScene);
             RenJS.control.execStack.unshift({c:-1,total: actions.length, action: "if"});
-        }        
+        }
     }
 
     this.parseVars = function(text,useQM){
@@ -94,7 +98,7 @@ function LogicManager(){
         this.visualChoices = game.add.group();
         this.currentChoices = ch;
         _. each(ch, function(choice,index){
-            
+
             var key = _.keys(choice)[0];
             var str = key.split(" ");
             var pos = str[2].split(",");
@@ -116,14 +120,14 @@ function LogicManager(){
     this.showChoices = function(choices){
         var ch = _.map(choices,_.clone);
         ch = _.filter(ch,this.evalChoice);
-        RenJS.logicManager.currentChoices = RenJS.logicManager.currentChoices.concat(ch);    
-        // Update choice log 
+        RenJS.logicManager.currentChoices = RenJS.logicManager.currentChoices.concat(ch);
+        // Update choice log
         var execId = RenJS.logicManager.getExecStackId();
         if (!RenJS.logicManager.choicesLog[execId]){
             RenJS.logicManager.choicesLog[execId]=[];
         }
         // END Update choice log
-        RenJS.gui.showChoices(RenJS.logicManager.currentChoices,execId); 
+        RenJS.gui.showChoices(RenJS.logicManager.currentChoices,execId);
     }
 
     this.interrupt = function(steps,choices){
@@ -139,9 +143,9 @@ function LogicManager(){
                     if (choice.remainingSteps) {
                         choice.remainingSteps--;
                         if (choice.remainingSteps==1){
-                            RenJS.gui.changeToLastInterrupt(choice.choiceId); 
+                            RenJS.gui.changeToLastInterrupt(choice.choiceId);
                         } else if (choice.remainingSteps==0){
-                            RenJS.gui.hideChoice(choice.choiceId); 
+                            RenJS.gui.hideChoice(choice.choiceId);
                             return false;
                         }
                     }
@@ -150,7 +154,7 @@ function LogicManager(){
                 if (RenJS.logicManager.currentChoices.length == 0){
                     delete RenJS.onInterpretActions.interruptAction;
                 }
-            }    
+            }
         }
         var execId = RenJS.logicManager.getExecStackId();
         if (!RenJS.logicManager.choicesLog[execId]){

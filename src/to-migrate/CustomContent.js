@@ -1,3 +1,5 @@
+import {RenJS} from "./RenJS";
+
 RenJS.customContent = {
 	//put here your own functions
 

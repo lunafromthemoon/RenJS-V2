@@ -1,8 +1,15 @@
-console.log(globalConfig)
-var game = new Phaser.Game(globalConfig.w, globalConfig.h, Phaser[globalConfig.mode], "");
+import {globalConfig} from "../dev-only/config";
+import 'pixi'
+import 'p2'
+import Phaser from 'phaser-ce'
+import {preload} from "./Preload";
+import {chooseLang} from "./LanguageChooser";
+
+export const game = new Phaser.Game(globalConfig.w, globalConfig.h, Phaser[globalConfig.mode], "");
+
 game.preserveDrawingBuffer = true;
 
-var bootstrap = {
+const bootstrap = {
 
   init: function() {
     if (globalConfig.i18n){
@@ -23,12 +30,12 @@ var bootstrap = {
         game.load.image('loading',  preparePath(globalConfig.splash.loadingBar.fullBar));
       }
       if (globalConfig.splash.loadingBar.asset){
-        var w = globalConfig.splash.loadingBar.size.w;
-        var h = globalConfig.splash.loadingBar.size.h;
+        const w = globalConfig.splash.loadingBar.size.w;
+        const h = globalConfig.splash.loadingBar.size.h;
         game.load.spritesheet('loading',  preparePath(globalConfig.splash.loadingBar.asset),w,h);
       }
     }
-    game.load.script('preload',  'RenJS/Preload.js');
+    // game.load.script('preload',  'RenJS/Preload.js');
   },
 
   create: function () {
@@ -38,7 +45,7 @@ var bootstrap = {
 
 };
 
-function preparePath(path){
+export function preparePath(path){
   if (globalConfig.i18n){
     return path.replace("LANG",globalConfig.i18n.current);
   } else {
@@ -54,6 +61,3 @@ if (globalConfig.i18n){
 } else {
   game.state.start('bootstrap');
 }
-
-
-

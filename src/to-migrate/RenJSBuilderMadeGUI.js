@@ -1,4 +1,7 @@
-function RenJSBuilderMadeGUI(meta){
+import {RenJS, config} from "./RenJS";
+import {game} from "./RenJSBootstrap";
+import {globalConfig} from "../dev-only/config";
+export function RenJSBuilderMadeGUI(meta){
     this.gui = meta;
 
     // public methods
@@ -43,7 +46,7 @@ function RenJSBuilderMadeGUI(meta){
         if (this.gui.config[menu].backgroundMusic && !this.gui.config[menu].backgroundMusic.isPlaying && !config.settings.muted){
             this.currentMusic = this.gui.config[menu].backgroundMusic;
             this.currentMusic.fadeIn(1000);
-        };        
+        }
     };
 
     this.changeMenu = function(menu) {
@@ -61,7 +64,7 @@ function RenJSBuilderMadeGUI(meta){
                 // just hide menu
                 this.hideMenu(previous,true);
             }
-        } 
+        }
         if (menu){
             this.showMenu(menu);
         }
@@ -70,7 +73,7 @@ function RenJSBuilderMadeGUI(meta){
     this.currentMusic = null;
 
     //hide menu
-    this.hideMenu = function(menu,mute,callback){  
+    this.hideMenu = function(menu,mute,callback){
         if (!menu){
             menu = this.currentMenu;
         }
@@ -82,7 +85,7 @@ function RenJSBuilderMadeGUI(meta){
                 callback()
             }
             // if (this.previousMenu){
-            //     this.showMenu(this.previousMenu);   
+            //     this.showMenu(this.previousMenu);
             // }
         },this);
         console.log('hiding')
@@ -91,7 +94,7 @@ function RenJSBuilderMadeGUI(meta){
         // console.log(this.gui.config[menu])
         if (mute && this.currentMusic){
             this.currentMusic.fadeOut(400);
-        };   
+        }
         tween.start();
     }
 
@@ -112,7 +115,7 @@ function RenJSBuilderMadeGUI(meta){
 
         var x = (choiceConfig.isBoxCentered) ? this.gui.resolution[0]/2 - choiceConfig.width/2 : choiceConfig.x;
         var y = (choiceConfig.isBoxCentered) ? this.gui.resolution[1]/2 - (choiceConfig.height*choices.length + parseInt(choiceConfig.separation)*(choices.length-1))/2 : choiceConfig.y;
-    
+
         choices.forEach((choice,index) => {
             var choiceType = choice.interrupt ? interruptConfig : choiceConfig;
             this.createChoiceBox(choice,[x,y],index,choiceType,execId)
@@ -190,12 +193,12 @@ function RenJSBuilderMadeGUI(meta){
 
     //dialogue and text
     this.showText = function(text,title,colour,callback){
-        if  (title && this.nameBox) {      
+        if  (title && this.nameBox) {
             this.nameBox.text.text = title;
             this.nameBox.text.fill = colour;
-            this.nameBox.visible = true;      
+            this.nameBox.visible = true;
         } else {
-            this.nameBox.visible = false; 
+            this.nameBox.visible = false;
         }
         if (RenJS.control.skipping || config.settings.textSpeed < 10){
             this.messageBox.message.text = text;
@@ -204,7 +207,7 @@ function RenJSBuilderMadeGUI(meta){
             callback();
             return;
         }
-        var textObj = this.messageBox.message;        
+        var textObj = this.messageBox.message;
         textObj.text = "";
         var words = text.split("");
         var count = 0;
@@ -220,11 +223,11 @@ function RenJSBuilderMadeGUI(meta){
             count++;
             if (count >= words.length){
                 completeText();
-            }   
+            }
         }, config.settings.textSpeed);
         this.messageBox.visible = true;
         if (!RenJS.control.auto){
-            RenJS.waitForClick(completeText);    
+            RenJS.waitForClick(completeText);
         }
     }
 
@@ -292,7 +295,7 @@ function RenJSBuilderMadeGUI(meta){
         if (hudConfig.interrupt && !hudConfig.interrupt.inlineWithChoice){
             this.interrupts = game.add.group();
         }
-        
+
         this.loadGeneralComponents(hudConfig,this.hud)
     }
 
@@ -334,7 +337,7 @@ function RenJSBuilderMadeGUI(meta){
         this.loadGeneralComponents(menuConfig,this.menus[name]);
         if (menuConfig.backgroundMusic){
             menuConfig.backgroundMusic = game.add.audio(menuConfig.backgroundMusic);
-        };      
+        };
     }
 
     this.loadButton = function(component,menu) {
@@ -397,7 +400,7 @@ function RenJSBuilderMadeGUI(meta){
     }
 
     this.loadThumbnail = function(thumbnail,parent) {
-        var id = 'thumbnail'+Math.floor(Math.random() * 5000);;
+        var id = 'thumbnail'+Math.floor(Math.random() * 5000);
         game.load.image(id, thumbnail);
         game.load.onLoadComplete.addOnce(function() {
             var thmbSprite = game.add.sprite(parent.config['thumbnail-x'],parent.config['thumbnail-y'],id);
@@ -410,15 +413,15 @@ function RenJSBuilderMadeGUI(meta){
 
     this.loadComponent = function(type,component,menu) {
         switch (type) {
-          case 'images' : 
+          case 'images' :
             game.add.image(component.x,component.y,component.id,0,menu);
           break;
-          case 'animations' : 
+          case 'animations' :
             var spr = game.add.sprite(component.x,component.y,component.id,0,menu);
             spr.animations.add('do').play(true)
           break;
           case 'buttons' :  this.loadButton(component,menu); break;
-          case 'labels' : 
+          case 'labels' :
             var color = component.color ? component.color : "#ffffff"
             game.add.text(component.x, component.y, component.text, {font: component.size+'px '+component.font, fill: color},menu);
           break;
@@ -473,7 +476,7 @@ function RenJSBuilderMadeGUI(meta){
         },
         return: function(){
             var prev = RenJS.gui.previousMenu;
-            RenJS.gui.changeMenu(prev); 
+            RenJS.gui.changeMenu(prev);
             if (!prev) {
                 RenJS.unpause();
             }

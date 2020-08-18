@@ -28,7 +28,6 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
     "expose-loader": "^1.0.0",
-    "html-webpack-plugin": "^4.3.0",
     "ts-loader": "^8.0.2",
     "typescript": "^3.9.7",
     "webpack": "^4.44.1",
@@ -38,6 +37,9 @@
   },
   "dependencies": {
     "js-yaml": "^3.14.0",
-    "phaser-ce": "^2.16.0"
+    "p2": "^0.7.1",
+    "phaser-ce": "^2.16.0",
+    "pixi": "^0.3.1",
+    "underscore": "^1.10.2"
   }
 }

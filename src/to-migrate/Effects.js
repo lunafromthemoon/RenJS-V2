@@ -1,4 +1,8 @@
-RenJS.effects = {
+import _ from 'underscore'
+import {RenJS, config} from "./RenJS";
+import {game} from "./RenJSBootstrap";
+import {globalConfig} from "../dev-only/config";
+export const effects = {
     SHAKE: function(){
         return new Promise(function(resolve, reject) {
             game.camera.shake(0.01, 200);
@@ -8,7 +12,7 @@ RenJS.effects = {
     ROLLINGCREDITS: function(params){
         return new Promise(function(resolve, reject) {
             var bg = game.add.graphics(0, 0);
-            RenJS.audioManager.play("rollingCredits","bgm",true,"FADE");  
+            RenJS.audioManager.play("rollingCredits","bgm",true,"FADE");
             bg.beginFill(0x000000, 1);
             bg.drawRect(0, 0, globalConfig.w, globalConfig.h);
             bg.endFill();
@@ -23,12 +27,12 @@ RenJS.effects = {
                     var nextLine = game.add.text(0,i*separation,params.text[i],style);
                     nextLine.anchor.set(0.5);
                     credits.addChild(nextLine);
-                }            
-            };
+                }
+            }
             var tweenChain = [
                 {sprite:bg,tweenables:{alpha:1},time:config.fadetime},
                 {sprite:credits,tweenables:{y:-(separation*params.text.length+30)},time:700*params.text.length},
-                
+
             ];
             if (!params.endGame){
                 tweenChain.push({sprite:bg,tweenables:{alpha:0},time:config.fadetime,callback:function(){
@@ -41,7 +45,7 @@ RenJS.effects = {
             }
             RenJS.tweenManager.unskippable = true;
             RenJS.tweenManager.chain(tweenChain);
-        });      
+        });
     },
     SHOWTITLE: function(param){
         return new Promise(function(resolve, reject) {
@@ -65,43 +69,44 @@ RenJS.effects = {
                     bg.destroy();
                     resolve();
                 }, delay: RenJS.control.fadetime*2}
-            ],config.fadetime*2);     
-        }); 
+            ],config.fadetime*2);
+        });
     },
     FLASHIMAGE: function(image){
-        return new Promise(function(resolve, reject) {   
+        return new Promise(function(resolve, reject) {
             var image = game.add.sprite(game.world.centerX,game.world.centerY,image);
             image.anchor.set(0.5);
             setTimeout(function() {
                 var tween = game.add.tween(image);
                 tween.to({ alpha: 0 }, RenJS.control.fadetime/2, Phaser.Easing.Linear.None);
-                tween.onComplete.add(function(){            
+                tween.onComplete.add(function(){
                     image.destroy();
-                    resolve();            
-                }, this);            
-                tween.start();            
+                    resolve();
+                }, this);
+                tween.start();
             }, RenJS.control.fadetime/3);
 
-        }); 
+        });
     },
     EXPLOSION: function(){
-        return new Promise(function(resolve, reject) {   
+        return new Promise(function(resolve, reject) {
             var explosion = game.add.sprite(game.world.centerX,game.world.centerY, 'explosion');
             explosion.anchor.set(0.5);
-            anim = explosion.animations.add('explode');
+            // let added
+            let anim = explosion.animations.add('explode');
             anim.onComplete.add(function(){
                 resolve();
             }, this);
             anim.play(10, false,true);
             RenJS.audioManager.playSFX("explosionSound");
-        }); 
+        });
     },
     THUNDER: function(){
         game.camera.shake(0.01, 200);
         RenJS.audioManager.playSFX("thunderSFX");
         return RenJS.effects.FLASHIMAGE("thunder");
     },
-    ATTACK: function() {        
+    ATTACK: function() {
         game.camera.shake(0.01, 200);
         return RenJS.effects.FLASHIMAGE("attack");
     },
@@ -111,7 +116,7 @@ RenJS.effects = {
         return RenJS.effects.FLASHIMAGE("multiattack");
     },
     CHAINATTACK: function() {
-        return new Promise(function(resolve, reject) {  
+        return new Promise(function(resolve, reject) {
             game.camera.shake(0.01, 200);
             RenJS.effects.FLASHIMAGE("chainattack1").then(function(){
                 game.camera.shake(0.01, 200);

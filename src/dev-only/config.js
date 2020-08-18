@@ -1,4 +1,4 @@
-var globalConfig =  {
+export const globalConfig =  {
   "name": "Quickstart",
   "w": 800,
   "h": 600,

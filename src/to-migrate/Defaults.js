@@ -1,7 +1,8 @@
-var defaults = {
+import {globalConfig} from "../dev-only/config";
+export const defaults = {
     //name of the game
     name: "RenJS-GAME",
-    
+
     defaultTextStyle: {
         font: "bold 16pt Arial",
         fill: "#FFFFFF",

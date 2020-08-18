@@ -1,4 +1,6 @@
-function TextManager(){
+import {RenJS} from "./RenJS";
+
+export function TextManager(){
 
     this.show = function(text,title,colour){
         return new Promise(function(resolve, reject) {

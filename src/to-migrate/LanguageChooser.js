@@ -1,10 +1,12 @@
-var chooseLang = {
+import {game} from "./RenJSBootstrap";
+import {globalConfig} from "../dev-only/config";
+export const chooseLang = {
 
     init: function() {
         if (!(globalConfig.scaleMode == "EXACT_FIT")){
           game.scale.pageAlignHorizontally = true;
           game.scale.pageAlignVertically = true;
-        }    
+        }
         game.scale.scaleMode = Phaser.ScaleManager[globalConfig.scaleMode];
         game.scale.refresh();
       },
