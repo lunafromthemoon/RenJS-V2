@@ -1,0 +1,17 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "member-ordering": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "quotemark": [true, "single"],
+    "no-console": false
+  },
+  "linterOptions": {
+    "exclude": [
+      "./node_modules/**",
+      "./src/to-migrate/**",
+      "./src/dev-only/**"
+    ]
+  }
+}

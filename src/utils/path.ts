@@ -1,4 +1,4 @@
-import {i18nInterface} from "../IGameConfig";
+import {i18nInterface} from "../RJSGameConfig";
 
 export function preparePath(path: string, i18n?: i18nInterface){
     if (i18n){

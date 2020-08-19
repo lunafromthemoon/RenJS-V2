@@ -1,4 +1,4 @@
-import Phaser from "phaser-ce";
+import {IGameConfig} from "phaser-ce";
 
 export interface i18nInterface {
     langs: string[],
@@ -9,7 +9,7 @@ export interface i18nInterface {
     current?: string
 }
 
-export interface GameConfig extends Phaser.IGameConfig {
+export interface RJSGameConfig extends IGameConfig {
     name: string,
     w: number,
     h: number,
