@@ -1,7 +1,6 @@
 import RJSControl from './RJSControl';
 import {Graphics} from 'phaser-ce';
 import RJSGame from './RJSGame';
-import {defaults} from './Defaults';
 import BackgroundManager from './managers/BackgroundManager';
 import CharacterManager from './managers/CharacterManager';
 import AudioManager from './managers/AudioManager';
@@ -10,6 +9,9 @@ import TextManager from './managers/TextManager';
 import TweenManager from './managers/TweenManager';
 import LogicManager from './managers/LogicManager';
 import StoryManager from './managers/StoryManager';
+import Ambient from './screen-effects/Ambient';
+import Effects from './screen-effects/Effects';
+import Transition from './screen-effects/Transition';
 
 class RJS {
     game: RJSGame
@@ -20,7 +22,6 @@ class RJS {
     control: RJSControl
     xShots = []
     blackOverlay: Graphics
-    config = {...defaults}
 
     managers: {
         background: BackgroundManager
@@ -31,6 +32,12 @@ class RJS {
         tween: TweenManager
         logic: LogicManager
         story: StoryManager
+    }
+
+    screenEffects: {
+        ambient: Ambient
+        effects: Effects,
+        transition: Transition
     }
 
     pause () {
@@ -94,7 +101,7 @@ class RJS {
     }
 
     skip (){
-        this.config.skiptime = 50;
+        this.game.defaultValues.skiptime = 50;
         this.control.skipping = true;
         if (this.control.waitForClick){
             this.control.waitForClick = false;
@@ -103,7 +110,7 @@ class RJS {
     }
 
     auto (){
-        this.config.skiptime = 1000;
+        this.game.defaultValues.skiptime = 1000;
         this.control.auto = true;
         if (this.control.waitForClick){
             this.control.nextAction()

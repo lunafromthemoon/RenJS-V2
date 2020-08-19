@@ -1,3 +1,1 @@
-interface RJSManager {}
-
-export default class RJSManager implements RJSManager {}
+export default interface RJSManagerInterface {}
