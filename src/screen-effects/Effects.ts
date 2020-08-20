@@ -11,10 +11,10 @@ export default class Effects implements RJSScreenEffectInterface {
     // todo impl gui
     private gui: any
 
-    constructor(game: RJSGame, audioManager: AudioManagerInterface, tweenManager: TweenManagerInterface) {
+    constructor(game: RJSGame) {
         this.game = game
-        this.audioManager = audioManager
-        this.tweenManager = tweenManager
+        this.audioManager = game.RJS.managers.audio
+        this.tweenManager = game.RJS.managers.tween
     }
 
     async SHAKE() {

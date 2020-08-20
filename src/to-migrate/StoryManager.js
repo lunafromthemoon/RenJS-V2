@@ -6,7 +6,7 @@ export function StoryManager(){
 
     this.actorsIndex = {};
 
-    this.setupStory = function(){
+    this.setupStory = function() {
         //load backgrounds
         this.backgroundSprites = game.add.group();
         _.each(RenJS.setup.backgrounds,function(filename,background){

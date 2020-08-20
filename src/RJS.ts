@@ -12,16 +12,18 @@ import StoryManager from './managers/StoryManager';
 import Ambient from './screen-effects/Ambient';
 import Effects from './screen-effects/Effects';
 import Transition from './screen-effects/Transition';
+import {RJSGUI} from './gui/RJSGUI';
 
 class RJS {
+
     game: RJSGame
-    constructor(game: RJSGame) {
-        this.game = game
-    }
     gameStarted = false
     control: RJSControl
     xShots = []
     blackOverlay: Graphics
+    setup: any
+    story: object
+    gui: RJSGUI
 
     managers: {
         background: BackgroundManager
@@ -40,14 +42,17 @@ class RJS {
         transition: Transition
     }
 
+    constructor(game: RJSGame) {
+        this.game = game
+    }
+
     pause () {
         this.control.paused = true;
         this.control.skipping = false;
         this.control.auto = false;
 
         this.takeXShot();
-        // @todo implement gui
-        // this.gui.hideHUD();
+        this.gui.hideHUD();
     }
 
     takeXShot (argument?) {
@@ -57,12 +62,10 @@ class RJS {
 
     unpause (force?){
         this.control.paused = false;
-        // @todo implement gui
-        // this.gui.showHUD();
+        this.gui.showHUD();
 
         if (!this.control.resolve || force){
-            // @todo implement storyManager
-            // this.storyManager.interpret();
+            this.managers.story.interpret();
         } else if (force) {
             this.control.resolve();
         }
@@ -90,14 +93,12 @@ class RJS {
         this.setBlackOverlay();
         this.control.paused = false;
 
-        // @todo implement storyManager
-        // this.storyManager.startScene("start");
+        this.managers.story.startScene("start");
 
         this.removeBlackOverlay();
         this.gameStarted = true;
 
-        // @todo implement storyManager
-        // this.storyManager.interpret();
+        this.managers.story.interpret();
     }
 
     skip (){
@@ -144,12 +145,65 @@ class RJS {
         localStorage.setItem('RenJSChoiceLog' + this.game.config.name,log);
         localStorage.setItem('RenJSDATA' + this.game.config.name + slot,dataSerialized);
         // @todo implement gui
-        // if (this.gui.addThumbnail && this.xShots && this.xShots.length){
-        //     const thumbnail = this.xShots[this.xShots.length-1];
-        //     this.gui.addThumbnail(thumbnail,slot)
-        //     localStorage.setItem('RenJSThumbnail' + this.game.config.name + slot,thumbnail);
-        // }
+        if (this.gui.addThumbnail && this.xShots && this.xShots.length) {
+            const thumbnail = this.xShots[this.xShots.length-1];
+            this.gui.addThumbnail(thumbnail,slot)
+            localStorage.setItem('RenJSThumbnail' + this.game.config.name + slot,thumbnail);
+        }
 
+    }
+
+    getSlotThumbnail (slot) {
+        return localStorage.getItem("RenJSThumbnail" + this.game.defaultValues.name + slot)
+    }
+
+    load (slot){
+        if (!slot){
+            slot = 0;
+        }
+        let data = localStorage.getItem("RenJSDATA" + this.game.defaultValues.name + slot);
+        if (!data){
+            this.start();
+            return;
+        }
+        data = JSON.parse(data);
+        this.setBlackOverlay();
+        // RenJS.transitions.FADETOCOLOUROVERLAY(0x000000);
+        this.managers.background.set(data.background);
+        this.managers.character.set(data.characters);
+        this.managers.audio.set(data.audio);
+        this.managers.cgs.set(data.cgs);
+        this.managers.logic.logicManager.set(data.vars);
+        this.gui.clear();
+        var stack = data.stack[data.stack.length-1];
+        var scene = stack.scene;
+        var allActions = [...RenJS.story[scene]];
+        var actions = allActions.slice(stack.c);
+        if(data.stack.length != 1){
+            for (var i = data.stack.length-2;i>=0;i--){
+                var nestedAction = allActions[stack.c];
+                stack = data.stack[i];
+                switch(stack.action){
+                    case "interrupt":
+                        nestedAction = allActions[data.stack[i+1].interrupting];
+                        allActions = nestedAction.interrupt[stack.index][stack.op];
+                        break;
+                    case "choice":
+                        allActions = nestedAction.choice[stack.index][stack.op];
+                        break;
+                    case "if":
+                        var action = Object.keys(nestedAction)[0];
+                        allActions = nestedAction[action];
+
+                }
+                var newActions = allActions.slice(stack.c+1);;
+                actions = newActions.concat(actions);
+            }
+        }
+        this.control.execStack = data.stack;
+        this.managers.story.currentScene = actions;
+        this.removeBlackOverlay();
+        RenJS.unpause(true);
     }
 
 }

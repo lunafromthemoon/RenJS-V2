@@ -1,1 +1,3 @@
-export default interface RJSManagerInterface {}
+export default interface RJSManagerInterface {
+    set(...args: any)
+}

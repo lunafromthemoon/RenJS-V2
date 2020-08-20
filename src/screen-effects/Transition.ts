@@ -3,14 +3,24 @@ import RJSGame from "../RJSGame";
 import {TweenManagerInterface} from "../managers/TweenManager";
 import {Group} from "phaser-ce";
 
+
 export default class Transition implements RJSScreenEffectInterface {
+
+    static CUT = 'CUT'
+    static FADE = 'FADE'
+    static FADEOUT = 'FADEOUT'
+    static FADEIN = 'FADEIN'
+    static FUSION = 'FUSION'
+    static MOVE = 'MOVE'
+    static FADETOCOLOUR = 'FADETOCOLOUR'
+
 
     private game: RJSGame
     private tweenManager: TweenManagerInterface
 
-    constructor(game: RJSGame, tweenManager: TweenManagerInterface) {
+    constructor(game: RJSGame) {
         this.game = game
-        this.tweenManager = tweenManager
+        this.tweenManager = game.RJS.managers.tween
     }
 
     async CUT(from, to, position, scaleX?) {

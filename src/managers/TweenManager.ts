@@ -11,10 +11,16 @@ export default class TweenManager implements TweenManagerInterface {
 
     // @todo to impl
     tween(sprite, tweenables, callback, time, start, delay?) {
+        if (callback) {
+            callback()
+        }
 
     }
 
     // @todo to impl
     chain(tweens, time) {
+    }
+
+    set(...args: any) {
     }
 }

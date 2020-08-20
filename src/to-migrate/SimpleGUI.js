@@ -6,19 +6,17 @@ export function SimpleGUI(meta){
     this.elements = meta ;
 
     this.getAssets = function(){
-        var assets = _.map(this.elements.assets.images,function(asset,key){
-            return {key:key, file:asset, type: "image"};
-        });
-        var list = _.map(this.elements.assets.spritesheets,function(asset,key){
+        var imgs = Object.entries(this.elements.assets.images).map(([key, asset]) => (
+          {key:key, file:asset, type: "image"}
+        ));
+        var spritesheets = Object.entries(this.elements.assets.spritesheets).map(([key, asset]) => {
             var e = asset.split(" ");
             return {key:key,file:e[0],w:parseInt(e[1]),h:parseInt(e[2]), type: "spritesheet"};
         });
-        assets = _.union(assets,list);
-        list = _.map(this.elements.assets.audio,function(asset,key){
-            return {key:key, file:asset, type: "audio"};
-        });
-        assets = _.union(assets,list);
-        return assets;
+        list = Object.entries(this.elements.assets.audio).map(([key, asset]) => (
+          {key:key, file:asset, type: "audio"}
+        ));
+        return [...imgs,...spritesheets,...audio];
     }
 
     this.getFonts = function(argument) {
@@ -43,15 +41,15 @@ export function SimpleGUI(meta){
         this.initHUD();
         this.initChoices();
         this.menus = {};
-        _.each(this.elements.menus,function(menu,name){
-            this.initMenu(name,menu);
-        },this);
+        for (const menuName in this.elements.menus){
+            this.initMenu(name,this.elements.menus[menuName]);
+        }
     }
 
 
 
     this.getTextStyle = function(textStyle){
-        return _.extend(_.clone(config.defaultTextStyle),textStyle);
+        return {...config.defaultTextStyle,...textStyle};
     }
 
     this.initHUD = function(){
@@ -60,7 +58,7 @@ export function SimpleGUI(meta){
         };
         // this.hud.group.alpha = 0;
         this.hud.area = [];
-        _.each(this.elements.hud.area,function(area){
+        for (const area of this.elements.hud.area){
             var a = area.split(" ");
             // debugger;
             var x = parseInt(a[0]);
@@ -68,25 +66,14 @@ export function SimpleGUI(meta){
             var w = parseInt(a[2])-x;
             var h = parseInt(a[3])-y;
             this.hud.area.push(new Phaser.Rectangle(x,y,w,h));
-        },this);
+        }
         this.hud.group.visible = false;
         var messageBox = this.elements.hud.message;
         this.hud.messageBox = game.add.image(messageBox.position.x,messageBox.position.y,"messageBox",0,this.hud.group);
         var style = this.getTextStyle(messageBox.textStyle);
 
-        // var messageBox = this.getSpriteInfo(this.elements.hud.message.box);
-        // this.hud.messageBox = game.add.image(messageBox.x,messageBox.y,messageBox.key,0,this.hud.group);
         this.hud.messageBox.visible = false;
-        // messageBox = this.getBoundingBoxInfo(this.elements.hud.message.text.boundingBox);
-        // var textStyle = _.extend(config.defaultTextStyle,
-        //     this.elements.hud.message.text,
-        //     {wordWrap:true, wordWrapWidth:messageBox.w});
 
-        // textStyle.wordWrap = true;
-        // textStyle.wordWrap = true;
-
-        // };
-        // console.log(messageBox);
         this.hud.text = game.add.text(messageBox.textPosition.x,messageBox.textPosition.y, "", style,this.hud.group);
         this.hud.messageBox.addChild(this.hud.text);
 
@@ -118,16 +105,14 @@ export function SimpleGUI(meta){
 
     this.initButtons = function(buttonsMeta,group){
         var buttons = {};
-        _.each(buttonsMeta,function(btn,action){
-            // console.log("Adding button");
-            // console.log(btn);
-            // button(x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame, group)
+        for (const action in buttonsMeta){
+            var btn = buttonsMeta[action];
             if (!btn.frames){
                 btn.frames = [0,1,0,1];
             }
             buttons[action] = game.add.button(btn.position.x,btn.position.y,btn.sprite,this.buttonActions[action],
-                this,btn.frames[0],btn.frames[1],btn.frames[2],btn.frames[3],group);
-        },this);
+              this,btn.frames[0],btn.frames[1],btn.frames[2],btn.frames[3],group);
+        }
         return buttons;
     }
 
@@ -144,14 +129,15 @@ export function SimpleGUI(meta){
             this.menus[name].music.onDecoded.add(function(){
                 this.menus[name].music.ready = true;
             }, this);
-        };
+        }
         this.menus[name].buttons = this.initButtons(menu.buttons,this.menus[name].group);
         this.initSliders(menu.sliders,this.menus[name].group);
 
     }
 
     this.initSliders = function(slidersMeta,group){
-        _.each(slidersMeta,function(slider,prop){
+        for (const prop in slidersMeta) {
+            var slider = slidersMeta[prop]
             var sliderFull = game.add.image(slider.position.x,slider.position.y,slider.sprite,0,group);
             var sliderMask = game.add.graphics(slider.position.x,slider.position.y,group);
             sliderMask.beginFill(0xffffff);
@@ -170,7 +156,7 @@ export function SimpleGUI(meta){
                 var newVal = (val/sprite.width)*(sprite.limits[1] - sprite.limits[0])+sprite.limits[0];
                 this.sliderValueChanged[sprite.prop](newVal);
             }, this);
-        },this);
+        }
     }
 
 
@@ -239,7 +225,7 @@ export function SimpleGUI(meta){
                }, 1000);
             }
 
-        };
+        }
     };
 
     //hide menu
@@ -281,8 +267,7 @@ export function SimpleGUI(meta){
             position.y = game.world.centerY - (choices.length*this.elements.hud.choice.separation)/2;
             position.anchor = {x:0.5,y:0};
         }
-
-        _.each(choices,function(choice,index){
+        choices.forEach((choice,index) => {
             var y = position.y + this.elements.hud.choice.separation*index;
             var key = "choice";
             var frames = [0,1,0,1];
@@ -428,9 +413,7 @@ export function SimpleGUI(meta){
 
     this.ignoreTap = function(pointer){
         // Tap should be ignored if the player clicked on a hud button.
-        var inside = _.find(RenJS.gui.hud.area,function(area){
-            return area.contains(pointer.x,pointer.y);
-        });
+        var inside = RenJS.gui.hud.area.find(area => area.contains(pointer.x,pointer.y));
         return inside != null && inside != undefined;
     }
 }

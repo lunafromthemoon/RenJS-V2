@@ -1,10 +1,28 @@
 import RJSManager from './RJSManager';
 import {Group} from "phaser-ce";
 
-export interface StoryManagerInterface extends RJSManager {
-    behindCharactersSprites: Group
+export interface StoryManagerInterface<T> extends RJSManager {
+    behindCharactersSprites: T
+    cgsSprites: T
+    interpret()
+    startScene(name: string)
+    currentScene: any[]
 }
 
-export default class StoryManager implements StoryManagerInterface {
-    behindCharactersSprites: Phaser.Group;
+// todo to impl
+export default class StoryManager implements StoryManagerInterface<Group> {
+    behindCharactersSprites: Group;
+    cgsSprites: Group
+
+
+    set(...args: any) {
+    }
+
+    interpret() {
+    }
+
+    startScene(name: string) {
+    }
+
+    currentScene: any[];
 }
