@@ -1,9 +1,9 @@
 import 'pixi'
 import 'p2'
-import Phaser from "phaser-ce";
-import {RJSGameConfig} from "./RJSGameConfig";
-import RJS from "./RJS";
-import {defaults} from "./Defaults";
+import Phaser from 'phaser-ce';
+import {RJSGameConfig} from './RJSGameConfig';
+import RJS from './RJS';
+import {defaults} from './Defaults';
 
 class RJSGame extends Phaser.Game {
     config: RJSGameConfig

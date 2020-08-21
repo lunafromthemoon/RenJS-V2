@@ -1,7 +1,7 @@
-import RJSScreenEffectInterface from "./RJSScreenEffect";
-import RJSGame from "../RJSGame";
-import {TweenManagerInterface} from "../managers/TweenManager";
-import {Group} from "phaser-ce";
+import RJSScreenEffectInterface from './RJSScreenEffect';
+import RJSGame from '../RJSGame';
+import {TweenManagerInterface} from '../managers/TweenManager';
+import {Group} from 'phaser-ce';
 
 
 export default class Transition implements RJSScreenEffectInterface {
@@ -23,7 +23,7 @@ export default class Transition implements RJSScreenEffectInterface {
         this.tweenManager = game.RJS.managers.tween
     }
 
-    async CUT(from, to, position, scaleX?) {
+    async CUT(from, to, position, scaleX?): Promise<void> {
         if (from) {
             from.alpha = 0;
         }
@@ -34,7 +34,7 @@ export default class Transition implements RJSScreenEffectInterface {
 
     }
 
-    async FADE(from, to, position, scaleX?) {
+    async FADE(from, to, position, scaleX?): Promise<void> {
         if (!from) return this.FADEIN(to, position, scaleX);
         if (!to) return this.FADEOUT(from);
 
@@ -48,16 +48,16 @@ export default class Transition implements RJSScreenEffectInterface {
         ], this.game.defaultValues.fadetime);
     }
 
-    async FADEOUT(from) {
+    async FADEOUT(from): Promise<void> {
         this.tweenManager.tween(from, {alpha: 0}, null, this.game.defaultValues.fadetime, true);
     }
 
-    async FADEIN(to, position, scaleX) {
+    async FADEIN(to, position, scaleX): Promise<void> {
         setNewProperties(to, position, scaleX);
         this.tweenManager.tween(to, {alpha: 1}, null, this.game.defaultValues.fadetime, true);
     }
 
-    async FUSION(from, to, position, scaleX, group: Group) {
+    async FUSION(from, to, position, scaleX, group: Group): Promise<void> {
         if (!from || !to) {
             return this.FADE(from, to, position);
         }
@@ -72,7 +72,7 @@ export default class Transition implements RJSScreenEffectInterface {
         }, this.game.defaultValues.fadetime, true);
     }
 
-    async MOVE(from, to, position, scaleX) {
+    async MOVE(from, to, position, scaleX): Promise<void> {
         if (!from || !to) {
             return this.CUT(from, to, position);
         }
@@ -83,16 +83,16 @@ export default class Transition implements RJSScreenEffectInterface {
         }, this.game.defaultValues.fadetime, true);
     }
 
-    async FADETOCOLOUR(from, to, position, scaleX, colour) {
-        const spr_bg = this.game.add.graphics(0, 0);
+    async FADETOCOLOUR(from, to, position, scaleX, colour): Promise<void> {
+        const sprBg = this.game.add.graphics(0, 0);
         // this.fadeColor = fadeColor ? fadeColor : 0x000000;
-        spr_bg.beginFill(colour, 1);
-        spr_bg.drawRect(0, 0, this.game.config.w, this.game.config.h);
-        spr_bg.alpha = 0;
-        spr_bg.endFill();
+        sprBg.beginFill(colour, 1);
+        sprBg.drawRect(0, 0, this.game.config.w, this.game.config.h);
+        sprBg.alpha = 0;
+        sprBg.endFill();
         this.tweenManager.chain([
             {
-                sprite: spr_bg, tweenables: {alpha: 1}, callback: () => {
+                sprite: sprBg, tweenables: {alpha: 1}, callback: (): void => {
                     if (from) {
                         from.alpha = 0;
                     }
@@ -103,23 +103,23 @@ export default class Transition implements RJSScreenEffectInterface {
                 }
             },
             {
-                sprite: spr_bg, tweenables: {alpha: 0}, callback: () => {
-                    spr_bg.destroy();
+                sprite: sprBg, tweenables: {alpha: 0}, callback: () => {
+                    sprBg.destroy();
                 }
             }
         ], this.game.defaultValues.fadetime);
     }
 
-    FADETOBLACK (from, to, position){
+    async FADETOBLACK (from, to, position): Promise<void> {
         return this.FADETOCOLOUR(from,to,position, null,0x000000)
     }
 
-    FADETOWHITE (from, to, position){
+    async FADETOWHITE (from, to, position): Promise<void> {
         return this.FADETOCOLOUR(from, to, position, null, 0xFFFFFF)
     }
 }
 
-function setNewProperties(sprite, position, scaleX) {
+const setNewProperties = (sprite, position, scaleX): void => {
     sprite.x = position.x;
     sprite.y = position.y;
     if (scaleX !== null && scaleX !== undefined) {

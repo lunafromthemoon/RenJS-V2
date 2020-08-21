@@ -1,4 +1,3 @@
-import _ from 'underscore'
 import {game} from "./RenJSBootstrap";
 import {RenJS, config} from "./RenJS";
 
@@ -15,24 +14,28 @@ export function AudioManager(){
     }
 
     this.isMusic = function(actor){
-        return _.has(this.musicList,actor);
+        return actor in this.musicList
     }
 
     this.isSfx = function(actor){
-        return _.has(this.sfx,actor);
+        return actor in this.sfx
     }
 
     this.init = function(callback){
-        var audioList = [];
-        _.each(RenJS.setup.music,function(filename,key){
-            this.musicList[key] = game.add.audio(key);
-            audioList.push(this.musicList[key]);
-        },this);
+        const audioList = [];
+        if (RenJS.setup.music){
+            Object.keys(RenJS.setup.music).forEach(key => {
+                this.musicList[key] = game.add.audio(key);
+                audioList.push(this.musicList[key]);
+            },this);
+        }
+        if (RenJS.setup.sfx){
+            Object.keys(RenJS.setup.sfx).forEach(key => {
+                this.sfx[key] = game.add.audio(key);
+                audioList.push(this.sfx[key]);
+            },this);
+        }
 
-        _.each(RenJS.setup.sfx,function(filename,key){
-            this.sfx[key] = game.add.audio(key);
-            audioList.push(this.sfx[key]);
-        },this);
         game.sound.setDecodedCallback(audioList, function(){
             this.audioLoaded = true;
             callback();

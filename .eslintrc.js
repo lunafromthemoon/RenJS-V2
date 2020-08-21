@@ -6,7 +6,7 @@ It represents the closest reasonable ESLint configuration to this
 project's original TSLint configuration.
 
 We recommend eventually switching this configuration to extend from
-the recommended rulesets in typescript-eslint. 
+the recommended rulesets in typescript-eslint.
 https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FAQs.md
 
 Happy linting! 💖
@@ -22,13 +22,12 @@ module.exports = {
         // "standard-with-typescript"
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": "tsconfig.json",
-        "sourceType": "module"
-    },
+    // "parserOptions": {
+    //     "project": "tsconfig.json",
+    //     "sourceType": "module"
+    // },
     "plugins": [
         "@typescript-eslint",
-        "prefer-arrow",
         "import",
         "node",
         "promise",
@@ -41,6 +40,8 @@ module.exports = {
                 "default": "array"
             }
         ],
+        "@typescript-eslint/require-await": "off",
+        "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/ban-types": [
             "error",
             {
@@ -66,6 +67,7 @@ module.exports = {
                 }
             }
         ],
+        "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/dot-notation": "error",
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/naming-convention": "error",
@@ -94,7 +96,7 @@ module.exports = {
             "error",
             "smart"
         ],
-        "guard-for-in": "error",
+        "guard-for-in": "off",
         "id-blacklist": [
             "error",
             "any",
@@ -141,7 +143,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "prefer-arrow/prefer-arrow-functions": "warn",
+        "prefer-arrow/prefer-arrow-functions": "off",
         "radix": "error",
         "spaced-comment": [
             "error",

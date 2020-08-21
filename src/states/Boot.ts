@@ -5,7 +5,7 @@ import RJSState from '../RJSState';
 import Preload from './Preload';
 
 class Boot extends RJSState {
-    init() {
+    init(): void {
         if (this.game.config.i18n){
             return;
         }
@@ -17,7 +17,7 @@ class Boot extends RJSState {
         this.game.scale.refresh();
     }
 
-    preload() {
+    preload(): void {
         this.game.load.image('splash',  preparePath(this.game.config.splash.loadingScreen, this.game));
         if (this.game.config.splash.loadingBar) {
             if (this.game.config.splash.loadingBar.fullBar){
@@ -31,7 +31,7 @@ class Boot extends RJSState {
         }
     }
 
-    create () {
+    create (): void {
         this.game.state.add('preload', Preload);
         this.game.state.start('preload');
     }

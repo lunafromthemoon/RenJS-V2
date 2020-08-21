@@ -17,11 +17,11 @@ export default class Effects implements RJSScreenEffectInterface {
         this.tweenManager = game.RJS.managers.tween
     }
 
-    async SHAKE() {
+    async SHAKE(): Promise<void> {
         this.game.camera.shake(0.01, 200);
     }
 
-    async ROLLINGCREDITS(params) {
+    async ROLLINGCREDITS(params): Promise<void> {
         const bg = this.game.add.graphics(0, 0);
         this.audioManager.play('rollingCredits', 'bgm', true, 'FADE');
         bg.beginFill(0x000000, 1);
@@ -61,7 +61,7 @@ export default class Effects implements RJSScreenEffectInterface {
         this.tweenManager.chain(tweenChain);
     }
 
-    async SHOWTITLE(param) {
+    async SHOWTITLE(param): Promise<void> {
         const bg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'title');
         bg.anchor.set(0.5);
         const style = {...this.game.defaultValues.defaultTextStyle, ...this.gui.getChoiceTextStyle()};
@@ -79,7 +79,7 @@ export default class Effects implements RJSScreenEffectInterface {
         this.tweenManager.chain([
             {sprite: bg, tweenables: {alpha: 1}},
             {
-                sprite: bg, tweenables: {alpha: 0}, callback: function () {
+                sprite: bg, tweenables: {alpha: 0}, callback: (): void => {
                     bg.destroy();
                 }, delay: this.game.defaultValues.fadetime * 2
             }
@@ -87,7 +87,7 @@ export default class Effects implements RJSScreenEffectInterface {
 
     }
 
-    async FLASHIMAGE(imageName: string) {
+    async FLASHIMAGE(imageName: string): Promise<void> {
         const image = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, imageName);
         image.anchor.set(0.5);
         setTimeout(() => {
@@ -100,11 +100,11 @@ export default class Effects implements RJSScreenEffectInterface {
         }, this.game.defaultValues.fadetime / 3);
     }
 
-    async EXPLOSION() {
+    async EXPLOSION(): Promise<void> {
         const explosion = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'explosion');
         explosion.anchor.set(0.5);
         // let added
-        let anim = explosion.animations.add('explode');
+        const anim = explosion.animations.add('explode');
         anim.onComplete.add(() => {
             return;
         });
@@ -112,29 +112,29 @@ export default class Effects implements RJSScreenEffectInterface {
         this.audioManager.playSFX('explosionSound');
     }
 
-    async THUNDER() {
+    async THUNDER(): Promise<void> {
         this.game.camera.shake(0.01, 200);
-        this.audioManager.playSFX("thunderSFX");
-        return this.FLASHIMAGE("thunder");
+        this.audioManager.playSFX('thunderSFX');
+        return this.FLASHIMAGE('thunder');
     }
 
-    async ATTACK() {
+    async ATTACK(): Promise<void> {
         this.game.camera.shake(0.01, 200);
-        return this.FLASHIMAGE("attack");
+        return this.FLASHIMAGE('attack');
     }
 
-    async MULTIATTACK() {
-        this.audioManager.playSFX("magical");
+    async MULTIATTACK(): Promise<void> {
+        this.audioManager.playSFX('magical');
         this.game.camera.shake(0.01, 600);
-        return this.FLASHIMAGE("multiattack");
+        return this.FLASHIMAGE('multiattack');
     }
 
-    async CHAINATTACK() {
+    async CHAINATTACK(): Promise<void> {
         this.game.camera.shake(0.01, 200);
-        await this.FLASHIMAGE("chainattack1")
+        await this.FLASHIMAGE('chainattack1')
         this.game.camera.shake(0.01, 200);
-        await this.FLASHIMAGE("chainattack2")
+        await this.FLASHIMAGE('chainattack2')
         this.game.camera.shake(0.01, 200);
-        await this.FLASHIMAGE("chainattack3")
+        await this.FLASHIMAGE('chainattack3')
     }
 }

@@ -1,8 +1,8 @@
-import RJSScreenEffectInterface from "./RJSScreenEffect";
-import RJSGame from "../RJSGame";
-import { AudioManagerInterface } from "../managers/AudioManager";
-import {StoryManagerInterface} from "../managers/StoryManager";
-import {Animation, Sprite} from "phaser-ce";
+import RJSScreenEffectInterface from './RJSScreenEffect';
+import RJSGame from '../RJSGame';
+import { AudioManagerInterface } from '../managers/AudioManager';
+import {StoryManagerInterface} from '../managers/StoryManager';
+import {Animation, Group, Sprite} from 'phaser-ce';
 import Emitter = Phaser.Particles.Arcade.Emitter;
 
 export default class Ambient implements RJSScreenEffectInterface {
@@ -16,7 +16,7 @@ export default class Ambient implements RJSScreenEffectInterface {
 
     private game: RJSGame
     private audioManager: AudioManagerInterface
-    private storyManager: StoryManagerInterface
+    private storyManager: StoryManagerInterface<Group>
 
     constructor(game: RJSGame) {
         this.game = game
@@ -24,7 +24,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         this.storyManager = game.RJS.managers.story
     }
 
-    addEmitter (options){
+    addEmitter (options): number {
         const emitter = this.game.add.emitter(this.game.world.centerX, -32, options.maxParticles);
         emitter.width = this.game.world.width * 1.5;
         emitter.makeParticles(options.sprite, options.frames);
@@ -48,11 +48,11 @@ export default class Ambient implements RJSScreenEffectInterface {
         return this.emitters.push(emitter);
     }
 
-    BGS (sound: string) {
-        this.audioManager.play(sound, "bgs", true, "FADE");
+    BGS (sound: string): void {
+        this.audioManager.play(sound, 'bgs', true, 'FADE');
     }
 
-    CLEAR (){
+    CLEAR (): void {
         if (this.maxLifespan){
             this.emitters.forEach( emitter => emitter.on = false);
             setTimeout(() => {
@@ -67,24 +67,24 @@ export default class Ambient implements RJSScreenEffectInterface {
         }
         this.clearFunctions.forEach(func => func())
         this.clearFunctions = [];
-        this.audioManager.stop("bgs","FADE");
+        this.audioManager.stop('bgs','FADE');
     }
 
-    STATIC () {
+    STATIC (): void {
         const staticGroup: Sprite = this.storyManager.behindCharactersSprites.create(this.game.world.centerX, this.game.world.centerY, 'static');
         staticGroup.anchor.set(0.5);
         staticGroup.scale.set(2.5);
         this.animation = staticGroup.animations.add('static')
-        this.audioManager.play("staticSound","bgs",true,"CUT");
+        this.audioManager.play('staticSound','bgs',true,'CUT');
         this.animation.play(10, true,true);
         this.spriteParent = staticGroup;
     }
 
-    RAIN () {
-        this.audioManager.play("rain","bgs",true,"FADE");
+    RAIN (): void {
+        this.audioManager.play('rain','bgs',true,'FADE');
         this.addEmitter({
             maxParticles: 400,
-            sprite:"rain",
+            sprite:'rain',
             frames: [0],
             scale: [0.1,0.5],
             speed: {y:[300,500],x:[-5,5]},
@@ -95,10 +95,10 @@ export default class Ambient implements RJSScreenEffectInterface {
         this.maxLifespan = 1600;
     }
 
-    SAKURA () {
+    SAKURA (): void {
         this.addEmitter({
             maxParticles: 200,
-            sprite:"sakura",
+            sprite:'sakura',
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.2,0.6],
             speed: {y:[20,100],x:[120,150]},
@@ -108,7 +108,7 @@ export default class Ambient implements RJSScreenEffectInterface {
 
         this.addEmitter({
             maxParticles: 150,
-            sprite:"sakura",
+            sprite:'sakura',
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.8,1.2],
             speed: {y:[50,150],x:[100,120]},
@@ -119,7 +119,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         this.maxLifespan = 6000;
     }
 
-    BADTRIP () {
+    BADTRIP (): void {
         this.drugsFlag = 2;
     }
 
@@ -192,10 +192,10 @@ export default class Ambient implements RJSScreenEffectInterface {
     //     });
     // }
 
-    SNOW () {
+    SNOW (): void {
         this.addEmitter({
             maxParticles: 200,
-            sprite:"snowflakes",
+            sprite:'snowflakes',
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.2,0.6],
             speed: {y:[20,100]},
@@ -205,7 +205,7 @@ export default class Ambient implements RJSScreenEffectInterface {
 
         this.addEmitter({
             maxParticles: 150,
-            sprite:"snowflakes",
+            sprite:'snowflakes',
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.8,1.2],
             speed: {y:[50,150]},
@@ -214,7 +214,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         });
         this.addEmitter({
             maxParticles: 150,
-            sprite:"snowflakes_large",
+            sprite:'snowflakes_large',
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.5,1],
             speed: {y:[100,200]},

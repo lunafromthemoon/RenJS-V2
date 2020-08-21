@@ -13,14 +13,14 @@ class Preload extends RJSState {
     loadingBar: Phaser.Sprite
 
 
-    init() {
+    init(): void {
         this.splash = initSplash(this.game)
         if (this.game.config.splash.loadingBar) {
             this.loadingBar = initLoadingBar(this.game)
         }
     }
 
-    preload () {
+    preload (): void {
         this.load.setPreloadSprite(this.loadingBar);
         loadStyle(preparePath(this.game.config.fonts, this.game));
         this.game.load.text('guiConfig', preparePath(this.game.config.guiConfig, this.game));
@@ -30,7 +30,7 @@ class Preload extends RJSState {
         }
     }
 
-    create () {
+    create (): void {
         // load the setup
         this.game.RJS.setup = jsyaml.load(this.game.cache.getText('storySetup'));
         // load the story text

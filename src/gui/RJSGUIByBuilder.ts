@@ -1,17 +1,17 @@
 import {RJSGUI} from './RJSGUI';
 
 export interface RJSGUIByBuilderInterface extends RJSGUI {
-    changeMenu(menu)
-    createChoiceBox(choice, pos, index, choiceConfig, execId)
-    setTextPosition(sprite, text, component)
-    loadGeneralComponents(menuConfig, menu)
-    loadButton(component, menu)
-    loadSlider(component, menu)
-    addThumbnail(thumbnail, slot)
-    loadSaveSlot(component, menu)
-    loadThumbnail(thumbnail,parent)
-    loadComponent(type, component, menu)
-    buttonsAction: object
+    changeMenu(menu);
+    createChoiceBox(choice, pos, index, choiceConfig, execId);
+    setTextPosition(sprite, text, component);
+    loadGeneralComponents(menuConfig, menu);
+    loadButton(component, menu);
+    loadSlider(component, menu);
+    addThumbnail(thumbnail, slot);
+    loadSaveSlot(component, menu);
+    loadThumbnail(thumbnail,parent);
+    loadComponent(type, component, menu);
+    buttonsAction: object;
 }
 // todo to impl
 export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface {
@@ -105,6 +105,12 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface {
     }
 
     setTextPosition(sprite, text, component) {
+    }
+
+    getChosenOptionColor() {
+        // eslint-disable-next-line no-bitwise
+        return (parseInt(this.gui.config.hud.choice['chosen-color'].substr(1), 16) << 8) / 256;
+
     }
 
 }
