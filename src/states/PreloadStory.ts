@@ -1,6 +1,6 @@
 import {initLoadingBar, initSplash, preparePath} from './utils';
 import RJSState from '../RJSState';
-import {GUIAssets} from '../gui/RJSBuilderMadeGUI';
+import {GUIAssets} from '../gui/Assets';
 
 class PreloadStory extends RJSState {
     splash: Phaser.Sprite

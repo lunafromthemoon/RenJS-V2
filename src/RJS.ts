@@ -1,6 +1,7 @@
+import 'pixi'
+import 'p2'
+import Phaser, {Game, Graphics} from 'phaser-ce';
 import RJSControl from './RJSControl';
-import {Graphics} from 'phaser-ce';
-import RJSGame from './RJSGame';
 import BackgroundManager from './managers/BackgroundManager';
 import CharacterManager from './managers/CharacterManager';
 import AudioManager from './managers/AudioManager';
@@ -13,10 +14,13 @@ import Ambient from './screen-effects/Ambient';
 import Effects from './screen-effects/Effects';
 import Transition from './screen-effects/Transition';
 import {RJSGUI} from './gui/RJSGUI';
+import {RJSGameConfig} from './RJSGameConfig';
+import {defaults} from './Defaults';
+import Boot from './states/Boot';
+import LanguageChooser from './states/LanguageChooser';
 
-class RJS {
+class RJS extends Game {
 
-    game: RJSGame
     gameStarted = false
     control: RJSControl
     xShots = []
@@ -24,6 +28,10 @@ class RJS {
     setup: any
     story: object
     gui: RJSGUI
+
+    config: RJSGameConfig
+    RJS: RJS
+    defaultValues = {...defaults}
 
     managers: {
         background: BackgroundManager;
@@ -42,8 +50,22 @@ class RJS {
         transition: Transition;
     }
 
-    constructor(game: RJSGame) {
-        this.game = game
+    constructor(config: RJSGameConfig) {
+        super()
+        this.config = config
+        this.initScreenEffects()
+        this.initManagers()
+    }
+
+    launch (): void {
+        this.preserveDrawingBuffer = true;
+        this.state.add('bootstrap', Boot)
+        if (this.config.i18n){
+            this.state.add('chooseLang', LanguageChooser);
+            this.state.start('chooseLang');
+        } else {
+            this.state.start('bootstrap');
+        }
     }
 
     pause (): void {
@@ -57,7 +79,7 @@ class RJS {
 
     takeXShot (): void {
         if (!this.xShots) this.xShots = [];
-        this.xShots.push(this.game.canvas.toDataURL());
+        this.xShots.push(this.canvas.toDataURL());
     }
 
     unpause (force?): void{
@@ -72,15 +94,15 @@ class RJS {
     }
 
     setBlackOverlay (): void {
-        this.blackOverlay = this.game.add.graphics(0, 0);
+        this.blackOverlay = this.add.graphics(0, 0);
         this.blackOverlay.beginFill(0x000000, 1);
-        this.blackOverlay.drawRect(0, 0, this.game.config.w, this.game.config.h);
+        this.blackOverlay.drawRect(0, 0, this.config.w, this.config.h);
         this.blackOverlay.endFill();
     }
 
     removeBlackOverlay (): void {
         if (this.blackOverlay){
-            const tween = this.game.add.tween(this.blackOverlay);
+            const tween = this.add.tween(this.blackOverlay);
             tween.onComplete.addOnce(() => {
                 this.blackOverlay.destroy();
                 this.blackOverlay = null;
@@ -102,7 +124,7 @@ class RJS {
     }
 
     skip (): void {
-        this.game.defaultValues.skiptime = 50;
+        this.defaultValues.skiptime = 50;
         this.control.skipping = true;
         if (this.control.waitForClick){
             this.control.waitForClick = false;
@@ -111,7 +133,7 @@ class RJS {
     }
 
     auto (): void {
-        this.game.defaultValues.skiptime = 1000;
+        this.defaultValues.skiptime = 1000;
         this.control.auto = true;
         if (this.control.waitForClick){
             this.control.nextAction()
@@ -142,27 +164,27 @@ class RJS {
         // Save choices log
         const log = JSON.stringify(this.managers.logic.choicesLog);
 
-        localStorage.setItem('RenJSChoiceLog' + this.game.config.name,log);
-        localStorage.setItem('RenJSDATA' + this.game.config.name + slot,dataSerialized);
+        localStorage.setItem('RenJSChoiceLog' + this.config.name,log);
+        localStorage.setItem('RenJSDATA' + this.config.name + slot,dataSerialized);
 
 
         if (this.gui.addThumbnail && this.xShots && this.xShots.length) {
             const thumbnail = this.xShots[this.xShots.length-1];
             this.gui.addThumbnail(thumbnail, slot)
-            localStorage.setItem('RenJSThumbnail' + this.game.config.name + slot,thumbnail);
+            localStorage.setItem('RenJSThumbnail' + this.config.name + slot,thumbnail);
         }
 
     }
 
     getSlotThumbnail (slot): string {
-        return localStorage.getItem('RenJSThumbnail' + this.game.defaultValues.name + slot)
+        return localStorage.getItem('RenJSThumbnail' + this.defaultValues.name + slot)
     }
 
-    async load (slot): Promise<void> {
+    async loadSlot (slot): Promise<void> {
         if (!slot){
             slot = 0;
         }
-        const data = localStorage.getItem('RenJSDATA' + this.game.defaultValues.name + slot);
+        const data = localStorage.getItem('RenJSDATA' + this.defaultValues.name + slot);
         if (!data){
             this.start();
             return;
@@ -171,7 +193,7 @@ class RJS {
         this.setBlackOverlay();
         // RenJS.transitions.FADETOCOLOUROVERLAY(0x000000);
         this.managers.background.set(dataParsed.background);
-        this.managers.character.set(dataParsed.characters);
+        await this.managers.character.set(dataParsed.characters);
         this.managers.audio.set(dataParsed.audio);
         await this.managers.cgs.set(dataParsed.cgs);
         this.managers.logic.set(dataParsed.vars);
@@ -207,25 +229,25 @@ class RJS {
         this.unpause(true);
     }
 
-    waitForClick (callback): void {
+    waitForClick (callback?): void {
         this.control.nextAction = callback ? callback : this.resolve;
         if (this.control.skipping || this.control.auto){
             setTimeout(() => {
                 this.control.nextAction();
-            }, this.game.defaultValues.skiptime);
+            }, this.defaultValues.skiptime);
         } else {
             this.control.waitForClick = true;
         }
     }
 
-    waitTimeout (time,callback): void {
+    waitTimeout (time, callback?): void {
         this.control.nextAction = callback ? callback : this.resolve;
         if (this.control.skipping){
             this.control.nextAction();
         } else {
             setTimeout( () => {
                 this.control.nextAction();
-            },time ? time : this.game.defaultValues.timeout);
+            },time ? time : this.defaultValues.timeout);
         }
     }
 
@@ -235,10 +257,10 @@ class RJS {
         setTimeout(() => {
             this.control.waitForClick = false;
             this.control.nextAction();
-        },time ? time : this.game.defaultValues.timeout);
+        },time ? time : this.defaultValues.timeout);
     }
 
-    onTap (pointer, doubleTap): void {
+    onTap (pointer, doubleTap?): void {
 
         if (this.control.paused){
             return;
@@ -260,7 +282,7 @@ class RJS {
 
     initInput(): void {
         // adds the control input
-        this.game.input.onTap.add(this.onTap, this);
+        this.input.onTap.add(this.onTap, this);
     }
 
     lockClick(): void {
@@ -294,6 +316,23 @@ class RJS {
             }
         },
         interruptAction: null
+    }
+
+    initScreenEffects (): void {
+        this.screenEffects.transition = new Transition(this)
+        this.screenEffects.ambient = new Ambient(this)
+        this.screenEffects.effects = new Effects(this)
+    }
+
+    initManagers (): void {
+        this.managers.background = new BackgroundManager(this, this.screenEffects.transition)
+        this.managers.tween = new TweenManager(this)
+        this.managers.story = new StoryManager(this)
+        this.managers.audio = new AudioManager(this)
+        this.managers.logic = new LogicManager(this)
+        this.managers.text = new TextManager(this)
+        this.managers.character = new CharacterManager(this, this.screenEffects.transition)
+        this.managers.cgs = new CGSManager(this)
     }
 }
 

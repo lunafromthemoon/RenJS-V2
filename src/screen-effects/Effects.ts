@@ -1,17 +1,17 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
-import RJSGame from '../RJSGame';
 import {AudioManagerInterface} from '../managers/AudioManager';
 import {TweenManagerInterface} from '../managers/TweenManager';
+import RJS from '../RJS';
 
 export default class Effects implements RJSScreenEffectInterface {
 
-    private game: RJSGame
+    private game: RJS
     private audioManager: AudioManagerInterface
     private tweenManager: TweenManagerInterface
     // todo impl gui
     private gui: any
 
-    constructor(game: RJSGame) {
+    constructor(game: RJS) {
         this.game = game
         this.audioManager = game.RJS.managers.audio
         this.tweenManager = game.RJS.managers.tween

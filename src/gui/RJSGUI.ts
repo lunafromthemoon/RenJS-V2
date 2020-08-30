@@ -8,7 +8,7 @@ export interface RJSGUI {
     hideHUD();
     initMenu(name: string, menu);
     showMenu(menu);
-    hideMenu(menu);
+    // hideMenu(menu);
     showChoices(choices, execId);
     hideChoice(choiceId);
     hideChoices();

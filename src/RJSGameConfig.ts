@@ -1,5 +1,6 @@
 import {IGameConfig} from 'phaser-ce';
 
+// eslint-disable-next-line @typescript-eslint/class-name-casing
 export interface i18nInterface {
     langs: string[];
     path: string;

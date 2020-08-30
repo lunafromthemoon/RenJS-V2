@@ -25,6 +25,7 @@ interface RJSControlInterface {
     auto: boolean;
     clickCooldown: number;
     wholeAction: any;
+    action?: any;
 }
 
 export default class RJSControl implements RJSControlInterface {
@@ -48,4 +49,5 @@ export default class RJSControl implements RJSControlInterface {
     nextAction = null
     resolve = null
     wholeAction: any;
+    action = null;
 }

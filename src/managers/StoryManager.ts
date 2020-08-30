@@ -1,6 +1,6 @@
 import RJSManager from './RJSManager';
 import {Group} from 'phaser-ce';
-import RJSGame from '../RJSGame';
+import RJS from '../RJS';
 
 export interface StoryManagerInterface<T> extends RJSManager {
     behindCharactersSprites: T;
@@ -22,9 +22,9 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     currentScene: any[];
     backgroundSprites: Group
 
-    private game: RJSGame
+    private game: RJS
 
-    constructor(game: RJSGame) {
+    constructor(game: RJS) {
         this.game = game
     }
 
@@ -97,6 +97,14 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         return 'cgs';
     }
 
+    getManagerByActorType (type: string): RJSManager {
+        switch (type) {
+            case 'ch': return this.game.RJS.managers.character
+            case 'bg': return this.game.RJS.managers.background
+            case 'cgs': return this.game.RJS.managers.cgs
+        }
+    }
+
     async interpretAction(action): Promise<any> {
         const actionParams = {
             withTransition: ['show','hide','play','stop'],
@@ -107,144 +115,139 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             return Object.keys(act)[0];
         }
 
-        RenJS.control.resolve = resolve;
+        // this.game.RJS.control.resolve = resolve;
         const key = getKey(action);
         const keyParams = key.split(' ');
         let mainAction; let actor;
-        if (keyParams[1] == 'says') {
+        if (keyParams[1] === 'says') {
             mainAction = 'say';
             actor = keyParams[0];
         } else {
             mainAction = keyParams[0];
             actor = keyParams[1];
         }
-        const actorType = RenJS.storyManager.getActorType(actor);
+        const actorType = this.getActorType(actor);
         // parse WITH and AT
         const params = action[key];
         if (actionParams.withTransition.includes(mainAction)){
-            var str = params ? params.split(' ') : [];
-            if (str.indexOf('WITH')!=-1){
-                action.transitionName = str[str.indexOf('WITH')+1];
+            const str = params ? params.split(' ') : [];
+            if (str.indexOf('WITH') !== -1){
+                action.transitionName = str[str.indexOf('WITH') +1];
             } else {
-                action.transitionName = config.transitions[actorType];
+                action.transitionName = this.game.defaultValues.transitions[actorType];
             }
-            action.transition = RenJS.transitions[action.transitionName];
+            action.transition = this.game.defaultValues.transitions[action.transitionName];
         }
         if (params && actionParams.withPosition.includes(mainAction)){
-            var str = params ? params.split(' ') : [];
-            if (str.indexOf('AT')!=-1){
+            const str = params ? params.split(' ') : [];
+            if (str.indexOf('AT') !== -1){
                 action.position = str[str.indexOf('AT')+1];
-                if (action.position in config.positions){
-                    action.position = config.positions[action.position];
+                if (action.position in this.game.defaultValues.positions){
+                    action.position = this.game.defaultValues.positions[action.position];
                 } else {
                     const coords = action.position.split(',');
-                    action.position = {x:parseInt(coords[0]),y:parseInt(coords[1])};
+                    action.position = {x:parseInt(coords[0], 10),y:parseInt(coords[1], 10)};
                 }
             }
-            if (str.length>0 && str[0]!='AT' && str[0]!='WITH'){
+            if (str.length>0 && str[0] !== 'AT' && str[0] !== 'WITH'){
                 action.look = str[0];
             }
         }
         let contAfterTrans = false;
         if (params && actionParams.withContinue.includes(mainAction)){
-            var str = params ? params.split(' ') : [];
-            contAfterTrans = str.indexOf('CONTINUE')!=-1
+            const str = params ? params.split(' ') : [];
+            contAfterTrans = str.indexOf('CONTINUE') !== -1
         }
-        action.manager = RenJS[actorType+'Manager'];
-        RenJS.control.action = mainAction;
-        RenJS.control.wholeAction = params;
-        RenJS.control.nextAction = null;
-        console.log('Doing '+RenJS.control.action);
-        switch(RenJS.control.action){
+        action.manager = this.getManagerByActorType(actorType);
+        // RenJS.control.action = mainAction;
+        this.game.RJS.control.action = mainAction
+        this.game.RJS.control.wholeAction = params;
+        this.game.RJS.control.nextAction = null;
+        // console.log('Doing '+RenJS.control.action);
+        switch(this.game.RJS.control.action){
             // Asnyc actions, will resolve after some actions
             case 'show' :
-                var transitioning = action.manager.show(actor,action.transition,action);
-                if (!contAfterTrans) return transitioning.then(RenJS.resolve);
+                if (!contAfterTrans) return action.manager.show(actor, action.transition, action);
                 break;
             case 'hide' :
-                if (actor == 'CHARS'){
-                    return RenJS.chManager.hideAll(action.transition).then(RenJS.resolve);
+                if (actor === 'CHARS') {
+                    return this.game.RJS.managers.character.hideAll(action.transition)
                 }
-                if (actor == 'ALL'){
-                    const promises = [RenJS.bgManager.hide(),RenJS.chManager.hideAll(),RenJS.cgsManager.hideAll()];
-                    return Promise.all(promises).then(RenJS.resolve);
+                if (actor === 'ALL') {
+                    return Promise.all([this.game.RJS.managers.background.hide(), this.game.RJS.managers.character.hideAll(), this.game.RJS.managers.cgs.hideAll()]);
                 }
-                var transitioning = action.manager.hide(actor,action.transition);
-                if (!contAfterTrans) return transitioning.then(RenJS.resolve);
+                if (!contAfterTrans) return action.manager.hide(actor, action.transition);
                 break;
             case 'animate' :
-                var transitioning = RenJS.cgsManager.animate(actor,action,action.time);
-                if (!contAfterTrans) return transitioning.then(RenJS.resolve);
+                if (!contAfterTrans) return this.game.RJS.managers.cgs.animate(actor, action, action.time);
                 break;
             case 'effect' :
-                var transitioning = RenJS.effects[actor](action);
-                if (!contAfterTrans) return transitioning.then(RenJS.resolve);
+                if (!contAfterTrans) return this.game.RJS.screenEffects.effects[actor](action);
                 break;
             case 'say' :
-                var look = (keyParams.length > 2) ? keyParams[2] : null;
-                return RenJS.textManager.say(actor,look,params).then(RenJS.resolve);
+                const look = (keyParams.length > 2) ? keyParams[2] : null;
+                return this.game.RJS.managers.text.say(actor, look, params)
             case 'text' :
-                return RenJS.textManager.show(params).then(RenJS.resolve);
+                return this.game.RJS.managers.text.show(params);
             // Wait for user action input, will resolve on its own
             case 'wait' :
-                if (params == 'click'){
-                    RenJS.waitForClick();
+                if (params === 'click'){
+                    this.game.RJS.waitForClick();
                 } else {
-                    RenJS.waitTimeout(parseInt(params));
+                    this.game.RJS.waitTimeout(parseInt(params, 10));
                 }
                 return;
-            case 'call' :
-                return RenJS.customContent[actor](params);
+                // todo impl
+            // case 'call' :
+            //     return this.game.RJS..customContent[actor](params);
             case 'choice' :
-                RenJS.control.skipping = false;
-                return RenJS.logicManager.showChoices([...params]);
+                this.game.RJS.control.skipping = false;
+                return this.game.RJS.managers.logic.showChoices([...params]);
             case 'visualchoice' :
-                RenJS.control.skipping = false;
-                return RenJS.logicManager.showVisualChoices([...params]);
+                this.game.RJS.control.skipping = false;
+                return this.game.RJS.managers.logic.showVisualChoices([...params]);
 
             // Synch actions, will resolve after case
             case 'interrupt' :
-                RenJS.logicManager.interrupt(actor,[...params]);
+                this.game.RJS.managers.logic.interrupt(actor,[...params]);
                 break;
             case 'var' :
-                RenJS.logicManager.setVar(actor,params);
+                this.game.RJS.managers.logic.setVar(actor,params);
                 break;
             case 'if' :
-                var condition = key.substr(key.indexOf('('));
-                var branches = {
+                const condition = key.substr(key.indexOf('('));
+                const branches: {
+                    ISTRUE: boolean;
+                    ISFALSE?: boolean;
+                } = {
                     ISTRUE: action[key]
-                };
-                var next = RenJS.storyManager.currentScene[0];
-                if (next && getKey(next) == 'else'){
-                    branches.ISFALSE = next.else;
-                    RenJS.storyManager.currentScene.shift();
                 }
-                RenJS.logicManager.branch(condition,branches);
+                const next = this.game.RJS.managers.story.currentScene[0];
+                if (next && getKey(next) === 'else'){
+                    branches.ISFALSE = next.else;
+                    this.game.RJS.managers.story.currentScene.shift();
+                }
+                this.game.RJS.managers.logic.branch(condition, branches);
                 break;
             case 'else' :
                 break;
             case 'play' :
                 // debugger;
-                if (actorType == 'bgm'){
-                    RenJS.audioManager.play(actor, 'bgm', action.looped, action.transitionName);
+                if (actorType === 'bgm') {
+                    this.game.RJS.managers.audio.play(actor, 'bgm', action.looped, action.transitionName);
                 } else {
-                    RenJS.audioManager.playSFX(actor);
+                    this.game.RJS.managers.audio.playSFX(actor);
                 }
                 break;
             case 'stop' :
-                RenJS.audioManager.stop('bgm',action.transitionName);
+                this.game.RJS.managers.audio.stop('bgm', action.transitionName);
                 break;
             case 'ambient' :
-                RenJS.ambient[actor](action.sfx);
+                this.game.RJS.screenEffects.ambient[actor](action.sfx);
                 break;
             case 'scene' :
-                RenJS.storyManager.startScene(params);
+                this.game.RJS.managers.story.startScene(params);
                 break;
-
         }
     }
-
-
-
-
 }

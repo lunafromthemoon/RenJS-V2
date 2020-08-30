@@ -1,7 +1,7 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
-import RJSGame from '../RJSGame';
 import {TweenManagerInterface} from '../managers/TweenManager';
 import {Group} from 'phaser-ce';
+import RJS from '../RJS';
 
 
 export default class Transition implements RJSScreenEffectInterface {
@@ -15,10 +15,10 @@ export default class Transition implements RJSScreenEffectInterface {
     static FADETOCOLOUR = 'FADETOCOLOUR'
 
 
-    private game: RJSGame
+    private game: RJS
     private tweenManager: TweenManagerInterface
 
-    constructor(game: RJSGame) {
+    constructor(game: RJS) {
         this.game = game
         this.tweenManager = game.RJS.managers.tween
     }

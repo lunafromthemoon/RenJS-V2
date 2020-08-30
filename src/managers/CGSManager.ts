@@ -1,10 +1,10 @@
 import RJSManager from './RJSManager';
 import Transition from '../screen-effects/Transition';
-import RJSGame from '../RJSGame';
 import {StoryManagerInterface} from './StoryManager';
 import {range} from '../utils/array';
 import {TweenManagerInterface} from './TweenManager';
 import {Group} from 'phaser-ce';
+import RJS from '../RJS';
 
 export interface CGSManagerInterface extends RJSManager {
     cgs: object;
@@ -18,11 +18,11 @@ export default class CGSManager implements CGSManagerInterface {
     cgs: object;
     current: object;
     private transition: Transition
-    private game: RJSGame
+    private game: RJS
     private storyManager: StoryManagerInterface<Group>
     private tweenManager: TweenManagerInterface
 
-    constructor(game: RJSGame) {
+    constructor(game: RJS) {
         this.game = game
         this.transition = game.RJS.screenEffects.transition
         this.storyManager = game.RJS.managers.story
@@ -39,7 +39,7 @@ export default class CGSManager implements CGSManagerInterface {
         }
     }
 
-    async hideAll(transition: string): Promise<any> {
+    async hideAll(transition?: string): Promise<any> {
         if (!transition) transition = 'FADEOUT'
         const promises = []
         for (const cg in this.cgs) {

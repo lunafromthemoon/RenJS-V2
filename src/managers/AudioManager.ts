@@ -1,5 +1,5 @@
 import RJSManagerInterface from './RJSManager';
-import RJSGame from '../RJSGame';
+import RJS from '../RJS';
 
 export interface AudioManagerInterface extends RJSManagerInterface {
     play(key: string, type: string, looped: boolean, transition: string): void;
@@ -25,9 +25,9 @@ export default class AudioManager implements AudioManagerInterface {
     audioLoaded: boolean;
     musicList: object;
     sfx: object;
-    private game: RJSGame
+    private game: RJS
 
-    constructor(game: RJSGame) {
+    constructor(game: RJS) {
         this.game = game
     }
 

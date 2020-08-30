@@ -1,7 +1,7 @@
 import RJSManagerInterface from './RJSManager';
-import RJSGame from '../RJSGame';
 import {Group} from 'phaser-ce';
 import Transition from '../screen-effects/Transition';
+import RJS from '../RJS';
 
 export interface BackgroundManagerInterface<T> extends RJSManagerInterface {
     backgroundSprites: T;
@@ -19,7 +19,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     backgrounds = {};
     current = null;
 
-    constructor(private game: RJSGame, transition: Transition) {
+    constructor(private game: RJS, transition: Transition) {
         this.backgroundSprites = this.game.add.group()
         this.transition = transition
     }
@@ -46,7 +46,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         }
     }
 
-    show (name, transition): any {
+    async show (name, transition): Promise<any> {
         const oldBg = this.current;
         this.current = name ? this.backgrounds[name] : null;
         if (this.current.animated){
@@ -55,7 +55,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         return transition(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1, this.backgroundSprites);
     }
 
-    hide (bg,transition): any {
+    async hide (bg?, transition?): Promise<any> {
         return this.show(null,transition ? transition : this.transition.FADEOUT);
     }
 

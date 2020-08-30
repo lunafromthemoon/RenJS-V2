@@ -1,7 +1,7 @@
 import RJSManagerInterface from './RJSManager';
 import Transition from '../screen-effects/Transition';
 import Character from '../entities/Character';
-import RJSGame from '../RJSGame';
+import RJS from '../RJS';
 
 export interface CharacterManagerInterface extends RJSManagerInterface {
     characters: object;
@@ -20,9 +20,9 @@ export default class CharacterManager implements CharacterManagerInterface {
     characters: {};
     showing: {};
     private transition: Transition
-    private game: RJSGame
+    private game: RJS
 
-    constructor(game: RJSGame, transition: Transition) {
+    constructor(game: RJS, transition: Transition) {
         this.transition = transition
         this.game = game
     }

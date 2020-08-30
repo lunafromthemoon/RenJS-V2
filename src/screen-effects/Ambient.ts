@@ -1,9 +1,9 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
-import RJSGame from '../RJSGame';
 import { AudioManagerInterface } from '../managers/AudioManager';
 import {StoryManagerInterface} from '../managers/StoryManager';
 import {Animation, Group, Sprite} from 'phaser-ce';
 import Emitter = Phaser.Particles.Arcade.Emitter;
+import RJS from '../RJS';
 
 export default class Ambient implements RJSScreenEffectInterface {
     emitters: Emitter[]
@@ -14,11 +14,11 @@ export default class Ambient implements RJSScreenEffectInterface {
     drugsFlag: number
     // drugsState: number
 
-    private game: RJSGame
+    private game: RJS
     private audioManager: AudioManagerInterface
     private storyManager: StoryManagerInterface<Group>
 
-    constructor(game: RJSGame) {
+    constructor(game: RJS) {
         this.game = game
         this.audioManager = game.RJS.managers.audio
         this.storyManager = game.RJS.managers.story

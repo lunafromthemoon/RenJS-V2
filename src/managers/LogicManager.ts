@@ -1,6 +1,6 @@
 import RJSManager from './RJSManager';
 import {Group} from 'phaser-ce';
-import RJSGame from '../RJSGame';
+import RJS from '../RJS';
 
 export interface LogicManagerInterface<T> extends RJSManager {
     choicesLog: object;
@@ -16,9 +16,9 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     currentChoices: any[];
     interrupting: boolean;
     visualChoices: Group = null;
-    private game: RJSGame
+    private game: RJS
 
-    constructor(game: RJSGame) {
+    constructor(game: RJS) {
         this.game = game
     }
 
