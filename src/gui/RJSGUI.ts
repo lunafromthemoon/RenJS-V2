@@ -3,7 +3,7 @@ export interface RJSGUI {
     getFonts(argument?: any);
     init();
     getChoiceTextStyle();
-    initHUD();
+    initHUD(hudConfig: any);
     showHUD();
     hideHUD();
     initMenu(name: string, menu);
@@ -20,4 +20,6 @@ export interface RJSGUI {
     sliderValueChanged: object;
     addThumbnail?(thumbnail, slot);
     getChosenOptionColor?(): number;
+    textLoop?: any
+    ctc?: any
 }
