@@ -19,7 +19,7 @@ import {defaults} from './Defaults';
 import Boot from './states/Boot';
 import LanguageChooser from './states/LanguageChooser';
 
-class RJS extends Game {
+export default class RJS extends Game {
 
     gameStarted = false
     control: RJSControl
@@ -30,7 +30,6 @@ class RJS extends Game {
     gui: RJSGUI
 
     config: RJSGameConfig
-    RJS: RJS
     defaultValues = {...defaults}
 
     managers: {
@@ -52,6 +51,7 @@ class RJS extends Game {
 
     constructor(config: RJSGameConfig) {
         super()
+        this.control = new RJSControl(this.defaultValues)
         this.config = config
         this.initScreenEffects()
         this.initManagers()
@@ -335,5 +335,3 @@ class RJS extends Game {
         this.managers.cgs = new CGSManager(this)
     }
 }
-
-export default RJS

@@ -1,3 +1,4 @@
-public/
+public
 .idea
 node_modules
+dist

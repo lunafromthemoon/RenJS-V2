@@ -1,10 +1,15 @@
 import Phaser from 'phaser-ce';
 import {preparePath} from './utils';
-import RJSState from '../RJSState';
+import RJSState from './RJSState';
 
 import Preload from './Preload';
 
 class Boot extends RJSState {
+
+    constructor() {
+        super();
+    }
+
     init(): void {
         if (this.game.config.i18n){
             return;

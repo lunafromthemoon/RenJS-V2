@@ -1,8 +1,8 @@
-import RJSManager from './RJSManager';
 import {Group} from 'phaser-ce';
 import RJS from '../RJS';
+import RJSManagerInterface from './RJSManager';
 
-export interface LogicManagerInterface<T> extends RJSManager {
+export interface LogicManagerInterface<T> extends RJSManagerInterface {
     choicesLog: object;
     vars: object;
     currentChoices: any[];
@@ -60,12 +60,12 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             actions = branches.ISTRUE;
         }
         if (!val && branches.ISFALSE){
-            this.game.RJS.control.execStack[0].c++;
+            this.game.control.execStack[0].c++;
             actions = branches.ISFALSE;
         }
         if(actions){
-            this.game.RJS.managers.story.currentScene = actions.concat(this.game.RJS.managers.story.currentScene);
-            this.game.RJS.control.execStack.unshift({c:-1, total: actions.length, action: 'if'});
+            this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
+            this.game.control.execStack.unshift({c:-1, total: actions.length, action: 'if'});
         }
     }
 
@@ -123,8 +123,8 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             this.choose(index,key,execId);
         },this,0,0,0,0,this.visualChoices);
 
-        if (this.game.RJS.gui.getChosenOptionColor && this.choicesLog[execId].indexOf(key) !== -1){
-            button.tint = this.game.RJS.gui.getChosenOptionColor();
+        if (this.game.gui.getChosenOptionColor && this.choicesLog[execId].indexOf(key) !== -1){
+            button.tint = this.game.gui.getChosenOptionColor();
             // previously chosen choice
         }
         button.anchor.set(0.5);
@@ -137,22 +137,22 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
         if (chosenOption){
             const actions = this.currentChoices[index][chosenOption];
-            this.game.RJS.managers.story.currentScene = actions.concat(this.game.RJS.managers.story.currentScene);
-            this.game.RJS.control.execStack.unshift({c:-1, index, op: chosenOption, total:actions.length, action:'choice'});
+            this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
+            this.game.control.execStack.unshift({c:-1, index, op: chosenOption, total:actions.length, action:'choice'});
         }
         this.currentChoices = [];
         if (this.interrupting){
-            this.game.RJS.control.execStack[0].action = 'interrupt';
+            this.game.control.execStack[0].action = 'interrupt';
             this.interrupting = false;
         } else {
-            this.game.RJS.resolve();
+            this.game.resolve();
         }
     }
 
 
     getExecStackId(): string {
-        const cAction = this.game.RJS.control.execStack[this.game.RJS.control.execStack.length-1].c;
-        const cScene = this.game.RJS.control.execStack[this.game.RJS.control.execStack.length-1].scene;
+        const cAction = this.game.control.execStack[this.game.control.execStack.length-1].c;
+        const cScene = this.game.control.execStack[this.game.control.execStack.length-1].scene;
         return 'Scene:'+cScene+'|Action:'+cAction;
     }
 
@@ -162,7 +162,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // Update choice log
         const execId = this.getExecStackId();
         // END Update choice log
-        this.game.RJS.gui.showChoices(this.currentChoices,execId);
+        this.game.gui.showChoices(this.currentChoices,execId);
     }
 
     interrupt(steps, choices): any {
@@ -173,30 +173,30 @@ export default class LogicManager implements LogicManagerInterface<Group> {
                 choice.remainingSteps = s+1;
                 choice.interrupt = true;
             })
-            this.game.RJS.onInterpretActions.interruptAction = (): any => {
+            this.game.onInterpretActions.interruptAction = (): any => {
                 this.currentChoices = this.currentChoices.filter(choice => {
                     if (choice.remainingSteps) {
                         choice.remainingSteps--;
                         if (choice.remainingSteps === 1){
-                            this.game.RJS.gui.changeToLastInterrupt(choice.choiceId);
+                            this.game.gui.changeToLastInterrupt(choice.choiceId);
                         } else if (choice.remainingSteps === 0){
-                            this.game.RJS.gui.hideChoice(choice.choiceId);
+                            this.game.gui.hideChoice(choice.choiceId);
                             return false;
                         }
                     }
                     return true;
                 },this);
                 if (this.currentChoices.length === 0){
-                    delete this.game.RJS.onInterpretActions.interruptAction;
+                    delete this.game.onInterpretActions.interruptAction;
                 }
             }
         }
         this.showChoices(choices);
-        this.game.RJS.control.execStack[0].interrupting = this.game.RJS.control.execStack[0].c;
+        this.game.control.execStack[0].interrupting = this.game.control.execStack[0].c;
     }
 
     clearChoices(): any {
-        this.game.RJS.gui.hideChoices();
+        this.game.gui.hideChoices();
         this.currentChoices = [];
         this.interrupting = false;
         if (this.visualChoices){

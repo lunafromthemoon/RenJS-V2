@@ -1,4 +1,4 @@
-import RJSGame from './RJSGame';
+import RJS from './RJS';
 
 interface ExecItem {
     c: number;
@@ -29,21 +29,22 @@ interface RJSControlInterface {
 }
 
 export default class RJSControl implements RJSControlInterface {
-    private game: RJSGame
 
-    constructor(game: RJSGame) {
-        this.game = game
+    defaultValues: any
+
+    constructor(defaultValues: object) {
+        this.defaultValues = defaultValues
     }
 
     auto = false;
-    clickCooldown = this.game.defaultValues.clickCooldown;
+    clickCooldown = this.defaultValues.clickCooldown;
     clickLocked = false;
     execStack: ExecItem[] = [{c: -1}];
-    fadetime = this.game.defaultValues.fadetime;
+    fadetime = this.defaultValues.fadetime;
     globalCounter = 0;
     paused = false;
     skipping = false;
-    timeout = this.game.defaultValues.timeout;
+    timeout = this.defaultValues.timeout;
     waitForClick = false;
     doBeforeResolve = null
     nextAction = null

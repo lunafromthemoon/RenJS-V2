@@ -2,6 +2,7 @@ import RJSManagerInterface from './RJSManager';
 import Transition from '../screen-effects/Transition';
 import Character from '../entities/Character';
 import RJS from '../RJS';
+import {Sprite} from 'phaser-ce';
 
 export interface CharacterManagerInterface extends RJSManagerInterface {
     characters: object;
@@ -29,9 +30,19 @@ export default class CharacterManager implements CharacterManagerInterface {
 
     add (name, displayName, speechColour, looks): void {
         this.characters[name] = new Character(displayName,speechColour);
-        for (const look in looks){
+        for (const look in looks) {
             this.characters[name].addLook(look,name+'_'+look);
         }
+    }
+
+    addLook (character: Character, lookName, image): void {
+        const look: Sprite = this.game.managers.story.characterSprites.create(this.game.defaultValues.positions.CENTER.x, this.game.defaultValues.positions.CENTER.y,(image ? image : lookName));
+        look.anchor.set(0.5,1);
+        look.alpha = 0;
+        look.name = lookName;
+
+        character.addLook(look)
+
     }
 
     async set (showing): Promise<any> {
@@ -60,7 +71,7 @@ export default class CharacterManager implements CharacterManagerInterface {
             ch.lastScale = props.flipped ? -1 : 1;
         }
         this.showing[name] = {look: ch.currentLook.name,position:props.position,flipped:(ch.lastScale === -1)};
-        return transition(oldLook, ch.currentLook, props.position, ch.lastScale, this.game.RJS.managers.story.characterSprites);
+        return transition(oldLook, ch.currentLook, props.position, ch.lastScale, this.game.managers.story.characterSprites);
     }
 
     async hide(name, transition): Promise<any> {

@@ -1,6 +1,10 @@
-import RJSState from '../RJSState';
+import RJSState from './RJSState';
 
 export default class LanguageChooser extends RJSState {
+
+    constructor() {
+        super();
+    }
 
     preload() {
         for (let i = this.game.config.i18n.langs.length - 1; i >= 0; i--) {

@@ -92,14 +92,14 @@ export default class AudioManager implements AudioManagerInterface {
 
     init(cb): void {
         const audioList = [];
-        if (this.game.RJS.setup.music){
-            Object.keys(this.game.RJS.setup.music).forEach(key => {
+        if (this.game.setup.music){
+            Object.keys(this.game.setup.music).forEach(key => {
                 this.musicList[key] = this.game.add.audio(key);
                 audioList.push(this.musicList[key]);
             },this);
         }
-        if (this.game.RJS.setup.sfx){
-            Object.keys(this.game.RJS.setup.sfx).forEach(key => {
+        if (this.game.setup.sfx){
+            Object.keys(this.game.setup.sfx).forEach(key => {
                 this.sfx[key] = this.game.add.audio(key);
                 audioList.push(this.sfx[key]);
             });

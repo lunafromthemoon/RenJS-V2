@@ -1,8 +1,8 @@
-import RJSManager from './RJSManager';
 import {Tween} from 'phaser-ce';
 import RJS from '../RJS';
+import RJSManagerInterface from './RJSManager';
 
-export interface TweenManagerInterface extends RJSManager {
+export interface TweenManagerInterface extends RJSManagerInterface {
     tween (sprite, tweenables, callback, time: number, start: boolean, delay?: number);
     chain (tweens: any[], time?: number);
     unskippable: boolean;
@@ -15,7 +15,7 @@ export interface TweenManagerInterface extends RJSManager {
 export default class TweenManager implements TweenManagerInterface {
     unskippable: boolean
     current = []
-    game: RJS
+    private game: RJS
     callbackOnComplete: any
     tweenables: any;
 
@@ -33,13 +33,13 @@ export default class TweenManager implements TweenManagerInterface {
         }
         this.tweenables = tweenables;
         if (start){
-            this.game.RJS.managers.tween.current = [];
+            this.game.managers.tween.current = [];
             tween.start();
-            if (!this.game.RJS.control.auto) {
-                this.game.RJS.waitForClick(this.skip);
+            if (!this.game.control.auto) {
+                this.game.waitForClick(this.skip);
             }
         }
-        this.game.RJS.managers.tween.current.push(tween);
+        this.game.managers.tween.current.push(tween);
         // if (RenJS.control.skipping){
         //     this.skip();
         // }
@@ -59,8 +59,8 @@ export default class TweenManager implements TweenManagerInterface {
             lastTween = tween;
         });
         this.current[0].start();
-        if (!this.game.RJS.control.auto) {
-            this.game.RJS.waitForClick(this.skip);
+        if (!this.game.control.auto) {
+            this.game.waitForClick(this.skip);
         }
     }
 
@@ -70,8 +70,8 @@ export default class TweenManager implements TweenManagerInterface {
             const tween = this.tween(tw.sprite,tw.tweenables,tw.callback,time,false,tw.delay);
             tween.start();
         });
-        if (!this.game.RJS.control.auto) {
-            this.game.RJS.waitForClick(this.skip);
+        if (!this.game.control.auto) {
+            this.game.waitForClick(this.skip);
         }
     }
 

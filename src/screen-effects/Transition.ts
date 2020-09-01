@@ -20,7 +20,7 @@ export default class Transition implements RJSScreenEffectInterface {
 
     constructor(game: RJS) {
         this.game = game
-        this.tweenManager = game.RJS.managers.tween
+        this.tweenManager = game.managers.tween
     }
 
     async CUT(from, to, position, scaleX?): Promise<void> {

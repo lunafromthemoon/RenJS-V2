@@ -13,8 +13,8 @@ export default class Effects implements RJSScreenEffectInterface {
 
     constructor(game: RJS) {
         this.game = game
-        this.audioManager = game.RJS.managers.audio
-        this.tweenManager = game.RJS.managers.tween
+        this.audioManager = game.managers.audio
+        this.tweenManager = game.managers.tween
     }
 
     async SHAKE(): Promise<void> {

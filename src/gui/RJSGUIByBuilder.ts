@@ -26,11 +26,10 @@ export interface RJSGUIByBuilderInterface<T, TSprite> extends RJSGUI {
     nameBox: TSprite
     interrupts: T
     previousMenu: any
+    saveSlots: any
 }
 // todo to impl
 export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, Sprite> {
-    sliderValueChanged: object;
-    buttonsAction: object;
     gui: any
     currentMusic = null
     choices: Group
@@ -45,6 +44,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     nameBox: Sprite
     skipClickArea = []
     previousMenu = null
+    saveSlots = {}
 
     textLoop = null
 
@@ -109,7 +109,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
         this.hud.visible = false;
     }
 
-    hideMenu(menu, mute, callback): void {
+    hideMenu(menu, mute, callback?): void {
         if (!menu){
             menu = this.currentMenu;
         }
@@ -303,30 +303,170 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     }
 
     changeMenu(menu) {
+        const previous = this.currentMenu;
+        if (previous){
+            if (menu) {
+                // hide previous menu and show this
+                this.hideMenu(previous,this.gui.config[menu].backgroundMusic,function() {
+                    // console.log('here')
+                    this.showMenu(menu);
+                    this.previousMenu = previous;
+                }.bind(this));
+                return
+            } else {
+                // just hide menu
+                this.hideMenu(previous,true);
+            }
+        }
+        if (menu){
+            this.showMenu(menu);
+        }
     }
 
     createChoiceBox(choice, pos, index, choiceConfig, execId) {
+        const separation = index*(parseInt(choiceConfig.height)+parseInt(choiceConfig.separation));
+        const chBox = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
+            if (choiceConfig.sfx && choiceConfig.sfx != 'none') {
+                const sfx = this.game.add.audio(choiceConfig.sfx);
+                sfx.onStop.addOnce(sfx.destroy);
+                sfx.play();
+            }
+            this.choices.removeAll(true);
+            this.game.managers.logic.choose(index,choice.choiceText,execId);
+        },this,1,0,2,0,this.choices);
+        if (chBox.animations.frameTotal == 2 || chBox.animations.frameTotal == 4){
+            chBox.setFrames(1,0,1,0)
+        }
+        if (choice.interrupt && choice.remainingSteps==1 && chBox.animations.frameTotal > 3){
+            if (chBox.animations.frameTotal == 4){
+                chBox.setFrames(3,2,3,2);
+            } else {
+                chBox.setFrames(4,3,5,3);
+            }
+        }
+        // todo property not exist
+        //chBox.choiceId = choice.choiceId;
+        chBox.name = choice.choiceId;
+        const textStyle = {font: choiceConfig.size + 'px ' + choiceConfig.font, fill: choiceConfig.color};
+        const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
+        this.setTextPosition(chBox,text, choiceConfig);
+        if (this.game.config.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) != -1){
+            chBox.tint = this.getChosenOptionColor();
+        }
+        return chBox;
     }
 
     loadButton(component, menu) {
+        const btn = this.game.add.button(component.x,component.y,component.id,() => {
+            if (component.sfx && component.sfx != 'none') {
+                const sfx = this.game.add.audio(component.sfx);
+                sfx.onStop.addOnce(sfx.destroy);
+                sfx.play()
+            }
+            this.buttonsAction[component.binding](component)
+        },this,1,0,2,0,menu);
+        // todo property not exist
+        // btn.component = component;
+        if (btn.animations.frameTotal == 2){
+            btn.setFrames(1,0,1,0)
+        }
     }
 
     loadComponent(type, component, menu) {
+        switch (type) {
+            case 'images' :
+                this.game.add.image(component.x,component.y,component.id,0,menu);
+                break;
+            case 'animations' :
+                const spr = this.game.add.sprite(component.x,component.y,component.id,0,menu);
+                spr.animations.add('do').play()
+                break;
+            case 'buttons' :  this.loadButton(component,menu); break;
+            case 'labels' :
+                const color = component.color ? component.color : "#ffffff"
+                this.game.add.text(component.x, component.y, component.text, {font: component.size+'px '+component.font, fill: color},menu);
+                break;
+            case 'sliders' : this.loadSlider(component,menu); break;
+            case 'save-slots' : this.loadSaveSlot(component,menu); break;
+        }
     }
 
     loadGeneralComponents(menuConfig, menu) {
+        const components = ['images','animations','labels','save-slots','buttons','sliders'];
+        components.forEach(component => {
+            if (component in menuConfig) {
+                for (let i = menuConfig[component].length - 1; i >= 0; i--) {
+                    this.loadComponent(component,menuConfig[component][i],menu)
+                }
+            }
+        });
     }
 
     loadSaveSlot(component, menu) {
+        if (!this.saveSlots){
+            this.saveSlots = {};
+        }
+        const sprite = this.game.add.sprite(component.x,component.y,component.id,0,menu);
+        // todo property not exist
+        // sprite.config = component;
+        const thumbnail = this.game.getSlotThumbnail(component.slot);
+        if (thumbnail) {
+            this.loadThumbnail(thumbnail,sprite);
+        }
+        this.saveSlots[component.slot] = sprite;
     }
 
     loadSlider(component, menu) {
+        let sliderFull = this.game.add.image(component.x,component.y,component.id,0,menu);
+        if (sliderFull.animations.frameTotal === 2){
+            sliderFull = this.game.add.image(component.x,component.y,component.id,0,menu);
+            sliderFull.frame = 1;
+        }
+        const sliderMask = this.game.add.graphics(component.x,component.y,menu);
+        sliderMask.beginFill(0xffffff);
+        const currentVal = this.game.defaultValues.settings[component.binding];
+        const limits = this.game.defaultValues.limits[component.binding];
+        const maskWidth = sliderFull.width*(currentVal-limits[0])/(limits[1]-limits[0]);
+        sliderMask.drawRect(0,0,maskWidth,sliderFull.height);
+        sliderFull.mask = sliderMask;
+        sliderFull.inputEnabled = true;
+        // todo property not exist
+        // sliderFull.limits = limits;
+        // sliderFull.binding = component.binding;
+        sliderFull.events.onInputDown.add((sprite,pointer) => {
+            const val = (pointer.x-sprite.x);
+            sprite.mask.width = val;
+            const newVal = (val/sprite.width)*(sprite.limits[1] - sprite.limits[0])+sprite.limits[0];
+            this.sliderValueChanged[sprite.binding](newVal);
+        });
     }
 
     loadThumbnail(thumbnail, parent) {
+        const id = 'thumbnail'+Math.floor(Math.random() * 5000);
+        this.game.load.image(id, thumbnail);
+        this.game.load.onLoadComplete.addOnce(() => {
+            const thmbSprite = this.game.add.sprite(parent.config['thumbnail-x'],parent.config['thumbnail-y'],id);
+            thmbSprite.width = parent.config['thumbnail-width']
+            thmbSprite.height = parent.config['thumbnail-height']
+            parent.addChild(thmbSprite);
+        }, this);
+        this.game.load.start();
     }
 
     setTextPosition(sprite, text, component) {
+        if (component.isTextCentered) {
+            text.setTextBounds(0,0, sprite.width, sprite.height);
+            text.boundsAlignH = 'center';
+            text.boundsAlignV = 'middle';
+        } else {
+            const offsetX = parseInt(component['offset-x']);
+            const offsetY = parseInt(component['offset-y']);
+            text.setTextBounds(offsetX,offsetY, sprite.width, sprite.height);
+            text.boundsAlignH = component.align;
+            text.boundsAlignV = 'top'
+        }
+        sprite.addChild(text);
+        sprite.text = text;
     }
 
     getChosenOptionColor() {
@@ -334,5 +474,60 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
         return (parseInt(this.gui.config.hud.choice['chosen-color'].substr(1), 16) << 8) / 256;
 
     }
+
+    sliderValueChanged = {
+        textSpeed (newVal) {
+            this.game.defaultValues.settings.textSpeed = newVal;
+        },
+        autoSpeed (newVal){
+            this.game.defaultValues.settings.autoSpeed = newVal;
+        },
+        bgmv (newVal){
+            this.game.defaultValues.settings.bgmv = newVal;
+            this.game.managers.audio.changeVolume("bgm",newVal);
+        },
+        sfxv (newVal){
+            this.game.defaultValues.settings.sfxv = newVal;
+        },
+    }
+
+    buttonsAction = {
+        start() {
+            this.game.gui.changeMenu(null);
+            this.game.gui.showHUD();
+            this.game.start();
+        },
+        load (component){
+            this.game.gui.changeMenu(null);
+            this.game.gui.showHUD();
+            this.game.loadSlot(parseInt(component.slot));
+        },
+
+        auto: this.game.auto,
+        skip: this.game.skip,
+        save (component) {
+            this.game.save(parseInt(component.slot));
+        },
+        saveload (argument?) {
+            this.game.pause();
+            this.game.gui.changeMenu("saveload");
+        },
+        settings(){
+            // this.game.onTap();
+            this.game.pause();
+            // this.game.resolve();
+            this.game.gui.changeMenu("settings");
+        },
+        return(){
+            const prev = this.game.gui.previousMenu;
+            this.game.gui.changeMenu(prev);
+            if (!prev) {
+                this.game.unpause();
+            }
+        },
+        mute (argument?) {
+            this.game.audioManager.mute();
+        }
+    };
 
 }

@@ -1,11 +1,11 @@
 import RJSManagerInterface from './RJSManager';
 import RJS from '../RJS';
 
-export type TextManagerInterface = RJSManagerInterface
+export interface TextManagerInterface extends RJSManagerInterface {}
 
 export default class TextManager implements TextManagerInterface {
 
-    game: RJS
+    private game: RJS
 
     constructor(game: RJS) {
         this.game = game
@@ -15,22 +15,22 @@ export default class TextManager implements TextManagerInterface {
     }
 
     async show (text, title?, colour?): Promise<void> {
-        const t = this.game.RJS.managers.logic.parseVars(text.toString());
-        this.game.RJS.gui.showText(t, title, colour, () => {
-            this.game.RJS.waitForClick(() => {
-                this.game.RJS.gui.hideText();
+        const t = this.game.managers.logic.parseVars(text.toString());
+        this.game.gui.showText(t, title, colour, () => {
+            this.game.waitForClick(() => {
+                this.game.gui.hideText();
             });
         });
     };
 
     async hide (): Promise<void> {
-        this.game.RJS.gui.hideText();
+        this.game.gui.hideText();
     }
 
     async say (name, look, text): Promise<void> {
-        const character = this.game.RJS.managers.character.characters[name];
+        const character = this.game.managers.character.characters[name];
         if (look){
-            this.game.RJS.managers.character.show(name, this.game.RJS.screenEffects.transition.CUT,{look});
+            this.game.managers.character.show(name, this.game.screenEffects.transition.CUT,{look});
         }
         return this.show(text,character.name,character.speechColour);
     }

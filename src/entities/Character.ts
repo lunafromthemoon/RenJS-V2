@@ -1,3 +1,5 @@
+import {Sprite} from 'phaser-ce';
+
 export interface CharacterInterface {
     name: string;
     speechColour: any;
@@ -18,16 +20,12 @@ export default class Character implements CharacterInterface {
         this.speechColour = speechColour
     }
 
-    // todo move to manager
-    // addLook (lookName,image): void{
-    //     const look = RenJS.storyManager.characterSprites.create(config.positions.CENTER.x,config.positions.CENTER.y,(image ? image : lookName));
-    //     look.anchor.set(0.5,1);
-    //     look.alpha = 0;
-    //     look.name = lookName;
-    //     this.looks[lookName] = look;
-    //     if (!this.currentLook){
-    //         this.currentLook = this.looks[lookName];
-    //     }
-    // }
+    addLook (look: Sprite): void {
+        this.looks[look.name] = look;
+        if (!this.currentLook){
+            this.currentLook = this.looks[look.name];
+        }
+
+    }
 
 }

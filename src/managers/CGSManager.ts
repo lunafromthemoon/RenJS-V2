@@ -5,8 +5,9 @@ import {range} from '../utils/array';
 import {TweenManagerInterface} from './TweenManager';
 import {Group} from 'phaser-ce';
 import RJS from '../RJS';
+import RJSManagerInterface from './RJSManager';
 
-export interface CGSManagerInterface extends RJSManager {
+export interface CGSManagerInterface extends RJSManagerInterface {
     cgs: object;
     current: object;
     hideAll(transition: string);
@@ -24,9 +25,9 @@ export default class CGSManager implements CGSManagerInterface {
 
     constructor(game: RJS) {
         this.game = game
-        this.transition = game.RJS.screenEffects.transition
-        this.storyManager = game.RJS.managers.story
-        this.tweenManager = game.RJS.managers.tween
+        this.transition = game.screenEffects.transition
+        this.storyManager = game.managers.story
+        this.tweenManager = game.managers.tween
     }
 
     async set(current): Promise<void> {
@@ -59,9 +60,9 @@ export default class CGSManager implements CGSManagerInterface {
         if (props.angle) {
             this.cgs[name].angle = props.angle;
         }
-        if (this.game.RJS.setup.cgs[name].animations) {
-            for (const key in this.game.RJS.setup.cgs[name].animations) {
-                const str = this.game.RJS.setup.cgs[name].animations[key].split(' ');
+        if (this.game.setup.cgs[name].animations) {
+            for (const key in this.game.setup.cgs[name].animations) {
+                const str = this.game.setup.cgs[name].animations[key].split(' ');
                 // range of animation
                 const frames = range(parseInt(str[0], 10), parseInt(str[1], 10))
                 let frameRate = 24;

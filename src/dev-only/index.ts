@@ -1,12 +1,11 @@
-import RJSGame from "../RJSGame";
+import RJS from '../RJS';
 import {globalConfig} from "./config";
 import Boot from "../states/Boot";
 // import {chooseLang} from "../to-migrate/LanguageChooser";
 
-const RenJSGame = new RJSGame(globalConfig)
-RenJSGame.preserveDrawingBuffer = true;
+const RenJSGame = new RJS(globalConfig)
+RenJSGame.launch()
 
-RenJSGame.state.add('bootstrap', Boot)
 
 // if (globalConfig.i18n){
 //     RenJSGame.phaserGameInstance.state.add('chooseLang', chooseLang);

@@ -20,8 +20,8 @@ export default class Ambient implements RJSScreenEffectInterface {
 
     constructor(game: RJS) {
         this.game = game
-        this.audioManager = game.RJS.managers.audio
-        this.storyManager = game.RJS.managers.story
+        this.audioManager = game.managers.audio
+        this.storyManager = game.managers.story
     }
 
     addEmitter (options): number {

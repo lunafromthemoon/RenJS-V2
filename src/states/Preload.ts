@@ -1,6 +1,6 @@
 import jsyaml from 'js-yaml'
 import {initLoadingBar, initSplash, loadStyle, preparePath} from './utils';
-import RJSState from '../RJSState';
+import RJSState from './RJSState';
 
 import PreloadStory from './PreloadStory';
 import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
@@ -12,6 +12,9 @@ class Preload extends RJSState {
     splash: Phaser.Sprite
     loadingBar: Phaser.Sprite
 
+    constructor() {
+        super();
+    }
 
     init(): void {
         this.splash = initSplash(this.game)
@@ -32,7 +35,7 @@ class Preload extends RJSState {
 
     create (): void {
         // load the setup
-        this.game.RJS.setup = jsyaml.load(this.game.cache.getText('storySetup'));
+        this.game.setup = jsyaml.load(this.game.cache.getText('storySetup'));
         // load the story text
         const story = {};
         this.game.config.storyText.forEach((file,index) => {
@@ -40,17 +43,18 @@ class Preload extends RJSState {
             Object.assign(story, ...text)
         })
 
-        this.game.RJS.story = story;
+        this.game.story = story;
         // load and create the GUI
         const gui = jsyaml.load(this.game.cache.getText('guiConfig'));
         if (gui.madeWithRenJSBuilder){
-            this.game.RJS.gui = new RJSGUIByBuilder(gui)
+            this.game.gui = new RJSGUIByBuilder(gui, this.game)
         } else {
-            this.game.RJS.gui = new RJSSimpleGUI(gui)
+            console.log('simple giu')
+            this.game.gui = new RJSSimpleGUI(gui)
         }
 
         // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of this.game.RJS.gui.getFonts()){
+        for (const font of this.game.gui.getFonts()){
             this.game.add.text(20, 20, font, {font: '42px ' + font});
         }
         // start preloading story

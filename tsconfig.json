@@ -2,14 +2,21 @@
   "compilerOptions": {
     "target": "es5",
     "sourceMap": true,
-    "allowJs": true,
+//    "allowJs": true,
     "esModuleInterop": true,
     "lib": [
-      "es2019",
+      "ES2019",
+      "ES2017",
+      "ES2018",
+      "ES2016",
+      "ES2015",
       "dom"
-    ]
+    ],
+    "outDir": "dist"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/dev-only",
+    "src/to-migrate"
   ]
 }

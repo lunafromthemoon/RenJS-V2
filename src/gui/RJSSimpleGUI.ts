@@ -18,6 +18,17 @@ export default class RJSSimpleGUI implements RJSSimpleGUIInterface {
     }
 
     getAssets() {
+        const imgs = Object.entries(this.gui.assets.images).map(([key, asset]) => (
+            {key:key, file:asset, type: "image"}
+        ));
+        const spritesheets = Object.entries(this.gui.assets.spritesheets).map(([key, asset]) => {
+            const e = String(asset).split(" ");
+            return {key:key,file:e[0],w:parseInt(e[1]),h:parseInt(e[2]), type: "spritesheet"};
+        });
+        const audio = Object.entries(this.gui.assets.audio).map(([key, asset]) => (
+            {key:key, file:asset, type: "audio"}
+        ));
+        return [...imgs,...spritesheets,...audio];
     }
 
     getChoiceTextStyle() {
