@@ -1,10 +1,11 @@
 import {initLoadingBar, initSplash, preparePath} from './utils';
 import RJSState from './RJSState';
 import {GUIAssets} from '../gui/Assets';
+import RJSSprite from '../entities/RJSSprite';
 
 class PreloadStory extends RJSState {
     splash: Phaser.Sprite
-    loadingBar: Phaser.Sprite
+    loadingBar: RJSSprite
 
     constructor() {
         super();
@@ -97,6 +98,11 @@ class PreloadStory extends RJSState {
 
     create(): void {
         this.splash.destroy()
+        // bg should be destroyed automatically, but destroy override is not working
+        if (this.loadingBar.background){
+            this.loadingBar.background.destroy();
+        }
+        this.loadingBar.destroy();
         // init game and start main menu
         this.game.managers.story.setupStory();
         this.game.gui.init();

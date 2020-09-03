@@ -1,58 +1,181 @@
 
 start:
-  - play morningBGM:
-  - show room: WITH FADE CONTINUE
+  - choice:
+    - test images:
+      - scene: testimages
+    - test text:
+      - scene: testtext
+    - test ambients and effects:
+      - scene: testAaE
+    - test logic:
+      - scene: testLogic
+
+testimages:
+  - show room_night: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
-  - text: Hello World
-  - deuzi says normal: Welcome to the Quickstart!
-  # - hide ALL: WITH FADE
-  - scene: longscene
+  - text: deuzi moves
+  - show deuzi: AT LEFT WITH MOVE
+  - text: jair appears
+  - show jair: AT OUTRIGHT WITH CUT
+  - show jair: AT RIGHT WITH MOVE
+  - text: phone appears 
+  - show phone1: AT 400,200 WITH FADE
+  - text: deuzi leaves
+  - hide deuzi: WITH FADE
+  - text: liz appears from left
+  - show liz: AT OUTLEFT WITH CUT
+    flipped: true
+  - show liz: AT LEFT WITH MOVE
+  - text: hide characters
+  - hide CHARS: WITH FADE
+  - text: phone moves
+  - animate phone1:
+    time: 500
+    position: 
+      x: 400
+      y: 300
+  - text: show jair again
+  - show jair: happy AT RIGHT WITH FADE
+  - text: hide jair and phone
+  - hide jair: WITH FADE CONTINUE
+  - hide phone1: WITH FADE
+  - text: change room
+  - show room_night_light: WITH FUSION
+  - text: show deuzi and phone
+  - show deuzi: AT RIGHT WITH FADE CONTINUE
+  - show phone2: AT 400,200 WITH FADE
+  - text: hide all and return to start
+  - hide ALL:
+  - scene: start
 
-longscene:
-  # - play morningBGM:
-  # - show room: WITH FADE CONTINUE
-  # - show deuzi: happy AT RIGHT WITH FADE
-  # - text: Hello World
-  - deuzi says normal: 1!
-  - deuzi says normal: 2!
-  - deuzi says normal: 3!
-  - deuzi says normal: 4!
-  - deuzi says normal: 5!
+testtext:
+  - play morningBGM:
+  - show bus_station:
+  - show deuzi: happy
+  - deuzi says:  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  - deuzi says normal:  Praesent finibus nunc id mauris ullamcorper fermentum. Mauris faucibus eu sem in aliquet. 
+  - show liz: AT OUTLEFT WITH CUT
+    flipped: true
+  - show liz: AT LEFT WITH MOVE
+  - liz says: Mauris pretium ligula nec metus placerat, nec imperdiet magna dictum. 
+  - text: In hac habitasse platea dictumst. Vestibulum iaculis lorem eget augue tristique, ac egestas mauris bibendum. Integer aliquet sit amet dolor in vulputate. 
+  - deuzi says: 1
+  - liz says: 2
+  - deuzi says: 3
   - choice:
-    - 'a' :
-      - var firstChoice: 'a'
-    - 'b' :
-      - var firstChoice: 'b'
-  - text: You choose {firstChoice}
-  - deuzi says normal: 6!
-  - deuzi says normal: 7!
-  - deuzi says normal: 8!
-  - deuzi says normal: 9!
-  - choice:
-    - 'c' :
-      - var secChoice: 'c'
-    - 'd' :
-      - var secChoice: 'd'
-  - text: You choose {secChoice}
-  - scene: end
+    - "4":
+      - var chosenNumber: 4
+    - "5":
+      - var chosenNumber: 5
+  - liz says: You chose {chosenNumber}
+  - hide ALL:
+  - scene: start
 
-end:
-  - text: this is the end
+testAaE:
+  - show store:
+  - show marco: 
+  - marco says: It looks like there's going to be a storm.
+  - effect THUNDER:
+  - marco says happy: Here it is!
+  - ambient RAIN:
+  - text: Snow in 3...
+  - text: 2...
+  - text: 1...
+  - text: Now
+  - ambient CLEAR:
+  - marco says: The storm is getting worse, I should go back.
+  - ambient SNOW:
+  - show jair: angry AT RIGHT
+  - jair says: Not so fast! Let's battle!
+  - effect ATTACK:
+  - marco says worry: You leave me no choice.
+  - effect MULTIATTACK:
+  - marco says angry: Take this!
+  - effect CHAINATTACK: 
+  - hide jair:
+  - ambient CLEAR:
+  - marco says: It's time to go home.
+  - hide ALL:
+  - show street_morning:
+  - show liz: 
+  - ambient SAKURA:
+  - liz says happy: What a beautiful morning.
+  - ambient CLEAR:
   - effect ROLLINGCREDITS:
-    endGame: true
+    endGame: false
     text:
-      - RenJS developed by
-      - lunafromthemoon
+      - asdf
+      - qwer
       - null
-      - Inspired by Ren'Py
-      - Powered by PhaserJS
+      - asdf
+      - qwer
       - null
       - null
-      - background art and cgs by
-      - konett
+      - asdf
+      - qwer
       - null
       - characters by
       - Shida
       - null
       - music by
       - Evan Schaeffer
+  - hide ALL:
+  - scene: start
+
+testLogic:
+  - show school_morning:
+  - text: first choice
+  - choice:
+    - "A":
+      - var firstChoice: A
+    - "B":
+      - var firstChoice: B
+  - text: second choice
+  - choice:
+    - C:
+      - var secondChoice: C
+    - D:
+      - var secondChoice: D
+    - E !if ({firstChoice}=="B"):
+      - var secondChoice: E
+  - if ({firstChoice}=="B" && {secondChoice}=="E"):
+    - text: BE is special
+  - else:
+    - text: "{firstChoice}{secondChoice} is normal"
+  - text: third choice
+  - choice:
+    - "0":
+      - choice:
+        - "00":
+          - var binary: 0
+        - "01":
+          - var binary: 1
+    - "1":
+      - choice:
+        - "10":
+          - var binary: 2
+        - "11":
+          - choice:
+            - "11":
+              - var binary: 3
+            - "110":
+              - text: Overflow!
+  - if ({binary} >= 2):
+    - text: "Your magic number is {binary}"
+  - text: Choose a phone
+  - visualchoice:
+    - phone1 AT 620,300:
+      - play ringtoneSFX:
+      - text: Tururu Ruru Ruru Ruruuuu
+      - show liz: angry
+      - liz says: That's mine!
+    - phone2 AT 180,300:
+      - play ringtoneSFX2:
+      - text: Pi Pi Ri Pi Ripi Pi Ri
+      - show deuzi: angry
+      - deuzi says: That's mine!
+  - hide ALL:
+  - scene: start
+
+
+

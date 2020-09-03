@@ -53,7 +53,6 @@
   },
   "dependencies": {
     "js-yaml": "^3.14.0",
-    "phaser-ce": "^2.16.0",
-    "underscore": "^1.10.2"
+    "phaser-ce": "^2.16.0"
   }
 }

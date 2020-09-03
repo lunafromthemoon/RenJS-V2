@@ -8,13 +8,14 @@ export function initSplash (game: RJS): Sprite {
     return splash
 }
 
-export function initLoadingBar (game: RJS): Sprite {
+export function initLoadingBar (game: RJS): RJSSprite {
     const position = game.config.splash.loadingBar.position;
     let loadingBar: RJSSprite = game.add.sprite(position.x,position.y , 'loading') ;
     if (loadingBar.animations.frameTotal > 1){
         // load second frame as full bar
+        let bg = loadingBar;
         loadingBar = game.add.sprite(position.x,position.y , 'loading',1);
-        loadingBar.background = loadingBar
+        loadingBar.background = bg;
     }
 
     return loadingBar
