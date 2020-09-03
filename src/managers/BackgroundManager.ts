@@ -25,8 +25,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     }
 
     add(name, animated?, framerate?): void {
-
-        this.backgrounds[name] = this.backgroundSprites.create(this.game.world.centerX, this.game.world.centerY, name);
+        this.backgrounds[name] = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, name,this.backgroundSprites);
         this.backgrounds[name].name = name;
         this.backgrounds[name].anchor.set(0.5);
         this.backgrounds[name].alpha = 0;
