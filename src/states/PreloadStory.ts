@@ -30,7 +30,7 @@ class PreloadStory extends RJSState {
         }
 
         // preload backgrounds
-        if ('background' in this.game.setup) {
+        if ('backgrounds' in this.game.setup) {
             for (const background of Object.keys(this.game.setup.backgrounds)) {
                 const str = this.game.setup.backgrounds[background].split(' ');
                 if (str.length === 1) {
@@ -96,6 +96,7 @@ class PreloadStory extends RJSState {
     }
 
     create(): void {
+        this.splash.destroy()
         // init game and start main menu
         this.game.managers.story.setupStory();
         this.game.gui.init();
