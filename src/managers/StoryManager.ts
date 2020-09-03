@@ -151,7 +151,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             } else {
                 action.transitionName = this.game.defaultValues.transitions[actorType];
             }
-            action.transition = this.game.defaultValues.transitions[action.transitionName];
+            action.transition = () => this.game.screenEffects.transition[action.transitionName];
         }
         if (params && actionParams.withPosition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
@@ -179,6 +179,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.game.control.wholeAction = params;
         this.game.control.nextAction = null;
         // console.log('Doing '+RenJS.control.action);
+        console.log(action)
         switch(this.game.control.action){
             // Asnyc actions, will resolve after some actions
             case 'show' :
@@ -189,7 +190,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
                     return this.game.managers.character.hideAll(action.transition)
                 }
                 if (actor === 'ALL') {
-                    return Promise.all([this.game.managers.background.hide(), this.game.managers.character.hideAll(), this.game.managers.cgs.hideAll()]);
+                    return Promise.all([this.game.managers.background.hide(action.transition), this.game.managers.character.hideAll(action.transition), this.game.managers.cgs.hideAll(action.transition)]);
                 }
                 if (!contAfterTrans) return action.manager.hide(actor, action.transition);
                 break;

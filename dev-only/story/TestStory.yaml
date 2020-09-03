@@ -45,7 +45,7 @@ testimages:
   - show deuzi: AT RIGHT WITH FADE CONTINUE
   - show phone2: AT 400,200 WITH FADE
   - text: hide all and return to start
-  - hide ALL:
+  - hide ALL: WITH FADE
   - scene: start
 
 testtext:

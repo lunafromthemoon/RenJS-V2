@@ -16,8 +16,8 @@ export interface CGSManagerInterface extends RJSManagerInterface {
 
 export default class CGSManager implements CGSManagerInterface {
 
-    cgs: object;
-    current: object;
+    cgs: object = {};
+    current: object = {};
     private transition: Transition
     private game: RJS
     private storyManager: StoryManagerInterface<Group>

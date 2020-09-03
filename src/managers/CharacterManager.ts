@@ -31,7 +31,8 @@ export default class CharacterManager implements CharacterManagerInterface {
     add (name, displayName, speechColour, looks): void {
         this.characters[name] = new Character(displayName,speechColour);
         for (const look in looks) {
-            this.characters[name].addLook(look,name+'_'+look);
+            this.addLook(this.characters[name],look,name+'_'+look);
+            // this.characters[name].addLook(look,name+'_'+look);
         }
     }
 
@@ -84,7 +85,10 @@ export default class CharacterManager implements CharacterManagerInterface {
 
 
 
-    async hideAll(transition = Transition.FADEOUT): Promise<any> {
+    async hideAll(transition?): Promise<any> {
+        if (!transition){
+            transition = () => this.game.screenEffects.transition.FADEOUT;
+        }
         const promises = []
         for (const char in this.showing){
             promises.push(this.hide(char,transition));

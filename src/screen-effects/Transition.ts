@@ -53,6 +53,7 @@ export default class Transition implements RJSScreenEffectInterface {
     }
 
     async FADEIN(to, position, scaleX): Promise<void> {
+        console.log("fadein")
         setNewProperties(to, position, scaleX);
         this.tweenManager.tween(to, {alpha: 1}, null, this.game.defaultValues.fadetime, true);
     }
