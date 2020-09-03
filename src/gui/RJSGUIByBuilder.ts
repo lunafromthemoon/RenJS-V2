@@ -481,60 +481,62 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     sliderValueChanged = {}
 
     initSliderValueChanged () {
+        const game = this.game
         this.sliderValueChanged = {
             textSpeed (newVal) {
-                this.game.defaultValues.settings.textSpeed = newVal;
+                game.defaultValues.settings.textSpeed = newVal;
             },
             autoSpeed (newVal){
-                this.game.defaultValues.settings.autoSpeed = newVal;
+                game.defaultValues.settings.autoSpeed = newVal;
             },
             bgmv (newVal){
-                this.game.defaultValues.settings.bgmv = newVal;
-                this.game.managers.audio.changeVolume('bgm',newVal);
+                game.defaultValues.settings.bgmv = newVal;
+                game.managers.audio.changeVolume('bgm',newVal);
             },
             sfxv (newVal){
-                this.game.defaultValues.settings.sfxv = newVal;
+                game.defaultValues.settings.sfxv = newVal;
             },
         }
     }
 
     initButtonsActions (): void {
+        const game = this.game
         this.buttonsAction = {
             start() {
-                this.game.gui.changeMenu(null);
-                this.game.gui.showHUD();
-                this.game.start();
+                game.gui.changeMenu(null);
+                game.gui.showHUD();
+                game.start();
             },
             load (component){
-                this.game.gui.changeMenu(null);
-                this.game.gui.showHUD();
-                this.game.loadSlot(parseInt(component.slot, 10));
+                game.gui.changeMenu(null);
+                game.gui.showHUD();
+                game.loadSlot(parseInt(component.slot, 10));
             },
 
-            auto: this.game.auto,
-            skip: this.game.skip,
+            auto: game.auto,
+            skip: game.skip,
             save (component) {
-                this.game.save(parseInt(component.slot, 10));
+                game.save(parseInt(component.slot, 10));
             },
             saveload (argument?) {
-                this.game.pause();
-                this.game.gui.changeMenu('saveload');
+                game.pause();
+                game.gui.changeMenu('saveload');
             },
             settings(){
-                // this.game.onTap();
-                this.game.pause();
-                // this.game.resolve();
-                this.game.gui.changeMenu('settings');
+                // game.onTap();
+                game.pause();
+                // game.resolve();
+                game.gui.changeMenu('settings');
             },
             return(){
-                const prev = this.game.gui.previousMenu;
-                this.game.gui.changeMenu(prev);
+                const prev = game.gui.previousMenu;
+                game.gui.changeMenu(prev);
                 if (!prev) {
-                    this.game.unpause();
+                    game.unpause();
                 }
             },
             mute (argument?) {
-                this.game.audioManager.mute();
+                game.managers.audio.mute();
             }
         };
     }

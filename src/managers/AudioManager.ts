@@ -23,8 +23,8 @@ export interface AudioManagerInterface extends RJSManagerInterface {
 export default class AudioManager implements AudioManagerInterface {
     current: { bgm: any; bgs: any };
     audioLoaded: boolean;
-    musicList: object;
-    sfx: object;
+    musicList: object = {};
+    sfx: object = {};
     private game: RJS
 
     constructor(game: RJS) {

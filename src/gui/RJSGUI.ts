@@ -22,4 +22,6 @@ export interface RJSGUI {
     getChosenOptionColor?(): number;
     textLoop?: any;
     ctc?: any;
+    changeMenu?(menu): void;
+    previousMenu?: any;
 }

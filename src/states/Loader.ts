@@ -18,7 +18,6 @@ export default class Loader extends RJSState {
     }
 
     init(): void {
-        console.log('-- Loader state --')
         this.game.managers = {
             tween: new TweenManager(this.game),
             story: new StoryManager(this.game),

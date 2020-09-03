@@ -18,8 +18,8 @@ export interface CharacterManagerInterface extends RJSManagerInterface {
 
 export default class CharacterManager implements CharacterManagerInterface {
 
-    characters: {};
-    showing: {};
+    characters = {};
+    showing = {};
     private transition: Transition
     private game: RJS
 

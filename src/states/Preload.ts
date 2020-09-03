@@ -35,7 +35,6 @@ class Preload extends RJSState {
     }
 
     create (game: RJS): void {
-        console.log('-- create --')
         // load the setup
         game.setup = jsyaml.load(game.cache.getText('storySetup'));
 

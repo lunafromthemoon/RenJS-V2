@@ -12,7 +12,7 @@ export interface CharacterInterface {
 export default class Character implements CharacterInterface {
     name: string
     speechColour: any
-    looks: {}
+    looks = {}
     currentLook = null
     lastScale: 1;
     constructor(name, speechColour) {

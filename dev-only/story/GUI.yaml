@@ -22,16 +22,16 @@ assets:
     choice: assets/gui/choice.png 716 65
     interrupt: assets/gui/interrupt.png 716 95
   audio:
-    mainMusic: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+#    mainMusic: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
 hud:
   area:
     - 640 450 748 554
   message:
-    position: 
-      x: 46 
+    position:
+      x: 46
       y: 435
-    textPosition: 
-      x: 36 
+    textPosition:
+      x: 36
       y: 36
     textStyle:
       font: 16pt audimat-mono
@@ -39,16 +39,16 @@ hud:
       wordWrapWidth: 545
       fill: "#ac9393"
   name:
-    position: 
-      x: 36 
+    position:
+      x: 36
       y: -40
     textStyle:
       font: 20pt audimat-mono
       boundsAlignH: center
       boundsAlignV: middle
-  ctc: 
+  ctc:
     position:
-      x: 570 
+      x: 570
       y: 90
     animated: false
   choice:
@@ -63,39 +63,39 @@ hud:
       font: 20pt audimat-mono
       boundsAlignH: center
       boundsAlignV: middle
-      fill: "#664b4b"        
+      fill: "#664b4b"
   buttons:
-    auto: 
+    auto:
       position:
         x: 647
         y: 502
       sprite: qmAutoButton
-    skip: 
+    skip:
       position:
         x: 694
         y: 502
       sprite: qmSkipButton
-    save: 
+    save:
       position:
         x: 694
         y: 457
       sprite: qmSaveButton
-    settings: 
+    settings:
       position:
         x: 647
         y: 457
       sprite: qmSettingsButton
     # mute: qmMuteButton 1175 60
 menus:
-  main: 
+  main:
     music: mainMusic
-    buttons: 
-      start: 
+    buttons:
+      start:
         position:
           x: 112
           y: 462
         sprite: startButton
-      load:  
+      load:
         position:
           x: 320
           y: 462
@@ -107,12 +107,12 @@ menus:
         sprite: settingsButton
   settings:
     buttons:
-      return: 
+      return:
         position:
           x: 112
           y: 500
         sprite: returnButton
-      start:  
+      start:
         position:
           x: 320
           y: 500
@@ -123,7 +123,7 @@ menus:
           y: 500
         sprite: loadButton
     sliders:
-      textSpeed: 
+      textSpeed:
         position:
           x: 436
           y: 235

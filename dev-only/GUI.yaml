@@ -47,7 +47,7 @@ config:
         'y': 452
         x: 529
         assetType: spritesheets
-    backgroundMusic: Evan_Schaeffer_-_01_-_Aqueduct
+#    backgroundMusic: Evan_Schaeffer_-_01_-_Aqueduct
   settings:
     background:
       id: asset16
