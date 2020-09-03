@@ -20,6 +20,6 @@ export interface RJSGUI {
     sliderValueChanged: object;
     addThumbnail?(thumbnail, slot);
     getChosenOptionColor?(): number;
-    textLoop?: any
-    ctc?: any
+    textLoop?: any;
+    ctc?: any;
 }

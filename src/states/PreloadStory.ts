@@ -30,42 +30,58 @@ class PreloadStory extends RJSState {
         }
 
         // preload backgrounds
-        for (const background of Object.keys(this.game.setup.backgrounds)) {
-            const str = this.game.setup.backgrounds[background].split(' ');
-            if (str.length === 1) {
-                this.game.load.image(background, preparePath(str[0], this.game));
-            } else {
-                this.game.load.spritesheet(background, preparePath(str[0], this.game), parseInt(str[1], 10), parseInt(str[2], 10));
+        if ('background' in this.game.setup) {
+            for (const background of Object.keys(this.game.setup.backgrounds)) {
+                const str = this.game.setup.backgrounds[background].split(' ');
+                if (str.length === 1) {
+                    this.game.load.image(background, preparePath(str[0], this.game));
+                } else {
+                    this.game.load.spritesheet(background, preparePath(str[0], this.game), parseInt(str[1], 10), parseInt(str[2], 10));
+                }
             }
         }
+
         // preload cgs
-        for (const key of Object.keys(this.game.setup.cgs)) {
-            const cgs = this.game.setup.cgs[key];
-            if (typeof cgs === 'string') {
-                // normal cgs
-                this.game.load.image(key, preparePath(cgs, this.game));
-            } else {
-                // spritesheet animation
-                const str = cgs.spritesheet.split(' ');
-                this.game.load.spritesheet(key, preparePath(str[0], this.game), parseInt(str[1], 10), parseInt(str[2], 10));
+        if ('cgs' in this.game.setup) {
+            for (const key of Object.keys(this.game.setup.cgs)) {
+                const cgs = this.game.setup.cgs[key];
+                if (typeof cgs === 'string') {
+                    // normal cgs
+                    this.game.load.image(key, preparePath(cgs, this.game));
+                } else {
+                    // spritesheet animation
+                    const str = cgs.spritesheet.split(' ');
+                    this.game.load.spritesheet(key, preparePath(str[0], this.game), parseInt(str[1], 10), parseInt(str[2], 10));
+                }
             }
         }
+
         // preload background music
-        for (const music of Object.keys(this.game.setup.music)) {
-            this.game.load.audio(music, preparePath(this.game.setup.music[music], this.game));
-        }
-        // preload sfx
-        for (const sfx of Object.keys(this.game.setup.sfx)) {
-            this.game.load.audio(sfx, preparePath(this.game.setup.sfx[sfx], this.game));
-        }
-        // preload characters
-        for (const name of Object.keys(this.game.setup.characters)) {
-            const char = this.game.setup.characters[name];
-            for (const look of Object.keys(char.looks)) {
-                this.game.load.image(name + '_' + look, preparePath(char.looks[look], this.game));
+        if ('music' in this.game.setup) {
+            for (const music of Object.keys(this.game.setup.music)) {
+                this.game.load.audio(music, preparePath(this.game.setup.music[music], this.game));
             }
         }
-        if (this.game.setup.extra) {
+
+        // preload sfx
+        if ('sfx' in this.game.setup) {
+            for (const sfx of Object.keys(this.game.setup.sfx)) {
+                this.game.load.audio(sfx, preparePath(this.game.setup.sfx[sfx], this.game));
+            }
+        }
+
+        // preload characters
+        if ('characters' in this.game.setup) {
+            for (const name of Object.keys(this.game.setup.characters)) {
+                const char = this.game.setup.characters[name];
+                for (const look of Object.keys(char.looks)) {
+                    this.game.load.image(name + '_' + look, preparePath(char.looks[look], this.game));
+                }
+            }
+        }
+
+
+        if ('extra' in this.game.setup) {
             for (const type of Object.keys(this.game.setup.extra)) {
                 Object.keys(this.game.setup.extra[type]).forEach(asset => {
                     if (type === 'spritesheets') {
@@ -81,28 +97,30 @@ class PreloadStory extends RJSState {
 
     create(): void {
         // init game and start main menu
-        this.game.state.add('init', init);
-        this.game.state.start('init');
-    }
-}
-
-const init = {
-    create(): void {
-        this.game.storyManager.setupStory();
+        this.game.managers.story.setupStory();
         this.game.gui.init();
         this.game.initInput();
-        this.game.audioManager.init(() => {
+        this.game.managers.audio.init(() => {
             this.game.gui.showMenu('main');
         });
-    },
 
-    render (): void {
-        // if (RenJS.gui && RenJS.gui.hud && RenJS.gui.hud.area){
-        //     _.each(RenJS.gui.hud.area,function(area){
-        //         game.debug.rectangle(area);
-        //     });
-        // }
+        // this.game.state.add('init', init);
+        // this.game.state.start('init');
     }
 }
+//
+// const init = {
+//     create(): void {
+//
+//     },
+//
+//     render (): void {
+//         // if (RenJS.gui && RenJS.gui.hud && RenJS.gui.hud.area){
+//         //     _.each(RenJS.gui.hud.area,function(area){
+//         //         game.debug.rectangle(area);
+//         //     });
+//         // }
+//     }
+// }
 
 export default PreloadStory

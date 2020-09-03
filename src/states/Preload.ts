@@ -5,6 +5,7 @@ import RJSState from './RJSState';
 import PreloadStory from './PreloadStory';
 import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
 import RJSSimpleGUI from '../gui/RJSSimpleGUI';
+import RJS from '../core/RJS';
 
 // TODO: LOAD RENJS OWN SPLASH SCREEN
 
@@ -33,34 +34,36 @@ class Preload extends RJSState {
         }
     }
 
-    create (): void {
+    create (game: RJS): void {
+        console.log('-- create --')
         // load the setup
-        this.game.setup = jsyaml.load(this.game.cache.getText('storySetup'));
+        game.setup = jsyaml.load(game.cache.getText('storySetup'));
+
         // load the story text
         const story = {};
-        this.game.config.storyText.forEach((file,index) => {
-            const text = jsyaml.load(this.game.cache.getText('story' + index));
-            Object.assign(story, ...text)
+        game.config.storyText.forEach((file,index) => {
+            const text = jsyaml.load(game.cache.getText('story' + index));
+            Object.assign(story, {...text})
         })
 
-        this.game.story = story;
+        game.story = story;
         // load and create the GUI
-        const gui = jsyaml.load(this.game.cache.getText('guiConfig'));
+        const gui = jsyaml.load(game.cache.getText('guiConfig'));
         if (gui.madeWithRenJSBuilder){
-            this.game.gui = new RJSGUIByBuilder(gui, this.game)
+            game.gui = new RJSGUIByBuilder(gui, game)
         } else {
             console.log('simple giu')
-            this.game.gui = new RJSSimpleGUI(gui)
+            game.gui = new RJSSimpleGUI(gui)
         }
 
         // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of this.game.gui.getFonts()){
-            this.game.add.text(20, 20, font, {font: '42px ' + font});
+        for (const font of game.gui.getFonts()){
+            game.add.text(20, 20, font, {font: '42px ' + font});
         }
         // start preloading story
-        this.game.state.add('preloadStory', PreloadStory);
-        this.game.state.start('preloadStory');
-        this.game.add.sprite()
+        game.state.add('preloadStory', PreloadStory);
+        game.state.start('preloadStory');
+        game.add.sprite()
     }
 }
 

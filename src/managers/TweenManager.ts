@@ -1,5 +1,5 @@
 import {Tween} from 'phaser-ce';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
 
 export interface TweenManagerInterface extends RJSManagerInterface {

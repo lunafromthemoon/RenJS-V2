@@ -3,6 +3,7 @@
     "target": "es5",
     "sourceMap": true,
 //    "allowJs": true,
+//    "declaration": true,
     "esModuleInterop": true,
     "lib": [
       "ES2019",
@@ -11,12 +12,13 @@
       "ES2016",
       "ES2015",
       "dom"
-    ],
-    "outDir": "dist"
+    ]
   },
   "exclude": [
     "node_modules",
-    "src/dev-only",
-    "src/to-migrate"
+    "dev-only"
+  ],
+  "include": [
+    "src/**/*.ts"
   ]
 }

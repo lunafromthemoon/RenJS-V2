@@ -1,7 +1,7 @@
 import RJSManagerInterface from './RJSManager';
 import {Group} from 'phaser-ce';
 import Transition from '../screen-effects/Transition';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 
 export interface BackgroundManagerInterface<T> extends RJSManagerInterface {
     backgroundSprites: T;
@@ -19,12 +19,13 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     backgrounds = {};
     current = null;
 
-    constructor(private game: RJS, transition: Transition) {
-        this.backgroundSprites = this.game.add.group()
-        this.transition = transition
+    constructor(private game: RJS) {
+        this.backgroundSprites = game.add.group()
+        this.transition = game.screenEffects.transition
     }
 
     add(name, animated?, framerate?): void {
+
         this.backgrounds[name] = this.backgroundSprites.create(this.game.world.centerX, this.game.world.centerY, name);
         this.backgrounds[name].name = name;
         this.backgrounds[name].anchor.set(0.5);

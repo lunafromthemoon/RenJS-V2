@@ -4,7 +4,7 @@ import {StoryManagerInterface} from './StoryManager';
 import {range} from '../utils/array';
 import {TweenManagerInterface} from './TweenManager';
 import {Group} from 'phaser-ce';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
 
 export interface CGSManagerInterface extends RJSManagerInterface {

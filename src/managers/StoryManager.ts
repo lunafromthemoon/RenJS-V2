@@ -1,6 +1,6 @@
 import RJSManager from './RJSManager';
 import {Group} from 'phaser-ce';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
 
 export interface StoryManagerInterface<T> extends RJSManagerInterface {

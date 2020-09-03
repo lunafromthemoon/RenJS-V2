@@ -1,7 +1,7 @@
 import RJSManagerInterface from './RJSManager';
 import Transition from '../screen-effects/Transition';
 import Character from '../entities/Character';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 import {Sprite} from 'phaser-ce';
 
 export interface CharacterManagerInterface extends RJSManagerInterface {
@@ -23,8 +23,8 @@ export default class CharacterManager implements CharacterManagerInterface {
     private transition: Transition
     private game: RJS
 
-    constructor(game: RJS, transition: Transition) {
-        this.transition = transition
+    constructor(game: RJS) {
+        this.transition = game.screenEffects.transition
         this.game = game
     }
 

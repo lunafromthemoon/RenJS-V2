@@ -1,0 +1,145 @@
+assets:
+  fonts:
+    - audimat-mono
+  images:
+    mainBackground: assets/gui/menu.png
+    settingsBackground: assets/gui/settings.png
+    sliderFull: assets/gui/slider.png
+    messageBox:  assets/gui/textbox.png
+    nameBox:  assets/gui/namebox.png
+    ctc: assets/gui/ctc.png
+  spritesheets:
+    startButton: assets/gui/startbutton.png 163 83
+    loadButton: assets/gui/loadbutton.png 163 83
+    saveButton: assets/gui/savebutton.png 163 83
+    settingsButton: assets/gui/settingsbutton.png 163 83
+    returnButton: assets/gui/returnbutton.png 163 83
+    qmAutoButton: assets/gui/qmenuauto.png 47 45
+    qmSkipButton: assets/gui/qmenuskip.png 47 45
+    qmSettingsButton: assets/gui/qmenusettings.png 47 45
+    qmMuteButton: assets/gui/Mute.png 50 50
+    qmSaveButton: assets/gui/qmenusave.png 47 45
+    choice: assets/gui/choice.png 716 65
+    interrupt: assets/gui/interrupt.png 716 95
+  audio:
+    mainMusic: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+hud:
+  area:
+    - 640 450 748 554
+  message:
+    position: 
+      x: 46 
+      y: 435
+    textPosition: 
+      x: 36 
+      y: 36
+    textStyle:
+      font: 16pt audimat-mono
+      wordWrap: true
+      wordWrapWidth: 545
+      fill: "#ac9393"
+  name:
+    position: 
+      x: 36 
+      y: -40
+    textStyle:
+      font: 20pt audimat-mono
+      boundsAlignH: center
+      boundsAlignV: middle
+  ctc: 
+    position:
+      x: 570 
+      y: 90
+    animated: false
+  choice:
+    separation: 95
+    textStyle:
+      font: 20pt audimat-mono
+      boundsAlignH: center
+      boundsAlignV: middle
+      fill: "#666666"
+  interrupt:
+    textStyle:
+      font: 20pt audimat-mono
+      boundsAlignH: center
+      boundsAlignV: middle
+      fill: "#664b4b"        
+  buttons:
+    auto: 
+      position:
+        x: 647
+        y: 502
+      sprite: qmAutoButton
+    skip: 
+      position:
+        x: 694
+        y: 502
+      sprite: qmSkipButton
+    save: 
+      position:
+        x: 694
+        y: 457
+      sprite: qmSaveButton
+    settings: 
+      position:
+        x: 647
+        y: 457
+      sprite: qmSettingsButton
+    # mute: qmMuteButton 1175 60
+menus:
+  main: 
+    music: mainMusic
+    buttons: 
+      start: 
+        position:
+          x: 112
+          y: 462
+        sprite: startButton
+      load:  
+        position:
+          x: 320
+          y: 462
+        sprite: loadButton
+      settings:
+        position:
+          x: 528
+          y: 462
+        sprite: settingsButton
+  settings:
+    buttons:
+      return: 
+        position:
+          x: 112
+          y: 500
+        sprite: returnButton
+      start:  
+        position:
+          x: 320
+          y: 500
+        sprite: startButton
+      load:
+        position:
+          x: 528
+          y: 500
+        sprite: loadButton
+    sliders:
+      textSpeed: 
+        position:
+          x: 436
+          y: 235
+        sprite: sliderFull
+      autoSpeed:
+        position:
+          x: 436
+          y: 364
+        sprite: sliderFull
+      bgmv:
+        position:
+          x: 147
+          y: 235
+        sprite: sliderFull
+      sfxv:
+        position:
+          x: 147
+          y: 364
+        sprite: sliderFull

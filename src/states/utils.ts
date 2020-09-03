@@ -1,8 +1,8 @@
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 import {Sprite} from 'phaser-ce';
 
 export function initSplash (game: RJS): Sprite {
-    const splash = game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'splash');
+    const splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
     splash.anchor.set(0.5)
     return splash
 }

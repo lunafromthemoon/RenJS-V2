@@ -1,5 +1,5 @@
 import RJSManagerInterface from './RJSManager';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 
 export interface TextManagerInterface extends RJSManagerInterface {}
 

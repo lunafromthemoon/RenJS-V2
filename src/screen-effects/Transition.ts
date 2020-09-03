@@ -1,7 +1,7 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
 import {TweenManagerInterface} from '../managers/TweenManager';
 import {Group} from 'phaser-ce';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 
 
 export default class Transition implements RJSScreenEffectInterface {

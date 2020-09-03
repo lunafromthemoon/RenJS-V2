@@ -3,7 +3,7 @@ import { AudioManagerInterface } from '../managers/AudioManager';
 import {StoryManagerInterface} from '../managers/StoryManager';
 import {Animation, Group, Sprite} from 'phaser-ce';
 import Emitter = Phaser.Particles.Arcade.Emitter;
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 
 export default class Ambient implements RJSScreenEffectInterface {
     emitters: Emitter[]

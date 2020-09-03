@@ -1,6 +1,6 @@
 import {RJSGUI} from './RJSGUI';
 import {Group, Sprite} from 'phaser-ce';
-import RJS from '../RJS';
+import RJS from '../core/RJS';
 import {GUIAssets} from './Assets';
 
 export interface RJSGUIByBuilderInterface<T, TSprite> extends RJSGUI {
@@ -22,11 +22,11 @@ export interface RJSGUIByBuilderInterface<T, TSprite> extends RJSGUI {
     currentMenu: any;
     menus: any;
     messageBox: TSprite;
-    skipClickArea: any[]
-    nameBox: TSprite
-    interrupts: T
-    previousMenu: any
-    saveSlots: any
+    skipClickArea: any[];
+    nameBox: TSprite;
+    interrupts: T;
+    previousMenu: any;
+    saveSlots: any;
 }
 // todo to impl
 export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, Sprite> {
@@ -51,6 +51,9 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     constructor(gui, game: RJS) {
         this.gui = gui
         this.game = game
+
+        this.initSliderValueChanged()
+        this.initButtonsActions()
     }
 
     changeToLastInterrupt(choiceId): void {
@@ -136,7 +139,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     }
 
     ignoreTap(pointer) {
-        return this.skipClickArea.find(area => area.contains(pointer.x,pointer.y)) != undefined;
+        return this.skipClickArea.find(area => area.contains(pointer.x,pointer.y)) !== undefined;
     }
 
     init() {
@@ -153,8 +156,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
 
         if (hudConfig.buttons){
             hudConfig.buttons.forEach(btn => {
-                const w = parseInt(btn.width)
-                const h = parseInt(btn.height)
+                const w = parseInt(btn.width, 10)
+                const h = parseInt(btn.height, 10)
                 this.skipClickArea.push(new Phaser.Rectangle(btn.x,btn.y,w,h))
             },this);
         }
@@ -164,7 +167,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
             this.messageBox = this.game.add.sprite(mBox.x,mBox.y,mBox.id,0,this.hud);
             this.messageBox.visible = false;
             const textStyle = {font: mBox.size+'px '+mBox.font, fill: mBox.color};
-            const text = this.game.add.text(mBox['offset-x'],mBox['offset-y'], "", textStyle);
+            const text = this.game.add.text(mBox['offset-x'],mBox['offset-y'], '', textStyle);
             text.wordWrap = true;
             text.align = mBox.align;
             text.wordWrapWidth = mBox['text-width'];
@@ -177,16 +180,16 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
             this.nameBox = this.game.add.sprite(x,y,hudConfig['name-box'].id,0,this.hud);
             // this.nameBox.visible = false;
             const textStyle = {font: hudConfig['name-box'].size+'px '+hudConfig['name-box'].font, fill: hudConfig['name-box'].color}
-            const text = this.game.add.text(0,0, "", textStyle);
+            const text = this.game.add.text(0,0, '', textStyle);
             this.setTextPosition(this.nameBox,text, hudConfig['name-box'])
             this.messageBox.addChild(this.nameBox)
         }
         if (hudConfig.ctc) {
-            const x = hudConfig['ctc'].x - mBox.x;
-            const y = hudConfig['ctc'].y - mBox.y;
+            const x = hudConfig.ctc.x - mBox.x;
+            const y = hudConfig.ctc.y - mBox.y;
             this.ctc = this.game.add.sprite(x,y,hudConfig.ctc.id);
             // this.ctc.visible = false;
-            if (hudConfig.ctc.animationStyle == 'spritesheet') {
+            if (hudConfig.ctc.animationStyle === 'spritesheet') {
                 this.ctc.animations.add('do').play()
             } else {
                 this.ctc.alpha = 0;
@@ -230,7 +233,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
         }
 
         const x = (choiceConfig.isBoxCentered) ? this.gui.resolution[0]/2 - choiceConfig.width/2 : choiceConfig.x;
-        const y = (choiceConfig.isBoxCentered) ? this.gui.resolution[1]/2 - (choiceConfig.height*choices.length + parseInt(choiceConfig.separation)*(choices.length-1))/2 : choiceConfig.y;
+        const y = (choiceConfig.isBoxCentered) ? this.gui.resolution[1]/2 - (choiceConfig.height*choices.length + parseInt(choiceConfig.separation, 10)*(choices.length-1))/2 : choiceConfig.y;
 
         choices.forEach((choice,index) => {
             const choiceType = choice.interrupt ? interruptConfig : choiceConfig;
@@ -273,8 +276,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
             return;
         }
         const textObj = this.messageBox.message;
-        textObj.text = "";
-        const words = text.split("");
+        textObj.text = '';
+        const words = text.split('');
         let count = 0;
         const completeText = () => {
             clearTimeout(this.game.gui.textLoop);
@@ -307,11 +310,11 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
         if (previous){
             if (menu) {
                 // hide previous menu and show this
-                this.hideMenu(previous,this.gui.config[menu].backgroundMusic,function() {
+                this.hideMenu(previous,this.gui.config[menu].backgroundMusic, () => {
                     // console.log('here')
                     this.showMenu(menu);
                     this.previousMenu = previous;
-                }.bind(this));
+                })
                 return
             } else {
                 // just hide menu
@@ -324,9 +327,9 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     }
 
     createChoiceBox(choice, pos, index, choiceConfig, execId) {
-        const separation = index*(parseInt(choiceConfig.height)+parseInt(choiceConfig.separation));
+        const separation = index*(parseInt(choiceConfig.height, 10)+parseInt(choiceConfig.separation, 10));
         const chBox = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
-            if (choiceConfig.sfx && choiceConfig.sfx != 'none') {
+            if (choiceConfig.sfx && choiceConfig.sfx !== 'none') {
                 const sfx = this.game.add.audio(choiceConfig.sfx);
                 sfx.onStop.addOnce(sfx.destroy);
                 sfx.play();
@@ -334,23 +337,23 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
             this.choices.removeAll(true);
             this.game.managers.logic.choose(index,choice.choiceText,execId);
         },this,1,0,2,0,this.choices);
-        if (chBox.animations.frameTotal == 2 || chBox.animations.frameTotal == 4){
+        if (chBox.animations.frameTotal === 2 || chBox.animations.frameTotal === 4){
             chBox.setFrames(1,0,1,0)
         }
-        if (choice.interrupt && choice.remainingSteps==1 && chBox.animations.frameTotal > 3){
-            if (chBox.animations.frameTotal == 4){
+        if (choice.interrupt && choice.remainingSteps===1 && chBox.animations.frameTotal > 3){
+            if (chBox.animations.frameTotal === 4){
                 chBox.setFrames(3,2,3,2);
             } else {
                 chBox.setFrames(4,3,5,3);
             }
         }
         // todo property not exist
-        //chBox.choiceId = choice.choiceId;
+        // chBox.choiceId = choice.choiceId;
         chBox.name = choice.choiceId;
         const textStyle = {font: choiceConfig.size + 'px ' + choiceConfig.font, fill: choiceConfig.color};
         const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
         this.setTextPosition(chBox,text, choiceConfig);
-        if (this.game.config.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) != -1){
+        if (this.game.config.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) !== -1){
             chBox.tint = this.getChosenOptionColor();
         }
         return chBox;
@@ -358,7 +361,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
 
     loadButton(component, menu) {
         const btn = this.game.add.button(component.x,component.y,component.id,() => {
-            if (component.sfx && component.sfx != 'none') {
+            if (component.sfx && component.sfx !== 'none') {
                 const sfx = this.game.add.audio(component.sfx);
                 sfx.onStop.addOnce(sfx.destroy);
                 sfx.play()
@@ -367,7 +370,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
         },this,1,0,2,0,menu);
         // todo property not exist
         // btn.component = component;
-        if (btn.animations.frameTotal == 2){
+        if (btn.animations.frameTotal === 2){
             btn.setFrames(1,0,1,0)
         }
     }
@@ -383,7 +386,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
                 break;
             case 'buttons' :  this.loadButton(component,menu); break;
             case 'labels' :
-                const color = component.color ? component.color : "#ffffff"
+                const color = component.color ? component.color : '#ffffff'
                 this.game.add.text(component.x, component.y, component.text, {font: component.size+'px '+component.font, fill: color},menu);
                 break;
             case 'sliders' : this.loadSlider(component,menu); break;
@@ -459,8 +462,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
             text.boundsAlignH = 'center';
             text.boundsAlignV = 'middle';
         } else {
-            const offsetX = parseInt(component['offset-x']);
-            const offsetY = parseInt(component['offset-y']);
+            const offsetX = parseInt(component['offset-x'], 10);
+            const offsetY = parseInt(component['offset-y'], 10);
             text.setTextBounds(offsetX,offsetY, sprite.width, sprite.height);
             text.boundsAlignH = component.align;
             text.boundsAlignV = 'top'
@@ -475,59 +478,67 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
 
     }
 
-    sliderValueChanged = {
-        textSpeed (newVal) {
-            this.game.defaultValues.settings.textSpeed = newVal;
-        },
-        autoSpeed (newVal){
-            this.game.defaultValues.settings.autoSpeed = newVal;
-        },
-        bgmv (newVal){
-            this.game.defaultValues.settings.bgmv = newVal;
-            this.game.managers.audio.changeVolume("bgm",newVal);
-        },
-        sfxv (newVal){
-            this.game.defaultValues.settings.sfxv = newVal;
-        },
+    sliderValueChanged = {}
+
+    initSliderValueChanged () {
+        this.sliderValueChanged = {
+            textSpeed (newVal) {
+                this.game.defaultValues.settings.textSpeed = newVal;
+            },
+            autoSpeed (newVal){
+                this.game.defaultValues.settings.autoSpeed = newVal;
+            },
+            bgmv (newVal){
+                this.game.defaultValues.settings.bgmv = newVal;
+                this.game.managers.audio.changeVolume('bgm',newVal);
+            },
+            sfxv (newVal){
+                this.game.defaultValues.settings.sfxv = newVal;
+            },
+        }
     }
 
-    buttonsAction = {
-        start() {
-            this.game.gui.changeMenu(null);
-            this.game.gui.showHUD();
-            this.game.start();
-        },
-        load (component){
-            this.game.gui.changeMenu(null);
-            this.game.gui.showHUD();
-            this.game.loadSlot(parseInt(component.slot));
-        },
+    initButtonsActions (): void {
+        this.buttonsAction = {
+            start() {
+                this.game.gui.changeMenu(null);
+                this.game.gui.showHUD();
+                this.game.start();
+            },
+            load (component){
+                this.game.gui.changeMenu(null);
+                this.game.gui.showHUD();
+                this.game.loadSlot(parseInt(component.slot, 10));
+            },
 
-        auto: this.game.auto,
-        skip: this.game.skip,
-        save (component) {
-            this.game.save(parseInt(component.slot));
-        },
-        saveload (argument?) {
-            this.game.pause();
-            this.game.gui.changeMenu("saveload");
-        },
-        settings(){
-            // this.game.onTap();
-            this.game.pause();
-            // this.game.resolve();
-            this.game.gui.changeMenu("settings");
-        },
-        return(){
-            const prev = this.game.gui.previousMenu;
-            this.game.gui.changeMenu(prev);
-            if (!prev) {
-                this.game.unpause();
+            auto: this.game.auto,
+            skip: this.game.skip,
+            save (component) {
+                this.game.save(parseInt(component.slot, 10));
+            },
+            saveload (argument?) {
+                this.game.pause();
+                this.game.gui.changeMenu('saveload');
+            },
+            settings(){
+                // this.game.onTap();
+                this.game.pause();
+                // this.game.resolve();
+                this.game.gui.changeMenu('settings');
+            },
+            return(){
+                const prev = this.game.gui.previousMenu;
+                this.game.gui.changeMenu(prev);
+                if (!prev) {
+                    this.game.unpause();
+                }
+            },
+            mute (argument?) {
+                this.game.audioManager.mute();
             }
-        },
-        mute (argument?) {
-            this.game.audioManager.mute();
-        }
-    };
+        };
+    }
+
+    buttonsAction = {};
 
 }
