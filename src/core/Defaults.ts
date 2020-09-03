@@ -45,7 +45,7 @@ export interface DefaultsInterface {
     };
 }
 
-export const defaults = {
+export const defaults: DefaultsInterface = {
     // name of the game
     name: 'RenJS-GAME',
 

@@ -1,7 +1,11 @@
 import {RJSGUI} from './RJSGUI';
-import {Group, Sprite} from 'phaser-ce';
+import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import {GUIAssets} from './Assets';
+import RJSSlider from '../components/RJSSlider';
+import RJSSprite from '../components/RJSSprite';
+import RJSButton from '../components/RJSButton';
+import ChoiceButton from '../components/ChoiceButton';
 
 export interface RJSGUIByBuilderInterface<T, TSprite> extends RJSGUI {
     hideMenu(menu, mute, callback);
@@ -28,8 +32,8 @@ export interface RJSGUIByBuilderInterface<T, TSprite> extends RJSGUI {
     previousMenu: any;
     saveSlots: any;
 }
-// todo to impl
-export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, Sprite> {
+
+export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, RJSSprite> {
     gui: any
     currentMusic = null
     choices: Group
@@ -40,8 +44,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     currentMenu = null
     menus = {}
     messageBox: any
-    ctc: Sprite
-    nameBox: Sprite
+    ctc: RJSSprite
+    nameBox: RJSSprite
     skipClickArea = []
     previousMenu = null
     saveSlots = {}
@@ -260,9 +264,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
 
     showText(text, title, colour, callback) {
         if  (title && this.nameBox) {
-            // todo unknown property
-            // this.nameBox.text.text = title;
-            // this.nameBox.text.fill = colour;
+            this.nameBox.text.text = title;
+            this.nameBox.text.fill = colour;
             this.nameBox.visible = true;
         } else {
             this.nameBox.visible = false;
@@ -328,7 +331,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
 
     createChoiceBox(choice, pos, index, choiceConfig, execId) {
         const separation = index*(parseInt(choiceConfig.height, 10)+parseInt(choiceConfig.separation, 10));
-        const chBox = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
+        const chBox: ChoiceButton = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
             if (choiceConfig.sfx && choiceConfig.sfx !== 'none') {
                 const sfx = this.game.add.audio(choiceConfig.sfx);
                 sfx.onStop.addOnce(sfx.destroy);
@@ -347,8 +350,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
                 chBox.setFrames(4,3,5,3);
             }
         }
-        // todo property not exist
-        // chBox.choiceId = choice.choiceId;
+        chBox.choiceId = choice.choiceId;
         chBox.name = choice.choiceId;
         const textStyle = {font: choiceConfig.size + 'px ' + choiceConfig.font, fill: choiceConfig.color};
         const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
@@ -360,7 +362,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     }
 
     loadButton(component, menu) {
-        const btn = this.game.add.button(component.x,component.y,component.id,() => {
+        const btn: RJSButton = this.game.add.button(component.x,component.y,component.id,() => {
             if (component.sfx && component.sfx !== 'none') {
                 const sfx = this.game.add.audio(component.sfx);
                 sfx.onStop.addOnce(sfx.destroy);
@@ -368,8 +370,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
             }
             this.buttonsAction[component.binding](component)
         },this,1,0,2,0,menu);
-        // todo property not exist
-        // btn.component = component;
+        btn.component = component;
         if (btn.animations.frameTotal === 2){
             btn.setFrames(1,0,1,0)
         }
@@ -409,9 +410,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
         if (!this.saveSlots){
             this.saveSlots = {};
         }
-        const sprite = this.game.add.sprite(component.x,component.y,component.id,0,menu);
-        // todo property not exist
-        // sprite.config = component;
+        const sprite: RJSSprite = this.game.add.sprite(component.x,component.y,component.id,0,menu);
+        sprite.config = component;
         const thumbnail = this.game.getSlotThumbnail(component.slot);
         if (thumbnail) {
             this.loadThumbnail(thumbnail,sprite);
@@ -420,7 +420,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     }
 
     loadSlider(component, menu) {
-        let sliderFull = this.game.add.image(component.x,component.y,component.id,0,menu);
+        let sliderFull: RJSSlider = this.game.add.image(component.x,component.y,component.id,0,menu);
         if (sliderFull.animations.frameTotal === 2){
             sliderFull = this.game.add.image(component.x,component.y,component.id,0,menu);
             sliderFull.frame = 1;
@@ -433,9 +433,9 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
         sliderMask.drawRect(0,0,maskWidth,sliderFull.height);
         sliderFull.mask = sliderMask;
         sliderFull.inputEnabled = true;
-        // todo property not exist
-        // sliderFull.limits = limits;
-        // sliderFull.binding = component.binding;
+
+        sliderFull.limits = limits;
+        sliderFull.binding = component.binding;
         sliderFull.events.onInputDown.add((sprite,pointer) => {
             const val = (pointer.x-sprite.x);
             sprite.mask.width = val;
@@ -513,8 +513,12 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
                 game.loadSlot(parseInt(component.slot, 10));
             },
 
-            auto: game.auto,
-            skip: game.skip,
+            auto() {
+               return  game.auto
+            },
+            skip() {
+                return game.skip
+            },
             save (component) {
                 game.save(parseInt(component.slot, 10));
             },

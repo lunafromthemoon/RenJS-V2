@@ -56,8 +56,22 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         //
     }
 
-    interpret(): void {
-        //
+    async interpret(): Promise<any> {
+        if (this.game.managers.story.currentScene.length === 0 || this.game.control.paused){
+            // console.log("Resolving something here");
+           return
+        } else {
+            const currentAction = this.game.managers.story.currentScene.shift();
+            // does extra stuff on every step
+            // like updating the execution stack
+            // or counting the interruption steps
+            for (const action in this.game.onInterpretActions){
+                this.game.onInterpretActions(action)
+            }
+            await this.game.managers.story.interpretAction(currentAction)
+            return this.game.managers.story.interpret();
+
+        }
     }
 
     startScene(name: string): void {

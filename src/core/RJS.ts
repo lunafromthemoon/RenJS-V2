@@ -31,7 +31,8 @@ export default class RJS extends Game {
     gui: RJSGUI
 
     config: RJSGameConfig
-    defaultValues: DefaultsInterface
+    defaultValues: DefaultsInterface = {...defaults}
+    interruptAction: any = null
 
     managers: {
         background?: BackgroundManager;
@@ -52,7 +53,7 @@ export default class RJS extends Game {
 
     constructor(config: RJSGameConfig) {
         super()
-        this.defaultValues = {...defaults}
+        // this.defaultValues = {...defaults}
         this.control = new RJSControl(this.defaultValues)
         this.config = config
         // this.initModulesInOrder()
@@ -133,6 +134,7 @@ export default class RJS extends Game {
     }
 
     auto (): void {
+        console.log(this.defaultValues)
         this.defaultValues.skiptime = 1000;
         this.control.auto = true;
         if (this.control.waitForClick){
@@ -306,16 +308,20 @@ export default class RJS extends Game {
         }
     }
 
-    onInterpretActions = {
-        updateStack(): void {
-            this.control.execStack[0].c++;
-            this.control.globalCounter++;
-            if (this.control.execStack[0].c === this.control.execStack[0].total){
-                this.control.execStack.shift();
+    onInterpretActions(action): void {
+        const control = this.control
+        if (action === 'updateStack') {
+            control.execStack[0].c++;
+            control.globalCounter++;
+            if (control.execStack[0].c === control.execStack[0].total){
+                control.execStack.shift();
 
             }
-        },
-        interruptAction: null
+        } else if (action === 'interruptAction') {
+            this.interruptAction()
+
+        }
+
     }
 
     // initScreenEffects (): void {

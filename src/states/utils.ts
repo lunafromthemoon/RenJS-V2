@@ -1,6 +1,6 @@
 import RJS from '../core/RJS';
 import {Sprite} from 'phaser-ce';
-import RJSSprite from '../entities/RJSSprite';
+import RJSSprite from '../components/RJSSprite';
 
 export function initSplash (game: RJS): Sprite {
     const splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
@@ -13,9 +13,8 @@ export function initLoadingBar (game: RJS): RJSSprite {
     let loadingBar: RJSSprite = game.add.sprite(position.x,position.y , 'loading') ;
     if (loadingBar.animations.frameTotal > 1){
         // load second frame as full bar
-        let bg = loadingBar;
         loadingBar = game.add.sprite(position.x,position.y , 'loading',1);
-        loadingBar.background = bg;
+        loadingBar.background = loadingBar;
     }
 
     return loadingBar

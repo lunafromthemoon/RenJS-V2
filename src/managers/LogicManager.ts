@@ -12,7 +12,7 @@ export interface LogicManagerInterface<T> extends RJSManagerInterface {
 
 export default class LogicManager implements LogicManagerInterface<Group> {
     choicesLog: object;
-    vars: object;
+    vars: object = {};
     currentChoices: any[];
     interrupting: boolean;
     visualChoices: Group = null;
@@ -20,6 +20,9 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     constructor(game: RJS) {
         this.game = game
+
+        const log = localStorage.getItem('RenJSChoiceLog'+game.config.name);
+        this.choicesLog = log ? JSON.parse(log) : {};
     }
 
     set(vars): void {
@@ -106,7 +109,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // clone
         const ch = choices.map(choice => ({...choice}));
         // filter (eval choice modifies the choice adding id and clearing text)
-        this.currentChoices = ch.filter(this.evalChoice,this);
+        this.currentChoices = ch.filter(this.evalChoice);
         this.visualChoices = this.game.add.group();
         const execId = this.getExecStackId();
         for (let i = 0; i < this.currentChoices.length; i++) {
@@ -161,6 +164,9 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.currentChoices = this.currentChoices.concat(ch);
         // Update choice log
         const execId = this.getExecStackId();
+        if (!this.choicesLog[execId]){
+            this.choicesLog[execId]=[];
+        }
         // END Update choice log
         this.game.gui.showChoices(this.currentChoices,execId);
     }
@@ -173,7 +179,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
                 choice.remainingSteps = s+1;
                 choice.interrupt = true;
             })
-            this.game.onInterpretActions.interruptAction = (): any => {
+            this.game.interruptAction = (): any => {
                 this.currentChoices = this.currentChoices.filter(choice => {
                     if (choice.remainingSteps) {
                         choice.remainingSteps--;
@@ -187,9 +193,14 @@ export default class LogicManager implements LogicManagerInterface<Group> {
                     return true;
                 },this);
                 if (this.currentChoices.length === 0){
-                    delete this.game.onInterpretActions.interruptAction;
+                   this.game.interruptAction = null;
                 }
             }
+        }
+
+        const execId = this.getExecStackId();
+        if (!this.choicesLog[execId]){
+            this.choicesLog[execId]=[];
         }
         this.showChoices(choices);
         this.game.control.execStack[0].interrupting = this.game.control.execStack[0].c;
