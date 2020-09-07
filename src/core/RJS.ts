@@ -232,7 +232,7 @@ export default class RJS extends Game {
     }
 
     waitForClick (callback?): void {
-        this.control.nextAction = callback ? callback : this.resolve;
+        this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping || this.control.auto){
             setTimeout(() => {
                 this.control.nextAction();
@@ -243,7 +243,7 @@ export default class RJS extends Game {
     }
 
     waitTimeout (time, callback?): void {
-        this.control.nextAction = callback ? callback : this.resolve;
+        this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping){
             this.control.nextAction();
         } else {
@@ -294,18 +294,18 @@ export default class RJS extends Game {
         }, this.control.clickCooldown);
     }
 
-    resolve(): void {
-        if (this.control.resolve != null){
-            if (this.control.doBeforeResolve != null){
-                this.control.doBeforeResolve();
-                this.control.doBeforeResolve = null;
-            }
-            // debugger;
-            this.control.waitForClick = false;
-            const resolve = this.control.resolve;
-            this.control.resolve = null;
-            resolve();
+    resolveAction(): void {
+        
+        if (this.control.doBeforeResolve != null){
+            this.control.doBeforeResolve();
+            this.control.doBeforeResolve = null;
         }
+        // debugger;
+        this.control.waitForClick = false;
+        if (!this.control.paused){
+            this.managers.story.interpret()
+        }
+            
     }
 
     onInterpretActions(action): void {

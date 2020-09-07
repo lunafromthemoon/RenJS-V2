@@ -46,17 +46,17 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         }
     }
 
-    async show (name, transition): Promise<any> {
+    async show (name, transitionName): Promise<any> {
         const oldBg = this.current;
         this.current = name ? this.backgrounds[name] : null;
         if (this.current && this.current.animated){
             this.current.animations.play('run', null, true);
         }
-        return transition(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1, this.backgroundSprites);
+        return this.transition[transitionName](oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1, this.backgroundSprites);
     }
 
-    async hide (bg?, transition = this.transition.FADEOUT): Promise<any> {
-        return this.show(null,() => transition);
+    async hide (bg?, transitionName = 'FADEOUT'): Promise<any> {
+        return this.show(null,transitionName);
     }
 
     isBackground (actor): boolean {

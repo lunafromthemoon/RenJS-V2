@@ -56,7 +56,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         //
     }
 
-    async interpret(): Promise<any> {
+    interpret(): void {
         if (this.game.managers.story.currentScene.length === 0 || this.game.control.paused){
             // console.log("Resolving something here");
            return
@@ -68,8 +68,8 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             for (const action in this.game.onInterpretActions){
                 this.game.onInterpretActions(action)
             }
-            await this.game.managers.story.interpretAction(currentAction)
-            return this.game.managers.story.interpret();
+            this.game.managers.story.interpretAction(currentAction)
+            // return this.game.managers.story.interpret();
 
         }
     }
@@ -120,7 +120,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         }
     }
 
-    async interpretAction(action): Promise<any> {
+    interpretAction(action): void {
         const actionParams = {
             withTransition: ['show','hide','play','stop'],
             withPosition: ['show'],
@@ -147,11 +147,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         if (actionParams.withTransition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
             if (str.indexOf('WITH') !== -1){
-                action.transitionName = str[str.indexOf('WITH') +1];
+                action.transition = str[str.indexOf('WITH') +1];
             } else {
-                action.transitionName = this.game.defaultValues.transitions[actorType];
+                action.transition = this.game.defaultValues.transitions[actorType];
             }
-            action.transition = () => this.game.screenEffects.transition[action.transitionName];
+            // action.transition = () => this.game.screenEffects.transition[action.transitionName];
         }
         if (params && actionParams.withPosition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
@@ -183,28 +183,45 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         switch(this.game.control.action){
             // Asnyc actions, will resolve after some actions
             case 'show' :
-                if (!contAfterTrans) return action.manager.show(actor, action.transition, action);
+            // each action should be a subclass of StoryAction
+                var transition: Promise<any> = action.manager.show(actor, action.transition, action);
+                if (!contAfterTrans){
+                    console.log(transition)
+                    transition.then(()=> this.game.resolveAction())
+                    return
+                }
                 break;
             case 'hide' :
+                var transition: Promise<any> = null;
                 if (actor === 'CHARS') {
-                    return this.game.managers.character.hideAll(action.transition)
+                    transition = this.game.managers.character.hideAll(action.transition)
+                } else if (actor === 'ALL') {
+                    transition = Promise.all([this.game.managers.background.hide(action.transition), this.game.managers.character.hideAll(action.transition), this.game.managers.cgs.hideAll(action.transition)]);
+                } else {
+                    transition = action.manager.hide(actor, action.transition);
                 }
-                if (actor === 'ALL') {
-                    return Promise.all([this.game.managers.background.hide(action.transition), this.game.managers.character.hideAll(action.transition), this.game.managers.cgs.hideAll(action.transition)]);
+                if (!contAfterTrans){
+                    transition.then(()=> this.game.resolveAction())
+                    return
                 }
-                if (!contAfterTrans) return action.manager.hide(actor, action.transition);
                 break;
             case 'animate' :
-                if (!contAfterTrans) return this.game.managers.cgs.animate(actor, action, action.time);
+                var transition: Promise<any> = this.game.managers.cgs.animate(actor, action, action.time);
+                if (!contAfterTrans){
+                    transition.then(()=> this.game.resolveAction())
+                    return
+                }
                 break;
             case 'effect' :
-                if (!contAfterTrans) return this.game.screenEffects.effects[actor](action);
-                break;
+                // if (!contAfterTrans) return this.game.screenEffects.effects[actor](action);
+                // break;
             case 'say' :
                 const look = (keyParams.length > 2) ? keyParams[2] : null;
-                return this.game.managers.text.say(actor, look, params)
+                this.game.managers.text.say(actor, look, params);
+                return;
             case 'text' :
-                return this.game.managers.text.show(params);
+                this.game.managers.text.show(params);
+                return
             // Wait for user action input, will resolve on its own
             case 'wait' :
                 if (params === 'click'){
@@ -218,11 +235,12 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             //     return this.game..customContent[actor](params);
             case 'choice' :
                 this.game.control.skipping = false;
-                return this.game.managers.logic.showChoices([...params]);
+                this.game.managers.logic.showChoices([...params]);
+                return
             case 'visualchoice' :
                 this.game.control.skipping = false;
-                return this.game.managers.logic.showVisualChoices([...params]);
-
+                this.game.managers.logic.showVisualChoices([...params]);
+                return 
             // Synch actions, will resolve after case
             case 'interrupt' :
                 this.game.managers.logic.interrupt(actor,[...params]);
@@ -265,5 +283,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
                 this.game.managers.story.startScene(params);
                 break;
         }
+        this.game.resolveAction()
     }
 }

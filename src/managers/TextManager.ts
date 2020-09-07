@@ -14,25 +14,26 @@ export default class TextManager implements TextManagerInterface {
         //
     }
 
-    async show (text, title?, colour?): Promise<void> {
+    show (text, title?, colour?): void {
         const t = this.game.managers.logic.parseVars(text.toString());
         this.game.gui.showText(t, title, colour, () => {
             this.game.waitForClick(() => {
                 this.game.gui.hideText();
+                this.game.resolveAction();
             });
         });
     };
 
-    async hide (): Promise<void> {
+    hide (): void {
         this.game.gui.hideText();
     }
 
-    async say (name, look, text): Promise<void> {
+    say (name, look, text): void {
         const character = this.game.managers.character.characters[name];
         if (look){
             this.game.managers.character.show(name, this.game.screenEffects.transition.CUT,{look});
         }
-        return this.show(text,character.name,character.speechColour);
+        this.show(text,character.name,character.speechColour);
     }
 
 }

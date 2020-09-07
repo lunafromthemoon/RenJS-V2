@@ -31,7 +31,7 @@ export default class CGSManager implements CGSManagerInterface {
     }
 
     async set(current): Promise<void> {
-        await this.hideAll(Transition.CUT);
+        await this.hideAll('CUT');
         this.current = current;
         for (const cg in this.current) {
             if (cg) {
@@ -40,8 +40,7 @@ export default class CGSManager implements CGSManagerInterface {
         }
     }
 
-    async hideAll(transition?: string): Promise<any> {
-        if (!transition) transition = 'FADEOUT'
+    async hideAll(transition = 'FADEOUT'): Promise<any> {
         const promises = []
         for (const cg in this.cgs) {
             promises.push(this.hide(cg,transition));
@@ -49,7 +48,7 @@ export default class CGSManager implements CGSManagerInterface {
         return Promise.all(promises)
     }
 
-    show (name, transition, props): any {
+    show (name, transitionName, props): Promise<any> {
         const position = props.position ? props.position : {x: this.game.world.centerX, y: this.game.world.centerY};
         this.cgs[name] = this.storyManager.cgsSprites.create(position.x, position.y, name);
         this.cgs[name].anchor.set(0.5);
@@ -73,10 +72,11 @@ export default class CGSManager implements CGSManagerInterface {
             }
         }
         this.current[name] = {name, position, zoom: props.zoom, angle: props.angle};
-        return transition(null, this.cgs[name], position);
+        return this.transition[transitionName](null, this.cgs[name], position);
     }
 
     async animate (name, toAnimate, time): Promise<void> {
+        // TODO: make truly async
         const tweenables: {
             alpha?: number;
             angle?: number;
@@ -119,19 +119,21 @@ export default class CGSManager implements CGSManagerInterface {
                 resolveFunction = (): void => {
                     this.cgs[name].animations.stop();
                     this.cgs[name].frame = 0;
+                    // has to finish here
                 }
             }
         }
         if (!time) {
             // stopping animation or looped animation
+            // has to finish here
             return;
         }
 
         this.tweenManager.tween(this.cgs[name], tweenables, resolveFunction, time, true);
     }
 
-    async hide (name, transition): Promise<void> {
-        await transition(this.cgs[name], null)
+    async hide (name, transitionName): Promise<void> {
+        await this.transition[transitionName](this.cgs[name], null)
         this.cgs[name].destroy();
         delete this.cgs[name];
         delete this.current[name];

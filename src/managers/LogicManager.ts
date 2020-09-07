@@ -148,7 +148,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             this.game.control.execStack[0].action = 'interrupt';
             this.interrupting = false;
         } else {
-            this.game.resolve();
+            this.game.resolveAction();
         }
     }
 
@@ -159,19 +159,16 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return 'Scene:'+cScene+'|Action:'+cAction;
     }
 
-    showChoices(choices): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.game.control.resolve = resolve;
-            const ch = choices.map(choice => ({...choice})).filter(this.evalChoice)
-            this.currentChoices = this.currentChoices.concat(ch);
-            // Update choice log
-            const execId = this.getExecStackId();
-            if (!this.choicesLog[execId]){
-                this.choicesLog[execId]=[];
-            }
-            // END Update choice log
-            this.game.gui.showChoices(this.currentChoices,execId);
-        })
+    showChoices(choices): void {
+        const ch = choices.map(choice => ({...choice})).filter(this.evalChoice)
+        this.currentChoices = this.currentChoices.concat(ch);
+        // Update choice log
+        const execId = this.getExecStackId();
+        if (!this.choicesLog[execId]){
+            this.choicesLog[execId]=[];
+        }
+        // END Update choice log
+        this.game.gui.showChoices(this.currentChoices,execId);
     }
 
     interrupt(steps, choices): any {
