@@ -73,7 +73,7 @@ export default class CGSManager implements CGSManagerInterface {
             }
         }
         this.current[name] = {name, position, zoom: props.zoom, angle: props.angle};
-        return this.transition[transitionName](null, this.cgs[name], position);
+        return this.transition.get(transitionName)(null, this.cgs[name], position);
     }
 
     async animate (name, toAnimate, time): Promise<void> {
@@ -138,7 +138,7 @@ export default class CGSManager implements CGSManagerInterface {
     }
 
     async hide (name, transitionName): Promise<void> {
-        await this.transition[transitionName](this.cgs[name], null)
+        await this.transition.get(transitionName)(this.cgs[name], null)
         this.cgs[name].destroy();
         delete this.cgs[name];
         delete this.current[name];

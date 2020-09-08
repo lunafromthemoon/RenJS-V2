@@ -23,6 +23,16 @@ export default class Transition implements RJSScreenEffectInterface {
         this.tweenManager = game.managers.tween
     }
 
+    get(name: string): any{
+        return (from, to, position, scaleX?) => {
+            if (this[name]){
+                this[name](from, to, position, scaleX)
+            } else {
+                this.game.pluginsRJS[name].execute(from, to, position, scaleX)
+            }
+        }
+    }
+
     async CUT(from, to, position, scaleX?): Promise<void> {
         if (from) {
             from.alpha = 0;

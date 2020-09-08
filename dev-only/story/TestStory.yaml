@@ -1,5 +1,8 @@
 
 start:
+  - call helloWorld:
+    param1: 'hello'
+    param2: 'world'
   - choice:
     - test images:
       - scene: testimages
@@ -11,7 +14,7 @@ start:
       - scene: testLogic
 
 testimages:
-  - show room_night: WITH FADE CONTINUE
+  - show room_night: WITH FADE2 CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - text: deuzi moves
   - show deuzi: AT LEFT WITH MOVE
@@ -77,7 +80,7 @@ testAaE:
   - marco says: It looks like there's going to be a storm.
   - effect THUNDER:
   - marco says happy: Here it is!
-  - ambient RAIN:
+  - ambient RAIN2:
   - text: Snow in 3...
   - text: 2...
   - text: 1...

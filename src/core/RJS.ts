@@ -19,6 +19,7 @@ import {defaults, DefaultsInterface} from './Defaults';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
 import Loader from '../states/Loader';
+import {PluginInterface} from './Plugin'
 
 export default class RJS extends Game {
 
@@ -29,6 +30,13 @@ export default class RJS extends Game {
     setup: any
     story: object
     gui: RJSGUI
+
+    pluginsRJS: any = {}
+
+    addPlugin(name:string, cls: any) : void {
+        console.log("adding "+name)
+        this.pluginsRJS[name] = new cls(name,this)
+    }
 
     config: RJSGameConfig
     defaultValues: DefaultsInterface = {...defaults}
