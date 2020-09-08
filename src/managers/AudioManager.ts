@@ -21,7 +21,7 @@ export interface AudioManagerInterface extends RJSManagerInterface {
 }
 
 export default class AudioManager implements AudioManagerInterface {
-    current: { bgm: any; bgs: any };
+    current = { bgm: null, bgs: null };
     audioLoaded: boolean;
     musicList: object = {};
     sfx: object = {};
