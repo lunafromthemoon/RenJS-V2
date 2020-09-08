@@ -1,9 +1,9 @@
-import RJSManagerInterface from './RJSManager';
+import {RJSSpriteManagerInterface} from './RJSManager';
 import {Group} from 'phaser-ce';
 import Transition from '../screen-effects/Transition';
 import RJS from '../core/RJS';
 
-export interface BackgroundManagerInterface<T> extends RJSManagerInterface {
+export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface {
     backgroundSprites: T;
     backgrounds: object;
     current?: object;

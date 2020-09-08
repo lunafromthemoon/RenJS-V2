@@ -1,10 +1,10 @@
-import RJSManagerInterface from './RJSManager';
+import {RJSSpriteManagerInterface} from './RJSManager';
 import Transition from '../screen-effects/Transition';
 import Character from '../entities/Character';
 import RJS from '../core/RJS';
 import {Sprite} from 'phaser-ce';
 
-export interface CharacterManagerInterface extends RJSManagerInterface {
+export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
     characters: object;
     showing: object;
     hideAll(transition: string);

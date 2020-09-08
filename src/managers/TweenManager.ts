@@ -1,45 +1,45 @@
 import {Tween} from 'phaser-ce';
 import RJS from '../core/RJS';
+import RJSTween from '../core/RJSTween';
 import RJSManagerInterface from './RJSManager';
 
 export interface TweenManagerInterface extends RJSManagerInterface {
     tween (sprite, tweenables, callback, time: number, start: boolean, delay?: number);
     chain (tweens: any[], time?: number);
+    skip(): any;
     unskippable: boolean;
-    current: any[];
-    skip: any;
-    callbackOnComplete: any;
-    tweenables: any;
+    current: RJSTween[];
+    
+
 }
 
 export default class TweenManager implements TweenManagerInterface {
     unskippable: boolean
     current = []
     private game: RJS
-    callbackOnComplete: any
-    tweenables: any;
+
 
     constructor(game: RJS) {
         this.game = game
     }
 
-    tween(sprite, tweenables, callback, time, start, delay?): Tween {
-        const tween = this.game.add.tween(sprite);
+    tween(sprite, tweenables, callback, time, start, delay?): RJSTween {
+        const tween: RJSTween = this.game.add.tween(sprite);
         delay = !delay ? 0 : delay;
         tween.to(tweenables, time, Phaser.Easing.Linear.None,false, delay);
         if (callback) {
             tween.onComplete.addOnce(callback, this);
-            this.callbackOnComplete = callback;
+            tween.callbackOnComplete = callback;
         }
-        this.tweenables = tweenables;
+        tween.tweenables = tweenables;
         if (start){
-            this.game.managers.tween.current = [];
+            this.current = [];
             tween.start();
             if (!this.game.control.auto) {
-                this.game.waitForClick(this.skip);
+                this.game.waitForClick(() => this.skip());
             }
         }
-        this.game.managers.tween.current.push(tween);
+        this.current.push(tween);
         // if (RenJS.control.skipping){
         //     this.skip();
         // }
@@ -60,7 +60,7 @@ export default class TweenManager implements TweenManagerInterface {
         });
         this.current[0].start();
         if (!this.game.control.auto) {
-            this.game.waitForClick(this.skip);
+            this.game.waitForClick(() => this.skip());
         }
     }
 
@@ -71,7 +71,7 @@ export default class TweenManager implements TweenManagerInterface {
             tween.start();
         });
         if (!this.game.control.auto) {
-            this.game.waitForClick(this.skip);
+            this.game.waitForClick(() => this.skip());
         }
     }
 
@@ -79,17 +79,16 @@ export default class TweenManager implements TweenManagerInterface {
         if (this.unskippable){
             return;
         }
-        const tweens = [...this.current];
-        this.current = [];
-        tweens.forEach(tween => {
+        this.current.forEach(tween => {
             tween.stop(false);
-            for (const property in this.tweenables){
-                tween.target[property] = this.tweenables[property];
+            for (const property in tween.tweenables){
+                tween.target[property] = tween.tweenables[property];
             }
-            if (this.callbackOnComplete){
-                this.callbackOnComplete();
+            if (tween.callbackOnComplete){
+                tween.callbackOnComplete();
             }
         });
+        this.current = [];
     }
 
     set(...args: any): void {

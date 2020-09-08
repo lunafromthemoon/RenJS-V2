@@ -420,26 +420,36 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     }
 
     loadSlider(component, menu) {
-        let sliderFull: RJSSlider = this.game.add.image(component.x,component.y,component.id,0,menu);
+        let sliderFull: RJSSlider = this.game.add.sprite(component.x,component.y,component.id,0,menu);
         if (sliderFull.animations.frameTotal === 2){
-            sliderFull = this.game.add.image(component.x,component.y,component.id,0,menu);
+            sliderFull = this.game.add.sprite(component.x,component.y,component.id,0,menu);
             sliderFull.frame = 1;
         }
-        const sliderMask = this.game.add.graphics(component.x,component.y,menu);
-        sliderMask.beginFill(0xffffff);
+        const createMask = (slider: RJSSlider,currentVal) => {
+            const sliderMask = this.game.add.graphics(slider.x,slider.y,menu);
+            sliderMask.beginFill(0xffffff);
+            const maskWidth = slider.width*(currentVal-slider.limits[0])/(slider.limits[1]-slider.limits[0]);
+            sliderMask.drawRect(0,0,maskWidth,slider.height);
+            sliderMask.endFill();
+            return sliderMask;
+        }
         const currentVal = this.game.defaultValues.settings[component.binding];
-        const limits = this.game.defaultValues.limits[component.binding];
-        const maskWidth = sliderFull.width*(currentVal-limits[0])/(limits[1]-limits[0]);
-        sliderMask.drawRect(0,0,maskWidth,sliderFull.height);
-        sliderFull.mask = sliderMask;
-        sliderFull.inputEnabled = true;
-
-        sliderFull.limits = limits;
+        sliderFull.limits = this.game.defaultValues.limits[component.binding];
         sliderFull.binding = component.binding;
+        sliderFull.mask = createMask(sliderFull,currentVal);
+        sliderFull.inputEnabled = true;
+        // sliderFull.mask.width = 50
+
+        
         sliderFull.events.onInputDown.add((sprite,pointer) => {
             const val = (pointer.x-sprite.x);
-            sprite.mask.width = val;
+            // sprite.mask.width = val;
+            
+
             const newVal = (val/sprite.width)*(sprite.limits[1] - sprite.limits[0])+sprite.limits[0];
+            sprite.mask.destroy();
+            sprite.mask = createMask(sprite,newVal);
+
             this.sliderValueChanged[sprite.binding](newVal);
         });
     }

@@ -160,7 +160,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     showChoices(choices): void {
-        const ch = choices.map(choice => ({...choice})).filter(this.evalChoice)
+        const ch = choices.map(choice => ({...choice})).filter(choice => this.evalChoice(choice))
         this.currentChoices = this.currentChoices.concat(ch);
         // Update choice log
         const execId = this.getExecStackId();

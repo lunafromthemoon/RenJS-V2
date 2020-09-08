@@ -6,7 +6,7 @@ import Emitter = Phaser.Particles.Arcade.Emitter;
 import RJS from '../core/RJS';
 
 export default class Ambient implements RJSScreenEffectInterface {
-    emitters: Emitter[]
+    emitters: Emitter[] = []
     clearFunctions = []
     maxLifespan = 0
     animation: Animation
@@ -24,7 +24,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         this.storyManager = game.managers.story
     }
 
-    addEmitter (options): number {
+    addEmitter (options,params): number {
         const emitter = this.game.add.emitter(this.game.world.centerX, -32, options.maxParticles);
         emitter.width = this.game.world.width * 1.5;
         emitter.makeParticles(options.sprite, options.frames);
@@ -44,7 +44,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             emitter.maxRotation = options.rotation[1];
         }
 
-        emitter.start.apply(options.params)
+        emitter.start(...params)
         return this.emitters.push(emitter);
     }
 
@@ -88,9 +88,8 @@ export default class Ambient implements RJSScreenEffectInterface {
             frames: [0],
             scale: [0.1,0.5],
             speed: {y:[300,500],x:[-5,5]},
-            rotation: [0,0],
-            params: [false, 1600, 5, 0]
-        });
+            rotation: [0,0]
+        },[false, 1600, 5, 0]);
 
         this.maxLifespan = 1600;
     }
@@ -102,9 +101,8 @@ export default class Ambient implements RJSScreenEffectInterface {
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.2,0.6],
             speed: {y:[20,100],x:[120,150]},
-            rotation: [0,40],
-            params: [false, 6000, 20]
-        });
+            rotation: [0,40]
+        },[false, 6000, 20]);
 
         this.addEmitter({
             maxParticles: 150,
@@ -112,9 +110,8 @@ export default class Ambient implements RJSScreenEffectInterface {
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.8,1.2],
             speed: {y:[50,150],x:[100,120]},
-            rotation: [0,40],
-            params: [false, 5000, 40]
-        });
+            rotation: [0,40]
+        },[false, 6000, 20]);
 
         this.maxLifespan = 6000;
     }
@@ -200,8 +197,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             scale: [0.2,0.6],
             speed: {y:[20,100]},
             rotation: [0,40],
-            params: [false, 6000, 20]
-        });
+        },[false, 6000, 20]);
 
         this.addEmitter({
             maxParticles: 150,
@@ -210,8 +206,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             scale: [0.8,1.2],
             speed: {y:[50,150]},
             rotation: [0,40],
-            params: [false, 5000, 40]
-        });
+        },[false, 5000, 40]);
         this.addEmitter({
             maxParticles: 150,
             sprite:'snowflakes_large',
@@ -219,10 +214,9 @@ export default class Ambient implements RJSScreenEffectInterface {
             scale: [0.5,1],
             speed: {y:[100,200]},
             rotation: [0,40],
-            params: [false, 4000, 1000]
-        });
+        },[false, 4000, 1000]);
 
-        this.maxLifespan = 6000;
+        this.maxLifespan = 1600;
     }
 }
 

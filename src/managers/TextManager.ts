@@ -1,5 +1,6 @@
 import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
+import Transition from '../screen-effects/Transition';
 
 export interface TextManagerInterface extends RJSManagerInterface {}
 
@@ -31,7 +32,7 @@ export default class TextManager implements TextManagerInterface {
     say (name, look, text): void {
         const character = this.game.managers.character.characters[name];
         if (look){
-            this.game.managers.character.show(name, this.game.screenEffects.transition.CUT,{look});
+            this.game.managers.character.show(name, Transition.CUT,{look});
         }
         this.show(text,character.name,character.speechColour);
     }

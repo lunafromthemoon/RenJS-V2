@@ -28,8 +28,8 @@ export default class Effects implements RJSScreenEffectInterface {
         bg.endFill();
         bg.alpha = 0;
 
-        const style = {...this.game.defaultValues.defaultTextStyle, ...this.gui.getChoiceTextStyle()};
-        style.font = '25pt ' + this.gui.getFonts()[0];
+        const style = {...this.game.defaultValues.defaultTextStyle, ...this.game.gui.getChoiceTextStyle()};
+        style.font = '25pt ' + this.game.gui.getFonts()[0];
         const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, params.text[0], style);
         credits.anchor.set(0.5);
         const separation = 35;
@@ -45,19 +45,24 @@ export default class Effects implements RJSScreenEffectInterface {
             {sprite: credits, tweenables: {y: -(separation * params.text.length + 30)}, time: 700 * params.text.length},
 
         ];
-        if (!params.endGame) {
-            tweenChain.push(
-                {
-                    sprite: bg, tweenables: {alpha: 0}, time: this.game.defaultValues.fadetime, callback: () => {
-                        bg.destroy();
-                        credits.destroy();
-                    }
-                })
-        } else {
-            tweenChain[1].callback = null;
-        }
-        this.tweenManager.unskippable = true;
-        this.tweenManager.chain(tweenChain);
+        return new Promise(resolve => {
+            if (!params.endGame) {
+                tweenChain.push(
+                    {
+                        sprite: bg, tweenables: {alpha: 0}, time: this.game.defaultValues.fadetime, callback: () => {
+                            bg.destroy();
+                            credits.destroy();
+                            this.audioManager.stop('bgm','FADE');
+                            resolve();
+                        }
+                    })
+            } else {
+                tweenChain[1].callback = null;
+            }
+            this.tweenManager.unskippable = true;
+            this.tweenManager.chain(tweenChain);
+        })
+
     }
 
     async SHOWTITLE(param): Promise<void> {
@@ -89,14 +94,18 @@ export default class Effects implements RJSScreenEffectInterface {
     async FLASHIMAGE(imageName: string): Promise<void> {
         const image = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, imageName);
         image.anchor.set(0.5);
-        setTimeout(() => {
-            const tween = this.game.add.tween(image);
-            tween.to({alpha: 0}, this.game.defaultValues.fadetime / 2, Phaser.Easing.Linear.None);
-            tween.onComplete.add(() => {
-                image.destroy();
-            });
-            tween.start();
-        }, this.game.defaultValues.fadetime / 3);
+        return new Promise(resolve => {
+            setTimeout(() => {
+                const tween = this.game.add.tween(image);
+                tween.to({alpha: 0}, this.game.defaultValues.fadetime / 2, Phaser.Easing.Linear.None);
+                tween.onComplete.add(() => {
+                    image.destroy();
+                    resolve();
+                });
+                tween.start();
+            }, this.game.defaultValues.fadetime / 3);
+        })
+        
     }
 
     async EXPLOSION(): Promise<void> {
@@ -123,7 +132,6 @@ export default class Effects implements RJSScreenEffectInterface {
     }
 
     async MULTIATTACK(): Promise<void> {
-        this.audioManager.playSFX('magical');
         this.game.camera.shake(0.01, 600);
         return this.FLASHIMAGE('multiattack');
     }

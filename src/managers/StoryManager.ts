@@ -2,6 +2,8 @@ import RJSManager from './RJSManager';
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
+import StoryActionFactory from '../core/actions/StoryActionFactory'
+import StoryAction from '../core/actions/StoryAction';
 
 export interface StoryManagerInterface<T> extends RJSManagerInterface {
     behindCharactersSprites: T;
@@ -137,19 +139,22 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         if (keyParams[1] === 'says') {
             mainAction = 'say';
             actor = keyParams[0];
+            action.look = (keyParams.length > 2) ? keyParams[2] : null;
         } else {
             mainAction = keyParams[0];
             actor = keyParams[1];
         }
-        const actorType = this.getActorType(actor);
+        action.actor = actor;
+        action.actorType = this.getActorType(actor);
         // parse WITH and AT
         const params = action[key];
+        action.body = params;
         if (actionParams.withTransition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
             if (str.indexOf('WITH') !== -1){
                 action.transition = str[str.indexOf('WITH') +1];
             } else {
-                action.transition = this.game.defaultValues.transitions[actorType];
+                action.transition = this.game.defaultValues.transitions[action.actorType];
             }
             // action.transition = () => this.game.screenEffects.transition[action.transitionName];
         }
@@ -168,121 +173,22 @@ export default class StoryManager implements StoryManagerInterface<Group> {
                 action.look = str[0];
             }
         }
-        let contAfterTrans = false;
+        action.contAfterTrans = false;
         if (params && actionParams.withContinue.includes(mainAction)){
             const str = params ? params.split(' ') : [];
-            contAfterTrans = str.indexOf('CONTINUE') !== -1
+            action.contAfterTrans = str.indexOf('CONTINUE') !== -1
         }
-        action.manager = this.getManagerByActorType(actorType);
+        action.manager = this.getManagerByActorType(action.actorType);
         // RenJS.control.action = mainAction;
         this.game.control.action = mainAction
         this.game.control.wholeAction = params;
         this.game.control.nextAction = null;
-        // console.log('Doing '+RenJS.control.action);
-        console.log(action)
-        switch(this.game.control.action){
-            // Asnyc actions, will resolve after some actions
-            case 'show' :
-            // each action should be a subclass of StoryAction
-                var transition: Promise<any> = action.manager.show(actor, action.transition, action);
-                if (!contAfterTrans){
-                    console.log(transition)
-                    transition.then(()=> this.game.resolveAction())
-                    return
-                }
-                break;
-            case 'hide' :
-                var transition: Promise<any> = null;
-                if (actor === 'CHARS') {
-                    transition = this.game.managers.character.hideAll(action.transition)
-                } else if (actor === 'ALL') {
-                    transition = Promise.all([this.game.managers.background.hide(action.transition), this.game.managers.character.hideAll(action.transition), this.game.managers.cgs.hideAll(action.transition)]);
-                } else {
-                    transition = action.manager.hide(actor, action.transition);
-                }
-                if (!contAfterTrans){
-                    transition.then(()=> this.game.resolveAction())
-                    return
-                }
-                break;
-            case 'animate' :
-                var transition: Promise<any> = this.game.managers.cgs.animate(actor, action, action.time);
-                if (!contAfterTrans){
-                    transition.then(()=> this.game.resolveAction())
-                    return
-                }
-                break;
-            case 'effect' :
-                // if (!contAfterTrans) return this.game.screenEffects.effects[actor](action);
-                // break;
-            case 'say' :
-                const look = (keyParams.length > 2) ? keyParams[2] : null;
-                this.game.managers.text.say(actor, look, params);
-                return;
-            case 'text' :
-                this.game.managers.text.show(params);
-                return
-            // Wait for user action input, will resolve on its own
-            case 'wait' :
-                if (params === 'click'){
-                    this.game.waitForClick();
-                } else {
-                    this.game.waitTimeout(parseInt(params, 10));
-                }
-                return;
-                // todo impl
-            // case 'call' :
-            //     return this.game..customContent[actor](params);
-            case 'choice' :
-                this.game.control.skipping = false;
-                this.game.managers.logic.showChoices([...params]);
-                return
-            case 'visualchoice' :
-                this.game.control.skipping = false;
-                this.game.managers.logic.showVisualChoices([...params]);
-                return 
-            // Synch actions, will resolve after case
-            case 'interrupt' :
-                this.game.managers.logic.interrupt(actor,[...params]);
-                break;
-            case 'var' :
-                this.game.managers.logic.setVar(actor,params);
-                break;
-            case 'if' :
-                const condition = key.substr(key.indexOf('('));
-                const branches: {
-                    ISTRUE: boolean;
-                    ISFALSE?: boolean;
-                } = {
-                    ISTRUE: action[key]
-                }
-                const next = this.game.managers.story.currentScene[0];
-                if (next && getKey(next) === 'else'){
-                    branches.ISFALSE = next.else;
-                    this.game.managers.story.currentScene.shift();
-                }
-                this.game.managers.logic.branch(condition, branches);
-                break;
-            case 'else' :
-                break;
-            case 'play' :
-                // debugger;
-                if (actorType === 'bgm') {
-                    this.game.managers.audio.play(actor, 'bgm', action.looped, action.transitionName);
-                } else {
-                    this.game.managers.audio.playSFX(actor);
-                }
-                break;
-            case 'stop' :
-                this.game.managers.audio.stop('bgm', action.transitionName);
-                break;
-            case 'ambient' :
-                this.game.screenEffects.ambient[actor](action.sfx);
-                break;
-            case 'scene' :
-                this.game.managers.story.startScene(params);
-                break;
+        if (this.game.control.action == 'else'){
+            // nothing to do, already resolved in previous if action
+            return this.game.resolveAction();
         }
-        this.game.resolveAction()
+        console.log(mainAction)
+        let storyAction: StoryAction = StoryActionFactory(mainAction,action,this.game);
+        storyAction.execute();
     }
 }

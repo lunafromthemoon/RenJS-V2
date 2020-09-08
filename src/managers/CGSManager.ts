@@ -5,13 +5,14 @@ import {range} from '../utils/array';
 import {TweenManagerInterface} from './TweenManager';
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
-import RJSManagerInterface from './RJSManager';
+import {RJSSpriteManagerInterface} from './RJSManager';
 
-export interface CGSManagerInterface extends RJSManagerInterface {
+export interface CGSManagerInterface extends RJSSpriteManagerInterface {
     cgs: object;
     current: object;
     hideAll(transition: string);
     show(name: string, transition: () => any, props): any;
+    hide(name, transition): Promise<any>;
 }
 
 export default class CGSManager implements CGSManagerInterface {
@@ -104,32 +105,36 @@ export default class CGSManager implements CGSManagerInterface {
             tweenables.width = this.cgs[name].originalScale.width * toAnimate.zoom;
         }
         this.current[name] = {...this.current[name], ...toAnimate};
-        let resolveFunction = null
-        if (toAnimate.spritesheet) {
-            if (toAnimate.spritesheet === 'stop') {
-                this.cgs[name].animations.stop();
-                this.cgs[name].frame = 0;
-            } else {
-                const str = toAnimate.spritesheet.split(' ');
-                // let added
-                const animName = str[0];
-                // let added
-                const looped = str.length > 1 && str[1] === 'looped';
-                this.cgs[name].animations.play(animName, null, looped);
-                resolveFunction = (): void => {
+        return new Promise(resolve => {
+            let resolveFunction = resolve
+            if (toAnimate.spritesheet) {
+                if (toAnimate.spritesheet === 'stop') {
                     this.cgs[name].animations.stop();
                     this.cgs[name].frame = 0;
-                    // has to finish here
+                    // TODO should it finish?
+                } else {
+                    const str = toAnimate.spritesheet.split(' ');
+                    // let added
+                    const animName = str[0];
+                    // let added
+                    const looped = str.length > 1 && str[1] === 'looped';
+                    this.cgs[name].animations.play(animName, null, looped);
+                    resolveFunction = (): void => {
+                        this.cgs[name].animations.stop();
+                        this.cgs[name].frame = 0;
+                        resolve()
+                    }
                 }
             }
-        }
-        if (!time) {
-            // stopping animation or looped animation
-            // has to finish here
-            return;
-        }
+            if (!time) {
+                // stopping animation or looped animation
+                resolve()
+                return;
+            }
 
-        this.tweenManager.tween(this.cgs[name], tweenables, resolveFunction, time, true);
+            this.tweenManager.tween(this.cgs[name], tweenables, resolveFunction, time, true);
+        })
+        
     }
 
     async hide (name, transitionName): Promise<void> {

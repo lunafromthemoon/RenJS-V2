@@ -31,7 +31,6 @@ export default class Transition implements RJSScreenEffectInterface {
             to.alpha = 1;
             setNewProperties(to, position, scaleX);
         }
-
     }
 
     async FADE(from, to, position, scaleX?): Promise<any> {
