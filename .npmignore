@@ -1,0 +1,21 @@
+# source code
+src
+
+# compiler
+tsconfig.json
+webpack.*.js
+
+
+# tests
+test
+
+#  lint
+.eslintrc.js
+.prettierrc
+
+# IDE
+.vscode
+.idea
+
+# git
+.git

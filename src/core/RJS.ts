@@ -19,7 +19,6 @@ import {defaults, DefaultsInterface} from './Defaults';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
 import Loader from '../states/Loader';
-import {PluginInterface} from './Plugin'
 
 export default class RJS extends Game {
 
@@ -33,8 +32,7 @@ export default class RJS extends Game {
 
     pluginsRJS: any = {}
 
-    addPlugin(name:string, cls: any) : void {
-        console.log("adding "+name)
+    addPlugin(name: string, cls: any): void {
         this.pluginsRJS[name] = new cls(name,this)
     }
 
@@ -142,7 +140,6 @@ export default class RJS extends Game {
     }
 
     auto (): void {
-        console.log(this.defaultValues)
         this.defaultValues.skiptime = 1000;
         this.control.auto = true;
         if (this.control.waitForClick){
@@ -303,7 +300,7 @@ export default class RJS extends Game {
     }
 
     resolveAction(): void {
-        
+
         if (this.control.doBeforeResolve != null){
             this.control.doBeforeResolve();
             this.control.doBeforeResolve = null;
@@ -313,7 +310,7 @@ export default class RJS extends Game {
         if (!this.control.paused){
             this.managers.story.interpret()
         }
-            
+
     }
 
     onInterpretActions(action): void {

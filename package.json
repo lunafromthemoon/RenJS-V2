@@ -2,7 +2,7 @@
   "name": "renjs",
   "version": "1.0.0",
   "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
-  "main": "dist/index.js",
+  "main": "dist/renjs.js",
   "files": [
     "dist"
   ],

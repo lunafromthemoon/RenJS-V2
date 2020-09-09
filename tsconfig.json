@@ -3,7 +3,7 @@
     "target": "es5",
     "sourceMap": true,
 //    "allowJs": true,
-//    "declaration": true,
+    "declaration": true,
     "esModuleInterop": true,
     "lib": [
       "ES2019",

@@ -9,14 +9,15 @@ const p2 = path.join(phaserModule, 'build/custom/p2.js')
 module.exports = {
     target: "web",
     entry: {
-        index: path.join(__dirname, 'src/index.ts'),
+        renjs: path.join(__dirname, 'src/index.ts'),
     },
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
         library: 'RenJS',
-        libraryTarget: "window",
-        // globalObject: "this"
+        libraryTarget: "umd",
+        globalObject: "this",
+        umdNamedDefine: true
     },
     module: {
         rules: [

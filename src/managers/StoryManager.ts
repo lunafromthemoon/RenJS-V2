@@ -183,12 +183,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.game.control.action = mainAction
         this.game.control.wholeAction = params;
         this.game.control.nextAction = null;
-        if (this.game.control.action == 'else'){
+        if (this.game.control.action === 'else'){
             // nothing to do, already resolved in previous if action
             return this.game.resolveAction();
         }
-        console.log(mainAction)
-        let storyAction: StoryAction = StoryActionFactory(mainAction,action,this.game);
+        const storyAction: StoryAction = StoryActionFactory(mainAction,action,this.game);
         storyAction.execute();
     }
 }
