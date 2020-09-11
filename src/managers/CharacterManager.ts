@@ -32,7 +32,6 @@ export default class CharacterManager implements CharacterManagerInterface {
         this.characters[name] = new Character(displayName,speechColour);
         for (const look in looks) {
             this.addLook(this.characters[name],look,name+'_'+look);
-            // this.characters[name].addLook(look,name+'_'+look);
         }
     }
 
@@ -55,7 +54,7 @@ export default class CharacterManager implements CharacterManagerInterface {
             character.currentLook = character.looks[props.look];
             character.currentLook.x = props.position.x;
             character.currentLook.y = props.position.y;
-            character.currentLook.scaleX = props.flipped ? -1 : 1;
+            character.currentLook.scale.x = props.flipped ? -1 : 1;
             character.currentLook.alpha = 1;
         }
     }

@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "js-yaml": "^3.14.0",
+    "object-hash": "^2.0.3",
     "phaser-ce": "^2.16.0"
   }
 }

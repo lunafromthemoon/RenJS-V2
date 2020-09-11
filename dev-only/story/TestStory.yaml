@@ -70,6 +70,15 @@ testtext:
       - var chosenNumber: 4
     - "5":
       - var chosenNumber: 5
+      - text: asdssssssssssss 1 
+      - text: asdssssssssssss 2
+      - interrupt:
+        - "WAIT":
+          - text: qwerrrrrrr 1
+          - text: qwerrrrrrr 2
+          - text: qwerrrrrrr 3
+      - text: asdssssssssssss 3
+      - text: asdssssssssssss 4
   - liz says: You chose {chosenNumber}
   - hide ALL:
   - scene: start

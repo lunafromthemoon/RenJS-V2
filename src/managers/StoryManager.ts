@@ -67,17 +67,15 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             // does extra stuff on every step
             // like updating the execution stack
             // or counting the interruption steps
-            for (const action in this.game.onInterpretActions){
-                this.game.onInterpretActions(action)
-            }
+            this.game.onInterpretActions()
+            // interpret the action at hand
             this.game.managers.story.interpretAction(currentAction)
-            // return this.game.managers.story.interpret();
 
         }
     }
 
     startScene(name: string): void {
-        this.game.control.execStack = [{c:-1,scene:name}];
+        this.game.control.execStack.replace(name);
         this.game.managers.logic.clearChoices(); // For any interrup still showing
         // RenJS.chManager.hideAll();
         // RenJS.bgManager.hide();
@@ -132,7 +130,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             return Object.keys(act)[0];
         }
 
-        // this.game.control.resolve = resolve;
         const key = getKey(action);
         const keyParams = key.split(' ');
         let mainAction; let actor;
@@ -156,7 +153,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             } else {
                 action.transition = this.game.defaultValues.transitions[action.actorType];
             }
-            // action.transition = () => this.game.screenEffects.transition[action.transitionName];
         }
         if (params && actionParams.withPosition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
@@ -179,7 +175,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             action.contAfterTrans = str.indexOf('CONTINUE') !== -1
         }
         action.manager = this.getManagerByActorType(action.actorType);
-        // RenJS.control.action = mainAction;
         this.game.control.action = mainAction
         this.game.control.wholeAction = params;
         this.game.control.nextAction = null;

@@ -112,10 +112,7 @@ export default class RJS extends Game {
     initInput(): void;
     lockClick(): void;
     resolve(): void;
-    onInterpretActions: {
-        updateStack(): void;
-        interruptAction: any;
-    };
+    onInterpretActions(): void;
     initScreenEffects(): void;
     initManagers(): void;
 }

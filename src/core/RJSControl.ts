@@ -1,17 +1,8 @@
 import {DefaultsInterface} from './Defaults';
-
-interface ExecItem {
-    c: number;
-    total?: number;
-    action?: string;
-    scene?: any;
-    index?: any;
-    op?: any;
-    interrupting?: any;
-}
+import ExecStack from './ExecStack'
 
 interface RJSControlInterface {
-    execStack: ExecItem[];
+    execStack: ExecStack;
     globalCounter: number;
     paused: boolean;
     fadetime: number;
@@ -39,7 +30,7 @@ export default class RJSControl implements RJSControlInterface {
     auto = false;
     clickCooldown = 0
     clickLocked = false;
-    execStack: ExecItem[] = [{c: -1}];
+    execStack = new ExecStack()
     fadetime = 0
     globalCounter = 0;
     paused = false;

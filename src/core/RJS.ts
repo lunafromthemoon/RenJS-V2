@@ -2,6 +2,7 @@ import 'pixi'
 import 'p2'
 import Phaser, {Game, Graphics} from 'phaser-ce';
 import RJSControl from './RJSControl';
+import ExecStack from './ExecStack';
 import BackgroundManager from '../managers/BackgroundManager';
 import CharacterManager from '../managers/CharacterManager';
 import AudioManager from '../managers/AudioManager';
@@ -19,7 +20,6 @@ import {defaults, DefaultsInterface} from './Defaults';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
 import Loader from '../states/Loader';
-
 export default class RJS extends Game {
 
     gameStarted = false
@@ -159,14 +159,10 @@ export default class RJS extends Game {
             characters: this.managers.character.showing,
             audio: this.managers.audio.current,
             cgs: this.managers.cgs.current,
-            stack: this.control.execStack,
+            stack: this.control.execStack.shallowCopy(),
             vars: this.managers.logic.vars
+            // should include any interrupts showing
         }
-
-        // if (RenJS.customContent.save){
-        //     RenJS.customContent.save(data);
-        // }
-
         const dataSerialized = JSON.stringify(data);
         // Save choices log
         const log = JSON.stringify(this.managers.logic.choicesLog);
@@ -184,54 +180,31 @@ export default class RJS extends Game {
     }
 
     getSlotThumbnail (slot): string {
-        return localStorage.getItem('RenJSThumbnail' + this.defaultValues.name + slot)
+        return localStorage.getItem('RenJSThumbnail' + this.config.name + slot)
     }
 
     async loadSlot (slot): Promise<void> {
         if (!slot){
             slot = 0;
         }
-        const data = localStorage.getItem('RenJSDATA' + this.defaultValues.name + slot);
+        const data = localStorage.getItem('RenJSDATA' + this.config.name + slot);
         if (!data){
             this.start();
             return;
         }
         const dataParsed = JSON.parse(data);
+
         this.setBlackOverlay();
-        // RenJS.transitions.FADETOCOLOUROVERLAY(0x000000);
+        this.gameStarted = true;
         this.managers.background.set(dataParsed.background);
         await this.managers.character.set(dataParsed.characters);
         this.managers.audio.set(dataParsed.audio);
         await this.managers.cgs.set(dataParsed.cgs);
         this.managers.logic.set(dataParsed.vars);
         this.gui.clear();
-        let stack = dataParsed.stack[dataParsed.stack.length-1];
-        const scene = stack.scene;
-        let allActions = [...this.story[scene]];
-        let actions = allActions.slice(stack.c);
-        if(dataParsed.stack.length !== 1){
-            for (let i = dataParsed.stack.length-2;i>=0;i--){
-                let nestedAction = allActions[stack.c];
-                stack = dataParsed.stack[i];
-                switch(stack.action){
-                    case 'interrupt':
-                        nestedAction = allActions[dataParsed.stack[i+1].interrupting];
-                        allActions = nestedAction.interrupt[stack.index][stack.op];
-                        break;
-                    case 'choice':
-                        allActions = nestedAction.choice[stack.index][stack.op];
-                        break;
-                    case 'if':
-                        const action = Object.keys(nestedAction)[0];
-                        allActions = nestedAction[action];
-
-                }
-                const newActions = allActions.slice(stack.c+1);
-                actions = newActions.concat(actions);
-            }
-        }
-        this.control.execStack = dataParsed.stack;
-        this.managers.story.currentScene = actions;
+        // resolve stack
+        this.control.execStack = new ExecStack(dataParsed.stack);
+        this.managers.story.currentScene = this.control.execStack.getActions(this.story);
         this.removeBlackOverlay();
         this.unpause(true);
     }
@@ -313,20 +286,13 @@ export default class RJS extends Game {
 
     }
 
-    onInterpretActions(action): void {
-        const control = this.control
-        if (action === 'updateStack') {
-            control.execStack[0].c++;
-            control.globalCounter++;
-            if (control.execStack[0].c === control.execStack[0].total){
-                control.execStack.shift();
-
-            }
-        } else if (action === 'interruptAction') {
-            this.interruptAction()
-
-        }
-
+    onInterpretActions(): void {
+        // called before interpreting action
+        // update stack
+        this.control.globalCounter++;
+        this.control.execStack.advance();
+        // update interrupts
+        this.managers.logic.updateInterruptions();
     }
 
     // initScreenEffects (): void {
