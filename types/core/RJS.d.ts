@@ -15,6 +15,7 @@ import Effects from '../screen-effects/Effects';
 import Transition from '../screen-effects/Transition';
 import { RJSGUI } from '../gui/RJSGUI';
 import { RJSGameConfig } from './RJSGameConfig';
+import { DefaultsInterface } from './Defaults';
 export default class RJS extends Game {
     gameStarted: boolean;
     control: RJSControl;
@@ -23,65 +24,16 @@ export default class RJS extends Game {
     setup: any;
     story: object;
     gui: RJSGUI;
+    pluginsRJS: any;
+    addPlugin(name: string, cls: any): void;
     config: RJSGameConfig;
-    defaultValues: {
-        name: string;
-        defaultTextStyle: {
-            font: string;
-            fill: string;
-            align: string;
-        };
-        settings: {
-            textSpeed: number;
-            autoSpeed: number;
-            bgmv: number;
-            sfxv: number;
-            muted: boolean;
-        };
-        limits: {
-            textSpeed: number[];
-            autoSpeed: number[];
-            bgmv: number[];
-            sfxv: number[];
-        };
-        positions: {
-            LEFT: {
-                x: number;
-                y: number;
-            };
-            OUTLEFT: {
-                x: number;
-                y: number;
-            };
-            CENTER: {
-                x: number;
-                y: number;
-            };
-            RIGHT: {
-                x: number;
-                y: number;
-            };
-            OUTRIGHT: {
-                x: number;
-                y: number;
-            };
-        };
-        fadetime: number;
-        skiptime: number;
-        timeout: number;
-        clickCooldown: number;
-        transitions: {
-            ch: string;
-            bg: string;
-            cgs: string;
-            bgm: string;
-        };
-    };
+    defaultValues: DefaultsInterface;
+    interruptAction: any;
     managers: {
-        background: BackgroundManager;
-        character: CharacterManager;
+        background?: BackgroundManager;
+        character?: CharacterManager;
         audio: AudioManager;
-        cgs: CGSManager;
+        cgs?: CGSManager;
         text: TextManager;
         tween: TweenManager;
         logic: LogicManager;
@@ -111,8 +63,6 @@ export default class RJS extends Game {
     onTap(pointer: any, doubleTap?: any): void;
     initInput(): void;
     lockClick(): void;
-    resolve(): void;
+    resolveAction(): void;
     onInterpretActions(): void;
-    initScreenEffects(): void;
-    initManagers(): void;
 }

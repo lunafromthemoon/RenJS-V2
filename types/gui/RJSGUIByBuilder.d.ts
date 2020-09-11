@@ -1,7 +1,9 @@
 import { RJSGUI } from './RJSGUI';
-import { Group, Sprite } from 'phaser-ce';
+import { Group } from 'phaser-ce';
 import RJS from '../core/RJS';
 import { GUIAssets } from './Assets';
+import RJSSprite from '../components/RJSSprite';
+import ChoiceButton from '../components/ChoiceButton';
 export interface RJSGUIByBuilderInterface<T, TSprite> extends RJSGUI {
     hideMenu(menu: any, mute: any, callback: any): any;
     changeMenu(menu: any): any;
@@ -27,7 +29,7 @@ export interface RJSGUIByBuilderInterface<T, TSprite> extends RJSGUI {
     previousMenu: any;
     saveSlots: any;
 }
-export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, Sprite> {
+export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, RJSSprite> {
     gui: any;
     currentMusic: any;
     choices: Group;
@@ -37,8 +39,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     currentMenu: any;
     menus: {};
     messageBox: any;
-    ctc: Sprite;
-    nameBox: Sprite;
+    ctc: RJSSprite;
+    nameBox: RJSSprite;
     skipClickArea: any[];
     previousMenu: any;
     saveSlots: {};
@@ -64,7 +66,7 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     showText(text: any, title: any, colour: any, callback: any): void;
     addThumbnail(thumbnail: any, slot: any): void;
     changeMenu(menu: any): void;
-    createChoiceBox(choice: any, pos: any, index: any, choiceConfig: any, execId: any): Phaser.Button;
+    createChoiceBox(choice: any, pos: any, index: any, choiceConfig: any, execId: any): ChoiceButton;
     loadButton(component: any, menu: any): void;
     loadComponent(type: any, component: any, menu: any): void;
     loadGeneralComponents(menuConfig: any, menu: any): void;
@@ -73,21 +75,8 @@ export default class RJSGUIByBuilder implements RJSGUIByBuilderInterface<Group, 
     loadThumbnail(thumbnail: any, parent: any): void;
     setTextPosition(sprite: any, text: any, component: any): void;
     getChosenOptionColor(): number;
-    sliderValueChanged: {
-        textSpeed(newVal: any): void;
-        autoSpeed(newVal: any): void;
-        bgmv(newVal: any): void;
-        sfxv(newVal: any): void;
-    };
-    buttonsAction: {
-        start(): void;
-        load(component: any): void;
-        auto: () => void;
-        skip: () => void;
-        save(component: any): void;
-        saveload(argument?: any): void;
-        settings(): void;
-        return(): void;
-        mute(argument?: any): void;
-    };
+    sliderValueChanged: {};
+    initSliderValueChanged(): void;
+    initButtonsActions(): void;
+    buttonsAction: {};
 }

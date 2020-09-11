@@ -12,8 +12,9 @@ export default class Transition implements RJSScreenEffectInterface {
     private game;
     private tweenManager;
     constructor(game: RJS);
+    get(name: string): any;
     CUT(from: any, to: any, position: any, scaleX?: any): Promise<void>;
-    FADE(from: any, to: any, position: any, scaleX?: any): Promise<void>;
+    FADE(from: any, to: any, position: any, scaleX?: any): Promise<any>;
     FADEOUT(from: any): Promise<void>;
     FADEIN(to: any, position: any, scaleX: any): Promise<void>;
     FUSION(from: any, to: any, position: any, scaleX: any, group: Group): Promise<void>;

@@ -1,8 +1,7 @@
-import RJSManagerInterface from './RJSManager';
-import Transition from '../screen-effects/Transition';
+import { RJSSpriteManagerInterface } from './RJSManager';
 import Character from '../entities/Character';
 import RJS from '../core/RJS';
-export interface CharacterManagerInterface extends RJSManagerInterface {
+export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
     characters: object;
     showing: object;
     hideAll(transition: string): any;
@@ -16,12 +15,12 @@ export default class CharacterManager implements CharacterManagerInterface {
     showing: {};
     private transition;
     private game;
-    constructor(game: RJS, transition: Transition);
+    constructor(game: RJS);
     add(name: any, displayName: any, speechColour: any, looks: any): void;
     addLook(character: Character, lookName: any, image: any): void;
     set(showing: any): Promise<any>;
-    show(name: any, transition: any, props: any): any;
-    hide(name: any, transition: any): Promise<any>;
-    hideAll(transition?: string): Promise<any>;
+    show(name: any, transitionName: any, props: any): Promise<any>;
+    hide(name: any, transitionName: any): Promise<any>;
+    hideAll(transition?: any): Promise<any>;
     isCharacter(actor: any): boolean;
 }

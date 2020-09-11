@@ -1,4 +1,4 @@
-export declare const defaults: {
+export interface DefaultsInterface {
     name: string;
     defaultTextStyle: {
         font: string;
@@ -50,4 +50,5 @@ export declare const defaults: {
         cgs: string;
         bgm: string;
     };
-};
+}
+export declare const defaults: DefaultsInterface;
