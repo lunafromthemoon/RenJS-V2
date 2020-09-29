@@ -1,10 +1,9 @@
-
 class HelloWorld extends RenJS.Plugin {
 
 	execute(params) {
-		console.log("helloworld function");
+		console.log('helloworld function');
 		setTimeout(() => {
-			console.log(params.param1 + " " +params.param2);
+			console.log(params.param1 + ' ' +params.param2);
 			this.game.resolveAction();
 		}, 1500);
 	}

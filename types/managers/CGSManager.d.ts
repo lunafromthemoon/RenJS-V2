@@ -1,10 +1,11 @@
 import RJS from '../core/RJS';
-import RJSManagerInterface from './RJSManager';
-export interface CGSManagerInterface extends RJSManagerInterface {
+import { RJSSpriteManagerInterface } from './RJSManager';
+export interface CGSManagerInterface extends RJSSpriteManagerInterface {
     cgs: object;
     current: object;
     hideAll(transition: string): any;
     show(name: string, transition: () => any, props: any): any;
+    hide(name: any, transition: any): Promise<any>;
 }
 export default class CGSManager implements CGSManagerInterface {
     cgs: object;
@@ -16,8 +17,8 @@ export default class CGSManager implements CGSManagerInterface {
     constructor(game: RJS);
     set(current: any): Promise<void>;
     hideAll(transition?: string): Promise<any>;
-    show(name: any, transition: any, props: any): any;
+    show(name: any, transitionName: any, props: any): Promise<any>;
     animate(name: any, toAnimate: any, time: any): Promise<void>;
-    hide(name: any, transition: any): Promise<void>;
+    hide(name: any, transitionName: any): Promise<void>;
     isCGS(actor: any): boolean;
 }

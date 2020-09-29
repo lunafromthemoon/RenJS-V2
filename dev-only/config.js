@@ -27,5 +27,5 @@ const globalConfig =  {
   ]
 }
 
-const RenJSGame = new RenJS(globalConfig)
+const RenJSGame = new RenJS.game(globalConfig)
 RenJSGame.launch()

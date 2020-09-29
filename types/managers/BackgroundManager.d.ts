@@ -1,8 +1,7 @@
-import RJSManagerInterface from './RJSManager';
+import { RJSSpriteManagerInterface } from './RJSManager';
 import { Group } from 'phaser-ce';
-import Transition from '../screen-effects/Transition';
 import RJS from '../core/RJS';
-export interface BackgroundManagerInterface<T> extends RJSManagerInterface {
+export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface {
     backgroundSprites: T;
     backgrounds: object;
     current?: object;
@@ -17,10 +16,10 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     private transition;
     backgrounds: {};
     current: any;
-    constructor(game: RJS, transition: Transition);
+    constructor(game: RJS);
     add(name: any, animated?: any, framerate?: any): void;
     set(name: any): void;
-    show(name: any, transition: any): Promise<any>;
-    hide(bg?: any, transition?: any): Promise<any>;
+    show(name: any, transitionName: any): Promise<any>;
+    hide(bg?: any, transitionName?: string): Promise<any>;
     isBackground(actor: any): boolean;
 }

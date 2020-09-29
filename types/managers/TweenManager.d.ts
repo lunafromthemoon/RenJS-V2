@@ -1,23 +1,19 @@
-import { Tween } from 'phaser-ce';
 import RJS from '../core/RJS';
+import RJSTween from '../core/RJSTween';
 import RJSManagerInterface from './RJSManager';
 export interface TweenManagerInterface extends RJSManagerInterface {
     tween(sprite: any, tweenables: any, callback: any, time: number, start: boolean, delay?: number): any;
     chain(tweens: any[], time?: number): any;
+    skip(): any;
     unskippable: boolean;
-    current: any[];
-    skip: any;
-    callbackOnComplete: any;
-    tweenables: any;
+    current: RJSTween[];
 }
 export default class TweenManager implements TweenManagerInterface {
     unskippable: boolean;
     current: any[];
     private game;
-    callbackOnComplete: any;
-    tweenables: any;
     constructor(game: RJS);
-    tween(sprite: any, tweenables: any, callback: any, time: any, start: any, delay?: any): Tween;
+    tween(sprite: any, tweenables: any, callback: any, time: any, start: any, delay?: any): RJSTween;
     chain(tweens: any, time: any): void;
     parallel(tweens: any, time: any): void;
     skip(): void;
