@@ -22,7 +22,7 @@ testimages:
   - show jair: AT OUTRIGHT WITH CUT
   - show jair: AT RIGHT WITH MOVE
   - text: phone appears 
-  - show phone1: AT 400,200 WITH FADE
+  - show phone1: AT 400,200 WITH FADE2
   - text: deuzi leaves
   - hide deuzi: WITH FADE
   - text: liz appears from left

@@ -2,9 +2,9 @@
 class Fade2 extends RenJS.Plugin {
 
 	execute(from, to, position, scaleX) {
+        if (!from) return this.game.screenEffects.transition.FADEIN(to, position, scaleX);
+        if (!to) return this.game.screenEffects.transition.FADEOUT(from);
 		return new Promise(resolve => {
-			if (!from) return this.game.screenEffects.transition.FADEIN(to, position, scaleX);
-        	if (!to) return this.game.screenEffects.transition.FADEOUT(from);
             this.game.managers.tween.chain([
                 {
                     sprite: from, tweenables: {alpha: 0}, callback: () => {

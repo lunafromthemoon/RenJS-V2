@@ -21,8 +21,7 @@ class PreloadStory extends RJSState {
     preload(): void {
         this.game.load.setPreloadSprite(this.loadingBar);
         // preload gui
-        const assets: GUIAssets[] = this.game.gui.getAssets()
-        for (const asset of assets) {
+        for (const asset of this.game.gui.assets) {
             if (asset.type === 'spritesheet') {
                 this.game.load.spritesheet(asset.key, preparePath(asset.file, this.game), asset.w, asset.h);
             } else {

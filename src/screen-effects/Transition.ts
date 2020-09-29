@@ -24,12 +24,10 @@ export default class Transition implements RJSScreenEffectInterface {
     }
 
     get(name: string): any{
-        return (from, to, position, scaleX?) => {
-            if (this[name]){
-                this[name](from, to, position, scaleX)
-            } else {
-                this.game.pluginsRJS[name].execute(from, to, position, scaleX)
-            }
+        if (this[name]){
+            return this[name].bind(this)
+        } else {
+            return this.game.pluginsRJS[name].execute.bind(this)
         }
     }
 

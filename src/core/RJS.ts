@@ -14,7 +14,7 @@ import StoryManager from '../managers/StoryManager';
 import Ambient from '../screen-effects/Ambient';
 import Effects from '../screen-effects/Effects';
 import Transition from '../screen-effects/Transition';
-import {RJSGUI} from '../gui/RJSGUI';
+import RJSGUI from '../gui/RJSGUI';
 import {RJSGameConfig} from './RJSGameConfig';
 import {defaults, DefaultsInterface} from './Defaults';
 import Boot from '../states/Boot';

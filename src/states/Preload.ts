@@ -52,11 +52,11 @@ class Preload extends RJSState {
             game.gui = new RJSGUIByBuilder(gui, game)
         } else {
             console.log('simple giu')
-            game.gui = new RJSSimpleGUI(gui)
+            game.gui = new RJSSimpleGUI(gui,game)
         }
 
         // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of game.gui.getFonts()){
+        for (const font of game.gui.fonts){
             game.add.text(20, 20, font, {font: '42px ' + font});
         }
         // start preloading story

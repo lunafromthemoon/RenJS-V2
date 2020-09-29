@@ -128,10 +128,10 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             this.choose(index,key,execId);
         },this,0,0,0,0,this.visualChoices);
 
-        if (this.game.gui.getChosenOptionColor && this.choicesLog[execId].indexOf(key) !== -1){
-            button.tint = this.game.gui.getChosenOptionColor();
+        // if (this.game.gui.getChosenOptionColor && this.choicesLog[execId].indexOf(key) !== -1){
+            // button.tint = this.game.gui.getChosenOptionColor();
             // previously chosen choice
-        }
+        // }
         button.anchor.set(0.5);
         return button;
     }

@@ -1,6 +1,4 @@
 export interface RJSGUI {
-    getAssets(): any;
-    getFonts(argument?: any): any;
     init(): any;
     getChoiceTextStyle(): any;
     initHUD(hudConfig: any): any;
