@@ -164,7 +164,6 @@ export default class RJSSimpleGUI extends RJSGUI {
 
     }
 
-
     parseButton(buttonKey, buttonConfig){
         let buttonAsset = this.assets.find(asset=>asset.key == buttonConfig.sprite);
         return {
@@ -178,8 +177,5 @@ export default class RJSSimpleGUI extends RJSGUI {
             y: buttonConfig.position.y
         }
     }
-
-    
-
 
 }

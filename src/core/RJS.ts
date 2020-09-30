@@ -212,9 +212,7 @@ export default class RJS extends Game {
     waitForClick (callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping || this.control.auto){
-            setTimeout(() => {
-                this.control.nextAction();
-            }, this.defaultValues.skiptime);
+            setTimeout(this.control.nextAction.bind(this), this.defaultValues.skiptime);
         } else {
             this.control.waitForClick = true;
         }
@@ -222,22 +220,21 @@ export default class RJS extends Game {
 
     waitTimeout (time, callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
+        this.control.nextAction
         if (this.control.skipping){
             this.control.nextAction();
         } else {
-            setTimeout( () => {
-                this.control.nextAction();
-            },time ? time : this.defaultValues.timeout);
+            setTimeout(this.control.nextAction.bind(this),time ? time : this.defaultValues.timeout);
         }
     }
 
     waitForClickOrTimeout (time,callback): void {
         this.control.nextAction = callback;
         this.control.waitForClick = true;
-        setTimeout(() => {
-            this.control.waitForClick = false;
-            this.control.nextAction();
-        },time ? time : this.defaultValues.timeout);
+        setTimeout((() => {
+                this.control.waitForClick = false;
+                this.control.nextAction();
+            }).bind(this),time ? time : this.defaultValues.timeout);
     }
 
     onTap (pointer, doubleTap?): void {

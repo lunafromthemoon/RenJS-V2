@@ -293,7 +293,7 @@ export default class RJSGUI implements RJSGUIInterface {
             }
         });
         let music = this.config.menus[menu].backgroundMusic;
-        if (mute && music && !music.isPlaying){
+        if (mute && music && music.isPlaying){
             music.fadeOut(400);
         }
         tween.start();
@@ -360,12 +360,9 @@ export default class RJSGUI implements RJSGUIInterface {
                 game.loadSlot(parseInt(component.slot, 10));
             },
 
-            auto() {
-               return  game.auto
-            },
-            skip() {
-                return game.skip
-            },
+            auto: game.auto.bind(game),
+            skip: game.skip.bind(game),
+            mute: game.managers.audio.mute.bind(game.managers.audio),
             save (component) {
                 game.save(parseInt(component.slot, 10));
             },
@@ -386,9 +383,7 @@ export default class RJSGUI implements RJSGUIInterface {
                     game.unpause();
                 }
             },
-            mute (argument?) {
-                game.managers.audio.mute();
-            }
+            
         };
     }
 

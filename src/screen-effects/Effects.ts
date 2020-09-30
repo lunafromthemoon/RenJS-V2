@@ -68,10 +68,10 @@ export default class Effects implements RJSScreenEffectInterface {
     async SHOWTITLE(param): Promise<void> {
         const bg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'title');
         bg.anchor.set(0.5);
-        const style = {...this.game.defaultValues.defaultTextStyle, ...this.gui.getTextStyle('choice')};
-        style.font = '50pt ' + this.gui.fonts[0];
+        const style = {...this.game.defaultValues.defaultTextStyle, ...this.game.gui.getTextStyle('choice')};
+        style.font = '50pt ' + this.game.gui.fonts[0];
         const title = this.game.add.text(0, -20, param.title, style);
-        style.font = '25pt ' + this.gui.fonts[0];
+        style.font = '25pt ' + this.game.gui.fonts[0];
         const subtitle = this.game.add.text(0, 40, param.subtitle, style);
         subtitle.anchor.set(0.5);
         title.anchor.set(0.5);
