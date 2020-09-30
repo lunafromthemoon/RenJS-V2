@@ -24,11 +24,6 @@ export interface RJSGUIInterface {
     addThumbnail?(thumbnail, slot);
     changeMenu(menu): void;
 
-    // private
-    // initHUD(hudConfig: any);
-    // showHUD();
-    // hideHUD();
-    // initMenu(name: string, menu);
 }
 
 export default class RJSGUI implements RJSGUIInterface {
@@ -56,11 +51,7 @@ export default class RJSGUI implements RJSGUIInterface {
     currentMenu = null
     previousMenu = null
 
-    // gui: any;
-    // game: RJS
-
     constructor(gui, protected game: RJS) {
-        // this.gui = gui
         this.initAssets(gui);
         this.initButtonsActions();
         this.initSliderValueChanged();
@@ -524,7 +515,8 @@ export default class RJSGUI implements RJSGUIInterface {
         }
         chBox.choiceId = choice.choiceId;
         chBox.name = choice.choiceId;
-        const textStyle = {font: choiceConfig.size + 'px ' + choiceConfig.font, fill: choiceConfig.color};
+
+        const textStyle = this.getTextStyle('choice');
         const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
         this.setTextPosition(chBox,text, choiceConfig);
         if (this.game.config.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) !== -1){

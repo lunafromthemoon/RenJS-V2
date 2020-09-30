@@ -32,8 +32,8 @@ export default class RJSSimpleGUI extends RJSGUI {
         this.config = {
             hud: this.parseHud(gui.hud), 
             menus: {
-                main: this.parseMenu('main',gui.main),
-                settings: this.parseMenu('settings',gui.settings),
+                main: this.parseMenu('main',gui.menus.main),
+                settings: this.parseMenu('settings',gui.menus.settings),
                 saveload: null
             }
         }
@@ -76,20 +76,18 @@ export default class RJSSimpleGUI extends RJSGUI {
               id: "ctc",
               height: ctcAsset.h,
               width: ctcAsset.w,
-              x: hudConfig.ctc.position.x,
-              y: hudConfig.ctc.position.y,
+              x: newConfig['message-box'].x + hudConfig.ctc.position.x,
+              y: newConfig['message-box'].y + hudConfig.ctc.position.y,
               animationStyle: hudConfig.ctc.animated ? "spritesheet" : "alpha"
             }
         }
-
-        
 
         let choiceAsset = this.assets.find(asset=>asset.key == "choice");
 
         newConfig.choice = {
           id: 'choice',
           isBoxCentered: !hudConfig.choice.position,
-          separation: choiceAsset.h - hudConfig.choice.separation,
+          separation: hudConfig.choice.separation - choiceAsset.h,
           height: choiceAsset.h,
           width: choiceAsset.w,
           sfx: 'none',
@@ -141,7 +139,7 @@ export default class RJSSimpleGUI extends RJSGUI {
 
     parseMenu(name,menuConfig){
         let newConfig:any = {
-            background: {id: name+"background"},
+            background: {id: name+"Background"},
             buttons: [],
             sliders: []
         };
@@ -175,6 +173,7 @@ export default class RJSSimpleGUI extends RJSGUI {
             binding: buttonKey,
             height: buttonAsset.h,
             width: buttonAsset.w,
+            slot: 0,
             x: buttonConfig.position.x,
             y: buttonConfig.position.y
         }

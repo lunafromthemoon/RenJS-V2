@@ -51,7 +51,6 @@ class Preload extends RJSState {
         if (gui.madeWithRenJSBuilder){
             game.gui = new RJSGUIByBuilder(gui, game)
         } else {
-            console.log('simple giu')
             game.gui = new RJSSimpleGUI(gui,game)
         }
 

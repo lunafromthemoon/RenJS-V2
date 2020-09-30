@@ -138,7 +138,6 @@ export default class CGSManager implements CGSManagerInterface {
     }
 
     async hide (name, transitionName): Promise<void> {
-        console.log("hiding "+name+" with "+transitionName)
         await this.transition.get(transitionName)(this.cgs[name], null)
         this.cgs[name].destroy();
         delete this.cgs[name];

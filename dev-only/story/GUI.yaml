@@ -2,25 +2,25 @@ assets:
   fonts:
     - audimat-mono
   images:
-    mainBackground: assets/gui/menu.png
-    settingsBackground: assets/gui/settings.png
-    sliderFull: assets/gui/slider.png
-    messageBox:  assets/gui/textbox.png
-    nameBox:  assets/gui/namebox.png
-    ctc: assets/gui/ctc.png
+    mainBackground: assets/gui_old/menu.png
+    settingsBackground: assets/gui_old/settings.png
+    sliderFull: assets/gui_old/slider.png
+    messageBox:  assets/gui_old/textbox.png
+    nameBox:  assets/gui_old/namebox.png
+    ctc: assets/gui_old/ctc.png
   spritesheets:
-    startButton: assets/gui/startbutton.png 163 83
-    loadButton: assets/gui/loadbutton.png 163 83
-    saveButton: assets/gui/savebutton.png 163 83
-    settingsButton: assets/gui/settingsbutton.png 163 83
-    returnButton: assets/gui/returnbutton.png 163 83
-    qmAutoButton: assets/gui/qmenuauto.png 47 45
-    qmSkipButton: assets/gui/qmenuskip.png 47 45
-    qmSettingsButton: assets/gui/qmenusettings.png 47 45
-    qmMuteButton: assets/gui/Mute.png 50 50
-    qmSaveButton: assets/gui/qmenusave.png 47 45
-    choice: assets/gui/choice.png 716 65
-    interrupt: assets/gui/interrupt.png 716 95
+    startButton: assets/gui_old/startbutton.png 163 83
+    loadButton: assets/gui_old/loadbutton.png 163 83
+    saveButton: assets/gui_old/savebutton.png 163 83
+    settingsButton: assets/gui_old/settingsbutton.png 163 83
+    returnButton: assets/gui_old/returnbutton.png 163 83
+    qmAutoButton: assets/gui_old/qmenuauto.png 47 45
+    qmSkipButton: assets/gui_old/qmenuskip.png 47 45
+    qmSettingsButton: assets/gui_old/qmenusettings.png 47 45
+    qmMuteButton: assets/gui_old/Mute.png 50 50
+    qmSaveButton: assets/gui_old/qmenusave.png 47 45
+    choice: assets/gui_old/choice.png 716 65
+    interrupt: assets/gui_old/interrupt.png 716 95
   audio:
     mainMusic: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
 hud:

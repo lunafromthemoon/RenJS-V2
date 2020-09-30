@@ -295,38 +295,4 @@ export default class RJS extends Game {
         this.managers.logic.updateInterruptions();
     }
 
-    // initScreenEffects (): void {
-    //
-    //
-    // }
-    //
-    // initManagers (): void {
-    //
-    //
-    //
-    // }
-
-    // initModulesInOrder (): void {
-    //     this.managers = {
-    //         tween: new TweenManager(this),
-    //         story: new StoryManager(this),
-    //         audio: new AudioManager(this),
-    //         logic: new LogicManager(this),
-    //         text: new TextManager(this),
-    //         background: null, // need transition
-    //         character: null, // need transition
-    //         cgs: null // need transition story tween
-    //     }
-    //
-    //     this.screenEffects = {
-    //         ambient: new Ambient(this), // need audio et story
-    //         effects: new Effects(this), // need audio et tween
-    //         transition: new Transition(this) // need tween
-    //     }
-    //     this.managers.background = new BackgroundManager(this)
-    //     this.managers.character = new CharacterManager(this)
-    //
-    //     this.managers.cgs = new CGSManager(this)
-    //
-    // }
 }
