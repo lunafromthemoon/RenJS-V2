@@ -73,7 +73,7 @@ export default class CGSManager implements CGSManagerInterface {
             }
         }
         this.current[name] = {name, position, zoom: props.zoom, angle: props.angle};
-        return this.transition.get(transitionName)(null, this.cgs[name], position);
+        return this.transition.get(transitionName)(null, this.cgs[name], false, position);
     }
 
     async animate (name, toAnimate, time): Promise<void> {

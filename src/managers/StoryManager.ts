@@ -93,16 +93,16 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             return this.actorsIndex[actor];
         }
         if (this.game.managers.character.isCharacter(actor)){
-            this.actorsIndex[actor] = 'ch';
-            return 'ch';
+            this.actorsIndex[actor] = 'characters';
+            return 'characters';
         }
         if (this.game.managers.background.isBackground(actor)){
-            this.actorsIndex[actor] = 'bg';
-            return 'bg';
+            this.actorsIndex[actor] = 'backgrounds';
+            return 'backgrounds';
         }
         if (this.game.managers.audio.isMusic(actor)){
-            this.actorsIndex[actor] = 'bgm';
-            return 'bgm';
+            this.actorsIndex[actor] = 'music';
+            return 'music';
         }
         if (this.game.managers.audio.isSfx(actor)){
             this.actorsIndex[actor] = 'sfx';
@@ -114,8 +114,8 @@ export default class StoryManager implements StoryManagerInterface<Group> {
 
     getManagerByActorType (type: string): RJSManager {
         switch (type) {
-            case 'ch': return this.game.managers.character
-            case 'bg': return this.game.managers.background
+            case 'characters': return this.game.managers.character
+            case 'backgrounds': return this.game.managers.background
             case 'cgs': return this.game.managers.cgs
         }
     }
@@ -151,15 +151,16 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             if (str.indexOf('WITH') !== -1){
                 action.transition = str[str.indexOf('WITH') +1];
             } else {
-                action.transition = this.game.defaultValues.transitions[action.actorType];
+                // default transition for the actor type
+                action.transition = this.game.storyConfig.transitions.defaults[action.actorType];
             }
         }
         if (params && actionParams.withPosition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
             if (str.indexOf('AT') !== -1){
                 action.position = str[str.indexOf('AT')+1];
-                if (action.position in this.game.defaultValues.positions){
-                    action.position = this.game.defaultValues.positions[action.position];
+                if (action.position in this.game.storyConfig.positions){
+                    action.position = this.game.storyConfig.positions[action.position];
                 } else {
                     const coords = action.position.split(',');
                     action.position = {x:parseInt(coords[0], 10),y:parseInt(coords[1], 10)};
@@ -175,10 +176,10 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             action.contAfterTrans = str.indexOf('CONTINUE') !== -1
         }
         action.manager = this.getManagerByActorType(action.actorType);
-        this.game.control.action = mainAction
-        this.game.control.wholeAction = params;
+        // this.game.control.action = mainAction
+        // this.game.control.wholeAction = params;
         this.game.control.nextAction = null;
-        if (this.game.control.action === 'else'){
+        if (mainAction === 'else'){
             // nothing to do, already resolved in previous if action
             return this.game.resolveAction();
         }

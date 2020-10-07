@@ -1,45 +1,49 @@
-import {DefaultsInterface} from './Defaults';
 import ExecStack from './ExecStack'
 
 interface RJSControlInterface {
-    execStack: ExecStack;
-    globalCounter: number;
+    // game status controls
     paused: boolean;
-    fadetime: number;
-    timeout: number;
     waitForClick: boolean;
-    resolve?: () => Promise<any>;
     clickLocked: boolean;
-    nextAction?: () => (void | Promise<any>);
-    doBeforeResolve?: () => void;
     skipping: boolean;
     auto: boolean;
     clickCooldown: number;
-    wholeAction: any;
-    action?: any;
+    // action stack control
+    execStack: ExecStack;
+    actionsCounter: number;
+    nextAction?: () => (void | Promise<any>);
+    // wholeAction: any;
+    // action?: any;
+
+    // resolve?: () => Promise<any>;
+    
+    // doBeforeResolve?: () => void;
 }
 
 export default class RJSControl implements RJSControlInterface {
 
-    constructor(defaultValues: DefaultsInterface) {
-        this.clickCooldown = defaultValues.clickCooldown
-        this.fadetime = defaultValues.fadetime
-        this.timeout = defaultValues.timeout
+    constructor() {
+        // this.clickCooldown = defaultValues.clickCooldown
+        // this.fadetime = defaultValues.fadetime
+        // this.timeout = defaultValues.timeout
     }
-
-    auto = false;
-    clickCooldown = 0
-    clickLocked = false;
-    execStack = new ExecStack()
-    fadetime = 0
-    globalCounter = 0;
-    paused = false;
+    // game status controls
     skipping = false;
-    timeout = 0
+    auto = false;
+    paused = false;
+    // click controls
+    clickCooldown = 200;
+    clickLocked = false;
     waitForClick = false;
-    doBeforeResolve = null
+    // story controls
+    execStack = new ExecStack()
+    actionsCounter = 0;
     nextAction = null
-    resolve = null
-    wholeAction: any;
-    action = null;
+
+    // doBeforeResolve = null
+    
+    // resolve = null
+
+    // wholeAction: any;
+    // action = null;
 }

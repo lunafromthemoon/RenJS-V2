@@ -29,6 +29,7 @@ class Preload extends RJSState {
         loadStyle(preparePath(this.game.config.fonts, this.game));
         this.game.load.text('guiConfig', preparePath(this.game.config.guiConfig, this.game));
         this.game.load.text('storySetup', preparePath(this.game.config.storySetup, this.game));
+        this.game.load.text('storyConfig', preparePath(this.game.config.storyConfig, this.game));
         for (let i = this.game.config.storyText.length - 1; i >= 0; i--) {
             this.game.load.text('story'+i, preparePath(this.game.config.storyText[i], this.game));
         }
@@ -37,6 +38,7 @@ class Preload extends RJSState {
     create (game: RJS): void {
         // load the setup
         game.setup = jsyaml.load(game.cache.getText('storySetup'));
+        game.storyConfig = jsyaml.load(game.cache.getText('storyConfig'));
 
         // load the story text
         const story = {};

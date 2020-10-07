@@ -19,9 +19,10 @@ const globalConfig =  {
     }
   },
   'logChoices': true,
-  'fonts': 'assets/gui_old/fonts.css',
-  // 'guiConfig': 'GUI.yaml',
-  'guiConfig': 'story/GUI.yaml',
+  'fonts': 'assets/gui/fonts.css',
+  'guiConfig': 'GUI.yaml',
+  'storyConfig': 'story/Config.yaml',
+  // 'guiConfig': 'story/GUI.yaml',
   storySetup: 'story/Setup.yaml',
   'storyText': [
     'story/TestStory.yaml'

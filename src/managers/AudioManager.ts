@@ -37,7 +37,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
         const oldAudio = this.musicList[this.current[type]];
         this.current[type] = key;
-        if (!this.game.defaultValues.settings.muted && this.current[type]) {
+        if (!this.game.userPreferences.muted && this.current[type]) {
             if (transition === 'FADE') {
                 this.musicList[key].fadeIn(1500,looped);
                 if (oldAudio) {
@@ -58,7 +58,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
         const oldAudio = this.musicList[this.current[type]];
         this.current[type] = null;
-        if (!this.game.defaultValues.settings.muted) {
+        if (!this.game.userPreferences.muted) {
             if (transition === 'FADE') {
                 oldAudio.fadeOut(1500);
             } else {
@@ -68,9 +68,9 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     playSFX(key): void {
-        if (this.audioLoaded && !this.game.defaultValues.settings.muted){
+        if (this.audioLoaded && !this.game.userPreferences.muted){
             // debugger;
-            this.sfx[key].volume = this.game.defaultValues.settings.sfxv;
+            this.sfx[key].volume = this.game.userPreferences.sfxv;
             this.sfx[key].play();
 
         }
@@ -120,7 +120,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     mute(): void {
-        if (this.game.defaultValues.settings.muted){
+        if (this.game.userPreferences.muted){
             if (this.current.bgm) {
                 this.musicList[this.current.bgm].play('',0,1,true);
             }
@@ -135,7 +135,7 @@ export default class AudioManager implements AudioManagerInterface {
                 this.musicList[this.current.bgs].stop();
             }
         }
-        this.game.defaultValues.settings.muted = !this.game.defaultValues.settings.muted;
+        this.game.userPreferences.muted = !this.game.userPreferences.muted;
     }
 
     stopAll(): void {

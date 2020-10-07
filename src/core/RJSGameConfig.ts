@@ -29,10 +29,35 @@ export interface RJSGameConfig extends IGameConfig {
             fullBar?: string;
         };
     };
-    logChoices: boolean;
+    // logChoices: boolean;
     fonts: string;
     guiConfig: string;
     storySetup: string;
+    storyConfig: string;
     storyText: string[];
     i18n?: i18nInterface;
+}
+
+export interface StoryConfig extends IGameConfig {
+    positions: any;
+
+    // miliseconds for fade transitions
+    fadetime: number;
+    skiptime: number;
+    autotime: number;
+    timeout: number;
+    // wether the game keeps a log of the player choices for replay purposes
+    logChoices: boolean;
+
+    transitions: {
+        defaults: {
+            characters: string;
+            backgrounds: string;
+            cgs: string;
+            music: string;
+        };
+        visualChoices: string;
+        textChoices: string;
+        menus: string;
+    };
 }

@@ -112,6 +112,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // filter (eval choice modifies the choice adding id and clearing text)
         this.currentChoices = ch.filter(this.evalChoice);
         this.visualChoices = this.game.add.group();
+        this.visualChoices.alpha = 0;
         const execId = this.getExecStackId();
         for (let i = 0; i < this.currentChoices.length; i++) {
             const key = Object.keys(this.currentChoices[i])[0];
@@ -119,13 +120,18 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             const pos = str[2].split(',');
             const position = {x: parseInt(pos[0], 10), y: parseInt(pos[1], 10)};
             this.createVisualChoice(str[0],position,i,key,execId);
-            // TODO: fade in visual choices
         }
+        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
+        transition(null,this.visualChoices,true);
     }
 
     createVisualChoice(image, position, index, key, execId): Phaser.Button {
         const button = this.game.add.button(position.x,position.y,image,() => {
-            this.choose(index,key,execId);
+            let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
+            transition(this.visualChoices,null,true).then(()=>{
+                this.visualChoices.destroy();
+                this.choose(index,key,execId);
+            })
         },this,0,0,0,0,this.visualChoices);
 
         // if (this.game.gui.getChosenOptionColor && this.choicesLog[execId].indexOf(key) !== -1){
@@ -151,10 +157,10 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             this.game.control.execStack.stack('choice',actions.length,index);
         }
         //clean up
-        if (this.visualChoices){
+        // if (this.visualChoices){
             // TODO: maybe do fade?
-            this.visualChoices.destroy();
-        }
+            // this.visualChoices.destroy();
+        // }
         this.currentChoices = [];
         if (!chosenOption.interrupt){
             // interrupts resolve immediately

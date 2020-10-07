@@ -53,34 +53,6 @@ characters:
 cgs:
   phone1: assets/objects/phone1.png
   phone2: assets/objects/phone2.png
-  folders: assets/lessons/folders.png
-  setupbg: assets/lessons/lessonsetupbg.png
-  setupch: assets/lessons/lessonsetupch.png
-  setupcgs: assets/lessons/lessonsetupcgs.png
-  setupaudio: assets/lessons/lessonsetupaudio.png
-  scenestart: assets/lessons/lessonscenestart.png
-  scenehide: assets/lessons/lessonscenehide.png
-  ambientAndEffects: assets/lessons/lessonambientandeffect.png
-  lessonScene: assets/lessons/lessonscene.png
-  lessonChoice: assets/lessons/lessonchoice.png
-  lessonVisualChoice: assets/lessons/lessonvisualchoice.png
-  lessonVarsNumeric: assets/lessons/lessonvarsnumeric.png
-  lessonVarsBoolean: assets/lessons/lessonvarsboolean.png
-  lessonVarsBooleanCont: assets/lessons/lessonvarsbooleancont.png
-  lessonVarsString: assets/lessons/lessonvarsstring.png
-  lessonIf: assets/lessons/lessonif.png
-  lessonIfCont: assets/lessons/lessonifcont.png
-  lessonGUI: assets/lessons/lessonGUI.png
-  lessonGUIAudio: assets/lessons/lessonGUIAudio.png
-  lessonGUIFonts: assets/lessons/lessonGUIFonts.png
-  lessonGUIImages: assets/lessons/lessonGUIImages.png
-  lessonGUISpritesheets: assets/lessons/lessonGUISpritesheets.png
-  lessonGUIHUD: assets/lessons/lessonGUIhud.png
-  lessonGUIHUDcont: assets/lessons/lessonGUIhudcont.png
-  lessonGUIHUDcont2: assets/lessons/lessonGUIhudcont2.png
-  lessonGUIHUDcont3: assets/lessons/lessonGUIhudcont3.png
-  lessonGUIMenu: assets/lessons/lessonGUIMenu.png
-  lessonGUISliders: assets/lessons/lessonGUISliders.png
 music:
   rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
   morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
@@ -93,12 +65,18 @@ sfx:
   thunderSFX: assets/audio/thunder_strike_1.mp3
 extra:
   image:
-    title: assets/lessons/titles.png
+    title: assets/gui/titles.png
     rain: assets/ambient/rain.png
     thunder: assets/effects/Thunder_Effect.png
-  # spritesheets:
-  #   explosion: assets/effects/explosion.png 450 274
-  #   static: assets/ambient/static.png 320 256
+    attack: assets/effects/Attack_1.png
+    chainattack1: assets/effects/Attack_2.png
+    chainattack2: assets/effects/Attack_3.png
+    chainattack3: assets/effects/Attack_4.png
+    multiattack: assets/effects/Attack_5.png
+  spritesheets:
+    snowflakes: assets/ambient/snowflakes.png 17 17
+    snowflakes_large: assets/ambient/snowflakes_large.png 64 64
+    sakura: assets/ambient/sakura-petals.png 17 26
   # scripts:
   #   marble: assets/ambient/Marble.js
   #   lightbeam: assets/ambient/LightBeam.js

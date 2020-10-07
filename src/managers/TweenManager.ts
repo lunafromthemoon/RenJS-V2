@@ -4,17 +4,15 @@ import RJSTween from '../core/RJSTween';
 import RJSManagerInterface from './RJSManager';
 
 export interface TweenManagerInterface extends RJSManagerInterface {
-    tween (sprite, tweenables, callback, time: number, start: boolean, delay?: number);
-    chain (tweens: any[], time?: number);
+    tween (sprite, tweenables, callback, time: number, start: boolean, delay?: number, unskippable?: boolean);
+    chain (tweens: any[], unskippable: boolean, time?: number);
     skip(): any;
-    unskippable: boolean;
     current: RJSTween[];
     
 
 }
 
 export default class TweenManager implements TweenManagerInterface {
-    unskippable: boolean
     current = []
     private game: RJS
 
@@ -23,9 +21,8 @@ export default class TweenManager implements TweenManagerInterface {
         this.game = game
     }
 
-    tween(sprite, tweenables, callback, time, start, delay?): RJSTween {
+    tween(sprite, tweenables, callback, time, start, delay = 0, unskippable = false): RJSTween {
         const tween: RJSTween = this.game.add.tween(sprite);
-        delay = !delay ? 0 : delay;
         tween.to(tweenables, time, Phaser.Easing.Linear.None,false, delay);
         if (callback) {
             tween.onComplete.addOnce(callback, this);
@@ -35,7 +32,7 @@ export default class TweenManager implements TweenManagerInterface {
         if (start){
             this.current = [];
             tween.start();
-            if (!this.game.control.auto) {
+            if (!this.game.control.auto && !unskippable) {
                 this.game.waitForClick(() => this.skip());
             }
         }
@@ -47,7 +44,7 @@ export default class TweenManager implements TweenManagerInterface {
 
     }
 
-    chain(tweens, time): void {
+    chain(tweens, unskippable = false, time?): void {
         this.current = [];
         let lastTween = null;
         tweens.forEach(tw => {
@@ -59,26 +56,26 @@ export default class TweenManager implements TweenManagerInterface {
             lastTween = tween;
         });
         this.current[0].start();
-        if (!this.game.control.auto) {
+        if (!this.game.control.auto && !unskippable) {
             this.game.waitForClick(() => this.skip());
         }
     }
 
-    parallel (tweens, time): void {
+    parallel (tweens, unskippable = false, time?): void {
         this.current = [];
         tweens.forEach(tw => {
             const tween = this.tween(tw.sprite,tw.tweenables,tw.callback,time,false,tw.delay);
             tween.start();
         });
-        if (!this.game.control.auto) {
+        if (!this.game.control.auto && !unskippable) {
             this.game.waitForClick(() => this.skip());
         }
     }
 
     skip(): void {
-        if (this.unskippable){
-            return;
-        }
+        // if (this.unskippable){
+        //     return;
+        // }
         this.current.forEach(tween => {
             tween.stop(false);
             for (const property in tween.tweenables){

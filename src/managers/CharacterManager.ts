@@ -36,7 +36,7 @@ export default class CharacterManager implements CharacterManagerInterface {
     }
 
     addLook (character: Character, lookName, image): void {
-        const look: Sprite = this.game.managers.story.characterSprites.create(this.game.defaultValues.positions.CENTER.x, this.game.defaultValues.positions.CENTER.y,(image ? image : lookName));
+        const look: Sprite = this.game.managers.story.characterSprites.create(this.game.storyConfig.positions.CENTER.x, this.game.storyConfig.positions.CENTER.y,(image ? image : lookName));
         look.anchor.set(0.5,1);
         look.alpha = 0;
         look.name = lookName;
@@ -65,13 +65,13 @@ export default class CharacterManager implements CharacterManagerInterface {
         ch.currentLook = props.look ? ch.looks[props.look] : ch.looks.normal;
 
         if (!props.position){
-            props.position = (oldLook !== null) ? {x:oldLook.x,y:oldLook.y} : this.game.defaultValues.positions.CENTER;
+            props.position = (oldLook !== null) ? {x:oldLook.x,y:oldLook.y} : this.game.storyConfig.positions.CENTER;
         }
         if (props.flipped !== undefined){
             ch.lastScale = props.flipped ? -1 : 1;
         }
         this.showing[name] = {look: ch.currentLook.name,position:props.position,flipped:(ch.lastScale === -1)};
-        return this.transition.get(transitionName)(oldLook, ch.currentLook, props.position, ch.lastScale, this.game.managers.story.characterSprites);
+        return this.transition.get(transitionName)(oldLook, ch.currentLook, false, props.position, ch.lastScale, this.game.managers.story.characterSprites);
     }
 
     async hide(name, transitionName): Promise<any> {

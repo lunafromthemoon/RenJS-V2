@@ -23,6 +23,12 @@ export interface RJSGUIInterface {
     ignoreTap(pointer);
     addThumbnail?(thumbnail, slot);
     changeMenu(menu): void;
+    sliderLimits: {
+        textSpeed: number[];
+        autoSpeed: number[];
+        bgmv: number[];
+        sfxv: number[];
+    };
 
 }
 
@@ -44,6 +50,13 @@ export default class RJSGUI implements RJSGUIInterface {
     saveSlots = {}
     // interval object to show text per letter 
     textLoop = null;
+
+    sliderLimits = {
+        textSpeed: [10,150],
+        autoSpeed: [50,300],
+        bgmv: [0,1],
+        sfxv: [0,1]
+    };
 
     skipClickArea = []
 
@@ -226,8 +239,8 @@ export default class RJSGUI implements RJSGUIInterface {
             sliderMask.endFill();
             return sliderMask;
         }
-        const currentVal = this.game.defaultValues.settings[component.binding];
-        sliderFull.limits = this.game.defaultValues.limits[component.binding];
+        const currentVal = this.game.userPreferences[component.binding];
+        sliderFull.limits = this.sliderLimits[component.binding];
         sliderFull.binding = component.binding;
         sliderFull.mask = createMask(sliderFull,currentVal);
         sliderFull.inputEnabled = true;
@@ -271,11 +284,13 @@ export default class RJSGUI implements RJSGUIInterface {
         this.game.pause();
         this.previousMenu = this.currentMenu;
         this.currentMenu = menu;
+
         this.menus[menu].alpha = 0;
         this.menus[menu].visible = true;
-        this.game.add.tween(this.menus[menu]).to( {alpha:1}, 750,null,true);
+        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        transition(null, this.menus[menu],true);
         let music = this.config.menus[menu].backgroundMusic;
-        if (music && !music.isPlaying && !this.game.defaultValues.settings.muted){
+        if (music && !music.isPlaying && !this.game.userPreferences.muted){
             music.fadeIn(1000);
         }
     }
@@ -284,19 +299,23 @@ export default class RJSGUI implements RJSGUIInterface {
         if (!menu){
             menu = this.currentMenu;
         }
-        const tween = this.game.add.tween(this.menus[menu]).to( {alpha:0}, 400);
-        tween.onComplete.add(() => {
+        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        transition(this.menus[menu], null, true).then(()=>{
             this.menus[menu].visible = false;
             this.currentMenu = null;
             if (callback){
                 callback()
             }
-        });
+        })
+        // const tween = this.game.add.tween(this.menus[menu]).to( {alpha:0}, 400);
+        // tween.onComplete.add(() => {
+            
+        // });
         let music = this.config.menus[menu].backgroundMusic;
         if (mute && music && music.isPlaying){
             music.fadeOut(400);
         }
-        tween.start();
+        // tween.start();
     }
 
     showHUD() {
@@ -331,17 +350,17 @@ export default class RJSGUI implements RJSGUIInterface {
         const game = this.game
         this.sliderValueChanged = {
             textSpeed (newVal) {
-                game.defaultValues.settings.textSpeed = newVal;
+                game.userPreferences.textSpeed = newVal;
             },
             autoSpeed (newVal){
-                game.defaultValues.settings.autoSpeed = newVal;
+                game.userPreferences.autoSpeed = newVal;
             },
             bgmv (newVal){
-                game.defaultValues.settings.bgmv = newVal;
+                game.userPreferences.bgmv = newVal;
                 game.managers.audio.changeVolume('bgm',newVal);
             },
             sfxv (newVal){
-                game.defaultValues.settings.sfxv = newVal;
+                game.userPreferences.sfxv = newVal;
             },
         }
     }
@@ -433,7 +452,7 @@ export default class RJSGUI implements RJSGUIInterface {
             this.nameBox.visible = false;
         }
 
-        if (this.game.control.skipping || this.game.defaultValues.settings.textSpeed < 10){
+        if (this.game.control.skipping || this.game.userPreferences.textSpeed < 10){
             this.messageBox.message.text = text;
             this.messageBox.visible = true;
             this.ctc.visible = true;
@@ -457,7 +476,7 @@ export default class RJSGUI implements RJSGUIInterface {
             if (count >= words.length){
                 completeText();
             }
-        }, this.game.defaultValues.settings.textSpeed);
+        }, this.game.userPreferences.textSpeed);
         this.messageBox.visible = true;
         if (!this.game.control.auto){
             this.game.waitForClick(completeText);
@@ -466,7 +485,7 @@ export default class RJSGUI implements RJSGUIInterface {
 
     showChoices(choices, execId) {
         this.choices.removeAll(true);
-
+        this.choices.alpha = 0;
         const choiceConfig = this.config.hud.choice;
         const interruptConfig = this.config.hud.interrupt;
 
@@ -485,6 +504,8 @@ export default class RJSGUI implements RJSGUIInterface {
             const choiceType = choice.interrupt ? interruptConfig : choiceConfig;
             this.createChoiceBox(choice,[x,y],index,choiceType,execId)
         });
+        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
+        transition(null,this.choices,true);
     }
 
     createChoiceBox(choice, pos, index, choiceConfig, execId) {
@@ -495,8 +516,12 @@ export default class RJSGUI implements RJSGUIInterface {
                 sfx.onStop.addOnce(sfx.destroy);
                 sfx.play();
             }
-            this.choices.removeAll(true);
-            this.game.managers.logic.choose(index,choice.choiceText,execId);
+            let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
+            transition(this.choices,null,true).then(()=>{
+                this.choices.removeAll(true);
+                this.game.managers.logic.choose(index,choice.choiceText,execId);
+            })
+            
         },this,1,0,2,0,this.choices);
         if (chBox.animations.frameTotal === 2 || chBox.animations.frameTotal === 4){
             chBox.setFrames(1,0,1,0)
@@ -514,7 +539,7 @@ export default class RJSGUI implements RJSGUIInterface {
         const textStyle = this.getTextStyle('choice');
         const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
         this.setTextPosition(chBox,text, choiceConfig);
-        if (this.game.config.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) !== -1){
+        if (this.game.storyConfig.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) !== -1){
             chBox.tint = this.toHexColor(choiceConfig['chosen-color']);
         }
         return chBox;

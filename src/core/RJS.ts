@@ -15,8 +15,8 @@ import Ambient from '../screen-effects/Ambient';
 import Effects from '../screen-effects/Effects';
 import Transition from '../screen-effects/Transition';
 import RJSGUI from '../gui/RJSGUI';
-import {RJSGameConfig} from './RJSGameConfig';
-import {defaults, DefaultsInterface} from './Defaults';
+import {RJSGameConfig,StoryConfig} from './RJSGameConfig';
+import UserPreferences from './UserPreferences';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
 import Loader from '../states/Loader';
@@ -37,7 +37,9 @@ export default class RJS extends Game {
     }
 
     config: RJSGameConfig
-    defaultValues: DefaultsInterface = {...defaults}
+    userPreferences: UserPreferences 
+    storyConfig: StoryConfig
+
     interruptAction: any = null
 
     managers: {
@@ -60,8 +62,9 @@ export default class RJS extends Game {
     constructor(config: RJSGameConfig) {
         super()
         // this.defaultValues = {...defaults}
-        this.control = new RJSControl(this.defaultValues)
-        this.config = config
+        this.userPreferences = new UserPreferences();
+        this.control = new RJSControl();
+        this.config = config;
         // this.initModulesInOrder()
     }
 
@@ -92,12 +95,17 @@ export default class RJS extends Game {
     unpause (force?): void{
         this.control.paused = false;
         this.gui.showHUD();
-
-        if (!this.control.resolve || force){
-            this.managers.story.interpret();
-        } else if (force) {
-            this.control.resolve();
+        if (this.control.waitForClick){
+            this.control.waitForClick = false;
+            this.control.nextAction();
+        } else {
+            this.resolveAction();
         }
+        // if (!this.control.resolve || force){
+        //     this.managers.story.interpret();
+        // } else if (force) {
+            
+        // }
     }
 
     setBlackOverlay (): void {
@@ -114,7 +122,7 @@ export default class RJS extends Game {
                 this.blackOverlay.destroy();
                 this.blackOverlay = null;
             });
-            tween.to({ alpha: 0 }, this.control.fadetime * 2, Phaser.Easing.Linear.None, true);
+            tween.to({ alpha: 0 }, this.storyConfig.fadetime * 2, Phaser.Easing.Linear.None, true);
         }
     }
 
@@ -131,7 +139,7 @@ export default class RJS extends Game {
     }
 
     skip (): void {
-        this.defaultValues.skiptime = 50;
+        // this.storyConfig.skiptime = 50;
         this.control.skipping = true;
         if (this.control.waitForClick){
             this.control.waitForClick = false;
@@ -140,10 +148,11 @@ export default class RJS extends Game {
     }
 
     auto (): void {
-        this.defaultValues.skiptime = 1000;
+        // this.defaultValues.skiptime = 1000;
         this.control.auto = true;
         if (this.control.waitForClick){
-            this.control.nextAction()
+            this.control.waitForClick = false;
+            this.control.nextAction();
         }
     }
 
@@ -212,7 +221,11 @@ export default class RJS extends Game {
     waitForClick (callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping || this.control.auto){
-            setTimeout(this.control.nextAction.bind(this), this.defaultValues.skiptime);
+            let timeout = this.control.skipping ? this.storyConfig.skiptime : this.storyConfig.autotime;
+            if (this.control.auto && this.userPreferences.autoSpeed){
+                timeout = this.userPreferences.autoSpeed;
+            }
+            setTimeout(this.control.nextAction.bind(this), timeout);
         } else {
             this.control.waitForClick = true;
         }
@@ -220,11 +233,10 @@ export default class RJS extends Game {
 
     waitTimeout (time, callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
-        this.control.nextAction
         if (this.control.skipping){
             this.control.nextAction();
         } else {
-            setTimeout(this.control.nextAction.bind(this),time ? time : this.defaultValues.timeout);
+            setTimeout(this.control.nextAction.bind(this),time ? time : this.storyConfig.timeout);
         }
     }
 
@@ -234,7 +246,7 @@ export default class RJS extends Game {
         setTimeout((() => {
                 this.control.waitForClick = false;
                 this.control.nextAction();
-            }).bind(this),time ? time : this.defaultValues.timeout);
+            }).bind(this),time ? time : this.storyConfig.timeout);
     }
 
     onTap (pointer, doubleTap?): void {
@@ -271,10 +283,10 @@ export default class RJS extends Game {
 
     resolveAction(): void {
 
-        if (this.control.doBeforeResolve != null){
-            this.control.doBeforeResolve();
-            this.control.doBeforeResolve = null;
-        }
+        // if (this.control.doBeforeResolve != null){
+        //     this.control.doBeforeResolve();
+        //     this.control.doBeforeResolve = null;
+        // }
         // debugger;
         this.control.waitForClick = false;
         if (!this.control.paused){
@@ -286,7 +298,7 @@ export default class RJS extends Game {
     onInterpretActions(): void {
         // called before interpreting action
         // update stack
-        this.control.globalCounter++;
+        this.control.actionsCounter++;
         this.control.execStack.advance();
         // update interrupts
         this.managers.logic.updateInterruptions();
