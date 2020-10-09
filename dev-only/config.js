@@ -22,8 +22,7 @@ const globalConfig =  {
   'fonts': 'assets/gui/fonts.css',
   'guiConfig': 'GUI.yaml',
   'storyConfig': 'story/Config.yaml',
-  // 'guiConfig': 'story/GUI.yaml',
-  storySetup: 'story/Setup.yaml',
+  storySetup: 'story/TutorialSetup.yaml',
   'storyText': [
     'story/TutorialStory.yaml'
   ]

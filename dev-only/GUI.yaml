@@ -126,8 +126,8 @@ config:
     message-box:
       id: asset19
       text-width: '540'
-      offset-y: '16'
-      offset-x: '16'
+      offset-y: '24'
+      offset-x: '24'
       align: left
       color: '#89BAA8'
       font: fontsaudimat-mono
@@ -205,7 +205,7 @@ config:
       chosen-color: '#535050'
       color: '#FFFFFF'
       font: fontsaudimat-mono
-      size: 37
+      size: 32
       separation: '10'
       height: '65'
       width: '716'
@@ -221,7 +221,7 @@ config:
       align: left
       color: '#AAA2A2'
       font: fontsaudimat-mono
-      size: 37
+      size: 32
       separation: ''
       height: '65'
       width: '716'

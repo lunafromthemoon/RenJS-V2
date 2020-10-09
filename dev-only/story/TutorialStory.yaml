@@ -6,8 +6,10 @@ start:
   - deuzi says: Hello, are you the new student?
   - deuzi says happy: Welcome to our Tutorial Game!
   - deuzi says: My name is Deuzilene and I'll be your guide.
+  - show street_afternoon: WITH FUSION
   - deuzi says normal: So you want to make a Visual Novel?
   - deuzi says: With RenJS you can easily make games just like this one.
+  - show street_morning: WITH FUSION
   - deuzi says: RenJS is inspired by Ren'Py and based on PhaserJS.
   - deuzi says: If you are familiar with any of those you have an advantage.
   - deuzi says: And if not...
@@ -83,16 +85,18 @@ enterSchool:
   - deuzi says: RenJS contains the library, renjs.js, and another file, boot.js that takes care of starting the game.
   - deuzi says: Normally, you don't need to do anything with these files, but there's one thing you need to know.
   - deuzi says: To launch the game, inside of boot.js, the game takes a few low level configuration parameters.
+  - show lessonRenJSConfig: AT 520,300
   - deuzi says: The most important is the game screen resolution. The Tutorial and Quickstart are both in the same resolution, 800x600 pixels.
-  - deuzi says: But you can make games in any resolution you like, and if you do, you will need to change it right there.
+  - deuzi says: But you can make games in any resolution you like, and if you do, you will need to change it right there with the 'w' and 'h' parameters.
   - deuzi says: The second important thing you might need to modify in this file is where to find the story itself.
-  - deuzi says: 'If you go check it, at the end of the configuration object, there are four important parameters: guiConfig, storySetup, storyConfig and storyText.'
+  - deuzi says: The parameters 'guiConfig', 'storySetup', 'storyConfig' and 'storyText' are just for that.
   - deuzi says: All of these point to a YAML file inside the 'story' directory, and they refer to the files that make up your story.
   - deuzi says: These files can be named whatever you want, but you would need to modify the file path and name here.
   - deuzi says: But the most important thing here is that 'storyText' doesn't just point to a file, but a list of files.
   - deuzi says: That means that you can have as many story text files as you want. In this way, you can organize your story as you like.
   - deuzi says: And all you need to do when you add a new file, is to come and add it to the configuration object in the boot.js file.
   - deuzi says: There are a few other parameters there that you might want to modify if you really know what you're doing. But if you leave them as they are, it should be fine.
+  - hide lessonRenJSConfig: 
   - deuzi says: Let's see the next directory. Plugins contains new scripts that you might want to use during your game. 
   - deuzi says: For example, you can code your own special effects, mini games or whatever you want, and they can be added seamlessly to the game with plugings.
   - deuzi says: If you're making a simple game, you shouldn't worry about any of this though.
@@ -116,20 +120,16 @@ enterSchool:
   - deuzi says normal: Ok, that was a lot of information, don't you think?
   - choice:
     - Yes, I'm already tired:
-      - show deuzi: happy
-      - deuzi says: I was hoping you'd say that!
+      - deuzi says happy: I was hoping you'd say that!
       - deuzi says: You can save from the quick menu here on the side and return later!
     - No, I want to know more:
-      - show deuzi: happy
-      - deuzi says: I knew it!
+      - deuzi says happy: I knew it!
       - deuzi says: I have a feeling you're not stopping until you write your first story.
       - deuzi says: Isn't that exciting?
-  - show deuzi: normal
-  - deuzi says: All right, I'm going to take a break anyways.
+  - deuzi says normal: All right, I'm going to take a break anyways.
   - deuzi says: You will see how to write each of these files in the next lessons.
   - deuzi says: But I'm leaving you in good hands.
-  - show deuzi: happy
-  - deuzi says: Good luck!
+  - deuzi says happy: Good luck!
   - hide deuzi: WITH FADE
   - scene: storySetup
 
@@ -151,14 +151,13 @@ storySetup:
   - jair says: What this means is...
   - jair says: All your characters, music, sfx and everything else you're planning to use on the story,
   - jair says: needs to be declared on this file.
-  - jair says: That means you need to know everything before even start to write your story.
+  - jair says: That means you need to know everything before you even start to write the story.
   - jair says: What kind of writer doesn't though...
   - wait: 300
-  - jair says happy: Just joking!
-  - jair says: You won't always know what things you need for a story.
+  - jair says : Just joking!
+  - jair says happy: You won't always know what things you need for a story.
   - jair says: So every time you add something, remember to also add it to the setup file.
-  - show jair: normal
-  - jair says: As Deuzi already said, we'll be using the Quickstart as a base.
+  - jair says normal: As Deuzi already said, we'll be using the Quickstart as a base.
   - jair says: But this game comes with the bare minimal.
   - jair says: One background and one characters, Deuzilene herself.
   - jair says: That would make a poor example, so let's learn by doing.
@@ -170,14 +169,13 @@ storySetup:
   - jair says: Exactly what it says on the tin. The assets used on this tutorial game.
   - jair says: Can you find me among the files?
   - choice:
-    - I found some other characters, who are they?:
+    - Who are the other characters?:
       - jair says angry: You just barely started today, you'll meet them when it's due.
     - Yes, I found you!:
       - jair says happy: I'm so handsome.
   - jair says normal: Anyway... Let's continue with the class.
-  - show jair: AT RIGHT WITH MOVE CONTINUE
-  - show setupbg: AT 400,350 WITH FADE
-  - jair says: This is the Setup.yaml file. You should open it yourself, too.
+  
+  - jair says: Find the Setup.yaml and take a look at it. 
   - jair says: The setup file is organized by type of game element.
   - jair says: The backgrounds with the backgrounds the characters with the characters.
   - jair says: Each type of element is declared in their own special way. 
@@ -186,18 +184,21 @@ storySetup:
   - jair says normal: I like to tease her about this obsesion of hers...
   - jair says angry: But she's right, it's really important.
   - jair says normal: To put this in practice, let's add a new background.
+  - show jair: AT RIGHT WITH MOVE CONTINUE
+  - show setupbg: AT 400,320 WITH FADE
   - jair says: First, locate the 'background' key word. It should be easy, it's in the first line.
-  - jair says: You'll notice that the sole background declared here is indented by two spaces.
+  - jair says: There are three backgrounds declared here, each in their own line, indented by two spaces.
   - jair says: You have to keep this structure.
   - jair says: Each background has a tag, that's the name that will be used to refer to that particular background on the story.
   - jair says: And they also have a path to where the background image is located, relative to the root of the game.
-  - jair says: If you change the path to the image, the image in the game will be updated automatically everywhere it's used.
+  - jair says: If you change the tag of a background, you will have to manually update the tag in the story, in every instance it's used.
+  - jair says: But if you change the path to the image, the image will be changed without having to modify the story.
   - jair says: In this way, you can use placeholder images, like sketches, to write your game before you have the final assets.
   - jair says: But let's do some practical work.
   - jair says: Go to the tutorial assets directory and let's explore the available backgrounds. 
-  - jair says happy: Seems like we have an afternoon for this same scenario.
+  - jair says happy: Seems like we have an afternoon for the school.
   - jair says normal: Add a new line to the backgrounds section of the setup to add it to the game.
-  - jair says: The key name, or tag, can't have spaces and it should be meaningful, so it will be easier to use in the script.
+  - jair says: The key name, or tag, can't have spaces and it should be meaningful, so it will be easier to use in the script. For example, 'school_afternoon'.
   - jair says: Then the path should be the directory hierarchy from the root of the game to the image file.
   - jair says: If you go to the Story.yaml file, the script of your story, and change the old background tag to the new one you just added.
   - jair says: Then when you run the game again, you should see the new background.
@@ -210,7 +211,7 @@ storySetup:
   - show deuzi: angry AT RIGHT
     flipped: true
   - deuzi says: Not so fast!
-  - show jair: normal
+  - show jair: normal WITH CUT
     flipped: true
   - jair says: Uh oh.
   - deuzi says: Where do you think you're going? There's a lot more to say about the setup!
@@ -903,7 +904,8 @@ graduation:
     text:
       - RenJS.V2 created by
       - lunafromthemoon
-      - In colaborations with
+      - null
+      - In colaboration with
       - RockTheFox
       - null
       - Inspired by Ren'Py

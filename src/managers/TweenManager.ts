@@ -37,9 +37,9 @@ export default class TweenManager implements TweenManagerInterface {
             }
         }
         this.current.push(tween);
-        // if (RenJS.control.skipping){
-        //     this.skip();
-        // }
+        if (this.game.control.skipping){
+            this.skip();
+        }
         return tween;
 
     }
@@ -55,8 +55,9 @@ export default class TweenManager implements TweenManagerInterface {
             }
             lastTween = tween;
         });
-        this.current[0].start();
-        if (this.canSkip() && !unskippable) {
+        if (!this.game.control.skipping){
+            this.current[0].start();
+        } else if (this.canSkip() && !unskippable) {
             this.game.waitForClick(() => this.skip());
         }
     }
@@ -64,8 +65,7 @@ export default class TweenManager implements TweenManagerInterface {
     parallel (tweens, unskippable = false, time?): void {
         this.current = [];
         tweens.forEach(tw => {
-            const tween = this.tween(tw.sprite,tw.tweenables,tw.callback,time,false,tw.delay);
-            tween.start();
+            const tween = this.tween(tw.sprite,tw.tweenables,tw.callback,time,true,tw.delay);
         });
         if (!this.canSkip() && !unskippable) {
             this.game.waitForClick(() => this.skip());

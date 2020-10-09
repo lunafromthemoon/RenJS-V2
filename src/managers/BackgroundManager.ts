@@ -4,7 +4,6 @@ import Transition from '../screen-effects/Transition';
 import RJS from '../core/RJS';
 
 export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface {
-    backgroundSprites: T;
     backgrounds: object;
     current?: object;
     add(name, animated, framerate): void;
@@ -14,21 +13,20 @@ export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface
 }
 
 export default class BackgroundManager implements BackgroundManagerInterface<Group> {
-    backgroundSprites: Group
     private transition: Transition
     backgrounds = {};
     current = null;
 
     constructor(private game: RJS) {
-        this.backgroundSprites = game.add.group()
         this.transition = game.screenEffects.transition
     }
 
     add(name, animated?, framerate?): void {
-        this.backgrounds[name] = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, name,this.backgroundSprites);
+        this.backgrounds[name] = this.game.managers.story.backgroundSprites.create(this.game.world.centerX, this.game.world.centerY, name);
+        this.backgrounds[name].alpha = 0;
         this.backgrounds[name].name = name;
         this.backgrounds[name].anchor.set(0.5);
-        this.backgrounds[name].alpha = 0;
+        
         if (animated){
             this.backgrounds[name].animated = true;
             this.backgrounds[name].animations.add('run', null, framerate);
@@ -52,7 +50,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         if (this.current && this.current.animated){
             this.current.animations.play('run', null, true);
         }
-        return this.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1, this.backgroundSprites);
+        return this.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1);
     }
 
     async hide (bg?, transitionName = 'FADEOUT'): Promise<any> {

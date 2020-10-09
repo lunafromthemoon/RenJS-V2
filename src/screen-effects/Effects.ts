@@ -64,32 +64,6 @@ export default class Effects implements RJSScreenEffectInterface {
 
     }
 
-    async SHOWTITLE(param): Promise<void> {
-        const bg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'title');
-        bg.anchor.set(0.5);
-        const style = {...this.game.gui.getTextStyle('choice')};
-        style.font = '50pt ' + this.game.gui.fonts[0];
-        const title = this.game.add.text(0, -20, param.title, style);
-        style.font = '25pt ' + this.game.gui.fonts[0];
-        const subtitle = this.game.add.text(0, 40, param.subtitle, style);
-        subtitle.anchor.set(0.5);
-        title.anchor.set(0.5);
-        bg.addChild(title);
-        bg.addChild(subtitle);
-        bg.alpha = 0;
-
-
-        this.tweenManager.chain([
-            {sprite: bg, tweenables: {alpha: 1}},
-            {
-                sprite: bg, tweenables: {alpha: 0}, callback: (): void => {
-                    bg.destroy();
-                }, delay: this.game.storyConfig.fadetime * 2
-            }
-        ], true, this.game.storyConfig.fadetime * 2);
-
-    }
-
     async FLASHIMAGE(params): Promise<void> {
         if (params.screenShake){
             this.SHAKE();

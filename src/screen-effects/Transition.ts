@@ -72,18 +72,17 @@ export default class Transition implements RJSScreenEffectInterface {
         })
     }
 
-    async FUSION(from, to, position?, scaleX?, group?: Group): Promise<void> {
+    async FUSION(from, to, position?, scaleX?): Promise<void> {
         if (!from || !to) {
             return this.FADE(from, to, position);
         }
         return new Promise(resolve => {
-            if (group) {
-                group.bringToTop(to);
-            }
+            if (from.parent) {
+                from.parent.bringToTop(from);
+            } 
             setNewProperties(to, position, scaleX);
-
-            this.tweenManager.tween(to, {alpha: 1}, () => {
-                from.alpha = 0;
+            to.alpha = 1;
+            this.tweenManager.tween(from, {alpha: 0}, () => {
                 resolve();
             }, this.game.storyConfig.fadetime, true,0,false);
         });

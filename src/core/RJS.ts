@@ -235,7 +235,7 @@ export default class RJS extends Game {
     waitTimeout (time, callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping){
-            this.control.nextAction();
+            this.control.nextAction.call(this);
         } else {
             setTimeout(this.control.nextAction.bind(this),time ? time : this.storyConfig.timeout);
         }
