@@ -122,13 +122,13 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             this.createVisualChoice(str[0],position,i,key,execId);
         }
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
-        transition(null,this.visualChoices,true);
+        transition(null,this.visualChoices);
     }
 
     createVisualChoice(image, position, index, key, execId): Phaser.Button {
         const button = this.game.add.button(position.x,position.y,image,() => {
             let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
-            transition(this.visualChoices,null,true).then(()=>{
+            transition(this.visualChoices,null).then(()=>{
                 this.visualChoices.destroy();
                 this.choose(index,key,execId);
             })

@@ -31,7 +31,7 @@ export default class Transition implements RJSScreenEffectInterface {
         }
     }
 
-    async CUT(from, to, unskippable = false, position?, scaleX?): Promise<void> {
+    async CUT(from, to, position?, scaleX?): Promise<void> {
         if (from) {
             from.alpha = 0;
         }
@@ -41,9 +41,9 @@ export default class Transition implements RJSScreenEffectInterface {
         }
     }
 
-    async FADE(from, to, unskippable = false, position?, scaleX?): Promise<any> {
-        if (!from) return this.FADEIN(to, unskippable, position, scaleX);
-        if (!to) return this.FADEOUT(from, unskippable);
+    async FADE(from, to, position?, scaleX?): Promise<any> {
+        if (!from) return this.FADEIN(to, position, scaleX);
+        if (!to) return this.FADEOUT(from);
 
         return new Promise(resolve => {
             this.tweenManager.chain([
@@ -54,25 +54,25 @@ export default class Transition implements RJSScreenEffectInterface {
                     }
                 },
                 {sprite: to, tweenables: {alpha: 1}}
-            ],unskippable, this.game.storyConfig.fadetime);
+            ],false, this.game.storyConfig.fadetime);
         })
         
     }
 
-    async FADEOUT(from, unskippable = false): Promise<void> {
+    async FADEOUT(from): Promise<void> {
         return new Promise(resolve => {
-            this.tweenManager.tween(from, {alpha: 0}, resolve, this.game.storyConfig.fadetime, true,0,unskippable);
+            this.tweenManager.tween(from, {alpha: 0}, resolve, this.game.storyConfig.fadetime, true,0,false);
         })
     }
 
-    async FADEIN(to, unskippable = false, position?, scaleX?): Promise<void> {
+    async FADEIN(to, position?, scaleX?): Promise<void> {
         return new Promise(resolve => {
             setNewProperties(to, position, scaleX);
-            this.tweenManager.tween(to, {alpha: 1}, resolve, this.game.storyConfig.fadetime, true,0,unskippable);
+            this.tweenManager.tween(to, {alpha: 1}, resolve, this.game.storyConfig.fadetime, true,0,false);
         })
     }
 
-    async FUSION(from, to, unskippable = false, position?, scaleX?, group?: Group): Promise<void> {
+    async FUSION(from, to, position?, scaleX?, group?: Group): Promise<void> {
         if (!from || !to) {
             return this.FADE(from, to, position);
         }
@@ -85,11 +85,11 @@ export default class Transition implements RJSScreenEffectInterface {
             this.tweenManager.tween(to, {alpha: 1}, () => {
                 from.alpha = 0;
                 resolve();
-            }, this.game.storyConfig.fadetime, true,0,unskippable);
+            }, this.game.storyConfig.fadetime, true,0,false);
         });
     }
 
-    async MOVE(from, to, unskippable = false, position, scaleX?): Promise<void> {
+    async MOVE(from, to, position, scaleX?): Promise<void> {
         if (!from || !to) {
             return this.CUT(from, to, position);
         }
@@ -99,11 +99,11 @@ export default class Transition implements RJSScreenEffectInterface {
                 from.alpha = 0;
                 to.alpha = 1;
                 resolve();
-            }, this.game.storyConfig.fadetime, true,0,unskippable);
+            }, this.game.storyConfig.fadetime, true,0,false);
         });
     }
 
-    async FADETOCOLOUR(from, to, unskippable = false, colour, position?, scaleX?): Promise<void> {
+    async FADETOCOLOUR(from, to, colour, position?, scaleX?): Promise<void> {
         const sprBg = this.game.add.graphics(0, 0);
         // this.fadeColor = fadeColor ? fadeColor : 0x000000;
         sprBg.beginFill(colour, 1);
@@ -129,16 +129,16 @@ export default class Transition implements RJSScreenEffectInterface {
                         resolve();
                     }
                 }
-            ], unskippable, this.game.storyConfig.fadetime);
+            ], false, this.game.storyConfig.fadetime);
         });
     }
 
-    async FADETOBLACK (from, to, unskippable = false, position?): Promise<void> {
-        return this.FADETOCOLOUR(from,to,unskippable,0x000000, position, null)
+    async FADETOBLACK (from, to, position?): Promise<void> {
+        return this.FADETOCOLOUR(from,to,0x000000, position, null)
     }
 
-    async FADETOWHITE (from, to, unskippable = false, position?): Promise<void> {
-        return this.FADETOCOLOUR(from, to, unskippable, 0xFFFFFF, position, null)
+    async FADETOWHITE (from, to, position?): Promise<void> {
+        return this.FADETOCOLOUR(from, to, 0xFFFFFF, position, null)
     }
 }
 

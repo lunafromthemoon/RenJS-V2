@@ -19,6 +19,12 @@ export interface RJSGUIInterface {
     ignoreTap(pointer: any): any;
     addThumbnail?(thumbnail: any, slot: any): any;
     changeMenu(menu: any): void;
+    sliderLimits: {
+        textSpeed: number[];
+        autoSpeed: number[];
+        bgmv: number[];
+        sfxv: number[];
+    };
 }
 export default class RJSGUI implements RJSGUIInterface {
     protected game: RJS;
@@ -43,6 +49,12 @@ export default class RJSGUI implements RJSGUIInterface {
     interrupts: Group;
     saveSlots: {};
     textLoop: any;
+    sliderLimits: {
+        textSpeed: number[];
+        autoSpeed: number[];
+        bgmv: number[];
+        sfxv: number[];
+    };
     skipClickArea: any[];
     currentMenu: any;
     previousMenu: any;

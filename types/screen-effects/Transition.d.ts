@@ -13,13 +13,13 @@ export default class Transition implements RJSScreenEffectInterface {
     private tweenManager;
     constructor(game: RJS);
     get(name: string): any;
-    CUT(from: any, to: any, position: any, scaleX?: any): Promise<void>;
-    FADE(from: any, to: any, position: any, scaleX?: any): Promise<any>;
-    FADEOUT(from: any): Promise<void>;
-    FADEIN(to: any, position: any, scaleX: any): Promise<void>;
-    FUSION(from: any, to: any, position: any, scaleX: any, group: Group): Promise<void>;
-    MOVE(from: any, to: any, position: any, scaleX: any): Promise<void>;
-    FADETOCOLOUR(from: any, to: any, position: any, scaleX: any, colour: any): Promise<void>;
-    FADETOBLACK(from: any, to: any, position: any): Promise<void>;
-    FADETOWHITE(from: any, to: any, position: any): Promise<void>;
+    CUT(from: any, to: any, unskippable?: boolean, position?: any, scaleX?: any): Promise<void>;
+    FADE(from: any, to: any, unskippable?: boolean, position?: any, scaleX?: any): Promise<any>;
+    FADEOUT(from: any, unskippable?: boolean): Promise<void>;
+    FADEIN(to: any, unskippable?: boolean, position?: any, scaleX?: any): Promise<void>;
+    FUSION(from: any, to: any, unskippable?: boolean, position?: any, scaleX?: any, group?: Group): Promise<void>;
+    MOVE(from: any, to: any, unskippable: boolean, position: any, scaleX?: any): Promise<void>;
+    FADETOCOLOUR(from: any, to: any, unskippable: boolean, colour: any, position?: any, scaleX?: any): Promise<void>;
+    FADETOBLACK(from: any, to: any, unskippable?: boolean, position?: any): Promise<void>;
+    FADETOWHITE(from: any, to: any, unskippable?: boolean, position?: any): Promise<void>;
 }

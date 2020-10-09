@@ -52,7 +52,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         if (this.current && this.current.animated){
             this.current.animations.play('run', null, true);
         }
-        return this.transition.get(transitionName)(oldBg,this.current,false,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1, this.backgroundSprites);
+        return this.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1, this.backgroundSprites);
     }
 
     async hide (bg?, transitionName = 'FADEOUT'): Promise<any> {

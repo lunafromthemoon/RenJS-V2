@@ -29,7 +29,7 @@ export default class Effects implements RJSScreenEffectInterface {
         bg.alpha = 0;
 
         const style = {...this.game.gui.getTextStyle('choice')};
-        style.font = '25pt ' + this.game.gui.fonts[0];
+        // style.font = '25pt ' + this.game.gui.fonts[0];
         const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, params.text[0], style);
         credits.anchor.set(0.5);
         const separation = 35;
@@ -90,8 +90,14 @@ export default class Effects implements RJSScreenEffectInterface {
 
     }
 
-    async FLASHIMAGE(imageName: string): Promise<void> {
-        const image = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, imageName);
+    async FLASHIMAGE(params): Promise<void> {
+        if (params.screenShake){
+            this.SHAKE();
+        } 
+        if (params.sfx){
+            this.audioManager.playSFX(params.sfx);    
+        }
+        const image = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, params.image);
         image.anchor.set(0.5);
         return new Promise(resolve => {
             setTimeout(() => {
@@ -107,40 +113,4 @@ export default class Effects implements RJSScreenEffectInterface {
         
     }
 
-    async EXPLOSION(): Promise<void> {
-        const explosion = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'explosion');
-        explosion.anchor.set(0.5);
-        // let added
-        const anim = explosion.animations.add('explode');
-        anim.onComplete.add(() => {
-            return;
-        });
-        anim.play(10, false, true);
-        this.audioManager.playSFX('explosionSound');
-    }
-
-    async THUNDER(): Promise<void> {
-        this.game.camera.shake(0.01, 200);
-        this.audioManager.playSFX('thunderSFX');
-        return this.FLASHIMAGE('thunder');
-    }
-
-    async ATTACK(): Promise<void> {
-        this.game.camera.shake(0.01, 200);
-        return this.FLASHIMAGE('attack');
-    }
-
-    async MULTIATTACK(): Promise<void> {
-        this.game.camera.shake(0.01, 600);
-        return this.FLASHIMAGE('multiattack');
-    }
-
-    async CHAINATTACK(): Promise<void> {
-        this.game.camera.shake(0.01, 200);
-        await this.FLASHIMAGE('chainattack1')
-        this.game.camera.shake(0.01, 200);
-        await this.FLASHIMAGE('chainattack2')
-        this.game.camera.shake(0.01, 200);
-        await this.FLASHIMAGE('chainattack3')
-    }
 }

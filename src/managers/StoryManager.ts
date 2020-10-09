@@ -124,7 +124,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         const actionParams = {
             withTransition: ['show','hide','play','stop'],
             withPosition: ['show'],
-            withContinue: ['show','hide','effect']
+            withContinue: ['show','hide']
         }
         function getKey(act): any {
             return Object.keys(act)[0];

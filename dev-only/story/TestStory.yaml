@@ -87,9 +87,12 @@ testAaE:
   - show store:
   - show marco: 
   - marco says: It looks like there's going to be a storm.
-  - effect THUNDER:
+  - effect FLASHIMAGE:
+    screenShake: true
+    sfx: thunderSFX
+    image: thunder
   - marco says happy: Here it is!
-  - ambient RAIN2:
+  - ambient RAIN:
   - text: Snow in 3...
   - text: 2...
   - text: 1...
@@ -99,11 +102,11 @@ testAaE:
   - ambient SNOW:
   - show jair: angry AT RIGHT
   - jair says: Not so fast! Let's battle!
-  - effect ATTACK:
+  # - effect ATTACK:
   - marco says worry: You leave me no choice.
-  - effect MULTIATTACK:
+  # - effect MULTIATTACK:
   - marco says angry: Take this!
-  - effect CHAINATTACK: 
+  # - effect CHAINATTACK: 
   - hide jair:
   - ambient CLEAR:
   - marco says: It's time to go home.
@@ -112,6 +115,7 @@ testAaE:
   - show liz: 
   - ambient SAKURA:
   - liz says happy: What a beautiful morning.
+  - liz says: There are cherry blossoms everywhere!
   - ambient CLEAR:
   - effect ROLLINGCREDITS:
     endGame: false

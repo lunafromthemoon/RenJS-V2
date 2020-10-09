@@ -96,6 +96,10 @@ extra:
     title: assets/lessons/titles.png
     rain: assets/ambient/rain.png
     thunder: assets/effects/Thunder_Effect.png
+  spritesheets:
+    snowflakes: assets/ambient/snowflakes.png 17 17
+    snowflakes_large: assets/ambient/snowflakes_large.png 64 64
+    sakura: assets/ambient/sakura-petals.png 17 26
   # spritesheets:
   #   explosion: assets/effects/explosion.png 450 274
   #   static: assets/ambient/static.png 320 256

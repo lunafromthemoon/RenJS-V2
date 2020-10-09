@@ -14,8 +14,8 @@ import Ambient from '../screen-effects/Ambient';
 import Effects from '../screen-effects/Effects';
 import Transition from '../screen-effects/Transition';
 import RJSGUI from '../gui/RJSGUI';
-import { RJSGameConfig } from './RJSGameConfig';
-import { DefaultsInterface } from './Defaults';
+import { RJSGameConfig, StoryConfig } from './RJSGameConfig';
+import UserPreferences from './UserPreferences';
 export default class RJS extends Game {
     gameStarted: boolean;
     control: RJSControl;
@@ -27,7 +27,8 @@ export default class RJS extends Game {
     pluginsRJS: any;
     addPlugin(name: string, cls: any): void;
     config: RJSGameConfig;
-    defaultValues: DefaultsInterface;
+    userPreferences: UserPreferences;
+    storyConfig: StoryConfig;
     interruptAction: any;
     managers: {
         background?: BackgroundManager;

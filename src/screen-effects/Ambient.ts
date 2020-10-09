@@ -6,13 +6,7 @@ import Emitter = Phaser.Particles.Arcade.Emitter;
 import RJS from '../core/RJS';
 
 export default class Ambient implements RJSScreenEffectInterface {
-    emitters: Emitter[] = []
     clearFunctions = []
-    maxLifespan = 0
-    animation: Animation
-    spriteParent: Sprite
-    drugsFlag: number
-    // drugsState: number
 
     private game: RJS
     private audioManager: AudioManagerInterface
@@ -24,7 +18,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         this.storyManager = game.managers.story
     }
 
-    addEmitter (options,params): number {
+    addEmitter (options,params): Emitter {
         const emitter = this.game.add.emitter(this.game.world.centerX, -32, options.maxParticles);
         emitter.width = this.game.world.width * 1.5;
         emitter.makeParticles(options.sprite, options.frames);
@@ -45,7 +39,15 @@ export default class Ambient implements RJSScreenEffectInterface {
         }
 
         emitter.start(...params)
-        return this.emitters.push(emitter);
+        return emitter;
+    }
+
+    destroyEmitters(emitters,maxLifespan){
+        emitters.forEach( emitter => emitter.on = false);
+        setTimeout(() => {
+            emitters.forEach( emitter => emitter.destroy());
+            emitters = [];
+        }, maxLifespan * 2);
     }
 
     BGS (sound: string): void {
@@ -53,144 +55,56 @@ export default class Ambient implements RJSScreenEffectInterface {
     }
 
     CLEAR (): void {
-        if (this.maxLifespan){
-            this.emitters.forEach( emitter => emitter.on = false);
-            setTimeout(() => {
-                this.emitters.forEach( emitter => emitter.destroy());
-                this.emitters = [];
-            }, this.maxLifespan * 2);
-            this.maxLifespan = 0;
-        }
-        if (this.animation){
-            this.animation.stop(false,true);
-            this.spriteParent.destroy();
-        }
         this.clearFunctions.forEach(func => func())
         this.clearFunctions = [];
-        this.audioManager.stop('bgs','FADE');
-    }
-
-    STATIC (): void {
-        const staticGroup: Sprite = this.storyManager.behindCharactersSprites.create(this.game.world.centerX, this.game.world.centerY, 'static');
-        staticGroup.anchor.set(0.5);
-        staticGroup.scale.set(2.5);
-        this.animation = staticGroup.animations.add('static')
-        this.audioManager.play('staticSound','bgs',true,'CUT');
-        this.animation.play(10, true,true);
-        this.spriteParent = staticGroup;
     }
 
     RAIN (): void {
         this.audioManager.play('rain','bgs',true,'FADE');
-        this.addEmitter({
+        let maxLifespan = 1600;
+        let emitter = this.addEmitter({
             maxParticles: 400,
             sprite:'rain',
             frames: [0],
             scale: [0.1,0.5],
             speed: {y:[300,500],x:[-5,5]},
             rotation: [0,0]
-        },[false, 1600, 5, 0]);
-
-        this.maxLifespan = 1600;
+        },[false, maxLifespan, 5, 0]);
+        this.clearFunctions.push(()=>{
+            this.destroyEmitters([emitter],maxLifespan);
+            this.audioManager.stop('bgs','FADE');
+        })
     }
 
     SAKURA (): void {
-        this.addEmitter({
+        let maxLifespan = 6000;
+        let e1 = this.addEmitter({
             maxParticles: 200,
             sprite:'sakura',
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.2,0.6],
             speed: {y:[20,100],x:[120,150]},
             rotation: [0,40]
-        },[false, 6000, 20]);
+        },[false, maxLifespan, 20]);
 
-        this.addEmitter({
+        let e2 = this.addEmitter({
             maxParticles: 150,
             sprite:'sakura',
             frames: [0, 1, 2, 3, 4, 5],
             scale: [0.8,1.2],
             speed: {y:[50,150],x:[100,120]},
             rotation: [0,40]
-        },[false, 6000, 20]);
+        },[false, maxLifespan, 20]);
 
-        this.maxLifespan = 6000;
+        this.clearFunctions.push(()=>{
+            this.destroyEmitters([e1,e2],maxLifespan);
+        })
+
     }
-
-    BADTRIP (): void {
-        this.drugsFlag = 2;
-    }
-
-    // DRUGS () {
-    //     const bg = this.storyManager.behindCharactersSprites.create(0,0);
-    //     bg.width = globalConfig.w;
-    //     bg.height = globalConfig.h;
-    //     const fragmentSrc = [
-    //         "precision mediump float;",
-    //         "uniform float time;",
-    //         "uniform vec2 resolution;",
-    //         "uniform vec2 mouse;",
-    //
-    //         "const float Pi = 3.14159;",
-    //         "const int zoom = 71;",
-    //         "const float speed = .1;",
-    //         "float fScale = 1.1;",
-    //
-    //         "void main(void)",
-    //         "{",
-    //
-    //         "vec2 uv = gl_FragCoord.xy / resolution.xy;",
-    //         "vec2 p=(4.0*gl_FragCoord.xy-resolution.xy)/max(resolution.x,resolution.y)+3.*(0.1/time);",
-    //
-    //         "float ct = time * speed * 2. * mouse[1];",
-    //
-    //         " for(int i=1;i<zoom;i++) {",
-    //         "vec2 newp=p;",
-    //         "newp.x+=0.25/float(i)*cos(float(i)*p.y+time*cos(ct)*0.3/40.0+0.03*float(i))*fScale+10.0;        ",
-    //         "newp.y+=0.5/float(i)*cos(float(i)*p.x+time*ct*0.3/50.0+0.03*float(i+10))*fScale+15.0;",
-    //         "p=newp;",
-    //         "}",
-    //
-    //         "vec3 col=vec3(1.5*sin(1.0*p.x)+0.5, 0.5*cos(3.0*p.y)+0.3, cos(p.x+p.y))-mouse[0];",
-    //         "gl_FragColor=vec4(col, 0.0);",
-    //         "}"
-    //     ];
-    //     //  The following properties are available (shown at default values)
-    //
-    //     //  filter.speed = 10.0;
-    //     //  filter.intensity = 0.30;
-    //     const filter = new Filter(this.game, null, fragmentSrc);
-    //     filter.setResolution(globalConfig.w, globalConfig.h);
-    //     bg.filters = [filter];
-    //     const counter = 2000;
-    //     this.drugsFlag = 1;
-    //     this.drugsState = 0;
-    //     const interval = setInterval(() => {
-    //         const speed = this.drugsFlag == 1 ? 1 : game.rnd.integerInRange(1,10);
-    //         filter.update({x:counter,y:speed } );
-    //         // console.log(game.input.activePointer.x);
-    //         // console.log(counter);
-    //         if (this.drugsState == 0){
-    //             counter -= 20;
-    //             if (counter<=20){
-    //                 this.drugsState = 1;
-    //             }
-    //         } else if (this.drugsState == 2){
-    //             counter += 25;
-    //             if (counter >= 2200){
-    //                 RenJS.storyManager.behindCharactersSprites.remove(bg,true);
-    //                 clearInterval(interval);
-    //             }
-    //         }
-    //
-    //
-    //     }, 60);
-    //     this.clearFunctions.push(function(){
-    //         this.drugsState = 2;
-    //     });
-    // }
 
     SNOW (): void {
-        this.addEmitter({
+        let maxLifespan = 6000;
+        let e1 = this.addEmitter({
             maxParticles: 200,
             sprite:'snowflakes',
             frames: [0, 1, 2, 3, 4, 5],
@@ -199,7 +113,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             rotation: [0,40],
         },[false, 6000, 20]);
 
-        this.addEmitter({
+        let e2 = this.addEmitter({
             maxParticles: 150,
             sprite:'snowflakes',
             frames: [0, 1, 2, 3, 4, 5],
@@ -207,7 +121,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             speed: {y:[50,150]},
             rotation: [0,40],
         },[false, 5000, 40]);
-        this.addEmitter({
+        let e3 = this.addEmitter({
             maxParticles: 150,
             sprite:'snowflakes_large',
             frames: [0, 1, 2, 3, 4, 5],
@@ -215,8 +129,9 @@ export default class Ambient implements RJSScreenEffectInterface {
             speed: {y:[100,200]},
             rotation: [0,40],
         },[false, 4000, 1000]);
-
-        this.maxLifespan = 1600;
+        this.clearFunctions.push(()=>{
+            this.destroyEmitters([e1,e2,e3],maxLifespan);
+        })
     }
 }
 

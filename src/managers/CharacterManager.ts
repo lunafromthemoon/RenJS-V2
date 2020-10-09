@@ -71,7 +71,7 @@ export default class CharacterManager implements CharacterManagerInterface {
             ch.lastScale = props.flipped ? -1 : 1;
         }
         this.showing[name] = {look: ch.currentLook.name,position:props.position,flipped:(ch.lastScale === -1)};
-        return this.transition.get(transitionName)(oldLook, ch.currentLook, false, props.position, ch.lastScale, this.game.managers.story.characterSprites);
+        return this.transition.get(transitionName)(oldLook, ch.currentLook, props.position, ch.lastScale, this.game.managers.story.characterSprites);
     }
 
     async hide(name, transitionName): Promise<any> {

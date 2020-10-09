@@ -288,7 +288,7 @@ export default class RJSGUI implements RJSGUIInterface {
         this.menus[menu].alpha = 0;
         this.menus[menu].visible = true;
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
-        transition(null, this.menus[menu],true);
+        transition(null, this.menus[menu]);
         let music = this.config.menus[menu].backgroundMusic;
         if (music && !music.isPlaying && !this.game.userPreferences.muted){
             music.fadeIn(1000);
@@ -300,7 +300,7 @@ export default class RJSGUI implements RJSGUIInterface {
             menu = this.currentMenu;
         }
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
-        transition(this.menus[menu], null, true).then(()=>{
+        transition(this.menus[menu], null).then(()=>{
             this.menus[menu].visible = false;
             this.currentMenu = null;
             if (callback){
@@ -486,11 +486,12 @@ export default class RJSGUI implements RJSGUIInterface {
     showChoices(choices, execId) {
         this.choices.removeAll(true);
         this.choices.alpha = 0;
-        const choiceConfig = this.config.hud.choice;
+        let choiceConfig = this.config.hud.choice;
         const interruptConfig = this.config.hud.interrupt;
 
         if (interruptConfig && !interruptConfig.inlineWithChoice){
             // separate choices from interrupts
+            choiceConfig = interruptConfig
         }
 
         const x = (choiceConfig.isBoxCentered) ? 
@@ -501,11 +502,10 @@ export default class RJSGUI implements RJSGUIInterface {
             choiceConfig.y;
 
         choices.forEach((choice,index) => {
-            const choiceType = choice.interrupt ? interruptConfig : choiceConfig;
-            this.createChoiceBox(choice,[x,y],index,choiceType,execId)
+            this.createChoiceBox(choice,[x,y],index,choiceConfig,execId)
         });
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
-        transition(null,this.choices,true);
+        transition(null,this.choices);
     }
 
     createChoiceBox(choice, pos, index, choiceConfig, execId) {
@@ -517,7 +517,7 @@ export default class RJSGUI implements RJSGUIInterface {
                 sfx.play();
             }
             let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
-            transition(this.choices,null,true).then(()=>{
+            transition(this.choices,null).then(()=>{
                 this.choices.removeAll(true);
                 this.game.managers.logic.choose(index,choice.choiceText,execId);
             })
