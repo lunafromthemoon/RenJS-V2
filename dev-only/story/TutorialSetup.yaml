@@ -58,8 +58,9 @@ cgs:
   setupch: assets/lessons/lessonsetupch.png
   setupcgs: assets/lessons/lessonsetupcgs.png
   setupaudio: assets/lessons/lessonsetupaudio.png
-  scenestart: assets/lessons/lessonscenestart.png
-  scenehide: assets/lessons/lessonscenehide.png
+  lessonSceneStart: assets/lessons/lessonscenestart.png
+  lessonSceneHide: assets/lessons/lessonscenehide.png
+  setupExtraAssets: assets/lessons/lessonsetupextra.png
   ambientAndEffects: assets/lessons/lessonambientandeffect.png
   lessonRenJSConfig: assets/lessons/lessonrenjsconfig.png
   lessonScene: assets/lessons/lessonscene.png
@@ -71,17 +72,6 @@ cgs:
   lessonVarsString: assets/lessons/lessonvarsstring.png
   lessonIf: assets/lessons/lessonif.png
   lessonIfCont: assets/lessons/lessonifcont.png
-  lessonGUI: assets/lessons/lessonGUI.png
-  lessonGUIAudio: assets/lessons/lessonGUIAudio.png
-  lessonGUIFonts: assets/lessons/lessonGUIFonts.png
-  lessonGUIImages: assets/lessons/lessonGUIImages.png
-  lessonGUISpritesheets: assets/lessons/lessonGUISpritesheets.png
-  lessonGUIHUD: assets/lessons/lessonGUIhud.png
-  lessonGUIHUDcont: assets/lessons/lessonGUIhudcont.png
-  lessonGUIHUDcont2: assets/lessons/lessonGUIhudcont2.png
-  lessonGUIHUDcont3: assets/lessons/lessonGUIhudcont3.png
-  lessonGUIMenu: assets/lessons/lessonGUIMenu.png
-  lessonGUISliders: assets/lessons/lessonGUISliders.png
 music:
   rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
   morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3

@@ -32,7 +32,7 @@ export default class TextManager implements TextManagerInterface {
     say (name, look, text): void {
         const character = this.game.managers.character.characters[name];
         if (look){
-            this.game.managers.character.show(name, Transition.CUT,{look});
+            this.game.managers.character.show(name, this.game.storyConfig.transitions.say,{look});
         }
         this.show(text,character.name,character.speechColour);
     }

@@ -14,7 +14,7 @@ export default class Character implements CharacterInterface {
     speechColour: any
     looks = {}
     currentLook = null
-    lastScale: 1;
+    lastScale = 1;
     constructor(name, speechColour) {
         this.name = name
         this.speechColour = speechColour

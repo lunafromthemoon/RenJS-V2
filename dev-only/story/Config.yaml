@@ -21,6 +21,7 @@ transitions:
     backgrounds: FADE
     cgs: FADE
     music: FADE
+  say: CUT #How to change character expression in say action
   # Transition to use when showing/hiding choices
   visualChoices: CUT
   textChoices: CUT

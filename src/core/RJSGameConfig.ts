@@ -56,6 +56,7 @@ export interface StoryConfig extends IGameConfig {
             cgs: string;
             music: string;
         };
+        say: string;
         visualChoices: string;
         textChoices: string;
         menus: string;

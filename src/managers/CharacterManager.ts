@@ -54,7 +54,7 @@ export default class CharacterManager implements CharacterManagerInterface {
             character.currentLook = character.looks[props.look];
             character.currentLook.x = props.position.x;
             character.currentLook.y = props.position.y;
-            character.currentLook.scale.x = props.flipped ? -1 : 1;
+            character.currentLook.scale.x = props.scaleX;
             character.currentLook.alpha = 1;
         }
     }
@@ -68,15 +68,20 @@ export default class CharacterManager implements CharacterManagerInterface {
             props.position = (oldLook !== null) ? {x:oldLook.x,y:oldLook.y} : this.game.storyConfig.positions.CENTER;
         }
         if (props.flipped !== undefined){
-            ch.lastScale = props.flipped ? -1 : 1;
+            if (props.flipped === 'flip'){
+                ch.lastScale *= -1; 
+            } else {
+                ch.lastScale = props.flipped ? -1 : 1;
+            }
         }
-        this.showing[name] = {look: ch.currentLook.name,position:props.position,flipped:(ch.lastScale === -1)};
+        this.showing[name] = {look: ch.currentLook.name,position:props.position,scaleX: ch.lastScale};
         return this.transition.get(transitionName)(oldLook, ch.currentLook, props.position, ch.lastScale);
     }
 
     async hide(name, transitionName): Promise<any> {
         const ch = this.characters[name];
         const oldLook = ch.currentLook;
+        ch.lastScale = 1;
         ch.currentLook = null;
         delete this.showing[name];
         return this.transition.get(transitionName)(oldLook,null);

@@ -77,10 +77,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     startScene(name: string): void {
         this.game.control.execStack.replace(name);
         this.game.managers.logic.clearChoices(); // For any interrup still showing
-        // RenJS.chManager.hideAll();
-        // RenJS.bgManager.hide();
-        // RenJS.cgsManager.hideAll();
-        // RenJS.audioManager.stop();
         this.currentScene = [...this.game.story[name]];
     }
 
@@ -124,7 +120,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         const actionParams = {
             withTransition: ['show','hide','play','stop'],
             withPosition: ['show'],
-            withContinue: ['show','hide']
+            withContinue: ['show','hide'],
         }
         function getKey(act): any {
             return Object.keys(act)[0];
@@ -165,6 +161,9 @@ export default class StoryManager implements StoryManagerInterface<Group> {
                     const coords = action.position.split(',');
                     action.position = {x:parseInt(coords[0], 10),y:parseInt(coords[1], 10)};
                 }
+            }
+            if (str.indexOf('FLIP') !== -1){
+                action.flipped = 'flip';
             }
             if (str.length>0 && str[0] !== 'AT' && str[0] !== 'WITH'){
                 action.look = str[0];
