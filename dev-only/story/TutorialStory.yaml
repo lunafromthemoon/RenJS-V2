@@ -1,9 +1,8 @@
-
 start:
   - play morningBGM:
   - show street_morning: WITH FADE CONTINUE
   - show deuzi: normal AT CENTER WITH FADE
-  - wait: 500
+  - wait: 300
   - deuzi says: Hello, are you the new student?
   - deuzi says happy: Welcome to our Tutorial Game!
   - deuzi says: My name is Deuzilene and I'll be your guide.
@@ -24,13 +23,14 @@ enterSchool:
   - show deuzi: WITH FADE
   - deuzi says: Are you ready?
   - effect SHOWTITLE: 
-    title: Chapter 1
+    title: Lesson 1
     subtitle: The basics 
   - deuzi says: First things first, let's see what we need to start.
   - deuzi says: RenJS doesn't come or is tied to any particular IDE (integrated development environment).
   - deuzi says: That is, a program to read and edit the files of the game, like your story script.
-  - deuzi says: It doesn't have to be anything big or expensive.
-  - deuzi says happy: It can be any low level text processor you already have installed.
+  - deuzi says: It doesn't have to be anything big or expensive. It can be any low level text processor you already have installed.
+  - deuzi says happy: But me, I like to use Brackets, a free and open source text editor, that comes with support for web development.
+  - deuzi says: You can find a link to download the Brackets editor below.
   - deuzi says normal: Another thing you will need is RenJS itself.
   - deuzi says: RenJS is the library that will manage the flow, assets and interactivity of your game.
   - deuzi says: And finally, you will need your game script, in a way that the library can understand.
@@ -53,7 +53,7 @@ enterSchool:
   - deuzi says: It should look like this.
   - show deuzi: AT LEFT WITH MOVE CONTINUE
   - show folders: AT 550,300 WITH FADE
-  - deuzi says: There are four folders and two files.
+  - deuzi says: There are four folders and one HTML file.
   - deuzi says: RenJS is web based, that means the game runs as a webpage.
   - deuzi says: You can then embed the game in any other webpage, or package it as a mobile or desktop app.
   - deuzi says: Webpages are HTML files, and index.html is the page that contains the game.
@@ -62,32 +62,45 @@ enterSchool:
   - deuzi says: It means you need a local server to deliver your page, as if it was published in the internet.
   - deuzi says: This sounds complicated, but it can be done easily with the right tools.
   - deuzi says: The easiest way is to use and IDE that lets you both edit your files, and publish them locally.
-  - deuzi says happy: My personal recommendation is Brackets! This editor is free and open source. 
-  - deuzi says happy: And allows you to do all you need to write games with RenJS.
-  - deuzi says: You can also find a link to download it down there.
-  - deuzi says: So, your second challenge is now to run the Quickstart locally.
+  - deuzi says happy: The recommended editor I mentioned before, Brackets, let's you do just that. 
+  - deuzi says: So, your second challenge is now to run the Quickstart locally, either through Brackets or in any other way you find.
   - deuzi says: Did you manage to do it?
   - choice:
     - Of course!:
-      - deuzi says happy: Perfect! Then we can continue with the class.
+      - deuzi says happy: Perfect!
     - It's too hard:
       - deuzi says happy: Don't worry, starting is always hard, but you'll get there.
       - deuzi says: You will find below a link to a video on how to run the Quickstart step by step.
       - deuzi says: If you still have troubles after that...
-      - deuzi says: RenJS has a growing community of writer and developers that can help you.
+      - deuzi says: RenJS has a growing community of writers and developers that can help you.
       - deuzi says: You will find below also links to the RenJS forums and an invitation to the discord channel.
-      - deuzi says: Make sure you can run the Quickstart, and then come back and we'll continue with the class.
-
-  - deuzi says happy: Ok, let's continue.
-  - deuzi says: Let's explore what's in each directory.
+      - deuzi says: Once you manage to run the Quickstart, come back and we'll continue with the class.
+      - choice:
+        - Done!:
+          - deuzi says happy: Perfect!
+  - deuzi says normal: Then we can continue with the class.
+  - deuzi says: Let's explore the contents of each directory.
   - deuzi says: RenJS contains the library, renjs.js, and another file, boot.js that takes care of starting the game.
-  - deuzi says: And the plugins directory contains plugin scripts for RenJS.
-  - deuzi says: If you're making a simple game, you shouldn't worry about any of this.
+  - deuzi says: Normally, you don't need to do anything with these files, but there's one thing you need to know.
+  - deuzi says: To launch the game, inside of boot.js, the game takes a few low level configuration parameters.
+  - deuzi says: The most important is the game screen resolution. The Tutorial and Quickstart are both in the same resolution, 800x600 pixels.
+  - deuzi says: But you can make games in any resolution you like, and if you do, you will need to change it right there.
+  - deuzi says: The second important thing you might need to modify in this file is where to find the story itself.
+  - deuzi says: 'If you go check it, at the end of the configuration object, there are four important parameters: guiConfig, storySetup, storyConfig and storyText.'
+  - deuzi says: All of these point to a YAML file inside the 'story' directory, and they refer to the files that make up your story.
+  - deuzi says: These files can be named whatever you want, but you would need to modify the file path and name here.
+  - deuzi says: But the most important thing here is that 'storyText' doesn't just point to a file, but a list of files.
+  - deuzi says: That means that you can have as many story text files as you want. In this way, you can organize your story as you like.
+  - deuzi says: And all you need to do when you add a new file, is to come and add it to the configuration object in the boot.js file.
+  - deuzi says: There are a few other parameters there that you might want to modify if you really know what you're doing. But if you leave them as they are, it should be fine.
+  - deuzi says: Let's see the next directory. Plugins contains new scripts that you might want to use during your game. 
+  - deuzi says: For example, you can code your own special effects, mini games or whatever you want, and they can be added seamlessly to the game with plugings.
+  - deuzi says: If you're making a simple game, you shouldn't worry about any of this though.
   - deuzi says: The files that concern you as a writer are inside the story and assets directory.
   - deuzi says: The assets directory contains the images and sounds that make up the game.
   - deuzi says: Among this images you will find the backgrounds and characters of the story, but also the Graphical User Interface (GUI) assets.
   - deuzi says: Going back to the main directories, the last one is called story.
-  - deuzi says: If you take a look, you will find three files with the extension yaml.
+  - deuzi says: If you take a look, you will find four files with the extension yaml.
   - deuzi says: These YAML files are what you will use to make your game.
   - deuzi says: YAML is a human readable data serialization language.
   - deuzi says: That means that the files contain data in a structure that you and most humans can read and write easily.
@@ -95,7 +108,7 @@ enterSchool:
   - deuzi says angry: Indentation is super important! If you screw up the indentation the game won't even load!
   - deuzi says: If you're wondering what's indentation, I'll tell you.
   - deuzi says: It's the amount of whitespaces from the start of the line on a given line of text.
-  - deuzi says: Go ahead and take a look at Setup.yaml
+  - deuzi says: Go ahead and take a look at Setup.yaml, as an example.
   - deuzi says: Everything is perfectly indented, each logical level adding further whitespaces.
   - deuzi says angry: So be very careful about it. Only two spaces per level!
   - hide folders: WITH FADE CONTINUE
@@ -113,6 +126,7 @@ enterSchool:
       - deuzi says: Isn't that exciting?
   - show deuzi: normal
   - deuzi says: All right, I'm going to take a break anyways.
+  - deuzi says: You will see how to write each of these files in the next lessons.
   - deuzi says: But I'm leaving you in good hands.
   - show deuzi: happy
   - deuzi says: Good luck!
@@ -131,7 +145,7 @@ storySetup:
   - jair says: But you should know that, since my name is on display right above the text box.
   - jair says: I'm here to show you how to setup your story.
   - effect SHOWTITLE: 
-    title: Chapter 2
+    title: Lesson 2
     subtitle: Setting up the story
   - jair says: All the setup is contained in the Setup.yaml file.
   - jair says: What this means is...
@@ -172,18 +186,26 @@ storySetup:
   - jair says normal: I like to tease her about this obsesion of hers...
   - jair says angry: But she's right, it's really important.
   - jair says normal: To put this in practice, let's add a new background.
-  - jair says: First, locate the 'background' tag. It should be easy, it's in the first line.
+  - jair says: First, locate the 'background' key word. It should be easy, it's in the first line.
   - jair says: You'll notice that the sole background declared here is indented by two spaces.
   - jair says: You have to keep this structure.
-  - jair says: Each background has a tag, the name that will be used to refer to that background on the story.
-  - jair says: And the path to where the background image is located.
-  - jair says: If you go to the game's assets folder, you'll find all the images we can use here.
-  - jair says happy: Seems like we have an afternoon background.
+  - jair says: Each background has a tag, that's the name that will be used to refer to that particular background on the story.
+  - jair says: And they also have a path to where the background image is located, relative to the root of the game.
+  - jair says: If you change the path to the image, the image in the game will be updated automatically everywhere it's used.
+  - jair says: In this way, you can use placeholder images, like sketches, to write your game before you have the final assets.
+  - jair says: But let's do some practical work.
+  - jair says: Go to the tutorial assets directory and let's explore the available backgrounds. 
+  - jair says happy: Seems like we have an afternoon for this same scenario.
+  - jair says normal: Add a new line to the backgrounds section of the setup to add it to the game.
+  - jair says: The key name, or tag, can't have spaces and it should be meaningful, so it will be easier to use in the script.
+  - jair says: Then the path should be the directory hierarchy from the root of the game to the image file.
+  - jair says: If you go to the Story.yaml file, the script of your story, and change the old background tag to the new one you just added.
+  - jair says: Then when you run the game again, you should see the new background.
+  - jair says: Don't worry too much about how to write the story for now, you will soon have another class to see all of it.
   - hide setupbg: WITH FADE
-  - jair says: Let's use it so I can go home sooner.
+  - jair says: Anyway, that background should be loaded into this game too, let's see...
   - show school_afternoon: WITH FUSION
-  - jair says: Well, time to go home.
-  - jair says: See you!
+  - jair says happy: Wow, I didn't realise it was so late. Time to go home!
   - show jair: normal AT LEFT WITH MOVE
   - show deuzi: angry AT RIGHT
     flipped: true
@@ -192,10 +214,10 @@ storySetup:
     flipped: true
   - jair says: Uh oh.
   - deuzi says: Where do you think you're going? There's a lot more to say about the setup!
-  - jair says: Your student is smart enought to get it without my help.
+  - jair says: Your pet student is smart enough to get it without my help. I'm just wasting their time, really.
   - deuzi says: What? Do you agree with that?
   - choice:
-    - Yeah, I checked the file by myself:
+    - Yeah, it does look easy:
       - deuzi says normal: Alright, I guess you can continue with more advanced lessons then...
       - jair says happy: See, told you not to treat 'em like a baby.
       - deuzi says angry: Shut up, you! We'll have a talk later.
@@ -208,10 +230,12 @@ storySetup:
       - scene: writingTheStory
     - We barely saw the first part!:
       - deuzi says: Come back here you ratbag, and finish the lesson!
+      - deuzi says: Let's get back to morning.
+      - show school_morning: WITH FUSION
       - jair says: Ok boss, don't worry.
       - hide deuzi: WITH FADE
   - jair says angry: What a snitch.
-  - jair says normal: Anyway, let's see the next part.
+  - jair says normal: Anyway, let's see the next part then.
   - jair says: Characters.
   - jair says: The characters are... you know what a character is, come on.
   - show setupch: AT 400,300 WITH FADE
@@ -219,16 +243,39 @@ storySetup:
   - jair says: Same as the backgrounds, this tag will be used to refer to this character on the text of your story.
   - jair says: Every time you need to use Deuzilene, you will use her tag, deuzi.
   - jair says: Characters also have a display name, that's the name that will apear on the name box when we talk.
-  - jair says: The display name can have whitespaces, accents and whatever you want.
+  - jair says: The display name can have whitespaces, accents and whatever you want, go crazy.
   - jair says: If you omit it, the tag will be used as the name.
   - jair says: The speech colour is the colour to write the name in the name box.
   - jair says: And then you have a list of looks.
-  - jair says: A look is an image representing a state of the character.
-  - jair says: You always need a normal look, that will be the default.
+  - jair says: A look is an image representing a state of the character. For example, you could have a different look for each emotion or outfit they will wear.
+  - jair says: You always need a normal look, that will be the default look for the character.
   - jair says: And you can have as many additional looks as you want.
   - jair says: Deuzi here can be happy or angry.
-  - jair says happy: Her range of emotions is infinite though.
+  - jair says happy: Her range of emotions is infinite, though.
   - jair says normal: Believe me.
+  - jair says: Go ahead and check what assets you have in the tutorial pack for the characters.
+  - jair says: There are about six images per character, that is, six looks. The names of the files should give you a clue about what they contain.
+  - jair says: Try to add a new character with all the available looks. For example, me.
+  - jair says: And then you can go to the story and change the deuzi tag for the new character tag.
+  - jair says: That way you'll see the new character when you re run the game.
+  - jair says: Did you manage to do it?
+  - choice:
+    - Yes, easy peasy:
+      - jair says angry: I told you it was easy, why am I wasting my time here!
+    - I think something went wrong:
+      - jair says: If the game suddenly stops working after you make some changes, it's probably because you made a mistake.
+      - jair says: It happens, and it's inevitable. What you can do to make your life easier is to just go adding changes slowly.
+      - jair says: Every time you make a change, you test that the game is still working.
+      - jair says: That way, when you do break something, it will be easier to identify where.
+      - jair says: And you can double check your work.
+      - jair says: But do you want to know what's the most common problem?
+      - jair says angry: I don't care if you don't wanna know, I'll tell you anyway.
+      - jair says normal: It's either indentation or typos. That's it. Check your whitespaces and your ortography, and stop crying.
+      - jair says: I'll wait here until you manage to add a character.
+      - choice:
+        - I did it!:
+          - jair says happy: That wasn't so hard, wasn't it?
+  - jair says normal: Anyway...
   - hide setupch:
   - jair says: Next up is cgs.
   - show setupcgs: 400,350 WITH FADE
@@ -237,37 +284,46 @@ storySetup:
   - jair says angry: It should have a better name, I know.
   - jair says: But for now, it's what we have.
   - jair says normal: Same as always, you have the cgs tag, and then each cgs has a tag and an image file.
-  - jair says: "We have two phones: phone1 and phone2"
+  - jair says: The quickstart already comes with a cgs, tagged as phone1.
+  - jair says: And if you check the pack, there's probably another one, somewhere. Why don't you find it?
+  - jair says: Adding it to the setup should be pretty easy. Tag and file.
   - hide setupcgs:
-  - jair says: Could one of those be mine?
+  - jair says: Now, let's see how these phones looks like. Could one of them be mine?
   - show phone1: AT 600,300 CONTINUE
   - show phone2: AT 380,300
-  - jair says: I don't think so!
+  - jair says: I don't think so! They're too girly.
   - hide phone1: CONTINUE
   - hide phone2:
-  - jair says: "And to finish: audio"
+  - jair says: The last esential part of the setup is audio.
   - show setupaudio: AT 400,350
-  - jair says: You can have music, and you can have sfx.
-  - jair says: The music will usually be looped, while the sfx will play just once.
-  - jair says: For example, the current background music is morningBGM.
-  - jair says: Let's make a phone call and check the ringtone...
+  - jair says: "You can see there are two tags here: music and sfx, which stands for special effect."
+  - jair says: As with the cgs, you only need tag and file. But the files here will be, obviously, audio files.
+  - jair says: The different between music and sfx is that the music will usually be looped, while the sfx will play just once.
+  - jair says: For example, in the Quickstart setup there is a morningBGM, background music.
+  - jair says: Coincidentally, it's what you're hearing right now. If enough time passes, you will hear the song finish, and start again. 
+  - jair says: There is also an SFX, called ringtoneSFX. You'll want to play it when something special happens.
+  - jair says: For example, let's make a phone call and check the ringtone...
   - hide setupaudio:
   - show phone1: AT 400,300 CONTINUE
   - play ringtoneSFX:
-  - text: Tururu Ruru Ruru Ruruuuu
-  - jair says: This has to be Deuzi's.
+  - text: Tururu Ruru Ruru Ruruuuu...
+  - jair says happy: This has to be Deuzi's.
   - show deuzi: angry AT RIGHT WITH FADE
     flipped: true
   - deuzi says: Hey! That's my phone!
-  - hide phone1: CONTINUE
+  - hide phone1: WITH FADE CONTINUE
   - hide deuzi: WITH FADE
-  - jair says happy: I knew it!
+  - jair says: I knew it!
   - jair says normal: Anyway, that's it, lesson over.
-  - jair says: I'm going to try and find the place where this bar music is playing.
-  - jair says happy: You're not entirely bad.
-  - jair says: See you around.
-  - jair says: And don't get lost, your next class is over there!
+  - jair says: There is more to tell about the setup, actually, but for now, you have enough tools to start.
+  - jair says: You should now know how to add Backgrounds, Characters, CGS and Audio to a game.
+  - jair says: If you're not tired yet, you can go straight to the next class. 
+  - jair says: But remember to take breaks every now and then. You can save and load games easily from the Quick Menu in the corner.
+  - jair says happy: I guess Deuzi already told you everything about it though.
+  - jair says: She's a bit overbearing, but she means well.
+  - jair says normal: Anyway, I'll see you later, probably. And don't get lost, your next class is over there!
   - hide jair: WITH FADE
+  - show school_afternoon: WITH FUSION
   - scene: writingTheStory
 
 writingTheStory:
@@ -276,83 +332,89 @@ writingTheStory:
   - liz says: Here we'll see how to actually write the story.
   - liz says happy: Are you ready!?
   - effect SHOWTITLE: 
-    title: Chapter 3
+    title: Lesson 3
     subtitle: Writing Part 1
   - show liz: normal
-  - liz says: First thing you need to know about a story is, it's divided in scenes.
-  - liz says: Each scene is a list of orders that will be executed from first to last.
-  - liz says: Inside a scene you can show backgrounds, characters, make them talk, show choices, call other scenes, and a lot more.
-  - liz says: The scenes are all contained in the file YourStory.yaml.
-  - liz says: And each one has a tag name. This name can be anything, but you always need a scene called start.
+  - liz says: First thing you need to know about a story is that it's divided in scenes.
+  - liz says: Each scene is a list of actions that will be executed from first to last.
+  - liz says: Inside a scene you can show backgrounds, characters, make them talk, show choices, call other scenes, and much more.
+  - liz says: The scenes are all contained in the file Story.yaml. But you can have as many story files as you want.
+  - liz says: Each scene has a tag name. This name can't have whitespaces, but appart from that it can be anything you want.
+  - liz says: Another important thing is that you always need a scene called start.
   - liz says: That will be, of course, the starting scene.
-  - show liz: happy
-  - liz says: Really easy, don't you think?
-  - show liz: normal
-  - liz says: So, let's see what's the content of a scene.
+  - liz says happy: Really easy, don't you think?
+  - liz says normal: So, let's see the contents of a scene, the story actions.
   - show liz: AT RIGHT WITH MOVE
   - show scenestart:
-  - liz says: This is the starting scene of this game.
+  - liz says: This is the 'start', and only, scene of the Quickstart game.
   - liz says: First thing we do is play music.
   - liz says: Notice the dash symbol.
   - liz says: That dash indicates that this is a single action.
   - liz says: Every action starts with a dash.
-  - liz says: Also, after declaring the basic action, you add a colon.
-  - liz says: After this, you can add additional parameters.
-  - liz says: But sometimes you don't need anything else, like in this case.
+  - liz says: An action has two main parts, the definition and the parameters.
+  - liz says: And these two parts are separated by a colon.
+  - liz says: An action can omit the parameters part, in which case, you simple leave the right side of the action empty.
   - liz says: Still, the colon is important.
-  - liz says: Next line we have another action, notice the starting dash.
-  - liz says: This one shows the background whose tag is 'school_morning'.
+  - liz says: This first action 'play' is an example of that.
+  - liz says: In the next line we have another action, notice the starting dash.
+  - liz says: This one shows the background whose tag is 'school_morning'. 
   - liz says: You were there this morning, remember?
-  - liz says: The background takes some aditional parameters.
+  - liz says: As you should have seen already with Jair, the file asociated with this tag has to be declared in the setup file.
+  - liz says: Showing the background takes some aditional parameters.
   - liz says: The uppercase text WITH is a special word to indicate a transition.
   - liz says: And 'FADE' is the name of that transition.
+  - liz says: A transition is the way in which an image will appear of disappear, like backgrounds, characters or cgs.
+  - liz says: For example, if you want to show an image immediately, you can use the transition CUT.
+  - liz says: And if you want them to slowly become visible, you can use FADE.
+  - liz says: Or maybe you want a character to appear from the side of the screen. That's what MOVE is for.
   - liz says: There are a few transitions included with RenJS, like 'CUT', 'FADE', 'FUSION', 'MOVE', 'FADETOBLACK' and 'FADETOWHITE'.
-  - liz says: You can add your own transitions if you feel adventurous.
-  - show liz: happy
-  - liz says: Or you can ask your programmer friend to code them for you!
-  - show liz: normal
-  - liz says: The transitions aren't just for backgrounds but also for characters and cgs.
-  - liz says: The next line shows a character appearing on the screen.
-  - show liz: happy
-  - liz says: Deuzilene, my best friend!
-  - show liz: normal
-  - liz says: The first aditional parameter is her look. She was happy to welcome you!
+  - liz says happy: But it's also possible to add new transitions to use, as a plugin.
+  - liz says normal: The next line shows a character appearing on the screen.
+  - liz says happy: Deuzilene, my best friend!
+  - liz says normal: The first aditional parameter is her look. She's happy to welcome you!
+  - liz says: If you omit the 'look' parameter, then the normal look for the character will be shown.
   - liz says: Also, notice another special word AT, used to designate the position.
   - liz says: The position can be 'LEFT', 'CENTER', 'RIGHT', or it can be a coordinate like '200,200'.
   - liz says: And we use, too, the transition 'FADE'.
-  - liz says: Next line is Deuzi welcoming you. The extra parameter is the text.
+  - liz says: Finally, the next line is Deuzi welcoming you. The extra parameter is the text that will be display in the message box.
+  - liz says: The next line is also a 'say' action, but it has another parameter in the left part.
+  - liz says: When you're writing a visual novel, it's normal for the characters to show facial expressions.
+  - liz says: And you'd want to use them often. You can change the expression, or look, with a show action.
+  - liz says: But you can also change it quickly during dialogue by adding the look tag to the 'say' action, like in this line.
+  - liz says happy: This way your script will look much more fluid.
   - hide scenestart:
-  - liz says: So, with just these sentences you can show backgrounds, characters and make them talk.
+  - liz says normal: So, with just these sentences you can show backgrounds, characters and make them talk.
   - liz says: But how do we hide them?
-  - liz says: Easily! Just hide them!
+  - liz says: Easily! Just hide them! That is, instead of writing 'show', you write 'hide'.
   - show scenehide:
-  - liz says: In this scene Jair is trying to annoy Deuzilene once again.
-  - show liz: angry
-  - liz says: He has her phone!
-  - show liz: normal
-  - liz says: On the second line, the phone, a cgs with 'phone1' tag, is shown.
+  - liz says: In this example scene Jair is trying to annoy Deuzilene once again.
+  - liz says angry: He has her phone!
+  - liz says normal: On the second line, a cgs with 'phone1' tag, is shown.
   - liz says: As the cgs are smaller than characters, we need a specific coordinate to locate them on the screen.
   - liz says: We use the special word AT again, but this time, with the coordinates.
   - liz says: Next we play the phone's ringtone, an SFX tagged as 'ringtoneSFX'.
   - liz says: To visually show the phone is ringing, we show its onomatopoeia.
-  - liz says: "As no character is speaking, the 'text' action is used instead."
+  - liz says: As no character is speaking, the 'text' action is used instead.
   - liz says: Then Deuzilene comes to rescue her phone!
   - liz says: Can you notice something different when Deuzi appears this time?
   - liz says: That's right, she's flipped.
   - liz says: Sometimes we need our characters to face the other way.
+  - liz says: Depending on the way your characters look, it will be possible to just flip the image in the x axis if you want them looking the other way.
   - liz says: One easy way to do it is to flip their look.
-  - liz says: On the show action, you just add a new extra parameter.
+  - liz says: To do this, simply add an extra parameter to the 'show' action.
   - liz says: "The line right after 'show' doesn't start with a dash, that means it's still the same action as before."
   - liz says: "And so we add the parameter, flipped: true."
   - liz says: Then Deuzi grabs her phone.
   - liz says: Hiding it is really easy, as I said before.
-  - liz says: And same thing for characters, we can hide Deuzi, taking a specific transition.
+  - liz says: But there's a new parameter here. The key word CONTINUE will make it so the game will not wait until the last action is finished to start the new one.
+  - liz says: What this normally achieves, is that it will look like the two actions, the one with CONTINUE, and the next one, are executed at the same time.
+  - liz says: The next action in this example is hiding Deuzilene, so both the phone and her will disappear at the same time.
+  - liz says: With this parameter, CONTINUE, you can show two characters at the same time, or show one while the other one leaves, and many more combinations.
   - liz says: Let's hide this lesson now.
   - hide scenehide:
   - show liz: AT CENTER WITH MOVE
   - liz says: So that's it for today. You must be really tired after studying the whole day.
-  - show liz: happy
-  - liz says: See you tomorrow for part 2!
+  - liz says happy: See you tomorrow for part 2!
   - stop morningBGM: WITH FADE
   - hide ALL: WITH FADE continue
   - scene: interval
@@ -372,7 +434,7 @@ interval:
       - deuzi says: Because I'm your teacher?  
       - deuzi says happyC: We're almost the same age!
       - deuzi says normalC: You might be teaching some years from now too. 
-      - deuzi says angryC: Then you'll see how awkward it is to be called professor and be treatead like and old person.
+      - deuzi says angryC: Then you'll see how awkward it is to be called professor and be treated like and old person.
       - deuzi says normalC: Anyway, as I was saying...
   - deuzi says: You probably know it already, but this is a small town.
   - deuzi says: There's not much to see, really.
@@ -412,7 +474,10 @@ storeAtNight:
   - jair says happyC: Yes, what's the special occasion that made you crawl out of your hole.
   - marco says happyC: Have to get some food before it starts raining.
   - liz says angryC: What do you mean by rain? It's a beautiful night!
-  - effect THUNDER:
+  - effect FLASHIMAGE:
+    shakeScreen: true
+    image: thunder
+    sfx: thunderSFX
   - marco says: I better hurry. Bye!
   - hide marco: AT OUTRIGHT WITH MOVE
   - deuzi says: Maybe we should go too, before...
@@ -422,7 +487,7 @@ storeAtNight:
   - liz says normalC: Well, it's rather easy.
   - liz says: Ambients and effects.
   - jair says: Come on! Not on the streets!
-  - show liz: angryC
+  - show liz: angryC CONTINUE
   - show deuzi: angryC
     flipped: true
   - deuzi says: That's it! You and I are going to have a serious talk!
@@ -432,7 +497,7 @@ storeAtNight:
   - show jair: AT OUTLEFT WITH MOVE CONTINUE
   - show deuzi: AT OUTLEFT WITH MOVE
   - liz says happyC: I know how that's going to end.
-  - liz says normalC: As I was saying, ambient changes are really easy to make.
+  - liz says normalC: As I was saying, ambient changes are really easy to make, and they will give your story a great mood.
   - liz says: Let me show you.
   - show ambientAndEffects:
   - liz says: Ambients are audiovisual effects that persist through time.
@@ -440,22 +505,30 @@ storeAtNight:
   - liz says: "You call them using the action 'ambient', followed by the ambient name."
   - liz says: There's a few ambients ready to use.
   - liz says: "'RAIN', 'SNOW' and 'SAKURA'."
-  - liz says: "To stop an ambient you call a special ambient called 'CLEAR'."
+  - liz says: To stop an ambient you call a special ambient called 'CLEAR', the same way you call the other ones.
   - ambient CLEAR:
   - liz says happyC: And the rain stops!
   - liz says: Finally!
   - liz says normalC: Effects are audiovisual effects that get played just once.
-  - liz says: Like that thunder from before.
-  - liz says: "Some other handy effects are:"
+  - liz says: As with the ambients, there are a few readily available to use.
+  - effect SHAKE:
   - liz says: "'SHAKE', a screen shake!"
-  - liz says: "'SHOWTITLE', a title screen like the ones at the start of each chapter."
-  - liz says: You can send two extra parameters, such as title and subtitle to it.
-  - liz says: "'EXPLOSION', just what it says on the tin."
-  - liz says: And the same goes for 'ATTACK', 'MULTIATTACK' and 'CHAINATTACK'.
-  - liz says: One last thing.
-  - liz says: The extra sounds and images used by ambients and effects have to be declared on the 'extra' section of the setup file.
-  - liz says: For example, the RAIN ambient uses a rain sound and a raindrop image and you can use your own.
+  - liz says: The thunder from before was also an effect, called FLASHIMAGE.
+  - liz says: "'FLASHIMAGE', will flash an image very quickly, acompanied by a sound effect and a screen shake too, if you want."
+  - liz says: Another handy effect is ROLLINGCREDITS, that takes a list of text lines as parameter.
+  - liz says: And shows them as rolling credits from a film.
+  - liz says happy: You will see them in action at the end of the game!
+  - liz says normal: With just these available options you can already do a lot, but you can also add new effects and ambients as Plugins.
+  - liz says: One last thing about this subject.
   - hide ambientAndEffects:
+  - show setupExtraAssets:
+  - liz says: The resources used by the effects and ambients should be declared in the setup file. For example, the spritesheet for the sakura petals.
+  - liz says: You already know where to put the sfx, but to add extra images and spritesheets to the setup file, you have a special tag.
+  - liz says: The extra tag in the setup file is separated itself into the types of asset, for example, 'image' for images, and 'spritesheets' for spritesheets.
+  - liz says: For the image, simply add tag and path, same as the cgs. But for the spritesheets, you will need to add also the dimensions of each frame, after the file path.
+  - liz says: For example, the sakura petals is a spritesheet with 5 frames of 17x26 pixels. 
+  - liz says: You can find all of these assets in the tutorial asset pack. Why don't you add them to the quickstart and play a bit with it?
+  - hide setupExtraAssets:
   - liz says happyC: And that's pretty much it.
   - show marco: normalC AT LEFT WITH FADE
   - marco says: Where you under the rain all this time?
@@ -490,33 +563,27 @@ day2:
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: Welcome back!
   - deuzi says: How was your first night away from home?
-  - show deuzi: normal
-  - deuzi says: Are you ready for today's lessons?
+  - deuzi says normal: Are you ready for today's lessons?
   - deuzi says: I'll let you to it.
   - hide deuzi: WITH FADE
   - show liz: WITH FADE
   - liz says: Good morning!
   - liz says: Let's start right away.
   - effect SHOWTITLE: 
-    title: Chapter 4
+    title: Lesson 4
     subtitle: Writing Part 2
   - liz says: Today we're going to see a very important part of writting interactive fiction.
-  - show liz: happy
-  - liz says: Interactivity!
-  - show liz: normal
-  - liz says: That is, how to let your players make choices that affect the story.
+  - liz says happy: Interactivity!
+  - liz say normal: That is, how to let your players make choices that affect the story.
   - liz says: The most straightforward way of doing this is presenting a list of choices for the player to make.
   - liz says: Have you seen something like that in this game?
   - choice:
     - Yes, Deuzi asks a lot of questions:
-      - show liz: happy
-      - liz says: She does!
+      - liz says happy: She does!
     - I don't think so:
-      - show liz: angry
-      - liz says: Was your head in the clouds? There were choices all over this lessons.
+      - liz says angry: Was your head in the clouds? There were choices all over these lessons.
       - liz says: This just now was a list of choices and you clicked on one.
-  - show liz: normal
-  - liz says: "Let's see an example:"
+  - liz says normal: "Let's see an example:"
   - show lessonChoice:
   - liz says: This part of the story is really recent.
   - liz says: I asked you something.
@@ -525,15 +592,13 @@ day2:
   - liz says: This action then takes a list of choices, indented by two spaces, and starting each with a dash.
   - liz says: Your choices here were 'Yes, Deuzi asks a lot of questions' and 'I don't think so'.
   - liz says: Inside each option, indented too by two spaces from the choice text, there's a new list.
-  - liz says: Those are the actions to execute if that choice is made.
+  - liz says: Those are the actions to execute if that option is chosen.
   - liz says: And when those actions are finished, you return to the next action after the 'choice' tag.
   - hide lessonChoice:
   - liz says: Inside a choice you can do anything you do in a scene.
-  - show liz: happy
-  - liz says: Even showing more choices!
+  - liz says happy: Even showing more choices!
   - liz says: But that could get out of hand really fast. Try not to nest more than two choices at a time.
-  - show liz: normal
-  - liz says: You learnt yesterday what a scene is, and now I'm going to show you how to change from one scene to the next.
+  - liz says normal: You learnt yesterday what a scene is, and now I'm going to show you how to change from one scene to the next.
   - show lessonScene:
   - liz says: This example shows a whole scene that can continue in two possible different scenes.
   - liz says: To start another scene we use the action 'scene'. It takes an extra parameter, the name of the scene to be executed next.
@@ -544,10 +609,8 @@ day2:
   - liz says: So if the player picks the phone up and then chooses to go to the party, the scene will change immediately to the 'partyScene' scene. 
   - liz says: And if she doesn't attend the call or chooses not to go, the scene will continue until the end and change to the 'dormsScene' scene.
   - hide lessonScene:
-  - show liz: happy
-  - liz says: Remember you can always say no to invitations, don't fall for peer pressure.
-  - show liz: normal
-  - liz says: There's another way of making a choice.
+  - liz says happy: Remember you can always say no to invitations, don't fall for peer pressure.
+  - liz says normal: There's another way of making a choice.
   - liz says: Visual choices.
   - liz says: With visual choices instead of using a text line, each option is an image you have to click.
   - liz says: Let's see it in action.
@@ -568,52 +631,36 @@ day2:
   - show lessonVisualChoice:
   - liz says: It's similar to the normal choices, but the text has the information to show the images.
   - liz says: First the tag of the image, and then the position.
-  - liz says: The image has to be declared in the setup file, in the extra section.
+  - liz says: The image has to be declared in the setup file, in the extra section, or as is the case for these two images, as cgs.
   - liz says: And that's it!
   - hide lessonVisualChoice:
-  - show liz: happy
-  - liz says: There's a few more things about choices, but we'll see them after your next lesson.
+  - liz says happy: There's a few more things about choices, but we'll see them after your next lesson.
   - show marco: normal AT CENTER WITH FADE
   - liz says: And here is your professor for it!
-  - show marco: happy
-  - marco says: Hey Liz, what are you doing here? I have a lesson now.
-  - show marco: normal
-  - marco says: Am I too early?
-  - show liz: normal
-  - liz says: Oh no, it's...
+  - marco says happy: Hey Liz, what are you doing here? I have a lesson now.
+  - marco says normal: Am I too early?
+  - liz says normal: Oh no, it's...
   - marco says: Too late?
-  - show marco: worry
-  - marco says: Is it the wrong day?
+  - marco says worry: Is it the wrong day?
   - marco says: Again?
-  - show liz: happy
-  - liz says: It's ok, it't the right day and time... And place.
-  - show marco: happy
-  - marco says: Great!
-  - show marco: normal
-  - marco says: Ok, so you have to open the file...
+  - liz says happy: It's ok, it't the right day and time... And place.
+  - marco says happy: Great!
+  - marco says normal: Ok, so you have to open the file...
   - liz says: Wait, wait, wait!
-  - show liz: normal
-  - liz says: You have to introduce yourself first! Come on, Deuzi told you about these things.
+  - liz says normal: You have to introduce yourself first! Come on, Deuzi told you about these things.
   - liz says: And don't forget to say what the lesson is about either!
-  - show marco: worry
-  - marco says: Sorry!
+  - marco says worry: Sorry!
   - wait: 600
-  - show marco: happy
-  - marco says: There! I won't forget again. I'm making a protocol for coming to class, see?
+  - marco says happy: There! I won't forget again. I'm making a protocol for coming to class, see?
   - liz says: Really? A protocol?
   - liz says: Didn't think it could be so complicated... What's on it?
-  - show marco: normal
-  - marco says: Well, first, getting out of bed and washing my face.
+  - marco says normal: Well, first, getting out of bed and washing my face.
   - marco says: Then, coming the right day at the right time is really important.
-  - show marco: happy
-  - marco says: And now I've added saying my name and state my lesson summary for the students.
+  - marco says happy: And now I've added saying my name and state my lesson summary for the students.
   - liz says: That's very thorough.
-  - show liz: happy
-  - liz says: Ok, I don't want to disrupt your protocol too much, so I'll let you keep going.
-  - show liz: normal
-  - liz says: Good luck!
-  - show liz: happy
-  - liz says: All of you!!!
+  - liz says happy: Ok, I don't want to disrupt your protocol too much, so I'll let you keep going.
+  - liz says normal: Good luck!
+  - liz says happy: To the both of you!!!
   - hide liz: WITH FADE
   - scene: lessonStoryFlux
 
@@ -621,19 +668,17 @@ lessonStoryFlux:
   - show marco: normal
   - marco says: All right, so, as I've gotten out of bed, washed my face and came here on the right day at the right time.
   - marco says: Now I can tell you.
-  - show marco: happy
-  - marco says: Hi! My name is Marco, and I'll be teaching you about logic and variables.
+  - marco says happy: Hi! My name is Marco, and I'll be teaching you about logic and variables.
   - effect SHOWTITLE: 
-    title: Chapter 5
+    title: Lesson 5
     subtitle: Story Flux
-  - show marco: normal
-  - marco says: This is chapter 5 of the course, that means you already know about choices and interrupts.
+  - marco says normal: This is lesson 5 of the course, that means you should already know about choices.
   - marco says: That's one way of changing the course of your story.
   - marco says: But some of our actions take a long time before they reflect on the outcome of our story.
   - marco says: That means that sometimes during the story you will need to keep record of the player's decisions.
   - marco says: What and how, exactly, is up to you.
   - marco says: RenJS allows you to save information with the action 'var'.
-  - marco says: It's name comes from the word variable, since it's value could change.
+  - marco says: Its name comes from the word variable, since it's a value that can change.
   - marco says: Let's see an example of what you can do with this action.
   - show marco: AT RIGHT WITH MOVE
   - show lessonVarsNumeric:
@@ -644,11 +689,11 @@ lessonStoryFlux:
   - marco says: In our case, the parts are separated by a colon.
   - marco says: The left part contains the variable name.
   - marco says: And the right part contains the value that will be assigned.
-  - marco says: This value can be the raw data, a number like 0.
-  - marco says: Or we make an operation combining numbers and other variables in an operation.
+  - marco says: This value can be the raw data, a number like 0, 5 or 17.
+  - marco says: Or we can make an operation combining numbers and other variables in an operation.
   - marco says: To use the value of a variable in the right part, we have to surround its name with curly braces.
   - marco says: That way we are saying we need to go and find the value of those variables, replace them in the operation.
-  - marco says: And then resolve the operation.
+  - marco says: And then resolve it.
   - marco says: The first variable 'score' is assigned the number 0 directly.
   - marco says: Same with the variable 'extraPoints'.
   - marco says: The third line assigns again a value to the variable 'score'.
@@ -680,12 +725,10 @@ lessonStoryFlux:
   - marco says: " '||' means 'or'. The variable 'canRead' will be true if any of the variables 'lightOn or lampOn' are true."
   - marco says: With just these symbols, including parentheses too, you can create really complex operations.
   - hide lessonVarsBoolean:
-  - show marco: happy
-  - marco says: But there's yet another way to get a boolean value. One that mixes numbers with arithmetic!
+  - marco says happy: But there's yet another way to get a boolean value. One that mixes numbers with logic!
   - marco says: Isn't it great!?
-  - show marco: normal
   - show lessonVarsBooleanCont:
-  - marco says: Here we have some new symbols.
+  - marco says marco: Here we have some new symbols.
   - marco says: "'>' greater than and '>=' greater or equal than."
   - marco says: "'==' equal to."
   - marco says: "'<' less than and '<=' less than or equal to."
@@ -700,23 +743,20 @@ lessonStoryFlux:
   - marco says: This is a character string, or more directly, a string.
   - marco says: These variables store text.
   - marco says: You can store text directly, or combine them with more text.
-  - marco says: The 'wholeName' variable will resolve to 'Mr. Marco Da Silva'.
-  - show marco: happy
-  - marco says: That's me!
-  - show marco: normal
-  - marco says: You can also show the content of any variable, not just strings, in any dialogue and text.
+  - marco says: The 'wholeName' variable will resolve to 'Prof. Marco Da Silva'.
+  - marco says happy: That's me!
+  - marco says normal: You can also show the content of any variable, not just strings, in any dialogue and text.
+  - marco says: Always by using the curly braces.
   - hide lessonVarsString:
-  - show marco: happy
-  - marco says: And those are all the types of variables you need.
+  - marco says happy: And those are all the types of variables you need.
   - marco says: Now we're going to see how we can use them to change the course of the story.
-  - show marco: normal
-  - marco says: For this we're going to use a new action, 'if'.
+  - marco says normal: For this we're going to use a new action, 'if'.
   - marco says: This action allows you to execute orders only if a condition is met.
   - show lessonIf:
   - marco says: As you can see, after the 'if', the condition is bewtween parentheses.
   - marco says: A condition is nothing more than a boolean value. Anything that evaluates to true or false.
   - marco says: So if you have a boolean variable like 'lightOn', we can use it as a condition.
-  - marco says: If that condition is true, the actions indented inside the if are executed.
+  - marco says: If that condition is true, the actions indented inside the if are executed. Just like with choices.
   - marco says: After an 'if' action, we can have an 'else' action.
   - marco says: This action is only to indicate what actions should be executed if the condition is false.
   - marco says: The else can be omitted, but if you need it, it should be immediately after the actions of the 'if'.
@@ -735,187 +775,120 @@ lessonStoryFlux:
   - marco says: To which one do you think it belongs?
   - choice:
     - First 'if'!:
-      - show marco: happy
-      - marco says: Correct!
+      - marco says happy: Correct!
     - Second 'if?:
-      - show marco: worry
-      - marco says: Not really.
-  - show marco: normal  
-  - marco says: The indentation level is what marks the right 'if' to pair it with. So that 'else' belongs to the first 'if'.
+      - marco says worry: Not really.
+  - marco says normal: The indentation level is what marks the right 'if' to pair it with. So that 'else' belongs to the first 'if'.
   - hide lessonIfCont:
   - show marco: normal AT CENTER WITH MOVE
-  - marco says: So that was all you need to know about logic and internal decisions in a story.
+  - marco says: And that's all you need to know about logic and internal decisions in a story.
   - marco says: The pieces are simple enough, but combine them and you can make really intricate systems.
-  - show marco: happy
-  - marco says: I love systems!
+  - marco says happy: I love systems!
   - marco says: They're so perfect!
-  - show marco: normal
-  - marco says: I really don't know if you have another class right now.
-  - marco says: But mine is over, so I'll leave.
-  - show marco: happy
-  - marco says: Bye!
+  - marco says worry: I really don't know if you have another class right now.
+  - marco says normal: But mine is over, so I'll leave.
+  - marco says happy: Bye!
   - hide marco: WITH FADE
   - scene: lastClass
 
 lastClass:
   - show school_afternoon: WITH FUSION
-  - show deuzi: happy WITH FADE
+  - show deuzi: happy WITH FADE AT CENTER
     flipped: true
   - deuzi says: Hi! Did you have fun today?
-  - show deuzi: normal
-  - deuzi says: Marco's is one of the hardest, but once you learn it, it becomes a lot easier to write the stories just how you want them.
+  - deuzi says normal: Marco's is one of the hardest, but once you learn it, it becomes a lot easier to write the stories just how you want them.
   - deuzi says: One last lesson and you can start writing!
   - show deuzi: happy
   - deuzi says: For this lesson, I'll be your teacher.
   - deuzi says: It'll be a lot of fun!
   - show deuzi: normal
   - effect SHOWTITLE: 
-    title: Chapter 6
-    subtitle: Graphical User Interface
-  - deuzi says: So, a Graphical User Interface, or GUI, constitutes most of the look and feel of your story.
+    title: Lesson 6
+    subtitle: GUI and Configuration
+  - deuzi says: So, a GUI, or Graphical User Interface , constitutes most of the look and feel of your story.
   - deuzi says: The graphical elements of your story are the backgrounds, the characters and the cgs.
   - deuzi says: We could say that anything else is part of the GUI.
   - deuzi says: So, the menus, the text box where we show dialogue, the font of the texts, the buttons of the quick menu here in the corner.
   - deuzi says: All of that is part of the GUI.
   - deuzi says: The GUI is not exactly part of the story, but it's great to set the mood, to show the story's aesthetic.
-  - deuzi says: So a period drama and a cyberpunk story shouldn't look the same.
+  - deuzi says: For example, a period drama and a cyberpunk story GUIs shouldn't look the same.
   - deuzi says: Also, the GUI will depend on the image resolution used.
   - deuzi says: A little pixel art game will need a specific GUI, and so would a big HD one.
   - deuzi says: With RenJS we have an easy way to make the GUI look exactly the way we need.
   - deuzi says: Configuring of the GUI happens inside the file 'GUI.yaml'.
-  - show deuzi: happy AT RIGHT WITH MOVE
-  - deuzi says: Let's check it!
-  - show lessonGUI:
-  - deuzi says: The first tag we use is simpleGUI.
-  - deuzi says: Inside it, the first tag is assets.
-  - deuzi says: Just as we did with the story setup, here we need to declare each resource with a file and tag.
-  - deuzi says: First of all, we have a fonts list.
-  - deuzi says: For this GUI we only use one font, called auditmat-mono.
-  - deuzi says: Fonts are declared in a special way.
-  - deuzi says: To find them, we first have to load them in a web style.
-  - deuzi says: Let's check for a moment the index.html file.
-  - show lessonGUIFonts:
-  - deuzi says: Here we tell the web page we need a 'font-face'.
-  - deuzi says: The 'font-family' property is the name we'll be referencing in our GUI file.
-  - deuzi says: And the 'src' indicates where to find the font file.
-  - deuzi says: "We have our font file inside the 'assets/gui' folder."
-  - deuzi says: You can go check!
-  - hide lessonGUIFonts:
-  - deuzi says: So, for every font you need to use on your game, you have to declare a 'font-face'.
-  - deuzi says: And then list them on your GUI file.
-  - show deuzi: happy
-  - deuzi says: You can find free fonts to use on sites like Google Fonts!
-  - show deuzi: normal
-  - hide lessonGUI:
-  - deuzi says: Next thing is images.
-  - show lessonGUIImages:
-  - deuzi says: Here we list the images we will use with their file names.
-  - deuzi says: Pay attention to the tag names, they are important.
-  - deuzi says: "'mainBackground' will be the background of the main menu."
-  - deuzi says: "'settingsBackground' will be the background of the settings menu."
-  - deuzi says: "'sliderFull' will be the image used to show the a slider all full, in the settings menu."
-  - deuzi says: You can check how those look if you open the settings menu right now and change some of the values.
-  - deuzi says: "'messageBox' is the box where dialogue and text will appear. It's where this text is showing right now."
-  - deuzi says: And 'nameBox' is the little box where the character's name is displayed. Right now it says Deuzilene.
-  - deuzi says: "'ctc' means click to continue, and it's the little image that blinks when the story is waiting for you to click."
-  - deuzi says: Your gui could have no nameBox and no ctc, but you definitely need the rest.
-  - hide lessonGUIImages:
-  - show lessonGUISpritesheets:
-  - deuzi says: Next you load the spritesheets.
-  - deuzi says: A spritesheet is an image that contains different frames of the same image.
-  - deuzi says: That's why after the file, you need to add the width and height of the frame.
-  - deuzi says: This is particularly useful to load animations and buttons.
-  - deuzi says: So let's see what spritesheets we have.
-  - deuzi says: And what images we have.
-  - deuzi says: A bunch of buttons! Start, load, save, settings and return button from the main and settings menu.
-  - deuzi says: Then the quick menu buttons. The quick menu refers to this little menu we have in the corner.
-  - deuzi says: It let's you autoplay, skip play, save and open the settings menu. So we need a button for each of those.
-  - deuzi says: Then we have the choice box.
-  - deuzi says: And the interrupt box.
-  - deuzi says: If you open the interrupt box image, you'll notice it has 4 frames.
-  - deuzi says: The first two are for the normal interrupt. 
-  - deuzi says: And the last two are for an interrupt that's just about to disappear.
-  - deuzi says: It should look more urgent.
-  - hide lessonGUISpritesheets:
-  - deuzi says: The last kind of asset to declare is audio.
-  - show lessonGUIAudio:
-  - deuzi says: The only thing we load here is the main menu music.
-  - hide lessonGUIAudio:
-  - deuzi says: After loading all of the assets, we need to configure how each part of the gui looks.
-  - deuzi says: Where the buttons are located, where the text should go, etc.
-  - deuzi says: We start with the HUD, the head-up display.
-  - deuzi says: That's all the GUI parts we'll use during the story.
-  - show lessonGUIHUD:
-  - deuzi says: First thing inside 'hud' is the area.
-  - deuzi says: The area of the hud is where your quick menu buttons are.
-  - deuzi says: It's a rectangle that envelops them, it doesn't have to be perfect.
-  - deuzi says: You could have many rectangles if the buttons are no all together.
-  - deuzi says: This area is important because it will tell the game that a 'click' inside them doesn't count as a 'story click'.
-  - deuzi says: A story click being a click to make the story advance, for example, when the game is waiting for you to read a text.
-  - deuzi says: We can not define the area, but then, whenever the player clicks on a button, the story will advance too.
-  - deuzi says: That could bring unexpected problems.
-  - deuzi says: So it's better to just check where your hud buttons are and make a rectangle around them to define as hud area.
-  - deuzi says: After the area we have the 'message' tag.
-  - deuzi says: That's the box where all the story text will be displayed.
-  - deuzi says: By convention, it will use the 'messageBox' asset.
-  - deuzi says: But we need to tell it where to locate it.
-  - deuzi says: And then, inside it, where the text will be located, and how it will look.
-  - hide lessonGUIHUD:
-  - show lessonGUIHUDcont:
-  - deuzi says: Then we have the name box. Same as before, you add position and text style.
-  - deuzi says: One important thing to notice here is the position must be relative the message box.
-  - deuzi says: The ctc doesn't have any text, but it can be animated or not.
-  - deuzi says: If it's not animated, then it will be made to blink programatically.
-  - deuzi says: But it can be if instead of it being a static image, you load it as a spritesheet.
-  - deuzi says: In that case, you should set the 'animated' parameter to true.
-  - deuzi says: The ctc's position is also relative to the message box.
-  - hide lessonGUIHUDcont:
-  - show lessonGUIHUDcont2:
-  - deuzi says: Next elements on the 'hud' are the choice and interrupt boxes.
-  - deuzi says: You can give them a position, like the rest of the elements.
-  - deuzi says: But if you don't, these boxes will be located in the middle of the screen.
-  - deuzi says: You can see how that looks on the choices of this story.
-  - deuzi says: If you set a position, then the list of choices will be added from that point down.
-  - deuzi says: The 'separation' in the choice means how far one box will be from the other.
-  - deuzi says: This number should be bigger than the box height itself, or else one box will be on top of the other.
-  - deuzi says: Last thing is text style.
-  - deuzi says: You can choose a different font for the interrupt.
-  - hide lessonGUIHUDcont2:
-  - deuzi says: If you want to know more about text styles, you can find information about them in the Phaser documentation.
-  - deuzi says: Now, the last elements on the 'hud' are the buttons for the quick menu.
-  - show lessonGUIHUDcont3:
-  - deuzi says: The tag name for each button is very important, since it's what will determine their action when you press them.
-  - deuzi says: The available buttons we have are 'auto', 'skip', 'save' and 'settings'.
-  - deuzi says: You don't need all of them in your GUI, of course. You can have only the buttons you deem necessary.
-  - hide lessonGUIHUDcont3:
-  - deuzi says: And that's all you need to create your 'hud'.
-  - deuzi says: But the GUI also has menus.
-  - deuzi says: A menu is basically a background with buttons on it. It can have music, and it can have other elements like sliders.
-  - deuzi says: Let's see how to do it.
-  - show lessonGUIMenu:
-  - deuzi says: The first menu we have is 'main'. That's the main menu. As a convention, it will use the background 'mainMenu'.
-  - deuzi says: It has music, so we have to indicate what music tag it is we should reproduce.
-  - deuzi says: And then it has buttons.
-  - deuzi says: The buttons are configured in the same way as before.
-  - deuzi says: A meaningful tag, a position and a sprite.
-  - hide lessonGUIMenu:
-  - show lessonGUISliders:
-  - deuzi says: The settings menu is very similar to the main menu, but it has sliders.
-  - deuzi says: The sliders, just like the buttons, have a meaningful name.
-  - deuzi says: The name indicates what property will be modified by that slider.
-  - deuzi says: Then a position, and the sprite of the slider when it's full.
-  - hide lessonGUISliders:
+  - deuzi says: The file is quite self explanatory. There is a list of assets, with key and path.
+  - deuzi says: And a configuration section for each menu, with the images, buttons, animations and all other elements contained in them.
+  - deuzi says: There's also the 'HUD' configuration. HUD stands for head-up-display.
+  - deuzi says: This word is an acronym used in videogames to designate all the graphical meta elements that appear during the game play.
+  - deuzi says: In the case of a visual novel, that means the 'Quick Menu', here in the bottom right corner; the boxes for displaying messages, character names and choices.
+  - deuzi says: You can modify this file by hand to make up your GUI.
+  - deuzi says happy: But there's a much easier way!
+  - deuzi says: There's a tool called RenJS GUI Builder, that lets you create the GUI visually. You can create the menus and the HUD by adding images, buttons and more.
+  - deuzi says normal: You can find a link to the RenJS GUI Builder down below.
+  - deuzi says: Once the GUI looks like you want, you can 'build it', and a directory with the GUI assets and configuration, along with a skeleton story and the RenJS library, will be created.
+  - deuzi says happy: Then you can add your story assets and start writing!
+  - deuzi says normal: And just in case you want to use this GUI, used by the tutorial game and the Quickstart, RenJS GUI Builder comes with it as an example. You can clone it and modify it or use it as it is.
+  - deuzi says: Finally, there's some more things you can change to make your game look like you want.
+  - deuzi says: There are many configuration parameters you can change and play with.
+  - deuzi says: For example, you already know that when showing characters in a particular position, you need to use the keyword AT.
+  - deuzi says: Then, you can use either a coordinate in the screen, or the special positions LEFT, CENTER and RIGHT.
+  - deuzi says: These three positions are automatically chosen from the dimensions of your game.
+  - deuzi says: But maybe they don't look good in your game. Maybe the RIGHT and LEFT are too far appart, or too close.
+  - deuzi says: Or maybe you simply could use other special positions, like, say, PORTRAIT, to place the player portrait.
+  - deuzi says happy: Well, this, and many other options, can be overwritten on your game.
+  - deuzi says normal: That's where the Config.yaml file comes into play.
+  - deuzi says: This file contains all the options you can change.
+  - deuzi says: Let's see what this file can contains.
+  - deuzi says: "As with the other yaml files, the options are each a line (or more) with key:value, and indentation is important."
+  - show lessonConfig:
+  - deuzi says: Let's see what the options are.
+  - deuzi says: The first one, and maybe most important, is the positions.
+  - deuzi says: These are the special positions you will have available while writing the game.
+  - deuzi says: They depend on the dimensions of the game, since they are expressed in pixels.
+  - deuzi says: There are five positions configured on the Quickstart game, but you can add as many as you want.
+  - deuzi says: One thing to take into account is that character sprites have the 'zero coordinate' in the middle bottom of the image.
+  - deuzi says: And this is what these values will positions in screen.
+  - deuzi says: So you can see, the CENTER position x is the middle of the screen, but the y is at the bottom. 
+  - deuzi says: This will position the characters exactly where I'm standing right now.
+  - deuzi says: 'The other position are what you expect:'
+  - show deuzi: AT LEFT WITH MOVE
+  - deuzi says: This is the LEFT position, and there's also an OUTLEFT, that is, outside of the screen on the left side.
+  - show deuzi: AT OUTLEFT WITH MOVE
+  - deuzi says: Like this!
+  - show deuzi: AT OUTRIGHT WITH CUT
+  - deuzi says: These positions are really handy when you want to...
+  - show deuzi: AT RIGHT WITH MOVE
+  - deuzi says: Make a character enter or leave the screen gracefully.
+  - deuzi says: And as I said before, if you want to simply add another special position specific to your game, here is where to add it.
+  - deuzi says: Next option is 'transitions'.
+  - deuzi says: You already know a bit about transitions, it's the way to show or hide characters, backgrounds or cgs.
+  - deuzi says: What you will be setting here, is what happens when you don't specify a transition in your show and hide actions.
+  - deuzi says: So, in this case, we are using the same behaviour for all the elements, FADE.
+  - deuzi says: That means that whenever I want to show or hide something using FADE, I will not need to write it.
+  - deuzi says: It will be the default behaviour. You can change this to any of the available transitions.
+  - deuzi says: And the same goes for showing and hiding parts of the GUI. The choices, either visual or text, the message box and even the menus themselves.
+  - deuzi says happy: You can play with these values and see how it looks!
+  - deuzi says normal: Finally, there are some other options to check.
+  - deuzi says: The option 'fadetime' will means how much the FADE transitions will take, in miliseconds. You can modify this value if you want faster of slower FADE transitions.
+  - deuzi says: The skip and auto times set the waiting time for each action in their respective modes.
+  - deuzi says: For example, on auto play, when text is shown, with a 'text' or 'say' action, the game will wait for a moment before continuing.
+  - deuzi says: Skip mode is basically the same as auto play, but really really fast.
+  - deuzi says: And finally, logChoices lets you keep a track of the choices the player took.
+  - deuzi says: If they replay the game, the choices previously taken will be shown tinted in a different color, so as to let them explore all the game more easily.
+  - deuzi says: Maybe you don't want this behaviour, and you can do that by setting logChoices to false.
+  - deuzi says: And that's all there is to know about the story configuration file.
+  - hide lessonConfig:
   - deuzi says: Wow, that was longer than expected.
-  - deuzi says: But that completes the whole of this course.
+  - deuzi says happy: But that completes the whole of this course.
   - deuzi says: Now we need to hurry!
   - scene: graduation
   
 graduation:
   - show street_afternoon:
-  - show deuzi: AT 300,600 WITH FADE
+  - show deuzi: AT 300,600 WITH FADE CONTINUE
     flipped: false
-  - show liz: happy AT 500,600 WITH FADE
-  - show jair: happy AT RIGHT WITH FADE
+  - show liz: happy AT 500,600 WITH FADE CONTINUE
+  - show jair: happy AT RIGHT WITH FADE CONTINUE
   - show marco: happy AT LEFT WITH FADE
   - deuzi says: So, this is the big day.
   - deuzi says: You can now go out in the world and write your own stories.
@@ -928,8 +901,10 @@ graduation:
   - effect ROLLINGCREDITS:
     endGame: true
     text:
-      - RenJS developed by
+      - RenJS.V2 created by
       - lunafromthemoon
+      - In colaborations with
+      - RockTheFox
       - null
       - Inspired by Ren'Py
       - Powered by PhaserJS

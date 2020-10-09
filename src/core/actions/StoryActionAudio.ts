@@ -11,7 +11,7 @@ export default class StoryActionAudio extends StoryAction {
 
     execute(): void {
         if (this.action=='play'){
-            if (this.params.actorType === 'bgm') {
+            if (this.params.actorType === 'music') {
                 this.game.managers.audio.play(this.params.actor, 'bgm', this.params.looped, this.params.transition);
             } else {
                 this.game.managers.audio.playSFX(this.params.actor);

@@ -4,6 +4,7 @@ interface RJSControlInterface {
     waitForClick: boolean;
     clickLocked: boolean;
     skipping: boolean;
+    unskippable: boolean;
     auto: boolean;
     clickCooldown: number;
     execStack: ExecStack;
@@ -13,6 +14,7 @@ interface RJSControlInterface {
 export default class RJSControl implements RJSControlInterface {
     constructor();
     skipping: boolean;
+    unskippable: boolean;
     auto: boolean;
     paused: boolean;
     clickCooldown: number;

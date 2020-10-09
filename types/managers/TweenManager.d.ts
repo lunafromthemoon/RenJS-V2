@@ -14,6 +14,7 @@ export default class TweenManager implements TweenManagerInterface {
     tween(sprite: any, tweenables: any, callback: any, time: any, start: any, delay?: number, unskippable?: boolean): RJSTween;
     chain(tweens: any, unskippable?: boolean, time?: any): void;
     parallel(tweens: any, unskippable?: boolean, time?: any): void;
+    canSkip(): boolean;
     skip(): void;
     set(...args: any): void;
 }

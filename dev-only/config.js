@@ -25,7 +25,7 @@ const globalConfig =  {
   // 'guiConfig': 'story/GUI.yaml',
   storySetup: 'story/Setup.yaml',
   'storyText': [
-    'story/TestStory.yaml'
+    'story/TutorialStory.yaml'
   ]
 }
 

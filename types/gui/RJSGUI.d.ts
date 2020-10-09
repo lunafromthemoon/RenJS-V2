@@ -75,11 +75,11 @@ export default class RJSGUI implements RJSGUIInterface {
     loadThumbnail(thumbnail: any, parent: any): void;
     ignoreTap(pointer: any): boolean;
     addThumbnail(thumbnail: any, slot: any): void;
-    showMenu(menu: any): void;
-    hideMenu(menu: any, mute: any, callback?: any): void;
+    showMenu(menu: any): Promise<void>;
+    hideMenu(menu: any, mute: any, callback?: any): Promise<void>;
     showHUD(): void;
     hideHUD(): void;
-    changeMenu(menu: any): void;
+    changeMenu(menu: any): Promise<void>;
     initSliderValueChanged(): void;
     initButtonsActions(): void;
     clear(): void;
