@@ -93,20 +93,26 @@ testAaE:
     image: thunder
   - marco says happy: Here it is!
   - ambient RAIN:
-  - text: Snow in 3...
+  - text: It will get worse in 3...
   - text: 2...
   - text: 1...
   - text: Now
   - ambient CLEAR:
+  - ambient HEAVYRAIN:
   - marco says: The storm is getting worse, I should go back.
+  - text: Rain will stop in 3...
+  - text: 2...
+  - text: 1...
+  - text: Now
+  - ambient CLEAR:
+  - marco says: That's much better
   - ambient SNOW:
+  - marco says worry: Oh no
   - show jair: angry AT RIGHT
   - jair says: Not so fast! Let's battle!
-  # - effect ATTACK:
-  - marco says worry: You leave me no choice.
-  # - effect MULTIATTACK:
+  - marco says: You leave me no choice.
   - marco says angry: Take this!
-  # - effect CHAINATTACK: 
+  - effect ATTACK:
   - hide jair:
   - ambient CLEAR:
   - marco says: It's time to go home.

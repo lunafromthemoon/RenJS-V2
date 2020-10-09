@@ -91,11 +91,15 @@ sfx:
   ringtoneSFX: assets/audio/nokia6210-24-elise.mp3
   ringtoneSFX2: assets/audio/alcatel-top_secret.mp3
   thunderSFX: assets/audio/thunder_strike_1.mp3
+  lashSFX: assets/audio/51755__erkanozan__whip-01.wav
 extra:
   image:
     title: assets/lessons/titles.png
     rain: assets/ambient/rain.png
     thunder: assets/effects/Thunder_Effect.png
+    chainattack1: assets/effects/Attack_2.png
+    chainattack2: assets/effects/Attack_3.png
+    chainattack3: assets/effects/Attack_4.png
   spritesheets:
     snowflakes: assets/ambient/snowflakes.png 17 17
     snowflakes_large: assets/ambient/snowflakes_large.png 64 64
