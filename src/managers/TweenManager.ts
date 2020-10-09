@@ -32,7 +32,7 @@ export default class TweenManager implements TweenManagerInterface {
         if (start){
             this.current = [];
             tween.start();
-            if (!this.game.control.auto && !unskippable) {
+            if (this.canSkip() && !unskippable) {
                 this.game.waitForClick(() => this.skip());
             }
         }
@@ -56,7 +56,7 @@ export default class TweenManager implements TweenManagerInterface {
             lastTween = tween;
         });
         this.current[0].start();
-        if (!this.game.control.auto && !unskippable) {
+        if (this.canSkip() && !unskippable) {
             this.game.waitForClick(() => this.skip());
         }
     }
@@ -67,15 +67,19 @@ export default class TweenManager implements TweenManagerInterface {
             const tween = this.tween(tw.sprite,tw.tweenables,tw.callback,time,false,tw.delay);
             tween.start();
         });
-        if (!this.game.control.auto && !unskippable) {
+        if (!this.canSkip() && !unskippable) {
             this.game.waitForClick(() => this.skip());
         }
     }
 
+    canSkip(): boolean {
+        return (!this.game.control.auto && !this.game.control.unskippable);
+    }
+
     skip(): void {
-        // if (this.unskippable){
-        //     return;
-        // }
+        if (this.game.control.unskippable){
+            return;
+        }
         this.current.forEach(tween => {
             tween.stop(false);
             for (const property in tween.tweenables){

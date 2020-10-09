@@ -96,8 +96,8 @@ export default class RJS extends Game {
         this.control.paused = false;
         this.gui.showHUD();
         if (this.control.waitForClick){
-            this.control.waitForClick = false;
-            this.control.nextAction();
+            // this.control.waitForClick = false;
+            // this.control.nextAction();
         } else {
             this.resolveAction();
         }
@@ -110,6 +110,7 @@ export default class RJS extends Game {
 
     setBlackOverlay (): void {
         this.blackOverlay = this.add.graphics(0, 0);
+        this.managers.story.cgsSprites.addChild(this.blackOverlay);
         this.blackOverlay.beginFill(0x000000, 1);
         this.blackOverlay.drawRect(0, 0, this.config.w, this.config.h);
         this.blackOverlay.endFill();

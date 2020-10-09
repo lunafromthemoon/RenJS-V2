@@ -6,6 +6,7 @@ interface RJSControlInterface {
     waitForClick: boolean;
     clickLocked: boolean;
     skipping: boolean;
+    unskippable: boolean;
     auto: boolean;
     clickCooldown: number;
     // action stack control
@@ -29,6 +30,7 @@ export default class RJSControl implements RJSControlInterface {
     }
     // game status controls
     skipping = false;
+    unskippable = false;
     auto = false;
     paused = false;
     // click controls

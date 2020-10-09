@@ -1,8 +1,5 @@
 
 start:
-  - call helloWorld:
-    param1: 'hello'
-    param2: 'world'
   - choice:
     - test images:
       - scene: testimages
@@ -17,6 +14,9 @@ testimages:
   - show room_night: WITH FADE2 CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - text: deuzi moves
+  - call helloWorld:
+    param1: 'hello'
+    param2: 'world'
   - show deuzi: AT LEFT WITH MOVE
   - text: jair appears
   - show jair: AT OUTRIGHT WITH CUT

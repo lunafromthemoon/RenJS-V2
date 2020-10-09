@@ -280,42 +280,40 @@ export default class RJSGUI implements RJSGUIInterface {
         }
     }
 
-    showMenu(menu) {
+    async showMenu(menu) {
         this.game.pause();
         this.previousMenu = this.currentMenu;
         this.currentMenu = menu;
-
         this.menus[menu].alpha = 0;
         this.menus[menu].visible = true;
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
-        transition(null, this.menus[menu]);
+        this.game.control.unskippable = true;
         let music = this.config.menus[menu].backgroundMusic;
         if (music && !music.isPlaying && !this.game.userPreferences.muted){
             music.fadeIn(1000);
         }
+        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        await transition(null, this.menus[menu]);
+        this.game.control.unskippable = false;
+        
     }
 
-    hideMenu(menu, mute, callback?): void {
+    async hideMenu(menu, mute, callback?) {
         if (!menu){
             menu = this.currentMenu;
         }
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
-        transition(this.menus[menu], null).then(()=>{
-            this.menus[menu].visible = false;
-            this.currentMenu = null;
-            if (callback){
-                callback()
-            }
-        })
-        // const tween = this.game.add.tween(this.menus[menu]).to( {alpha:0}, 400);
-        // tween.onComplete.add(() => {
-            
-        // });
         let music = this.config.menus[menu].backgroundMusic;
         if (mute && music && music.isPlaying){
             music.fadeOut(400);
         }
-        // tween.start();
+        this.game.control.unskippable = true;
+        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        await transition(this.menus[menu], null);
+        this.game.control.unskippable = false;
+        this.menus[menu].visible = false;
+        this.currentMenu = null;
+        if (callback){
+            callback()
+        }
     }
 
     showHUD() {
@@ -326,23 +324,22 @@ export default class RJSGUI implements RJSGUIInterface {
         this.hud.visible = false;
     }    
 
-    changeMenu(menu) {
+    async changeMenu(menu) {
         const previous = this.currentMenu;
         if (previous){
             if (menu) {
                 // hide previous menu and show this
-                this.hideMenu(previous,this.config[menu].backgroundMusic, () => {
-                    this.showMenu(menu);
-                    this.previousMenu = previous;
-                })
+                await this.hideMenu(previous,this.config.menus[menu].backgroundMusic);
+                await this.showMenu(menu);
+                this.previousMenu = previous;
                 return
             } else {
                 // just hide menu
-                this.hideMenu(previous,true);
+                await this.hideMenu(previous,true);
             }
         }
         if (menu){
-            this.showMenu(menu);
+            await this.showMenu(menu);
         }
     }
 
@@ -368,14 +365,14 @@ export default class RJSGUI implements RJSGUIInterface {
     initButtonsActions (): void {
         const game = this.game
         this.buttonsAction = {
-            start() {
-                game.gui.changeMenu(null);
+            async start() {
                 game.gui.showHUD();
+                await game.gui.changeMenu(null);
                 game.start();
             },
-            load (component){
-                game.gui.changeMenu(null);
+            async load (component){
                 game.gui.showHUD();
+                await game.gui.changeMenu(null);
                 game.loadSlot(parseInt(component.slot, 10));
             },
 
@@ -390,14 +387,12 @@ export default class RJSGUI implements RJSGUIInterface {
                 game.gui.changeMenu('saveload');
             },
             settings(){
-                // game.onTap();
                 game.pause();
-                // game.resolve();
                 game.gui.changeMenu('settings');
             },
-            return(){
+            async return(){
                 const prev = game.gui.previousMenu;
-                game.gui.changeMenu(prev);
+                await game.gui.changeMenu(prev);
                 if (!prev) {
                     game.unpause();
                 }
@@ -493,7 +488,6 @@ export default class RJSGUI implements RJSGUIInterface {
             // separate choices from interrupts
             choiceConfig = interruptConfig
         }
-
         const x = (choiceConfig.isBoxCentered) ? 
             this.game.world.centerX - choiceConfig.width/2 : 
             choiceConfig.x;
@@ -538,7 +532,9 @@ export default class RJSGUI implements RJSGUIInterface {
 
         const textStyle = this.getTextStyle('choice');
         const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
+        text.visible = false;
         this.setTextPosition(chBox,text, choiceConfig);
+        setTimeout(()=>{text.visible = true},20)
         if (this.game.storyConfig.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) !== -1){
             chBox.tint = this.toHexColor(choiceConfig['chosen-color']);
         }
