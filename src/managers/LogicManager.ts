@@ -16,11 +16,8 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     currentChoices: any[];
     // interrupting: boolean;
     visualChoices: Group = null;
-    private game: RJS
 
-    constructor(game: RJS) {
-        this.game = game
-
+    constructor(private game: RJS) {
         const log = localStorage.getItem('RenJSChoiceLog'+game.config.name);
         this.choicesLog = log ? JSON.parse(log) : {};
     }
@@ -43,6 +40,13 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         } catch(e) {
             this.vars[name] = value;
         }
+    }
+
+    updateChoiceLog(execId,choiceText){
+        this.choicesLog[execId].push(choiceText);
+        // Save choices log
+        const log = JSON.stringify(this.choicesLog);
+        localStorage.setItem('RenJSChoiceLog' + this.game.config.name,log);
     }
 
     evalExpression(expression): any {
@@ -144,7 +148,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     choose(index, choiceText, execId): void {
         // update choice log
-        this.choicesLog[execId].push(choiceText);
+        this.updateChoiceLog(execId,choiceText);
         let chosenOption = this.currentChoices[index];
         // add new action to scene
         const actions = chosenOption[choiceText];
@@ -156,11 +160,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         } else {
             this.game.control.execStack.stack('choice',actions.length,index);
         }
-        //clean up
-        // if (this.visualChoices){
-            // TODO: maybe do fade?
-            // this.visualChoices.destroy();
-        // }
+
         this.currentChoices = [];
         if (!chosenOption.interrupt){
             // interrupts resolve immediately
@@ -180,7 +180,6 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     showChoices(choices): void {
         const ch = choices.map(choice => ({...choice})).filter(choice => this.evalChoice(choice))
         this.currentChoices = this.currentChoices.concat(ch);
-        // END Update choice log
         this.game.gui.showChoices(this.currentChoices,this.getExecStackId());
     }
 

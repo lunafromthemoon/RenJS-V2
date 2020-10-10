@@ -23,7 +23,7 @@ transitions:
     music: FADE
   say: CUT #How to change character expression in say action
   # Transition to use when showing/hiding choices
-  visualChoices: CUT
+  visualChoices: FADE
   textChoices: CUT
   menus: FADE
 

@@ -406,6 +406,10 @@ writingTheStory:
   - liz says: Let's hide this lesson now.
   - hide lessonSceneHide:
   - show liz: AT CENTER WITH MOVE
+  - liz says: One last thing about hide. Sometimes you will want to hide everything, for example, before changing a scene.
+  - liz says: You can do it easily by using the special word ALL, as the subject in the left side of the action.
+  - liz says: As with any other hide action, you can still specify the transition to use.
+  - liz says: And the result will be everything in the screen, characters, background, cgs, will be hidden.
   - liz says: So that's it for today. You must be really tired after studying the whole day.
   - liz says happy: See you tomorrow for part 2!
   - stop morningBGM: WITH FADE
@@ -595,9 +599,9 @@ day2:
   - liz says: That means the order you write the scenes or place them in the file has nothing to do with the actual execution.
   - liz says: And that also means that you have to explicitly call the next scene when the current one ends.
   - liz says: We can see here that the game will continue in different paths depending on what choices the player makes.
-  - liz says: When you change the scene, nothing else from that scene is executed.
-  - liz says: So if the player picks the phone up and then chooses to go to the party, the scene will change immediately to the 'partyScene' scene. 
-  - liz says: And if she doesn't attend the call or chooses not to go, the scene will continue until the end and change to the 'dormsScene' scene.
+  - liz says: When you change the scene, all the remaining actions from the previous scene, if any, are discarded.
+  - liz says: So if the player picks the phone up and then chooses to go to the party, the scene will change immediately to 'partyScene'. 
+  - liz says: And if she doesn't attend the call or chooses not to go, the scene will continue until the end and change to 'dormsScene'.
   - hide lessonScene:
   - liz says happy: Remember you can always say no to invitations, don't fall for peer pressure.
   - liz says normal: There's another way of making a choice.
@@ -695,7 +699,7 @@ lessonStoryFlux:
   - marco says: " '/' is for division."
   - marco says: And you can also use parentheses to make more complicated operations, like assigning something to 'totalScore'.
   - marco says: One last thing to pay attention to is...
-  - marco says: Most of the values on the right side are bewtween inverted commas.
+  - marco says: Most of the values on the right side are between inverted commas.
   - marco says: That's because the parser, the program that reads each line and decides what it means...
   - marco says: "gets nervous when special characters like + & / etc appear on a line."
   - marco says: So you have to use the inverted commas to let it know it's all one valid line.
@@ -715,7 +719,7 @@ lessonStoryFlux:
   - marco says happy: But there's yet another way to get a boolean value. One that mixes numbers with logic!
   - marco says: Isn't it great!?
   - show lessonVarsBooleanCont:
-  - marco says marco: Here we have some new symbols.
+  - marco says normal: Here we have some new symbols.
   - marco says: "'>' greater than and '>=' greater or equal than."
   - marco says: "'==' equal to."
   - marco says: "'<' less than and '<=' less than or equal to."
@@ -730,7 +734,7 @@ lessonStoryFlux:
   - marco says: This is a character string, or more directly, a string.
   - marco says: These variables store text.
   - marco says: You can store text directly, or combine them with more text.
-  - marco says: The 'wholeName' variable will resolve to 'Prof. Marco Da Silva'.
+  - marco says: The 'wholeName' variable will resolve to 'Mr. Marco Da Silva'.
   - marco says happy: That's me!
   - marco says normal: You can also show the content of any variable, not just strings, in any dialogue and text.
   - marco says: Always by using the curly braces.
@@ -768,8 +772,7 @@ lessonStoryFlux:
   - show marco: normal AT CENTER WITH MOVE
   - marco says: And that's all you need to know about logic and internal decisions in a story.
   - marco says: The pieces are simple enough, but combine them and you can make really intricate systems.
-  - marco says happy: I love systems!
-  - marco says: They're so perfect!
+  - marco says happy: I love systems! They're so perfect!
   - marco says worry: I really don't know if you have another class right now.
   - marco says normal: But mine is over, so I'll leave.
   - marco says happy: Bye!
@@ -797,84 +800,94 @@ lastClass:
   - deuzi says: Also, the GUI will depend on the image resolution used.
   - deuzi says: A little pixel art game will need a specific GUI, and so would a big HD one.
   - deuzi says: With RenJS we have an easy way to make the GUI look exactly the way we need.
-  - deuzi says: Configuring of the GUI happens inside the file 'GUI.yaml'.
+  - deuzi says: The configuration of the GUI happens inside the file 'GUI.yaml'.
   - deuzi says: The file is quite self explanatory. There is a list of assets, with key and path.
   - deuzi says: And a configuration section for each menu, with the images, buttons, animations and all other elements contained in them.
   - deuzi says: There's also the 'HUD' configuration. HUD stands for head-up-display.
   - deuzi says: This word is an acronym used in videogames to designate all the graphical meta elements that appear during the game play.
-  - deuzi says: In the case of a visual novel, that means the 'Quick Menu', here in the bottom right corner; the boxes for displaying messages, character names and choices.
+  - deuzi says: In the case of a visual novel, that means the 'Quick Menu', here in the corner; the boxes for displaying messages, character names and choices.
   - deuzi says: You can modify this file by hand to make up your GUI.
   - deuzi says happy: But there's a much easier way!
-  - deuzi says: There's a tool called RenJS GUI Builder, that lets you create the GUI visually. You can create the menus and the HUD by adding images, buttons and more.
+  - deuzi says: There's a tool called RenJS GUI Builder, that lets you create the GUI visually.
+  - deuzi says: With it, you can create the menus and the HUD by adding images, buttons and more and drag them to the right place.
   - deuzi says normal: You can find a link to the RenJS GUI Builder down below.
-  - deuzi says: Once the GUI looks like you want, you can 'build it', and a directory with the GUI assets and configuration, along with a skeleton story and the RenJS library, will be created.
+  - deuzi says: Once the GUI looks like you want, you can 'build it', and a skeleton for your game will be made.
+  - deuzi says: Including your GUI assets and configuration, along with a sample story and the RenJS library.
   - deuzi says happy: Then you can add your story assets and start writing!
-  - deuzi says normal: And just in case you want to use this GUI, used by the tutorial game and the Quickstart, RenJS GUI Builder comes with it as an example. You can clone it and modify it or use it as it is.
-  - deuzi says: Finally, there's some more things you can change to make your game look like you want.
+  - deuzi says normal: And just in case you want to use this GUI, used by the tutorial game and the Quickstart...
+  - deuzi says: RenJS GUI Builder comes with it as an example. You can clone it and modify it or use it as it is.
+  - deuzi says: But there's some more things you can change to make your game look like you want.
   - deuzi says: There are many configuration parameters you can change and play with.
   - deuzi says: For example, you already know that when showing characters in a particular position, you need to use the keyword AT.
   - deuzi says: Then, you can use either a coordinate in the screen, or the special positions LEFT, CENTER and RIGHT.
-  - deuzi says: These three positions are automatically chosen from the dimensions of your game.
-  - deuzi says: But maybe they don't look good in your game. Maybe the RIGHT and LEFT are too far appart, or too close.
-  - deuzi says: Or maybe you simply could use other special positions, like, say, PORTRAIT, to place the player portrait.
-  - deuzi says happy: Well, this, and many other options, can be overwritten on your game.
-  - deuzi says normal: That's where the Config.yaml file comes into play.
-  - deuzi says: This file contains all the options you can change.
+  - deuzi says: These three positions, and some others, are in the Config.yaml file.
+  - deuzi says: You can change the values for any of these positions, and you can also add more.
+  - deuzi says: For example, if your game has a player portrait, you might want to add a special PORTRAIT position to place those images.
   - deuzi says: Let's see what this file can contains.
-  - deuzi says: "As with the other yaml files, the options are each a line (or more) with key:value, and indentation is important."
-  - show lessonConfig:
-  - deuzi says: Let's see what the options are.
-  - deuzi says: The first one, and maybe most important, is the positions.
+  - deuzi says: "As with the other yaml files, the options are each a line or hierarchy with key:value, and indentation is important."
+  - show deuzi: AT RIGHT WITH MOVE CONTINUE
+  - show lessonConfigPosition: AT 200,300
+  - deuzi says: The first tag, and maybe most important, is the positions.
   - deuzi says: These are the special positions you will have available while writing the game.
   - deuzi says: They depend on the dimensions of the game, since they are expressed in pixels.
   - deuzi says: There are five positions configured on the Quickstart game, but you can add as many as you want.
   - deuzi says: One thing to take into account is that character sprites have the 'zero coordinate' in the middle bottom of the image.
   - deuzi says: And this is what these values will positions in screen.
   - deuzi says: So you can see, the CENTER position x is the middle of the screen, but the y is at the bottom. 
-  - deuzi says: This will position the characters exactly where I'm standing right now.
+  - deuzi says: This will position the characters with their feet on the ground, in the middle of the screen.
   - deuzi says: 'The other position are what you expect:'
-  - show deuzi: AT LEFT WITH MOVE
-  - deuzi says: This is the LEFT position, and there's also an OUTLEFT, that is, outside of the screen on the left side.
+  - show lessonPositionExample:
+  - show deuzi: AT CENTER WITH MOVE
+  - deuzi says: This is the CENTER position, and there's also an OUTLEFT, that is, outside of the screen on the left side.
   - show deuzi: AT OUTLEFT WITH MOVE
   - deuzi says: Like this!
   - show deuzi: AT OUTRIGHT WITH CUT
   - deuzi says: These positions are really handy when you want to...
   - show deuzi: AT RIGHT WITH MOVE
   - deuzi says: Make a character enter or leave the screen gracefully.
-  - deuzi says: And as I said before, if you want to simply add another special position specific to your game, here is where to add it.
+  - hide lessonPositionExample:
+  - deuzi says: And as I said before, if you want to simply add another special position specific to your game, here is where you can add it.
+  - hide lessonConfigPosition:
   - deuzi says: Next option is 'transitions'.
+  - show lessonConfigTransition: AT 300,300
   - deuzi says: You already know a bit about transitions, it's the way to show or hide characters, backgrounds or cgs.
   - deuzi says: What you will be setting here, is what happens when you don't specify a transition in your show and hide actions.
   - deuzi says: So, in this case, we are using the same behaviour for all the elements, FADE.
   - deuzi says: That means that whenever I want to show or hide something using FADE, I will not need to write it.
   - deuzi says: It will be the default behaviour. You can change this to any of the available transitions.
-  - deuzi says: And the same goes for showing and hiding parts of the GUI. The choices, either visual or text, the message box and even the menus themselves.
+  - deuzi says: Of course, you can still use any transition during the game, you will only have to write it in the action with the WITH keyword.
+  - deuzi says: And the same goes for showing and hiding parts of the GUI. The choices, either visual or text and even the menus themselves.
+  - deuzi says: You can also configure how the character look will transitions during a say action.
   - deuzi says happy: You can play with these values and see how it looks!
+  - hide lessonConfigTransition:
   - deuzi says normal: Finally, there are some other options to check.
-  - deuzi says: The option 'fadetime' will means how much the FADE transitions will take, in miliseconds. You can modify this value if you want faster of slower FADE transitions.
+  - show lessonConfigTime: AT 300,300
+  - deuzi says: The option 'fadetime' means how much the FADE transitions will take, in miliseconds. 
+  - deuzi says: You can modify this value if you want faster of slower FADE and FUSION transitions.
   - deuzi says: The skip and auto times set the waiting time for each action in their respective modes.
   - deuzi says: For example, on auto play, when text is shown, with a 'text' or 'say' action, the game will wait for a moment before continuing.
-  - deuzi says: Skip mode is basically the same as auto play, but really really fast.
-  - deuzi says: And finally, logChoices lets you keep a track of the choices the player took.
-  - deuzi says: If they replay the game, the choices previously taken will be shown tinted in a different color, so as to let them explore all the game more easily.
+  - deuzi says: Skip mode is basically the same as auto play, but really really fast and skipping transitions.
+  - deuzi says: And logChoices lets you keep a track of the choices the player took.
+  - deuzi says: If they replay the game, the choices previously taken will be shown tinted in a different color.
   - deuzi says: Maybe you don't want this behaviour, and you can do that by setting logChoices to false.
   - deuzi says: And that's all there is to know about the story configuration file.
-  - hide lessonConfig:
+  - hide lessonConfigTime:
+  - show deuzi: AT CENTER WITH MOVE
   - deuzi says: Wow, that was longer than expected.
-  - deuzi says happy: But that completes the whole of this course.
+  - deuzi says happy: But that completes the course.
   - deuzi says: Now we need to hurry!
+  - hide ALL: WITH FADE
   - scene: graduation
   
 graduation:
   - show street_afternoon:
-  - show deuzi: AT 300,600 WITH FADE CONTINUE FLIP
+  - show deuzi: AT 300,600 WITH FADE CONTINUE
   - show liz: happy AT 500,600 WITH FADE CONTINUE
   - show jair: happy AT RIGHT WITH FADE CONTINUE
   - show marco: happy AT LEFT WITH FADE
   - deuzi says: So, this is the big day.
   - deuzi says: You can now go out in the world and write your own stories.
-  - show deuzi: happy
-  - deuzi says: I'm so proud of you!
+  - deuzi says happy: I'm so proud of you!
   - liz says: I'm looking forward to read all of your stories.
   - jair says: Let's keep in touch!
   - marco says: And don't be scared of making it complex!
@@ -956,7 +969,7 @@ varsScene:
     - text: The light is off.
   - deuzi says: Let's check your score.
   - deuzi says: "You have {score} points."
-  - if ({score > 10}):
+  - if ({score} > 10):
     - show deuzi: happy
     - deuzi says: You did great! Congratulations!
     - if ({name} == {favouriteStudent}):

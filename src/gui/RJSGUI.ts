@@ -33,7 +33,6 @@ export interface RJSGUIInterface {
 }
 
 export default class RJSGUI implements RJSGUIInterface {
-    sliderValueChanged = {}
     buttonsAction = {};
 
     config = {hud:null, menus: {main:null,settings:null,saveload:null}}
@@ -67,7 +66,6 @@ export default class RJSGUI implements RJSGUIInterface {
     constructor(gui, protected game: RJS) {
         this.initAssets(gui);
         this.initButtonsActions();
-        this.initSliderValueChanged();
     }
 
     // ----------------------------------------------------------------
@@ -249,7 +247,10 @@ export default class RJSGUI implements RJSGUIInterface {
             const newVal = (val/sprite.width)*(sprite.limits[1] - sprite.limits[0])+sprite.limits[0];
             sprite.mask.destroy();
             sprite.mask = createMask(sprite,newVal);
-            this.sliderValueChanged[sprite.binding](newVal);
+            this.game.userPreferences.setPreference(sprite.binding,newVal);
+            if (sprite.binding == "bgmv"){
+                this.game.managers.audio.changeVolume('bgm',newVal);
+            }
         });
     }
 
@@ -343,25 +344,6 @@ export default class RJSGUI implements RJSGUIInterface {
         }
     }
 
-    initSliderValueChanged (): void {
-        const game = this.game
-        this.sliderValueChanged = {
-            textSpeed (newVal) {
-                game.userPreferences.textSpeed = newVal;
-            },
-            autoSpeed (newVal){
-                game.userPreferences.autoSpeed = newVal;
-            },
-            bgmv (newVal){
-                game.userPreferences.bgmv = newVal;
-                game.managers.audio.changeVolume('bgm',newVal);
-            },
-            sfxv (newVal){
-                game.userPreferences.sfxv = newVal;
-            },
-        }
-    }
-
     initButtonsActions (): void {
         const game = this.game
         this.buttonsAction = {
@@ -446,8 +428,8 @@ export default class RJSGUI implements RJSGUIInterface {
         } else {
             this.nameBox.visible = false;
         }
-
-        if (this.game.control.skipping || this.game.userPreferences.textSpeed < 10){
+        let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
+        if (this.game.control.skipping || textSpeed < 10){
             this.messageBox.message.text = text;
             this.messageBox.visible = true;
             this.ctc.visible = true;
@@ -471,7 +453,7 @@ export default class RJSGUI implements RJSGUIInterface {
             if (count >= words.length){
                 completeText();
             }
-        }, this.game.userPreferences.textSpeed);
+        }, textSpeed);
         this.messageBox.visible = true;
         if (!this.game.control.auto){
             this.game.waitForClick(completeText);

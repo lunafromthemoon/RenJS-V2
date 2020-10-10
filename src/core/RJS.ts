@@ -61,11 +61,9 @@ export default class RJS extends Game {
 
     constructor(config: RJSGameConfig) {
         super()
-        // this.defaultValues = {...defaults}
-        this.userPreferences = new UserPreferences();
         this.control = new RJSControl();
         this.config = config;
-        // this.initModulesInOrder()
+        this.userPreferences = new UserPreferences(this);
     }
 
     launch (): void {
@@ -95,17 +93,9 @@ export default class RJS extends Game {
     unpause (force?): void{
         this.control.paused = false;
         this.gui.showHUD();
-        if (this.control.waitForClick){
-            // this.control.waitForClick = false;
-            // this.control.nextAction();
-        } else {
+        if (!this.control.waitForClick){
             this.resolveAction();
         }
-        // if (!this.control.resolve || force){
-        //     this.managers.story.interpret();
-        // } else if (force) {
-            
-        // }
     }
 
     setBlackOverlay (): void {
@@ -140,7 +130,6 @@ export default class RJS extends Game {
     }
 
     skip (): void {
-        // this.storyConfig.skiptime = 50;
         this.control.skipping = true;
         if (this.control.waitForClick){
             this.control.waitForClick = false;
@@ -149,7 +138,6 @@ export default class RJS extends Game {
     }
 
     auto (): void {
-        // this.defaultValues.skiptime = 1000;
         this.control.auto = true;
         if (this.control.waitForClick){
             this.control.waitForClick = false;
@@ -174,10 +162,7 @@ export default class RJS extends Game {
             // should include any interrupts showing
         }
         const dataSerialized = JSON.stringify(data);
-        // Save choices log
-        const log = JSON.stringify(this.managers.logic.choicesLog);
-
-        localStorage.setItem('RenJSChoiceLog' + this.config.name,log);
+        
         localStorage.setItem('RenJSDATA' + this.config.name + slot,dataSerialized);
 
 
@@ -224,7 +209,8 @@ export default class RJS extends Game {
         if (this.control.skipping || this.control.auto){
             let timeout = this.control.skipping ? this.storyConfig.skiptime : this.storyConfig.autotime;
             if (this.control.auto && this.userPreferences.autoSpeed){
-                timeout = this.userPreferences.autoSpeed;
+                // max autospeed == 300
+                timeout = 350 - this.userPreferences.autoSpeed;
             }
             setTimeout(this.control.nextAction.bind(this), timeout);
         } else {
@@ -283,12 +269,6 @@ export default class RJS extends Game {
     }
 
     resolveAction(): void {
-
-        // if (this.control.doBeforeResolve != null){
-        //     this.control.doBeforeResolve();
-        //     this.control.doBeforeResolve = null;
-        // }
-        // debugger;
         this.control.waitForClick = false;
         if (!this.control.paused){
             this.managers.story.interpret()

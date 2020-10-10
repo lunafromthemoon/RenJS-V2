@@ -72,6 +72,10 @@ cgs:
   lessonVarsString: assets/lessons/lessonvarsstring.png
   lessonIf: assets/lessons/lessonif.png
   lessonIfCont: assets/lessons/lessonifcont.png
+  lessonConfigPosition: assets/lessons/lessonconfigposition.png
+  lessonPositionExample: assets/lessons/lessonconfigposition2.png
+  lessonConfigTransition: assets/lessons/lessonconfigtransition.png
+  lessonConfigTime: assets/lessons/lessonconfigtimes.png
 music:
   rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
   morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3

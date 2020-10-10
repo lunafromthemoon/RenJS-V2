@@ -29,6 +29,7 @@ export default class AudioManager implements AudioManagerInterface {
 
     constructor(game: RJS) {
         this.game = game
+        this.changeVolume("bgm",game.userPreferences.bgmv)
     }
 
     play (key,type,looped,transition): void {
@@ -135,7 +136,7 @@ export default class AudioManager implements AudioManagerInterface {
                 this.musicList[this.current.bgs].stop();
             }
         }
-        this.game.userPreferences.muted = !this.game.userPreferences.muted;
+        this.game.userPreferences.setPreference('muted',!this.game.userPreferences.muted)
     }
 
     stopAll(): void {

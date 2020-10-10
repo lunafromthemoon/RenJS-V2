@@ -32,16 +32,16 @@ export default class CGSManager implements CGSManagerInterface {
     }
 
     async set(current): Promise<void> {
-        await this.hideAll('CUT');
+        await this.hideAll(Transition.CUT);
         this.current = current;
         for (const cg in this.current) {
             if (cg) {
-                this.show(cg, this.transition.CUT, this.current[cg])
+                this.show(cg, Transition.CUT, this.current[cg])
             }
         }
     }
 
-    async hideAll(transition = 'FADEOUT'): Promise<any> {
+    async hideAll(transition = Transition.FADEOUT): Promise<any> {
         const promises = []
         for (const cg in this.cgs) {
             promises.push(this.hide(cg,transition));

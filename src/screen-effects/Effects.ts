@@ -21,6 +21,7 @@ export default class Effects implements RJSScreenEffectInterface {
     }
 
     async ROLLINGCREDITS(params): Promise<void> {
+        this.game.control.unskippable = true;
         const bg = this.game.add.graphics(0, 0);
         this.audioManager.play('rollingCredits', 'bgm', true, 'FADE');
         bg.beginFill(0x000000, 1);
@@ -53,6 +54,7 @@ export default class Effects implements RJSScreenEffectInterface {
                             bg.destroy();
                             credits.destroy();
                             this.audioManager.stop('bgm','FADE');
+                            this.game.control.unskippable = false;
                             resolve();
                         }
                     })
