@@ -2,7 +2,6 @@ import { RJSSpriteManagerInterface } from './RJSManager';
 import { Group } from 'phaser-ce';
 import RJS from '../core/RJS';
 export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface {
-    backgroundSprites: T;
     backgrounds: object;
     current?: object;
     add(name: any, animated: any, framerate: any): void;
@@ -12,7 +11,6 @@ export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface
 }
 export default class BackgroundManager implements BackgroundManagerInterface<Group> {
     private game;
-    backgroundSprites: Group;
     private transition;
     backgrounds: {};
     current: any;

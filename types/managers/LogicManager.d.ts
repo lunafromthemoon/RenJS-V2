@@ -8,14 +8,15 @@ export interface LogicManagerInterface<T> extends RJSManagerInterface {
     visualChoices?: T;
 }
 export default class LogicManager implements LogicManagerInterface<Group> {
+    private game;
     choicesLog: object;
     vars: object;
     currentChoices: any[];
     visualChoices: Group;
-    private game;
     constructor(game: RJS);
     set(vars: any): void;
     setVar(name: any, value: any): void;
+    updateChoiceLog(execId: any, choiceText: any): void;
     evalExpression(expression: any): any;
     branch(expression: any, branches: any): void;
     parseVars(text: any, useQM?: any): string;

@@ -1,5 +1,4 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
-import { Group } from 'phaser-ce';
 import RJS from '../core/RJS';
 export default class Transition implements RJSScreenEffectInterface {
     static CUT: string;
@@ -17,7 +16,7 @@ export default class Transition implements RJSScreenEffectInterface {
     FADE(from: any, to: any, position?: any, scaleX?: any): Promise<any>;
     FADEOUT(from: any): Promise<void>;
     FADEIN(to: any, position?: any, scaleX?: any): Promise<void>;
-    FUSION(from: any, to: any, position?: any, scaleX?: any, group?: Group): Promise<void>;
+    FUSION(from: any, to: any, position?: any, scaleX?: any): Promise<void>;
     MOVE(from: any, to: any, position: any, scaleX?: any): Promise<void>;
     FADETOCOLOUR(from: any, to: any, colour: any, position?: any, scaleX?: any): Promise<void>;
     FADETOBLACK(from: any, to: any, position?: any): Promise<void>;

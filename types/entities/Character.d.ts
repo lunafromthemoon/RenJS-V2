@@ -12,7 +12,7 @@ export default class Character implements CharacterInterface {
     speechColour: any;
     looks: {};
     currentLook: any;
-    lastScale: 1;
+    lastScale: number;
     constructor(name: any, speechColour: any);
     addLook(look: Sprite): void;
 }

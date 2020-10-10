@@ -39,6 +39,12 @@ class Boot extends RJSState {
     create (): void {
         this.game.state.add('preload', Preload);
         this.game.state.start('preload');
+        this.input.onDown.addOnce(()=> {
+            if (this.sound.context.state === 'suspended') {
+                this.sound.context.resume();
+            }
+        });
+
     }
 }
 

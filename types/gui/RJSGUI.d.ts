@@ -28,7 +28,6 @@ export interface RJSGUIInterface {
 }
 export default class RJSGUI implements RJSGUIInterface {
     protected game: RJS;
-    sliderValueChanged: {};
     buttonsAction: {};
     config: {
         hud: any;
@@ -80,7 +79,6 @@ export default class RJSGUI implements RJSGUIInterface {
     showHUD(): void;
     hideHUD(): void;
     changeMenu(menu: any): Promise<void>;
-    initSliderValueChanged(): void;
     initButtonsActions(): void;
     clear(): void;
     hideText(): void;

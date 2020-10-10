@@ -8,6 +8,5 @@ export default class Effects implements RJSScreenEffectInterface {
     constructor(game: RJS);
     SHAKE(): Promise<void>;
     ROLLINGCREDITS(params: any): Promise<void>;
-    SHOWTITLE(param: any): Promise<void>;
     FLASHIMAGE(params: any): Promise<void>;
 }
