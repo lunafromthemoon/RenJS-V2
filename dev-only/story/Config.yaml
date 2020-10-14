@@ -37,3 +37,4 @@ autotime: 150
 logChoices: true
 # Default waiting time for timeouts if not specified
 timeout: 5000
+

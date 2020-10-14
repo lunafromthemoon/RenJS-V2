@@ -35,7 +35,7 @@ enterSchool:
   - deuzi says: RenJS is the library that will manage the flow, assets and interactivity of your game.
   - deuzi says: And finally, you will need your game script, in a way that the library can understand.
   - deuzi says: To make things easy, RenJS comes with a Quickstart.
-  - deuzi says: A Quickstar is a minimal game already set up for you to test and even use as a base for your games.
+  - deuzi says: A Quickstart is a minimal game already set up for you to test and even use as a base for your games.
   - deuzi says: You can find a link to download it in this same page.
   - deuzi says: The game files will include the RenJS library, and the story script, configuration and assets.
   - deuzi says: So, have you downloaded it yet?
@@ -61,8 +61,8 @@ enterSchool:
   - deuzi says: What does it mean? 
   - deuzi says: It means you need a local server to deliver your page, as if it was published in the internet.
   - deuzi says: This sounds complicated, but it can be done easily with the right tools.
-  - deuzi says: The easiest way is to use and IDE that lets you both edit your files, and publish them locally.
-  - deuzi says happy: The recommended editor I mentioned before, Brackets, let's you do just that. 
+  - deuzi says: The easiest way is to use an IDE that lets you both edit your files, and publish them locally.
+  - deuzi says happy: The recommended editor I mentioned before, Brackets, lets you do just that. 
   - deuzi says: So, your second challenge is now to run the Quickstart locally, either through Brackets or in any other way you find.
   - deuzi says: Did you manage to do it?
   - choice:
