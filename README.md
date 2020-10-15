@@ -9,6 +9,8 @@ npm i
 ## Run
 ### (only dev mode available)
 
+Edit dev-only/boot.js and set story and setup files correctly (e.g. to play tutorial, set TutorialStory.yaml and TutorialSetup.yaml).
+
 ```
 npm start
 ```
