@@ -53,6 +53,11 @@ characters:
 cgs:
   phone1: assets/objects/phone1.png
   phone2: assets/objects/phone2.png
+  horse:
+    spritesheet: assets/objects/horse.png 192 144
+    animations:
+      head: 1 4 20
+      run: 5 11 20
 music:
   rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
   morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3

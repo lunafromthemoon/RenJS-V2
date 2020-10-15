@@ -50,34 +50,59 @@ export default class CGSManager implements CGSManagerInterface {
     }
 
     show (name, transitionName, props): Promise<any> {
-        const position = props.position ? props.position : {x: this.game.world.centerX, y: this.game.world.centerY};
-        this.cgs[name] = this.storyManager.cgsSprites.create(position.x, position.y, name);
-        this.cgs[name].anchor.set(0.5);
-        this.cgs[name].alpha = 0;
+        console.log(props)
+        let position = props.position
+        let previousSprite = this.cgs[name];
+        if (!previousSprite){
+            if (!position){
+                position = {x: this.game.world.centerX, y: this.game.world.centerY}
+            }
+            this.cgs[name] = this.game.managers.story[props.layer].create(position.x, position.y, name);
+            this.cgs[name].anchor.set(0.5);
+            this.cgs[name].alpha = 0;
+            
+            if (this.game.setup.cgs[name].animations) {
+                for (const key in this.game.setup.cgs[name].animations) {
+                    const str = this.game.setup.cgs[name].animations[key].split(' ');
+                    // range of animation
+                    const frames = range(parseInt(str[0], 10), parseInt(str[1], 10))
+                    let frameRate = 24;
+                    if (str.length > 2) {
+                        frameRate = parseInt(str[2], 10)
+                    }
+                    this.cgs[name].animations.add(key, frames, frameRate)
+                }
+            }
+        } 
+
+        if (!position){
+            position = {x: this.cgs[name].x, y: this.cgs[name].y}
+        }
+
         if (props.zoom) {
             this.cgs[name].scale.set(props.zoom);
+        }
+        let flipped = false;
+        if (props.flipped !== undefined){
+            let currently_flipped = this.cgs[name].scale.x < 0;
+            if (props.flipped === 'flip'){
+                this.cgs[name].scale.x *= -1;
+                flipped = !currently_flipped
+            } else {
+                flipped = props.flipped;
+                if (flipped != currently_flipped){
+                    this.cgs[name].scale.x *= -1;
+                }
+            }
         }
         if (props.angle) {
             this.cgs[name].angle = props.angle;
         }
-        if (this.game.setup.cgs[name].animations) {
-            for (const key in this.game.setup.cgs[name].animations) {
-                const str = this.game.setup.cgs[name].animations[key].split(' ');
-                // range of animation
-                const frames = range(parseInt(str[0], 10), parseInt(str[1], 10))
-                let frameRate = 24;
-                if (str.length > 2) {
-                    frameRate = parseInt(str[2], 10)
-                }
-                this.cgs[name].animations.add(key, frames, frameRate)
-            }
-        }
-        this.current[name] = {name, position, zoom: props.zoom, angle: props.angle};
-        return this.transition.get(transitionName)(null, this.cgs[name], position);
+        this.current[name] = {name, position, zoom: props.zoom, angle: props.angle, layer:props.layer, flipped: flipped};
+        return this.transition.get(transitionName)(previousSprite, this.cgs[name], position);
     }
 
     async animate (name, toAnimate, time): Promise<void> {
-        // TODO: make truly async
         const tweenables: {
             alpha?: number;
             angle?: number;
@@ -106,32 +131,61 @@ export default class CGSManager implements CGSManagerInterface {
         }
         this.current[name] = {...this.current[name], ...toAnimate};
         return new Promise(resolve => {
+            // Cases for animation and when to resolve
+            // 1. Only tweenables: resolve with tween
+            // 2. Only spritesheet, not looped: resolve when animation stops
+            // 3. Only spritesheet, looped with timer: resolve when timer stops
+            // 4. Only spritesheet, looped with no timer: resolve immediately
+            // 5. Only spritesheet, STOP looped animation: resolve immediately
+            // 6. Spritesheet + tweenables: resolve with tween
+
             let resolveFunction = resolve
             if (toAnimate.spritesheet) {
-                if (toAnimate.spritesheet === 'stop') {
+                const stopAnimation = (): void => {
                     this.cgs[name].animations.stop();
+                    // this.cgs[name].frame = 0;
+                    resolve()
+                }
+                if (toAnimate.spritesheet === 'STOP') {
+                    // case 5, stop animation and resolve immediately
                     this.cgs[name].frame = 0;
-                    // TODO should it finish?
+                    stopAnimation()
                 } else {
                     const str = toAnimate.spritesheet.split(' ');
-                    // let added
                     const animName = str[0];
-                    // let added
-                    const looped = str.length > 1 && str[1] === 'looped';
-                    this.cgs[name].animations.play(animName, null, looped);
-                    resolveFunction = (): void => {
-                        this.cgs[name].animations.stop();
-                        this.cgs[name].frame = 0;
-                        resolve()
+                    const looped = str.includes('LOOPED');
+
+                    const animation = this.cgs[name].animations.getAnimation(animName);
+                    if (str.includes('BACKWARDS')){
+                        animation.reverseOnce()
+                    }
+                    animation.play(null, looped);
+                    if (Object.keys(tweenables).length == 0){
+                        // no tweenables, cases 2, 3 and 4
+                        if (!looped){
+                            // case 2, 
+                            if (this.game.control.skipping){
+                                // if skipping game stop immediately
+                                return stopAnimation()
+                            } else {
+                                return animation.onComplete.addOnce(stopAnimation.bind(this))
+                            }
+                        } else {
+                            if (!time){
+                                // case 4, resolve immediately, don't stop animation
+                                return resolve()
+                            } else {
+                                // case 3, stop animation and resolve after timeout
+                                return this.game.waitTimeout(time,stopAnimation.bind(this))
+                            }
+                        }
+                    } else {
+                        // case 6, will resolve after tween
+                        resolveFunction = stopAnimation.bind(this);
                     }
                 }
             }
-            if (!time) {
-                // stopping animation or looped animation
-                resolve()
-                return;
-            }
-
+            // case 1 or 6, will resolve after tween
             this.tweenManager.tween(this.cgs[name], tweenables, resolveFunction, time, true);
         })
         

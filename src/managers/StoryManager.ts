@@ -151,6 +151,16 @@ export default class StoryManager implements StoryManagerInterface<Group> {
                 action.transition = this.game.storyConfig.transitions.defaults[action.actorType];
             }
         }
+
+        if (action.actorType == "cgs"){
+            console.log(action.actorType)
+            const str = params ? params.split(' ') : [];
+            if (str.indexOf('BEHIND') !== -1){
+                action.layer = 'behindCharactersSprites';
+            } else {
+                action.layer = 'cgsSprites';
+            }
+        }
         if (params && actionParams.withPosition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
             if (str.indexOf('AT') !== -1){
