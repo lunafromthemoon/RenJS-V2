@@ -96,11 +96,11 @@ enterSchool:
   - deuzi says: There are a few other parameters there that you might want to modify if you really know what you're doing. But if you leave them as they are, it should be fine.
   - hide lessonRenJSConfig: 
   - deuzi says: Let's see the next directory. Plugins contains new scripts that you might want to use during your game. 
-  - deuzi says: For example, you can code your own special effects, mini games or whatever you want, and they can be added seamlessly to the game with plugings.
+  - deuzi says: For example, you can code your own special effects, mini games or whatever you want, and they can be added seamlessly to the game with plugins.
   - deuzi says: If you're making a simple game, you shouldn't worry about any of this though.
   - deuzi says: The files that concern you as a writer are inside the story and assets directory.
   - deuzi says: The assets directory contains the images and sounds that make up the game.
-  - deuzi says: Among this images you will find the backgrounds and characters of the story, but also the Graphical User Interface (GUI) assets.
+  - deuzi says: Among these images you will find the backgrounds and characters of the story, but also the Graphical User Interface (GUI) assets.
   - deuzi says: Going back to the main directories, the last one is called story.
   - deuzi says: If you take a look, you will find four files with the extension yaml.
   - deuzi says: These YAML files are what you will use to make your game.
@@ -156,8 +156,8 @@ storySetup:
   - jair says happy: You won't always know what things you need for a story.
   - jair says: So every time you add something, remember to also add it to the setup file.
   - jair says normal: As Deuzi already said, we'll be using the Quickstart as a base.
-  - jair says: But this game comes with the bare minimal.
-  - jair says: One background and one characters, Deuzilene herself.
+  - jair says: But this game comes with the bare minimum.
+  - jair says: One background and one character, Deuzilene herself.
   - jair says: That would make a poor example, so let's learn by doing.
   - jair says: And for that, we will need more assets. Luckily, we have something on hand for that.
   - jair says: You'll find a link below to download the Tutorial Assets Pack.

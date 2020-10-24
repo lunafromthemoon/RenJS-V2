@@ -1,0 +1,42 @@
+start:
+  - play morningBGM:
+  - show room: WITH FADE CONTINUE
+  - show deuzi: happy AT CENTER WITH FADE
+  - deuzi says: Hello, welcome to the Quickstart!
+  - wait: 300
+  - deuzi says normal: Are you ready to create great visual novels?
+  - choice:
+    - "Yes!":
+      - deuzi says happy: That's great! Go ahead!
+    - "Not yet!":
+      - deuzi says: Well, I'll be here when you're ready!
+  - deuzi says normal: If you're new, don't forget to play the tutorial game, where me and my friends will show you around the basic features of RenJS.
+  - deuzi says happy: And if you already have some exprience, you can go ahead and start writing!
+  - scene: endGame
+
+endGame:
+  - deuzi says normal: Quickstart over!
+  - effect ROLLINGCREDITS:
+    endGame: true
+    text:
+      - RenJS.V2 created by
+      - lunafromthemoon
+      - null
+      - In colaboration with
+      - RockTheFox
+      - null
+      - Inspired by Ren'Py
+      - Powered by PhaserJS
+      - null
+      - null
+      - Thanks for playing
+      - The Quickstart Game
+      - null
+      - background art and cgs by
+      - konett
+      - null
+      - characters by
+      - Shida
+      - null
+      - music by
+      - Evan Schaeffer
