@@ -420,6 +420,49 @@ export default class RJSGUI implements RJSGUIInterface {
         this.choices.removeAll();
     }
 
+    setTextStyles(text,text_obj): string {
+      text_obj.clearFontValues();
+      text_obj.clearColors()
+      let styles = []
+      while(true){
+        let re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
+        let match = text.match(re);
+        if (match){
+          let s = {
+            start: text.search(re),
+            style: match[1].includes("color") ? "color" : match[1],
+            end: -1,
+            color: null
+          }
+          if (s.style == "color"){
+            s.color = match[2];
+          }
+          text = text.replace(re,"")
+          let endIdx = text.indexOf("(end)");
+          if (endIdx!=-1){
+            text = text.replace("(end)","")
+            s.end = endIdx;
+            styles.push(s)
+          }
+        } else break;
+      }
+      styles.forEach(s=>{
+        if (s.style=="italic"){
+          text_obj.addFontStyle("italic", s.start);
+          text_obj.addFontStyle("normal", s.end);
+        }
+        if (s.style=="bold"){
+          text_obj.addFontWeight("bold", s.start);
+          text_obj.addFontWeight("normal", s.end);
+        }
+        if (s.style=="color"){
+          text_obj.addColor(s.color, s.start)
+          text_obj.addColor(text_obj.fill, s.end)
+        }
+      })
+      return text;
+    }
+
     showText(text, title, colour, callback) {
         if  (title && this.nameBox) {
             this.nameBox.text.text = title;
@@ -438,11 +481,12 @@ export default class RJSGUI implements RJSGUIInterface {
         }
         const textObj = this.messageBox.message;
         textObj.text = '';
-        const words = text.split('');
+        let finalText = this.setTextStyles(text,textObj)
+        const words = finalText.split('');
         let count = 0;
         const completeText = () => {
             clearTimeout(this.textLoop);
-            textObj.text = text;
+            textObj.text = finalText;
             this.game.gui.ctc.visible = true;
             callback();
         }

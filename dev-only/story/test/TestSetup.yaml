@@ -68,6 +68,7 @@ sfx:
   ringtoneSFX: assets/audio/nokia6210-24-elise.mp3
   ringtoneSFX2: assets/audio/alcatel-top_secret.mp3
   thunderSFX: assets/audio/thunder_strike_1.mp3
+  lashSFX: assets/audio/51755__erkanozan__whip-01.wav
 extra:
   image:
     title: assets/gui/titles.png

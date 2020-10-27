@@ -122,6 +122,9 @@ testtext:
   - show bus_station:
   - show deuzi: happy
   - deuzi says:  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  - text:  Text with styles
+  - text: This is (italic)italic(end), this is (bold)bold(end).
+  - text: Text can have (color:red)color(end) too. With hex (color:#f593e6)this is pink(end).
   - deuzi says normal: Praesent finibus nunc id mauris ullamcorper fermentum. Mauris faucibus eu sem in aliquet. 
   - show liz: AT OUTLEFT WITH CUT
     flipped: true

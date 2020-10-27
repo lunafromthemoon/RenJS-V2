@@ -152,8 +152,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             }
         }
 
-        if (action.actorType == "cgs"){
-            console.log(action.actorType)
+        if (mainAction == "show" && action.actorType == "cgs"){
             const str = params ? params.split(' ') : [];
             if (str.indexOf('BEHIND') !== -1){
                 action.layer = 'behindCharactersSprites';
