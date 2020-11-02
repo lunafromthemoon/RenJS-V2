@@ -1,0 +1,456 @@
+name: QuickstartES
+resolution:
+  - 800
+  - 600
+assetCounter: 57
+config:
+  loader:
+    background:
+      id: loaderbackground
+      assetType: images
+    loading-bar:
+      id: asset45
+      height: '82'
+      width: '578'
+      'y': '458'
+      x: '109'
+      assetType: spritesheets
+  main:
+    background:
+      id: loaderbackground
+      assetType: images
+    buttons:
+      - id: asset46
+        sfx: none
+        slot: '0'
+        binding: saveload
+        height: '82'
+        width: '216'
+        'y': 456
+        x: 63
+        assetType: spritesheets
+      - id: asset47
+        sfx: none
+        slot: '0'
+        binding: start
+        height: '82'
+        width: '180'
+        'y': 455
+        x: 322
+        assetType: spritesheets
+      - id: asset48
+        sfx: none
+        slot: '0'
+        binding: settings
+        height: '82'
+        width: '199'
+        'y': 455
+        x: 542
+        assetType: spritesheets
+    backgroundMusic: Evan_Schaeffer_-_01_-_Aqueduct
+    labels:
+      - x: 23
+        'y': 30
+        size: 43
+        text: ¡En Español!
+        font: fontsaudimat-mono
+        color: '#AC8484'
+  settings:
+    background:
+      id: asset16
+      assetType: images
+    labels:
+      - x: 221
+        'y': 40
+        size: 47
+        text: O.P.C.I.O.N.E.S
+        font: fontsaudimat-mono
+        color: '#B0B0B0'
+      - x: 43
+        'y': 179
+        size: 33
+        text: volumen música
+        font: fontsaudimat-mono
+        color: '#6D6C6C'
+      - x: 45
+        'y': 325
+        size: 33
+        text: volumen sfx
+        font: fontsaudimat-mono
+        color: '#6D6C6C'
+      - x: 429
+        'y': 328
+        size: '33'
+        text: velocidad auto
+        font: fontsaudimat-mono
+        color: '#6D6C6C'
+      - x: 427
+        'y': 180
+        size: '33'
+        text: velocidad texto
+        font: fontsaudimat-mono
+        color: '#6D6C6C'
+    buttons:
+      - id: asset51
+        sfx: none
+        slot: '0'
+        binding: return
+        height: '82'
+        width: '163'
+        'y': '506'
+        x: '616'
+        assetType: spritesheets
+    sliders:
+      - id: asset12
+        binding: bgmv
+        height: '53'
+        width: '256'
+        'y': 220
+        x: 74
+        assetType: spritesheets
+      - id: asset12
+        binding: sfxv
+        height: '53'
+        width: '256'
+        'y': 370
+        x: 74
+        assetType: spritesheets
+      - id: asset12
+        binding: textSpeed
+        height: '53'
+        width: '256'
+        'y': 220
+        x: 463
+        assetType: spritesheets
+      - id: asset12
+        binding: autoSpeed
+        height: '53'
+        width: '256'
+        'y': 370
+        x: 463
+        assetType: spritesheets
+  hud:
+    message-box:
+      id: asset19
+      text-width: '540'
+      offset-y: '16'
+      offset-x: '16'
+      align: left
+      color: '#89BAA8'
+      font: fontsaudimat-mono
+      size: '20'
+      sfx: none
+      'y': 449
+      x: 40
+      assetType: images
+    name-box:
+      id: asset20
+      offset-y: '0'
+      offset-x: '0'
+      align: left
+      color: '#FFFFFF'
+      font: fontsaudimat-mono
+      size: 26
+      'y': 400
+      x: 84
+      isTextCentered: true
+      assetType: images
+    ctc:
+      id: asset21
+      height: '20'
+      width: '19'
+      'y': 540
+      x: 577
+      assetType: spritesheets
+    images:
+      - id: asset22
+        'y': 468
+        x: 640
+        assetType: images
+    buttons:
+      - id: asset23
+        sfx: none
+        slot: '0'
+        binding: saveload
+        height: '39'
+        width: '41'
+        'y': 474
+        x: 688
+        assetType: spritesheets
+      - id: asset24
+        sfx: none
+        slot: '0'
+        binding: settings
+        height: '39'
+        width: '41'
+        'y': 474
+        x: 646
+        assetType: spritesheets
+      - id: asset25
+        sfx: none
+        slot: '0'
+        binding: skip
+        height: '39'
+        width: '41'
+        'y': 514
+        x: 688
+        assetType: spritesheets
+      - id: asset26
+        sfx: none
+        slot: '0'
+        binding: auto
+        height: '39'
+        width: '41'
+        'y': 514
+        x: 646
+        assetType: spritesheets
+    choice:
+      id: asset31
+      offset-y: '0'
+      offset-x: '0'
+      align: left
+      chosen-color: '#535050'
+      color: '#AAA2A2'
+      font: fontsaudimat-mono
+      size: 37
+      separation: '10'
+      height: '65'
+      width: '716'
+      sfx: none
+      isTextCentered: true
+      isBoxCentered: true
+      assetType: spritesheets
+      sample: 2
+    interrupt:
+      id: asset32
+      offset-y: '0'
+      offset-x: '0'
+      align: left
+      color: '#AAA2A2'
+      font: fontsaudimat-mono
+      size: 37
+      separation: ''
+      height: '65'
+      width: '716'
+      sfx: none
+      'y': 0
+      x: 0
+      isTextCentered: true
+      isBoxCentered: false
+      textStyleAsChoice: true
+      textPositionAsChoice: true
+      inlineWithChoice: true
+      assetType: spritesheets
+  saveload:
+    background:
+      id: asset16
+      assetType: images
+    labels:
+      - x: 180
+        'y': 39
+        size: 47
+        text: PARTIDAS GUARDADAS
+        font: fontsaudimat-mono
+        color: '#B0B0B0'
+    buttons:
+      - id: asset51
+        sfx: none
+        slot: '0'
+        binding: return
+        height: '82'
+        width: '163'
+        'y': '506'
+        x: '616'
+        assetType: spritesheets
+      - id: asset52
+        sfx: none
+        slot: '0'
+        binding: save
+        height: '52'
+        width: '145'
+        'y': 340
+        x: 99
+        assetType: spritesheets
+      - id: asset53
+        sfx: none
+        slot: '0'
+        binding: load
+        height: '52'
+        width: '145'
+        'y': 408
+        x: 99
+        assetType: spritesheets
+      - id: asset52
+        sfx: none
+        slot: '1'
+        binding: save
+        height: '52'
+        width: '145'
+        'y': '340'
+        x: 332
+        assetType: spritesheets
+      - id: asset52
+        sfx: none
+        slot: '2'
+        binding: save
+        height: '52'
+        width: '145'
+        'y': '340'
+        x: 561
+        assetType: spritesheets
+      - id: asset53
+        sfx: none
+        slot: '1'
+        binding: load
+        height: '52'
+        width: '145'
+        'y': '408'
+        x: 332
+        assetType: spritesheets
+      - id: asset53
+        sfx: none
+        slot: '2'
+        binding: load
+        height: '52'
+        width: '145'
+        'y': '408'
+        x: 561
+        assetType: spritesheets
+    save-slot:
+      id: asset18
+      slot: '0'
+      thumbnail-height: '100'
+      thumbnail-width: '120'
+      thumbnail-y: '0'
+      thumbnail-x: '0'
+      assetType: images
+    save-slots:
+      - id: asset18
+        slot: '0'
+        thumbnail-height: 110
+        thumbnail-width: 154
+        thumbnail-y: 22
+        thumbnail-x: 24
+        'y': 168
+        x: 71
+        assetType: images
+      - id: asset18
+        slot: '1'
+        thumbnail-height: 110
+        thumbnail-width: 154
+        thumbnail-y: 22
+        thumbnail-x: 24
+        'y': 168
+        x: 303
+        assetType: images
+      - id: asset18
+        slot: '2'
+        thumbnail-height: '110'
+        thumbnail-width: '154'
+        thumbnail-y: '22'
+        thumbnail-x: '24'
+        'y': 168
+        x: 531
+        assetType: images
+assets:
+  images:
+    loaderbackground:
+      name: loaderbackground
+      fileName: loaderloaderbackground.png
+    asset16:
+      name: asset16
+      fileName: saveloadasset16.png
+    asset18:
+      name: asset18
+      fileName: saveloadasset18.png
+    asset19:
+      name: asset19
+      fileName: hudasset19.png
+    asset20:
+      name: asset20
+      fileName: hudasset20.png
+    asset22:
+      name: asset22
+      fileName: hudasset22.png
+  spritesheets:
+    asset12:
+      name: asset12
+      fileName: settingsasset12.png
+      w: 256
+      h: 53
+    asset21:
+      name: asset21
+      fileName: hudasset21.png
+      w: 19
+      h: 20
+    asset23:
+      name: asset23
+      fileName: hudasset23.png
+      w: 41
+      h: 39
+    asset24:
+      name: asset24
+      fileName: hudasset24.png
+      w: 41
+      h: 39
+    asset25:
+      name: asset25
+      fileName: hudasset25.png
+      w: 41
+      h: 39
+    asset26:
+      name: asset26
+      fileName: hudasset26.png
+      w: 41
+      h: 39
+    asset31:
+      name: asset31
+      fileName: hudasset31.png
+      w: 716
+      h: 65
+    asset32:
+      name: asset32
+      fileName: hudasset32.png
+      w: 716
+      h: 65
+    asset46:
+      name: asset46
+      fileName: es/mainasset46.png
+      w: 216
+      h: 82
+    asset47:
+      name: asset47
+      fileName: es/mainasset47.png
+      w: 180
+      h: 82
+    asset48:
+      name: asset48
+      fileName: es/mainasset48.png
+      w: 199
+      h: 82
+    asset51:
+      name: asset51
+      fileName: es/saveloadasset51.png
+      w: 163
+      h: 82
+    asset52:
+      name: asset52
+      fileName: es/saveloadasset52.png
+      w: 145
+      h: 52
+    asset53:
+      name: asset53
+      fileName: es/saveloadasset53.png
+      w: 145
+      h: 52
+  fonts:
+    fontsaudimat-mono:
+      fileName: fontsfontsaudimat-mono.ttf
+      name: fontsaudimat-mono
+  audio:
+    Evan_Schaeffer_-_01_-_Aqueduct:
+      fileName: audioEvan_Schaeffer_-_01_-_Aqueduct.mp3
+      name: Evan_Schaeffer_-_01_-_Aqueduct
+      type: music
+madeWithRenJSBuilder: true
+assetsPath: assets/gui/

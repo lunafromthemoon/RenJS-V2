@@ -10,18 +10,6 @@ class Boot extends RJSState {
         super();
     }
 
-    init(): void {
-        if (this.game.config.i18n){
-            return;
-        }
-        if (!(this.game.config.scaleMode === Phaser.ScaleManager.EXACT_FIT)){
-            this.game.scale.pageAlignHorizontally = true;
-            this.game.scale.pageAlignVertically = true;
-        }
-        this.game.scale.scaleMode = Phaser.ScaleManager[this.game.config.scaleMode];
-        this.game.scale.refresh();
-    }
-
     preload(): void {
         this.game.load.image('splash',  preparePath(this.game.config.splash.loadingScreen, this.game));
         if (this.game.config.splash.loadingBar) {

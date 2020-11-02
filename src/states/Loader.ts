@@ -37,6 +37,13 @@ export default class Loader extends RJSState {
         this.game.managers.background = new BackgroundManager(this.game)
         this.game.managers.character = new CharacterManager(this.game)
         this.game.managers.cgs = new CGSManager(this.game)
+
+        if (!(this.game.config.scaleMode === Phaser.ScaleManager.EXACT_FIT)){
+            this.game.scale.pageAlignHorizontally = true;
+            this.game.scale.pageAlignVertically = true;
+        }
+        this.game.scale.scaleMode = Phaser.ScaleManager[this.game.config.scaleMode];
+        this.game.scale.refresh();
     }
 
     create(game: RJS) {
