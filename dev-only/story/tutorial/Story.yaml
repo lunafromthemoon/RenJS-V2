@@ -179,7 +179,7 @@ storySetup:
   - jair says: Each type of element is declared in their own special way. 
   - jair says: But the main thing here is to keep everything tidy.
   - jair says happy: I bet Deuzi already told you all about indentation.
-  - jair says normal: I like to tease her about this obsesion of hers...
+  - jair says normal: I like to tease her about this obsession of hers...
   - jair says angry: But she's right, it's really important.
   - jair says normal: To put this in practice, let's add a new background.
   - show jair: AT RIGHT WITH MOVE CONTINUE
@@ -239,7 +239,7 @@ storySetup:
   - jair says: Ok so, inside the characters tag, each character is declared after its own tag.
   - jair says: Same as the backgrounds, this tag will be used to refer to this character on the text of your story.
   - jair says: Every time you need to use Deuzilene, you will use her tag, deuzi.
-  - jair says: Characters also have a display name, that's the name that will apear on the name box when we talk.
+  - jair says: Characters also have a display name, that's the name that will appear on the name box when we talk.
   - jair says: The display name can have whitespaces, accents and whatever you want, go crazy.
   - jair says: If you omit it, the tag will be used as the name.
   - jair says: The speech colour is the colour to write the name in the name box.
@@ -257,7 +257,7 @@ storySetup:
   - jair says: That way you'll see the new character when you re run the game.
   - jair says: Did you manage to do it?
   - choice:
-    - Yes, easy peasy:
+    - Yes, easy-peasy:
       - jair says angry: I told you it was easy, why am I wasting my time here!
     - I think something went wrong:
       - jair says: If the game suddenly stops working after you make some changes, it's probably because you made a mistake.
@@ -267,7 +267,7 @@ storySetup:
       - jair says: And you can double check your work.
       - jair says: But do you want to know what's the most common problem?
       - jair says angry: I don't care if you don't wanna know, I'll tell you anyway.
-      - jair says normal: It's either indentation or typos. That's it. Check your whitespaces and your ortography, and stop crying.
+      - jair says normal: It's either indentation or typos. That's it. Check your whitespaces and your orthography, and stop crying.
       - jair says: I'll wait here until you manage to add a character.
       - choice:
         - I did it!:
@@ -291,7 +291,7 @@ storySetup:
   - jair says: I don't think so! They're too girly.
   - hide phone1: CONTINUE
   - hide phone2:
-  - jair says: The last esential part of the setup is audio.
+  - jair says: The last essential part of the setup is audio.
   - show setupaudio: AT 400,350
   - jair says: "You can see there are two tags here: music and sfx, which stands for sound effect."
   - jair says: As with the cgs, you only need tag and file. But the files here will be, obviously, audio files.
@@ -334,7 +334,7 @@ writingTheStory:
   - liz says: Each scene is a list of actions that will be executed from first to last.
   - liz says: Inside a scene you can show backgrounds, characters, make them talk, show choices, call other scenes, and much more.
   - liz says: The scenes are all contained in the file Story.yaml. But you can have as many story files as you want.
-  - liz says: Each scene has a tag name. This name can't have whitespaces, but appart from that it can be anything you want.
+  - liz says: Each scene has a tag name. This name can't have whitespaces, but apart from that it can be anything you want.
   - liz says: Another important thing is that you always need a scene called start.
   - liz says: That will be, of course, the starting scene.
   - liz says happy: Really easy, don't you think?
@@ -348,11 +348,11 @@ writingTheStory:
   - liz says: An action can omit the parameters part, in which case, you simple leave the right side of the action empty.
   - liz says happy: Still, the colon is important. This first action, 'play', is an example of that.
   - liz says normal: This action will play the music with tag 'morningBGM', no other information is needed.
-  - liz says: As you should have seen already with Jair, the file asociated with this tag has to be declared in the setup file.
+  - liz says: As you should have seen already with Jair, the file associated with this tag has to be declared in the setup file.
   - liz says: The next line is another action, notice the starting dash.
   - liz says: This one shows the background whose tag is 'room'. 
-  - liz says happy: You will see your room soon enought, don't worry!
-  - liz says normal: Showing the background takes some aditional parameters.
+  - liz says happy: You will see your room soon enough, don't worry!
+  - liz says normal: Showing the background takes some additional parameters.
   - liz says: The uppercase text WITH is a special word to indicate a transition.
   - liz says: And 'FADE' is the name of that transition.
   - liz says: A transition is the way in which we can show or hide images, like backgrounds, characters or cgs.
@@ -366,13 +366,19 @@ writingTheStory:
   - liz says: The next line is also a show action, but the tag belongs to a character.
   - liz says happy: Deuzilene, my best friend!
   - liz says normal: When showing a character, you might want to use a few extra parameters.
-  - liz says: The first aditional parameter is her look. She's happy to welcome you!
+  - liz says: The first additional parameter is her look. She's happy to welcome you!
   - liz says: If you omit the 'look' parameter, then the normal look for the character will be shown.
   - liz says: Also, notice another special word AT, used to designate the position.
   - liz says: The position can be 'LEFT', 'CENTER', 'RIGHT', or it can be a coordinate like '200,200'. You can also add your own special positions to the game.
   - liz says: The transition, as with the background, is FADE.
-  - liz says: Finally, the next line is Deuzi welcoming you. The extra parameter is the text that will be display in the message box.
-  - liz says: The wait action will do just that, wait for the specified amount of time, in miliseconds, and then continue the story.
+  - liz says: Finally, the next line is Deuzi welcoming you. The extra parameter is the text that will be displayed in the message box.
+  - liz says: If you played the Quickstart already, you can probably tell there's a difference between the text here and what you see in the game.
+  - liz says: The text in the script can have style tags surrounding words or phrases. The style will be applied, and the tags will not show.
+  - liz says: This allows you to change a bit how the text will be shown in the message box, in a very easy way.
+  - liz says: 'In the Quickstart example, the words "the Quickstart" have the style (bold)bold(end).'
+  - liz says: Other styles that you can use are (italic)italic(end) and (color:#f593e6)color(end)!
+  - liz says: Just with these three options, you can add a lot of personality to your dialogs and text.
+  - liz says: The wait action will do just that, wait for the specified amount of time, in milliseconds, and then continue the story.
   - liz says: The next line is another 'say' action, but it has an extra parameter in the left part.
   - liz says: When you're writing a visual novel, it's normal for the characters to show facial expressions.
   - liz says: And you'd want to use them often. You can change the expression, or look, with a show action.
@@ -508,7 +514,7 @@ storeAtNight:
   - effect SHAKE:
   - liz says: "'SHAKE', a screen shake!"
   - liz says: The thunder from before was also an effect, called FLASHIMAGE.
-  - liz says: "'FLASHIMAGE', will flash an image very quickly, acompanied by a sound effect and a screen shake too, if you want."
+  - liz says: "'FLASHIMAGE', will flash an image very quickly, accompanied by a sound effect and a screen shake too, if you want."
   - liz says: Another handy effect is ROLLINGCREDITS, that takes a list of text lines as parameter.
   - liz says: And shows them as rolling credits from a film.
   - liz says happyC: You will see them in action at the end of the game!
@@ -566,7 +572,7 @@ day2:
   - effect SHOWTITLE: 
     title: Lesson 4
     subtitle: Writing Part 2
-  - liz says: Today we're going to see a very important part of writting interactive fiction.
+  - liz says: Today we're going to see a very important part of writing interactive fiction.
   - liz says happy: Interactivity!
   - liz says normal: That is, how to let your players make choices that affect the story.
   - liz says: The most straightforward way of doing this is presenting a list of choices for the player to make.
@@ -581,7 +587,7 @@ day2:
   - show lessonChoice:
   - liz says: This part of the story is really recent.
   - liz says: I asked you something.
-  - liz says: And you could have choosen between two different options.
+  - liz says: And you could have chosen between two different options.
   - liz says: That is achieved with the action 'choice'.
   - liz says: This action then takes a list of choices, indented by two spaces, and starting each with a dash.
   - liz says: Your choices here were 'Yes, Deuzi asks a lot of questions' and 'I don't think so'.
@@ -635,7 +641,7 @@ day2:
   - marco says: Too late?
   - marco says worry: Is it the wrong day?
   - marco says: Again?
-  - liz says happy: It's ok, it't the right day and time... And place.
+  - liz says happy: It's ok, it's the right day and time... And place.
   - marco says happy: Great!
   - marco says normal: Ok, so you have to open the file...
   - liz says: Wait, wait, wait!
@@ -689,7 +695,7 @@ lessonStoryFlux:
   - marco says: Same with the variable 'extraPoints'.
   - marco says: The third line assigns again a value to the variable 'score'.
   - marco says: The old value is lost, and the new one will replace it.
-  - marco says: The new value is a summatory between the old value and 10.
+  - marco says: The new value is a summation between the old value and 10.
   - marco says: "First it evaluates the value of 'score' and then it resolves: 0 + 10 = 10"
   - marco says: In this way, we can make almost any arithmetical operation we want.
   - marco says: "The marks allowed in this operations are:"
@@ -711,7 +717,7 @@ lessonStoryFlux:
   - marco says: As with numeric variables, we can also assign an operations to the variables.
   - marco says: The operations in this case are logical, and they have their own symbols to use.
   - marco says: "The usual ones are:"
-  - marco says: "'!', wich means 'not'. On the second line we assign the variable 'lightOff' with 'not lightOn'."
+  - marco says: "'!', which means 'not'. On the second line we assign the variable 'lightOff' with 'not lightOn'."
   - marco says: " '&&' means 'and'. The variable 'allLightsOn' will be true only if both variables 'lightOn and lampOn' are true."
   - marco says: " '||' means 'or'. The variable 'canRead' will be true if any of the variables 'lightOn or lampOn' are true."
   - marco says: With just these symbols, including parentheses too, you can create really complex operations.
@@ -744,7 +750,7 @@ lessonStoryFlux:
   - marco says normal: For this we're going to use a new action, 'if'.
   - marco says: This action allows you to execute orders only if a condition is met.
   - show lessonIf:
-  - marco says: As you can see, after the 'if', the condition is bewtween parentheses.
+  - marco says: As you can see, after the 'if', the condition is between parentheses.
   - marco says: A condition is nothing more than a boolean value. Anything that evaluates to true or false.
   - marco says: So if you have a boolean variable like 'lightOn', we can use it as a condition.
   - marco says: If that condition is true, the actions indented inside the if are executed. Just like with choices.
@@ -862,7 +868,7 @@ lastClass:
   - hide lessonConfigTransition:
   - deuzi says normal: Finally, there are some other options to check.
   - show lessonConfigTime: AT 300,300
-  - deuzi says: The option 'fadetime' means how much the FADE transitions will take, in miliseconds. 
+  - deuzi says: The option 'fadetime' means how much the FADE transitions will take, in milliseconds. 
   - deuzi says: You can modify this value if you want faster of slower FADE and FUSION transitions.
   - deuzi says: The skip and auto times set the waiting time for each action in their respective modes.
   - deuzi says: For example, on auto play, when text is shown, with a 'text' or 'say' action, the game will wait for a moment before continuing.
@@ -898,7 +904,7 @@ graduation:
       - RenJS.V2 created by
       - lunafromthemoon
       - null
-      - In colaboration with
+      - In collaboration with
       - RockTheFox
       - null
       - Inspired by Ren'Py
@@ -910,9 +916,6 @@ graduation:
       - null
       - written by
       - lunafromthemoon
-      - null
-      - proofreading by
-      - rumpelcita
       - null
       - background art and cgs by
       - konett
@@ -946,8 +949,8 @@ varsScene:
   - var score: 0
   - var extraPoints: 3
   - var score: "{score} + 10"
-  - var bonification: "{extraPoints} - 1"
-  - var totalScore: "({score} + {extraPoints}) * {bonification}"
+  - var bonus: "{extraPoints} - 1"
+  - var totalScore: "({score} + {extraPoints}) * {bonus}"
   # boolean variables
   - var lightOn: true
   - var lightOff: "!{lightOn}"
