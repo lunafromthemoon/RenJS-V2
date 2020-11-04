@@ -464,13 +464,11 @@ export default class RJSGUI implements RJSGUIInterface {
     }
 
     showText(text, title, colour, callback) {
-        if  (title && this.nameBox) {
+        if  (this.nameBox) {
             this.nameBox.text.text = title;
             this.nameBox.text.fill = colour;
-            this.nameBox.visible = true;
-        } else {
-            this.nameBox.visible = false;
-        }
+            this.nameBox.visible = title!=undefined;
+        } 
         let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
         if (this.game.control.skipping || textSpeed < 10){
             this.messageBox.message.text = text;

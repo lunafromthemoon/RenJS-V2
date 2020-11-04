@@ -14,6 +14,7 @@ export interface StoryManagerInterface<T> extends RJSManagerInterface {
     startScene(name: string);
     currentScene: any[];
     actorsIndex: object;
+    interpreting: boolean;
 }
 
 
@@ -24,6 +25,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     actorsIndex = {}
     currentScene: any[];
     backgroundSprites: Group
+    interpreting: boolean;
 
     private game: RJS
 
@@ -60,10 +62,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
 
     interpret(): void {
         if (this.game.managers.story.currentScene.length === 0 || this.game.control.paused){
-            // console.log("Resolving something here");
+           this.interpreting = false;
            return
         } else {
             const currentAction = this.game.managers.story.currentScene.shift();
+            this.interpreting = true;
             // does extra stuff on every step
             // like updating the execution stack
             // or counting the interruption steps

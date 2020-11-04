@@ -60,7 +60,7 @@ export default class RJS extends Game {
     }
 
     constructor(config: RJSGameConfig) {
-        super()
+        super(config.w,config.h,config.renderer)
         this.control = new RJSControl();
         this.config = config;
         this.userPreferences = new UserPreferences(this);

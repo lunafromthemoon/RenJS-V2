@@ -85,6 +85,7 @@ export default class RJSGUI implements RJSGUIInterface {
     hideChoice(choiceId: any): void;
     changeToLastInterrupt(choiceId: any): void;
     hideChoices(): void;
+    setTextStyles(text: any, text_obj: any): string;
     showText(text: any, title: any, colour: any, callback: any): void;
     showChoices(choices: any, execId: any): void;
     createChoiceBox(choice: any, pos: any, index: any, choiceConfig: any, execId: any): ChoiceButton;

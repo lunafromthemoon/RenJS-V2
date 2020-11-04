@@ -2,3 +2,6 @@ public
 .idea
 node_modules
 dist
+dev-only/assetsImg
+dev-only/story/img
+dev-only/img.html
