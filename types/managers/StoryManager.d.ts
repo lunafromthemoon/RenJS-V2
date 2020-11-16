@@ -11,6 +11,7 @@ export interface StoryManagerInterface<T> extends RJSManagerInterface {
     startScene(name: string): any;
     currentScene: any[];
     actorsIndex: object;
+    interpreting: boolean;
 }
 export default class StoryManager implements StoryManagerInterface<Group> {
     behindCharactersSprites: Group;
@@ -19,6 +20,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     actorsIndex: {};
     currentScene: any[];
     backgroundSprites: Group;
+    interpreting: boolean;
     private game;
     constructor(game: RJS);
     setupStory(): void;

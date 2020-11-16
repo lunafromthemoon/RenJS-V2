@@ -36,8 +36,8 @@ export default class Transition implements RJSScreenEffectInterface {
             from.alpha = 0;
         }
         if (to) {
-            to.alpha = 1;
             setNewProperties(to, position, scaleX);
+            to.alpha = 1;
         }
     }
 

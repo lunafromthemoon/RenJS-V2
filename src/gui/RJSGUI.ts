@@ -465,7 +465,7 @@ export default class RJSGUI implements RJSGUIInterface {
 
     showText(text, title, colour, callback) {
         if  (this.nameBox) {
-            this.nameBox.text.text = title;
+            this.nameBox.text.text = title!=undefined ? title : "";
             this.nameBox.text.fill = colour;
             this.nameBox.visible = title!=undefined;
         } 

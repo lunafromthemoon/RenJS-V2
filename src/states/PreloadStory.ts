@@ -12,7 +12,9 @@ class PreloadStory extends RJSState {
     }
 
     init(): void {
-        this.splash = initSplash(this.game)
+        if (this.game.config.splash.loadingScreen){
+            this.splash = initSplash(this.game)
+        }
         if (this.game.config.splash.loadingBar) {
             this.loadingBar = initLoadingBar(this.game)
         }
@@ -96,7 +98,7 @@ class PreloadStory extends RJSState {
     }
 
     create(): void {
-        this.splash.destroy()
+        if (this.splash) this.splash.destroy()
         // bg should be destroyed automatically, but destroy override is not working
         if (this.loadingBar.background){
             this.loadingBar.background.destroy();
@@ -106,27 +108,16 @@ class PreloadStory extends RJSState {
         this.game.managers.story.setupStory();
         this.game.gui.init();
         this.game.initInput();
+        // preload the fonts by adding text, else they wont be fully loaded :\
+        for (const font of this.game.gui.fonts){
+            this.game.add.text(20, -100, font, {font: '42px ' + font});
+        }
+        
         this.game.managers.audio.init(() => {
             this.game.gui.showMenu('main');
         });
-
-        // this.game.state.add('init', init);
-        // this.game.state.start('init');
+        
     }
 }
-//
-// const init = {
-//     create(): void {
-//
-//     },
-//
-//     render (): void {
-//         // if (RenJS.gui && RenJS.gui.hud && RenJS.gui.hud.area){
-//         //     _.each(RenJS.gui.hud.area,function(area){
-//         //         game.debug.rectangle(area);
-//         //     });
-//         // }
-//     }
-// }
 
 export default PreloadStory

@@ -11,7 +11,9 @@ class Boot extends RJSState {
     }
 
     preload(): void {
-        this.game.load.image('splash',  preparePath(this.game.config.splash.loadingScreen, this.game));
+        if (this.game.config.splash.loadingScreen){
+            this.game.load.image('splash',  preparePath(this.game.config.splash.loadingScreen, this.game));
+        }
         if (this.game.config.splash.loadingBar) {
             if (this.game.config.splash.loadingBar.fullBar){
                 this.game.load.image('loading',  preparePath(this.game.config.splash.loadingBar.fullBar, this.game));
