@@ -87,7 +87,7 @@ export default class RJS extends Game {
 
     takeXShot (): void {
         if (!this.xShots) this.xShots = [];
-        this.xShots.push(this.canvas.toDataURL());
+        this.xShots.push(this.canvas.toDataURL("image/jpeg"));
     }
 
     unpause (force?): void{

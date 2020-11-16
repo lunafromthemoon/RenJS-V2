@@ -59,9 +59,9 @@ class Preload extends RJSState {
         }
 
         // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of game.gui.fonts){
-            game.add.text(20, -100, font, {font: '42px ' + font});
-        }
+        // for (const font of game.gui.fonts){
+        //     game.add.text(20, -100, font, {font: '42px ' + font});
+        // }
         // start preloading story
         game.state.add('preloadStory', PreloadStory);
         game.state.start('preloadStory');
