@@ -21,9 +21,13 @@ export default class Effects implements RJSScreenEffectInterface {
     }
 
     async ROLLINGCREDITS(params): Promise<void> {
+        // params: text (list of strings), music (music id), timePerLine (int), endGame (boolean)
         this.game.control.unskippable = true;
         const bg = this.game.add.graphics(0, 0);
-        this.audioManager.play('rollingCredits', 'bgm', true, 'FADE');
+        if (params.music){
+            this.audioManager.play(params.music, 'bgm', true, 'FADE');
+        }
+        
         bg.beginFill(0x000000, 1);
         bg.drawRect(0, 0, this.game.config.w, this.game.config.h);
         bg.endFill();
@@ -41,9 +45,10 @@ export default class Effects implements RJSScreenEffectInterface {
                 credits.addChild(nextLine);
             }
         }
+        const timePerLine = params.time ? params.timePerLine : 700;
         const tweenChain: any = [
             {sprite: bg, tweenables: {alpha: 1}, time: this.game.storyConfig.fadetime},
-            {sprite: credits, tweenables: {y: -(separation * params.text.length + 30)}, time: 700 * params.text.length},
+            {sprite: credits, tweenables: {y: -(separation * params.text.length + 30)}, time: timePerLine * params.text.length},
 
         ];
         return new Promise(resolve => {

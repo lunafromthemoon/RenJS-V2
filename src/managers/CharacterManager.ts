@@ -65,7 +65,7 @@ export default class CharacterManager implements CharacterManagerInterface {
         ch.currentLook = props.look ? ch.looks[props.look] : ch.looks.normal;
 
         if (!props.position){
-            props.position = (oldLook !== null) ? {x:oldLook.x,y:oldLook.y} : this.game.storyConfig.positions.CENTER;
+            props.position = (oldLook !== null) ? {x:oldLook.x,y:oldLook.y} : this.game.storyConfig.positions.DEFAULT;
         }
         if (props.flipped !== undefined){
             if (props.flipped === 'flip'){

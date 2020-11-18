@@ -40,8 +40,8 @@ class Preload extends RJSState {
     create (game: RJS): void {
         // load the setup
         game.setup = jsyaml.load(game.cache.getText('storySetup'));
+        if (!game.setup) game.setup = {};
         game.storyConfig = jsyaml.load(game.cache.getText('storyConfig'));
-
         // load the story text
         const story = {};
         game.config.storyText.forEach((file,index) => {

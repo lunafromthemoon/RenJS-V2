@@ -24,6 +24,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     add(name, animated?, framerate?): void {
         this.backgrounds[name] = this.game.managers.story.backgroundSprites.create(this.game.world.centerX, this.game.world.centerY, name);
         this.backgrounds[name].alpha = 0;
+        this.backgrounds[name].visible = false;
         this.backgrounds[name].name = name;
         this.backgrounds[name].anchor.set(0.5);
         
@@ -39,6 +40,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         }
         this.current = this.backgrounds[name];
         this.current.alpha = 1;
+        this.backgrounds[name].visible = true;
         if (this.current.animated){
             this.current.animations.play('run', null, true);
         }
@@ -47,10 +49,17 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     async show (name, transitionName): Promise<any> {
         const oldBg = this.current;
         this.current = name ? this.backgrounds[name] : null;
-        if (this.current && this.current.animated){
-            this.current.animations.play('run', null, true);
+        if (this.current){
+            this.current.visible=true;
+            if (this.current.animated){
+                this.current.animations.play('run', null, true);
+            }
         }
-        return this.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1);
+        let transitioning: Promise<any> = this.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1);
+        transitioning.then(()=>{
+            if (oldBg) oldBg.visible=false;
+        })
+        return transitioning;
     }
 
     async hide (bg?, transitionName = 'FADEOUT'): Promise<any> {
