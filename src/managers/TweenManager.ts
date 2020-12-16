@@ -73,7 +73,7 @@ export default class TweenManager implements TweenManagerInterface {
     }
 
     canSkip(): boolean {
-        return (!this.game.control.auto && !this.game.control.unskippable);
+        return this.game.storyConfig.transitions.skippable && !this.game.control.unskippable;
     }
 
     skip(): void {

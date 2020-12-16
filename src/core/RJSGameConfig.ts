@@ -61,5 +61,6 @@ export interface StoryConfig extends IGameConfig {
         visualChoices: string;
         textChoices: string;
         menus: string;
+        skippable: boolean;
     };
 }

@@ -19,7 +19,6 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     constructor(private game: RJS) {
         const log = localStorage.getItem('RenJSChoiceLog'+game.config.name);
-        console.log(this.game.setup)
         if (this.game.setup.vars){
             this.vars = this.game.setup.vars
         }
@@ -47,10 +46,14 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     updateChoiceLog(execId,choiceText){
-        this.choicesLog[execId].push(choiceText);
-        // Save choices log
-        const log = JSON.stringify(this.choicesLog);
-        localStorage.setItem('RenJSChoiceLog' + this.game.config.name,log);
+        if (!this.choicesLog[execId].includes(choiceText)){
+
+            this.choicesLog[execId].push(choiceText);
+            // Save choices log
+            const log = JSON.stringify(this.choicesLog);
+            localStorage.setItem('RenJSChoiceLog' + this.game.config.name,log);
+        }
+        
     }
 
     evalExpression(expression): any {

@@ -42,7 +42,6 @@ export default class CGSManager implements CGSManagerInterface {
     }
 
     show (name, transitionName, props): Promise<any> {
-        console.log(props)
         let position = props.position
         let previousSprite = this.cgs[name];
         if (!previousSprite){

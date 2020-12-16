@@ -26,6 +26,8 @@ transitions:
   visualChoices: FADE
   textChoices: CUT
   menus: FADE
+  # transitions can be skipped by the player by tapping
+  skippable: false
 
 # Fade transition time, in miliseconds
 fadetime : 750
