@@ -2,27 +2,22 @@ import {initLoadingBar, initSplash, preparePath} from './utils';
 import RJSState from './RJSState';
 import {GUIAssets} from '../gui/Assets';
 import RJSSprite from '../components/RJSSprite';
+import RJSLoadingScreen from '../components/RJSLoadingScreen';
 
 class PreloadStory extends RJSState {
-    splash: Phaser.Sprite
-    loadingBar: RJSSprite
+    loadingScreen:RJSLoadingScreen
 
     constructor() {
         super();
     }
 
     init(): void {
-        if (this.game.config.splash.loadingScreen){
-            this.splash = initSplash(this.game)
-        }
-        if (this.game.config.splash.loadingBar) {
-            this.loadingBar = initLoadingBar(this.game)
-        }
+        this.loadingScreen = new RJSLoadingScreen(this.game);
     }
 
     preload(): void {
-        this.game.load.setPreloadSprite(this.loadingBar);
-        // preload gui
+        this.loadingScreen.setLoadingBar(this.game);
+        // preload gui assets
         for (const asset of this.game.gui.assets) {
             if (asset.type === 'spritesheet') {
                 this.game.load.spritesheet(asset.key, preparePath(asset.file, this.game), asset.w, asset.h);
@@ -30,7 +25,6 @@ class PreloadStory extends RJSState {
                 this.game.load[asset.type](asset.key, preparePath(asset.file, this.game));
             }
         }
-
         // preload backgrounds
         if ('backgrounds' in this.game.setup) {
             for (const background of Object.keys(this.game.setup.backgrounds)) {
@@ -98,22 +92,13 @@ class PreloadStory extends RJSState {
     }
 
     create(): void {
-        if (this.splash) this.splash.destroy()
-        // bg should be destroyed automatically, but destroy override is not working
-        if (this.loadingBar.background){
-            this.loadingBar.background.destroy();
-        }
-        this.loadingBar.destroy();
-        // init game and start main menu
-        this.game.managers.story.setupStory();
-        this.game.gui.init();
-        this.game.initInput();
-        // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of this.game.gui.fonts){
-            this.game.add.text(20, -100, font, {font: '42px ' + font});
-        }
-        
+        // game finished loading, now has to build game
+        // we add a tween to the loading bar to make it a bit less static
+        this.loadingScreen.waitingScreen();
+        this.game.initStory();
+
         this.game.managers.audio.init(() => {
+            this.loadingScreen.destroy();
             this.game.gui.showMenu('main');
         });
         

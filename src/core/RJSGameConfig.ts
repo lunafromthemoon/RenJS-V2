@@ -22,6 +22,7 @@ export interface RJSGameConfig extends IGameConfig {
                 x: number;
                 y: number;
             };
+            direction: number;
             size: {
                 w: number;
                 h: number;

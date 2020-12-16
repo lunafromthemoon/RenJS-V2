@@ -63,8 +63,8 @@ export default class RJSGUI implements RJSGUIInterface {
     currentMenu = null
     previousMenu = null
 
-    constructor(gui, protected game: RJS) {
-        this.initAssets(gui);
+    constructor(protected game: RJS) {
+        this.initAssets(game.guiSetup);
         this.initButtonsActions();
     }
 
@@ -360,7 +360,7 @@ export default class RJSGUI implements RJSGUIInterface {
 
             auto: game.auto.bind(game),
             skip: game.skip.bind(game),
-            mute: game.managers.audio.mute.bind(game.managers.audio),
+            mute: game.mute.bind(game),
             save (component) {
                 game.save(parseInt(component.slot, 10));
             },

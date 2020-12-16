@@ -27,10 +27,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     backgroundSprites: Group
     interpreting: boolean;
 
-    private game: RJS
-
-    constructor(game: RJS) {
-        this.game = game
+    constructor(private game: RJS) {
     }
 
     setupStory(): void {

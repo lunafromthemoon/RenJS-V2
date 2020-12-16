@@ -7,18 +7,16 @@ export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface
     backgrounds: object;
     current?: object;
     add(name, animated, framerate): void;
-    show (name, transition): any;
-    hide (bg,transition): any;
+    show (name, transitionName): any;
+    hide (bg,transitionName): any;
     isBackground (actor): boolean;
 }
 
 export default class BackgroundManager implements BackgroundManagerInterface<Group> {
-    private transition: Transition
     backgrounds = {};
     current = null;
 
     constructor(private game: RJS) {
-        this.transition = game.screenEffects.transition
     }
 
     add(name, animated?, framerate?): void {
@@ -55,7 +53,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
                 this.current.animations.play('run', null, true);
             }
         }
-        let transitioning: Promise<any> = this.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1);
+        let transitioning: Promise<any> = this.game.screenEffects.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1);
         transitioning.then(()=>{
             if (oldBg) oldBg.visible=false;
         })

@@ -20,13 +20,9 @@ export default class CharacterManager implements CharacterManagerInterface {
 
     characters = {};
     showing = {};
-    private transition: Transition
-    private game: RJS
+    transition: Transition
 
-    constructor(game: RJS) {
-        this.transition = game.screenEffects.transition
-        this.game = game
-    }
+    constructor(private game: RJS) {}
 
     add (name, displayName, speechColour, looks): void {
         this.characters[name] = new Character(displayName,speechColour);

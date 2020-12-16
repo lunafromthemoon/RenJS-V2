@@ -19,17 +19,9 @@ export default class CGSManager implements CGSManagerInterface {
 
     cgs: object = {};
     current: object = {};
-    private transition: Transition
-    private game: RJS
-    private storyManager: StoryManagerInterface<Group>
-    private tweenManager: TweenManagerInterface
+    transition: Transition
 
-    constructor(game: RJS) {
-        this.game = game
-        this.transition = game.screenEffects.transition
-        this.storyManager = game.managers.story
-        this.tweenManager = game.managers.tween
-    }
+    constructor(private game: RJS) {}
 
     async set(current): Promise<void> {
         await this.hideAll(Transition.CUT);
@@ -186,7 +178,7 @@ export default class CGSManager implements CGSManagerInterface {
                 }
             }
             // case 1 or 6, will resolve after tween
-            this.tweenManager.tween(this.cgs[name], tweenables, resolveFunction, time, true);
+            this.game.managers.tween.tween(this.cgs[name], tweenables, resolveFunction, time, true);
         })
         
     }

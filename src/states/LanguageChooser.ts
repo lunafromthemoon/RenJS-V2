@@ -2,6 +2,10 @@ import RJSState from './RJSState';
 
 export default class LanguageChooser extends RJSState {
 
+    init(): void {
+        this.game.setupScreen();
+    }
+
     constructor() {
         super();
     }

@@ -19,6 +19,10 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     constructor(private game: RJS) {
         const log = localStorage.getItem('RenJSChoiceLog'+game.config.name);
+        console.log(this.game.setup)
+        if (this.game.setup.vars){
+            this.vars = this.game.setup.vars
+        }
         this.choicesLog = log ? JSON.parse(log) : {};
     }
 

@@ -19,7 +19,6 @@ import {RJSGameConfig,StoryConfig} from './RJSGameConfig';
 import UserPreferences from './UserPreferences';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
-import Loader from '../states/Loader';
 export default class RJS extends Game {
 
     gameStarted = false
@@ -28,6 +27,7 @@ export default class RJS extends Game {
     blackOverlay: Graphics
     setup: any
     story: object
+    guiSetup: any
     gui: RJSGUI
 
     pluginsRJS: any = {}
@@ -64,15 +64,59 @@ export default class RJS extends Game {
         this.control = new RJSControl();
         this.config = config;
         this.userPreferences = new UserPreferences(this);
+        
     }
 
     launch (): void {
         this.preserveDrawingBuffer = true;
-        this.state.add('loader', Loader)
-        this.state.start('loader')
+
+        // this.state.add('loader', Loader)
+        // this.state.start('loader')
         this.state.add('bootstrap', Boot)
         if (this.config.i18n){
             this.state.add('chooseLang', LanguageChooser);
+            this.state.start('chooseLang')
+        } else {
+            this.state.start('bootstrap')
+        }
+    }
+
+    setupScreen(): void {
+        if (!(this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT)){
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
+        }
+        this.scale.scaleMode = Phaser.ScaleManager[this.config.scaleMode];
+        this.scale.refresh();
+    }
+
+    initStory (): void {
+        this.managers = {
+            tween: new TweenManager(this),
+            story: new StoryManager(this),
+            audio: new AudioManager(this),
+            logic: new LogicManager(this),
+            text: new TextManager(this),
+            background: new BackgroundManager(this),
+            character: new CharacterManager(this), // need transition
+            cgs: new CGSManager(this) // need transition
+        }
+
+        this.screenEffects = {
+            ambient: new Ambient(this), // need audio
+            effects: new Effects(this), // need audio et tween
+            transition: new Transition(this) // need tween
+        }
+        this.managers.character.transition = this.screenEffects.transition;
+        this.managers.cgs.transition = this.screenEffects.transition;
+
+        // init game and start main menu
+        this.managers.story.setupStory()
+        this.gui.init();
+        this.initInput();
+        // preload the fonts by adding text, else they wont be fully loaded :\
+        for (const font of this.gui.fonts){
+            this.add.text(20, -100, font, {font: '42px ' + font});
         }
     }
 
@@ -143,6 +187,10 @@ export default class RJS extends Game {
             this.control.waitForClick = false;
             this.control.nextAction();
         }
+    }
+
+    mute(): void {
+        this.managers.audio.mute();
     }
 
     save (slot?): void {
@@ -259,6 +307,7 @@ export default class RJS extends Game {
     initInput(): void {
         // adds the control input
         this.input.onTap.add(this.onTap, this);
+        // add keyboard binding
     }
 
     lockClick(): void {
