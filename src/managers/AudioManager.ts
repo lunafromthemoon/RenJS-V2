@@ -78,6 +78,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     set (current): void {
+        this.current = current;
         if (current.bgm){
             this.play(current.bgm,'bgm',true,'FADE');
         }

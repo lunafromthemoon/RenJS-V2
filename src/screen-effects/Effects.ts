@@ -52,20 +52,20 @@ export default class Effects implements RJSScreenEffectInterface {
 
         ];
         return new Promise(resolve => {
-            if (!params.endGame) {
-                tweenChain.push(
-                    {
-                        sprite: bg, tweenables: {alpha: 0}, time: this.game.storyConfig.fadetime, callback: () => {
-                            bg.destroy();
-                            credits.destroy();
-                            this.audioManager.stop('bgm','FADE');
-                            this.game.control.unskippable = false;
+            tweenChain.push(
+                {
+                    sprite: bg, tweenables: {alpha: 0}, time: this.game.storyConfig.fadetime, callback: () => {
+                        bg.destroy();
+                        credits.destroy();
+                        this.audioManager.stop('bgm','FADE');
+                        this.game.control.unskippable = false;
+                        if (!params.endGame) {
                             resolve();
+                        } else {
+                            this.game.endGame();
                         }
-                    })
-            } else {
-                tweenChain[1].callback = null;
-            }
+                    }
+                })
             this.tweenManager.chain(tweenChain,true);
         })
 

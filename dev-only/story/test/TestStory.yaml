@@ -11,6 +11,33 @@ start:
       - scene: testLogic
     - test animations:
       - scene: testAnim
+    - test end game:
+      - scene: endgame
+
+endgame:
+  - text: What kind of ending?
+  - choice:
+    - End immediately:
+      - endgame:
+    - End after credits:
+      - effect ROLLINGCREDITS:
+        endGame: true
+        text:
+          - asdf
+          - qwer
+          - null
+          - asdf
+          - qwer
+          - null
+          - null
+          - asdf
+          - qwer
+          - null
+          - characters by
+          - Shida
+          - null
+          - music by
+          - Evan Schaeffer
 
 testAnim:
   - show room_night: WITH FADE2 CONTINUE
@@ -192,6 +219,7 @@ testAaE:
   - liz says happy: What a beautiful morning.
   - liz says: There are cherry blossoms everywhere!
   - ambient CLEAR:
+  - hide ALL:
   - effect ROLLINGCREDITS:
     endGame: false
     text:
@@ -210,7 +238,6 @@ testAaE:
       - null
       - music by
       - Evan Schaeffer
-  - hide ALL:
   - scene: start
 
 testLogic:

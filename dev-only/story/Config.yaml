@@ -5,6 +5,9 @@ positions:
   LEFT: 
     x: 133
     y: 600
+  DEFAULT:
+    x: 400
+    y: 600
   CENTER: 
     x: 400
     y: 600

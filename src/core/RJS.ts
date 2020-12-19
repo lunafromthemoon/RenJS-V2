@@ -161,10 +161,22 @@ export default class RJS extends Game {
         }
     }
 
+    endGame(): void {
+        this.setBlackOverlay();
+        this.managers.story.clearScene();
+        this.gameStarted = false;
+        this.control.paused = true;
+        for (const plugin in this.pluginsRJS) {
+            this.pluginsRJS[plugin].teardown();
+        }
+        this.removeBlackOverlay();
+        this.gui.showMenu('main');
+    }
+
     start (): void {
         this.setBlackOverlay();
         this.control.paused = false;
-
+        this.managers.story.clearScene();
         this.managers.story.startScene('start');
 
         this.removeBlackOverlay();
@@ -238,7 +250,7 @@ export default class RJS extends Game {
         const dataParsed = JSON.parse(data);
 
         this.setBlackOverlay();
-        this.gameStarted = true;
+        this.managers.story.clearScene();
         this.managers.background.set(dataParsed.background);
         await this.managers.character.set(dataParsed.characters);
         this.managers.audio.set(dataParsed.audio);
@@ -248,6 +260,7 @@ export default class RJS extends Game {
         // resolve stack
         this.control.execStack = new ExecStack(dataParsed.stack);
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
+        this.gameStarted = true;
         this.removeBlackOverlay();
         this.unpause(true);
     }
@@ -308,6 +321,10 @@ export default class RJS extends Game {
         // adds the control input
         this.input.onTap.add(this.onTap, this);
         // add keyboard binding
+        //  Stop the following keys from propagating up to the browser
+        this.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
+        // spacebar == ontap, continue with the game
+        this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(this.onTap, this); 
     }
 
     lockClick(): void {

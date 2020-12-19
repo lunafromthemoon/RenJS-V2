@@ -62,6 +62,7 @@ export default class RJSGUI implements RJSGUIInterface {
     // menu navigation
     currentMenu = null
     previousMenu = null
+    currentMusic = null
 
     constructor(protected game: RJS) {
         this.initAssets(game.guiSetup);
@@ -290,7 +291,11 @@ export default class RJSGUI implements RJSGUIInterface {
         this.game.control.unskippable = true;
         let music = this.config.menus[menu].backgroundMusic;
         if (music && !music.isPlaying && !this.game.userPreferences.muted){
-            music.fadeIn(1000);
+            if (this.currentMusic){
+                this.currentMusic.fadeOut(1000);
+            }
+            this.currentMusic = music;
+            this.currentMusic.fadeIn(1000);
         }
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         await transition(null, this.menus[menu]);
@@ -299,12 +304,13 @@ export default class RJSGUI implements RJSGUIInterface {
     }
 
     async hideMenu(menu, mute, callback?) {
+
         if (!menu){
             menu = this.currentMenu;
         }
-        let music = this.config.menus[menu].backgroundMusic;
-        if (mute && music && music.isPlaying){
-            music.fadeOut(400);
+        if (mute && this.currentMusic && this.currentMusic.isPlaying){
+            this.currentMusic.fadeOut(400);
+            this.currentMusic = null;
         }
         this.game.control.unskippable = true;
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);

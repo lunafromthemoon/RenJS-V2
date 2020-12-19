@@ -83,13 +83,13 @@ export default class CharacterManager implements CharacterManagerInterface {
         return this.transition.get(transitionName)(oldLook,null);
     }
 
-    async hideAll(transition?): Promise<any> {
-        if (!transition){
-            transition = () => this.transition.FADEOUT;
+    async hideAll(transitionName?): Promise<any> {
+        if (!transitionName){
+            transitionName = () => this.transition.FADEOUT;
         }
         const promises = []
         for (const char in this.showing){
-            promises.push(this.hide(char,transition));
+            promises.push(this.hide(char,transitionName));
         }
         return Promise.all(promises)
     }

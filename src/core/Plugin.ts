@@ -16,4 +16,8 @@ export default class Plugin implements PluginInterface {
 	execute(params): void {
 
 	}
+
+	teardown(): void {
+
+	}
 }

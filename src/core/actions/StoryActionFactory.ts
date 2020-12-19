@@ -12,6 +12,7 @@ import StoryActionEffect from './StoryActionEffect';
 import StoryActionAmbient from './StoryActionAmbient';
 import StoryActionIf from './StoryActionIf';
 import StoryActionCall from './StoryActionCall';
+import StoryActionEnd from './StoryActionEnd';
 import RJS from '../RJS';
 
 
@@ -35,6 +36,7 @@ export default function StoryActionFactory (type: string, params: Object, game: 
     	case 'ambient': return new StoryActionAmbient(params,game);
     	case 'if': return new StoryActionIf(params,game);
     	case 'call': return new StoryActionCall(params,game);
+        case 'endgame': return new StoryActionEnd(game);
 
     }
     return null;

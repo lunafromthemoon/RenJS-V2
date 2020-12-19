@@ -38,6 +38,10 @@ export default class ExecStack {
         return this.execStack[this.execStack.length-1]
     }
 
+    clear(){
+        this.execStack = []
+    }
+
     replace(scope: string){
         // replace the whole stack, scope will be a new scene
         this.execStack = [{c:-1,scope:scope}]
