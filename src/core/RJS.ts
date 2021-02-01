@@ -90,7 +90,7 @@ export default class RJS extends Game {
         this.scale.refresh();
     }
 
-    initStory (): void {
+    async initStory () {
         this.managers = {
             tween: new TweenManager(this),
             story: new StoryManager(this),
@@ -110,10 +110,17 @@ export default class RJS extends Game {
         this.managers.character.transition = this.screenEffects.transition;
         this.managers.cgs.transition = this.screenEffects.transition;
 
+        
         // init game and start main menu
         this.managers.story.setupStory()
         this.gui.init();
         this.initInput();
+        
+        if (!this.setup.lazyloading){
+            // decode audio for all game
+            const audioList = Object.keys(this.setup.music).concat(Object.keys(this.setup.sfx));
+            await this.managers.audio.decodeAudio(audioList);
+        }
         // preload the fonts by adding text, else they wont be fully loaded :\
         for (const font of this.gui.fonts){
             this.add.text(20, -100, font, {font: '42px ' + font});
@@ -173,11 +180,11 @@ export default class RJS extends Game {
         this.gui.showMenu('main');
     }
 
-    start (): void {
+    async start () {
         this.setBlackOverlay();
         this.control.paused = false;
         this.managers.story.clearScene();
-        this.managers.story.startScene('start');
+        await this.managers.story.startScene('start');
 
         this.removeBlackOverlay();
         this.gameStarted = true;

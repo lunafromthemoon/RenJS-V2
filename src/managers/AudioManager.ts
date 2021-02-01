@@ -7,22 +7,22 @@ export interface AudioManagerInterface extends RJSManagerInterface {
     playSFX (key: string): void;
     isMusic(actor): boolean;
     isSfx(actor): boolean;
-    init(cb): void;
+    decodeAudio(audioList): Promise<any>;
     mute(): void;
     changeVolume(type, volume): void;
     stopAll(): void;
     current: {
-        bgm: any;
-        bgs: any;
+        bgm: Phaser.Sound;
+        bgs: Phaser.Sound;
     };
-    audioLoaded: boolean;
+    // audioLoaded: boolean;
     sfx: object;
     musicList: object;
 }
 
 export default class AudioManager implements AudioManagerInterface {
     current = { bgm: null, bgs: null };
-    audioLoaded: boolean;
+    // audioLoaded: boolean;
     musicList: object = {};
     sfx: object = {};
     private game: RJS
@@ -36,19 +36,15 @@ export default class AudioManager implements AudioManagerInterface {
         if (looped === undefined){
             looped = true;
         }
-        const oldAudio = this.musicList[this.current[type]];
-        this.current[type] = key;
-        if (!this.game.userPreferences.muted && this.current[type]) {
+        // stop old music
+        this.stop(type,transition);
+        // add new music
+        this.current[type] = this.game.add.audio(key);
+        if (!this.game.userPreferences.muted) {
             if (transition === 'FADE') {
-                this.musicList[key].fadeIn(1500,looped);
-                if (oldAudio) {
-                    oldAudio.fadeOut(1500);
-                }
+                this.current[type].fadeIn(1500,looped);
             } else {
-                if (oldAudio) {
-                    oldAudio.stop();
-                }
-                this.musicList[key].play('',0,1,looped);
+                this.current[type].play('',0,1,looped);
             }
         }
     }
@@ -57,23 +53,29 @@ export default class AudioManager implements AudioManagerInterface {
         if (!this.current[type]){
             return;
         }
-        const oldAudio = this.musicList[this.current[type]];
-        this.current[type] = null;
         if (!this.game.userPreferences.muted) {
-            if (transition === 'FADE') {
-                oldAudio.fadeOut(1500);
-            } else {
-                oldAudio.stop();
-            }
+            this.stopAudio(this.current[type],transition);
+            this.current[type]=null;
+        }
+    }
+
+    stopAudio(audio: Phaser.Sound,transition: string){
+        if (transition === 'FADE') {
+            audio.onFadeComplete.add(()=>{
+                audio.destroy();
+            })
+            audio.fadeOut(1500);
+        } else {
+            audio.destroy();
         }
     }
 
     playSFX(key): void {
-        if (this.audioLoaded && !this.game.userPreferences.muted){
-            // debugger;
-            this.sfx[key].volume = this.game.userPreferences.sfxv;
-            this.sfx[key].play();
-
+        if (!this.game.userPreferences.muted){
+            const sfx = this.game.sound.play(key,this.game.userPreferences.sfxv);
+            sfx.onStop.addOnce(()=>{
+                sfx.destroy();
+            })
         }
     }
 
@@ -92,33 +94,35 @@ export default class AudioManager implements AudioManagerInterface {
         this.game.sound.volume = volume;
     }
 
-    init(cb): void {
-        const audioList = [];
-        if (this.game.setup.music){
-            Object.keys(this.game.setup.music).forEach(key => {
-                this.musicList[key] = this.game.add.audio(key);
-                audioList.push(this.musicList[key]);
-            },this);
-        }
-        if (this.game.setup.sfx){
-            Object.keys(this.game.setup.sfx).forEach(key => {
-                this.sfx[key] = this.game.add.audio(key);
-                audioList.push(this.sfx[key]);
-            });
-        }
+    async decodeAudio(audioList:string[]):Promise<any> {
+        // if (this.game.setup.music){
 
-        this.game.sound.setDecodedCallback(audioList, () => {
-            this.audioLoaded = true;
-            cb();
-        });
+        //     Object.keys(this.game.setup.music).forEach(key => {
+        //         this.musicList[key] = this.game.add.audio(key);
+        //         audioList.push(this.musicList[key]);
+        //     },this);
+        // }
+        // if (this.game.setup.sfx){
+        //     Object.keys(this.game.setup.sfx).forEach(key => {
+        //         this.sfx[key] = this.game.add.audio(key);
+        //         audioList.push(this.sfx[key]);
+        //     });
+        // }
+        return new Promise(resolve=>{
+            this.game.sound.setDecodedCallback(audioList, () => {
+                // this.audioLoaded = true;
+                resolve();
+            });
+        })
+        
     }
 
     isMusic(actor): boolean {
-        return actor in this.musicList
+        return actor in this.game.setup.music
     }
 
     isSfx(actor): boolean {
-        return actor in this.sfx
+        return actor in this.game.setup.sfx
     }
 
     mute(): void {

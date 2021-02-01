@@ -555,6 +555,7 @@ backToTheRoom:
   - text: Your day was very tiring, but you're closer to be a visual novel writer. Tomorrow is going to be another long day, you better rest.
   - show room_night: WITH FUSION
   - wait: 400
+  - hide ALL:
   - scene: day2
 
 day2:

@@ -1,31 +1,25 @@
 import {Sprite} from 'phaser-ce';
 
 export interface CharacterInterface {
+    keyName: string
     name: string;
     speechColour: any;
-    looks: object;
     lastScale: number;
     currentLook?: any;
-    addLook(lookName, image): void;
 }
 
 export default class Character implements CharacterInterface {
+    keyName: string
     name: string
     speechColour: any
-    looks = {}
     currentLook = null
     lastScale = 1;
-    constructor(name, speechColour) {
+    constructor(keyName,name, speechColour) {
+        this.keyName = keyName
         this.name = name
         this.speechColour = speechColour
     }
 
-    addLook (look: Sprite): void {
-        this.looks[look.name] = look;
-        if (!this.currentLook){
-            this.currentLook = this.looks[look.name];
-        }
 
-    }
 
 }

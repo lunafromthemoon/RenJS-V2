@@ -29,6 +29,51 @@ export function preparePath(path: string, game: RJS): string {
     }
 }
 
+// preload assets, maybe relocate somewhere else
+export function preloadBackground(bgName: string, game: RJS): void {
+    const str = game.setup.backgrounds[bgName].split(' ');
+    if (str.length === 1) {
+        game.load.image(bgName, preparePath(str[0], game));
+    } else {
+        game.load.spritesheet(bgName, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));
+    }
+}
+
+export function preloadCGS(cgName: string, game:RJS):void {
+    const cgs = game.setup.cgs[cgName];
+    if (typeof cgs === 'string') {
+        // normal cgs
+        game.load.image(cgName, preparePath(cgs, game));
+    } else {
+        // spritesheet animation
+        const str = cgs.spritesheet.split(' ');
+        game.load.spritesheet(cgName, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));
+    }
+}
+
+export function preloadAudio(audioName: string, audioType, game: RJS): void {
+    game.load.audio(audioName, preparePath(game.setup[audioType][audioName], game));
+}
+
+export function preloadCharacter(chName: string, game:RJS):void {
+    const char = game.setup.characters[chName];
+    for (const look in char.looks) {
+        game.load.image(chName + '_' + look, preparePath(char.looks[look], game));
+    }
+}
+
+export function preloadExtra(asset:string, type:string, game:RJS){
+    // console.log("loading extra");
+    // console.log(asset);
+    // console.log(type);
+    if (type === 'spritesheets') {
+        const str = game.setup.extra[type][asset].split(' ');
+        game.load.spritesheet(asset, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));
+    } else {
+        game.load[type](asset, preparePath(game.setup.extra[type][asset], game));
+    }
+}
+
 export function loadStyle(href, callback?): void {
     // avoid duplicates
     for (const stylesheet of Array.from(document.styleSheets)){

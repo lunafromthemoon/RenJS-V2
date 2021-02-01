@@ -29,6 +29,7 @@ export interface RJSGameConfig extends IGameConfig {
             };
             fullBar?: string;
         };
+        fade: boolean;
     };
     // logChoices: boolean;
     fonts: string;
@@ -37,6 +38,7 @@ export interface RJSGameConfig extends IGameConfig {
     storyConfig: string;
     storyText: string[];
     i18n?: i18nInterface;
+    debugMode: boolean;
 }
 
 export interface StoryConfig extends IGameConfig {
@@ -49,7 +51,7 @@ export interface StoryConfig extends IGameConfig {
     timeout: number;
     // wether the game keeps a log of the player choices for replay purposes
     logChoices: boolean;
-
+    lazyloading: boolean;
     transitions: {
         defaults: {
             characters: string;

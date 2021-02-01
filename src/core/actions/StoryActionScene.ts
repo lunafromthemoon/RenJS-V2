@@ -10,7 +10,7 @@ export default class StoryActionScene extends StoryAction {
     }
 
     execute(): void {
-        this.game.managers.story.startScene(this.params.scene);
-        this.resolve()
+    	const scene = this.game.managers.logic.parseVars(this.params.scene);
+        this.resolve(this.game.managers.story.startScene(scene));        
     }
 }

@@ -1,6 +1,7 @@
 import RJSManager from './RJSManager';
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
+import RJSAssetLoader from '../core/RJSAssetLoader';
 import RJSManagerInterface from './RJSManager';
 import StoryActionFactory from '../core/actions/StoryActionFactory'
 import StoryAction from '../core/actions/StoryAction';
@@ -26,31 +27,20 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     currentScene: any[];
     backgroundSprites: Group
     interpreting: boolean;
+    assetLoader: RJSAssetLoader;
 
     constructor(private game: RJS) {
     }
 
     setupStory(): void {
-        // load backgrounds
         this.backgroundSprites = this.game.add.group();
-        for (const background in this.game.setup.backgrounds){
-            const str = this.game.setup.backgrounds[background].split(' ');
-            if (str.length === 1){
-                this.game.managers.background.add(background);
-            } else {
-                const framerate = str.length === 4 ? parseInt(str[3], 10) : 16;
-                this.game.managers.background.add(background,true,framerate);
-            }
-        }
-        // load characters
         this.behindCharactersSprites = this.game.add.group();
         this.characterSprites = this.game.add.group();
-        for (const name in this.game.setup.characters){
-            const character = this.game.setup.characters[name];
-            const displayName = character.displayName ? character.displayName : name;
-            this.game.managers.character.add(name,displayName,character.speechColour,character.looks);
-        }
         this.cgsSprites = this.game.add.group();
+
+        if (this.game.setup.lazyloading){
+            this.assetLoader = new RJSAssetLoader(this.game);
+        }
     }
 
     set(...args: any): void {
@@ -85,7 +75,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.currentScene = [];
     }
 
-    startScene(name: string): void {
+    async startScene(name: string) {
+        if (this.game.setup.lazyloading){
+            // load scene or episode assets (not loaded yet) 
+            await this.assetLoader.loadScene(name);
+        }
         this.game.control.execStack.replace(name);
         this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.currentScene = [...this.game.story[name]];
@@ -127,7 +121,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         }
     }
 
-    interpretAction(action): void {
+    parseAction(action){
         const actionParams = {
             withTransition: ['show','hide','play','stop'],
             withPosition: ['show'],
@@ -148,6 +142,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             mainAction = keyParams[0];
             actor = keyParams[1];
         }
+        action.mainAction = mainAction;
         action.actor = actor;
         action.actorType = this.getActorType(actor);
         // parse WITH and AT
@@ -195,14 +190,19 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             action.contAfterTrans = str.indexOf('CONTINUE') !== -1
         }
         action.manager = this.getManagerByActorType(action.actorType);
+        return action;
+    }
+
+    interpretAction(actionRaw): void {
+        const action = this.parseAction(actionRaw);
         // this.game.control.action = mainAction
         // this.game.control.wholeAction = params;
         this.game.control.nextAction = null;
-        if (mainAction === 'else'){
+        if (action.mainAction === 'else'){
             // nothing to do, already resolved in previous if action
             return this.game.resolveAction();
         }
-        const storyAction: StoryAction = StoryActionFactory(mainAction,action,this.game);
+        const storyAction: StoryAction = StoryActionFactory(action.mainAction,action,this.game);
         storyAction.execute();
     }
 }

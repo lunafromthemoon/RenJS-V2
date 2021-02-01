@@ -1,4 +1,5 @@
-import {initLoadingBar, initSplash, preparePath} from './utils';
+import {preparePath} from './utils';
+import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from './utils';
 import RJSState from './RJSState';
 import {GUIAssets} from '../gui/Assets';
 import RJSSprite from '../components/RJSSprite';
@@ -25,54 +26,42 @@ class PreloadStory extends RJSState {
                 this.game.load[asset.type](asset.key, preparePath(asset.file, this.game));
             }
         }
+        if (this.game.setup.lazyloading){
+            // when lazy loading, game assets will be loaded while playing the story
+            return
+        }
         // preload backgrounds
         if ('backgrounds' in this.game.setup) {
-            for (const background of Object.keys(this.game.setup.backgrounds)) {
-                const str = this.game.setup.backgrounds[background].split(' ');
-                if (str.length === 1) {
-                    this.game.load.image(background, preparePath(str[0], this.game));
-                } else {
-                    this.game.load.spritesheet(background, preparePath(str[0], this.game), parseInt(str[1], 10), parseInt(str[2], 10));
-                }
+            for (const bg in this.game.setup.backgrounds) {
+                preloadBackground(bg,this.game);
             }
         }
 
         // preload cgs
         if ('cgs' in this.game.setup) {
-            for (const key of Object.keys(this.game.setup.cgs)) {
-                const cgs = this.game.setup.cgs[key];
-                if (typeof cgs === 'string') {
-                    // normal cgs
-                    this.game.load.image(key, preparePath(cgs, this.game));
-                } else {
-                    // spritesheet animation
-                    const str = cgs.spritesheet.split(' ');
-                    this.game.load.spritesheet(key, preparePath(str[0], this.game), parseInt(str[1], 10), parseInt(str[2], 10));
-                }
+            for (const cg in this.game.setup.cgs) {
+                preloadCGS(cg,this.game);
             }
         }
 
         // preload background music
         if ('music' in this.game.setup) {
-            for (const music of Object.keys(this.game.setup.music)) {
-                this.game.load.audio(music, preparePath(this.game.setup.music[music], this.game));
+            for (const music in this.game.setup.music) {
+               preloadAudio(music,"music",this.game);
             }
         }
 
         // preload sfx
         if ('sfx' in this.game.setup) {
-            for (const sfx of Object.keys(this.game.setup.sfx)) {
-                this.game.load.audio(sfx, preparePath(this.game.setup.sfx[sfx], this.game));
+            for (const sfx in this.game.setup.sfx) {
+               preloadAudio(sfx,"sfx",this.game);
             }
         }
 
         // preload characters
         if ('characters' in this.game.setup) {
-            for (const name of Object.keys(this.game.setup.characters)) {
-                const char = this.game.setup.characters[name];
-                for (const look of Object.keys(char.looks)) {
-                    this.game.load.image(name + '_' + look, preparePath(char.looks[look], this.game));
-                }
+            for (const name in this.game.setup.characters) {
+                preloadCharacter(name,this.game);
             }
         }
 
@@ -80,28 +69,19 @@ class PreloadStory extends RJSState {
         if ('extra' in this.game.setup) {
             for (const type of Object.keys(this.game.setup.extra)) {
                 Object.keys(this.game.setup.extra[type]).forEach(asset => {
-                    if (type === 'spritesheets') {
-                        const str = this.game.setup.extra[type][asset].split(' ');
-                        this.game.load.spritesheet(asset, preparePath(str[0], this.game), parseInt(str[1], 10), parseInt(str[2], 10));
-                    } else {
-                        this.game.load[type](asset, preparePath(this.game.setup.extra[type][asset], this.game));
-                    }
+                    preloadExtra(asset,type,this.game);
                 })
             }
         }
     }
 
-    create(): void {
+    async create() {
         // game finished loading, now has to build game
         // we add a tween to the loading bar to make it a bit less static
         this.loadingScreen.waitingScreen();
-        this.game.initStory();
-
-        this.game.managers.audio.init(() => {
-            this.loadingScreen.destroy();
-            this.game.gui.showMenu('main');
-        });
-        
+        await this.game.initStory();
+        this.loadingScreen.destroy(this.game);
+        this.game.gui.showMenu('main');
     }
 }
 

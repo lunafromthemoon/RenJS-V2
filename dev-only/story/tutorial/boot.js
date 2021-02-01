@@ -5,6 +5,7 @@ const globalConfig =  {
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'splash': {
+    fade: true,
     'loadingScreen': 'assets/gui/loaderloaderbackground.png',
     'loadingBar': {
       'asset': 'assets/gui/loaderloading-bar.png',
@@ -25,7 +26,8 @@ const globalConfig =  {
   storySetup: 'story/tutorial/Setup.yaml',
   'storyText': [
     'story/tutorial/Story.yaml'
-  ]
+  ],
+  debugMode:true
 }
 
 const RenJSGame = new RenJS.game(globalConfig)
