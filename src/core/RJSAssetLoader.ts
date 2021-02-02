@@ -10,6 +10,7 @@ export default class RJSAssetLoader {
     loadedEpisodes: {} = {}
     loading: boolean = false;
     loadingScreen:RJSLoadingScreen;
+    backgroundLoading: Promise<any>;
 
     constructor(private game) {
         if (this.game.setup.lazyloading.findAssets){
@@ -46,6 +47,7 @@ export default class RJSAssetLoader {
     }
 
     async loadScene(sceneName: string){
+
         const episodeIdx = this.getEpisode(sceneName);
         if (episodeIdx!=-1) {
             return this.loadEpisode(episodeIdx,this.game.setup.lazyloading.backgroundLoading);
@@ -60,7 +62,7 @@ export default class RJSAssetLoader {
             // this episode was already loaded, but we try to load the next one anyway
             if (loadNextAfter && episodeIdx<this.episodes.length-1){
                 console.log("Loading next episode "+(episodeIdx+1));
-                this.loadEpisode(episodeIdx+1,false,true);
+                this.backgroundLoading = this.loadEpisode(episodeIdx+1,false,true);
             }
             return;
         }
@@ -77,13 +79,13 @@ export default class RJSAssetLoader {
             promise.then(()=>{
                 // after loading the current episode, we set to load the next one in the background
                 console.log("Loading next episode "+(episodeIdx+1)+" after right now.");
-                this.loadEpisode(episodeIdx+1,false,true);
+                this.backgroundLoading = this.loadEpisode(episodeIdx+1,false,true);
             })
         }
         return promise;
     }
 
-    loadAssets(assets: {},background?){
+    async loadAssets(assets: {},background?){
         for (var asset in this.loadedAssets) {
             // remove assets already loaded
             delete assets[asset]
@@ -98,6 +100,11 @@ export default class RJSAssetLoader {
         // set loading screen
         if (!background && this.game.setup.lazyloading.loadingScreen){
             this.loadingScreen = new RJSLoadingScreen(this.game);
+        }
+        if (this.backgroundLoading){
+            // we want to start loading new assets, but background loading still working
+            await this.backgroundLoading;
+            this.backgroundLoading = null;
         }
 
         const audioList = [];
@@ -140,7 +147,10 @@ export default class RJSAssetLoader {
                     this.loadingScreen.destroy(this.game);
                     this.loadingScreen = null;
                 }
-                
+                if (this.backgroundLoading){
+                    // this was background loading
+                    this.backgroundLoading=null;
+                }
                 if (this.game.config.debugMode){
                     console.log("All assets loaded.");
                 }
