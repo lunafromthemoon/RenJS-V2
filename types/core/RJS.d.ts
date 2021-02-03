@@ -23,6 +23,7 @@ export default class RJS extends Game {
     blackOverlay: Graphics;
     setup: any;
     story: object;
+    guiSetup: any;
     gui: RJSGUI;
     pluginsRJS: any;
     addPlugin(name: string, cls: any): void;
@@ -47,14 +48,18 @@ export default class RJS extends Game {
     };
     constructor(config: RJSGameConfig);
     launch(): void;
+    setupScreen(): void;
+    initStory(): Promise<void>;
     pause(): void;
     takeXShot(): void;
     unpause(force?: any): void;
     setBlackOverlay(): void;
     removeBlackOverlay(): void;
-    start(): void;
+    endGame(): void;
+    start(): Promise<void>;
     skip(): void;
     auto(): void;
+    mute(): void;
     save(slot?: any): void;
     getSlotThumbnail(slot: any): string;
     loadSlot(slot: any): Promise<void>;

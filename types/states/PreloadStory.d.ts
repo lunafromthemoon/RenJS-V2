@@ -1,11 +1,10 @@
 import RJSState from './RJSState';
-import RJSSprite from '../components/RJSSprite';
+import RJSLoadingScreen from '../components/RJSLoadingScreen';
 declare class PreloadStory extends RJSState {
-    splash: Phaser.Sprite;
-    loadingBar: RJSSprite;
+    loadingScreen: RJSLoadingScreen;
     constructor();
     init(): void;
     preload(): void;
-    create(): void;
+    create(): Promise<void>;
 }
 export default PreloadStory;

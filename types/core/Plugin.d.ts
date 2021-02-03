@@ -6,4 +6,5 @@ export default class Plugin implements PluginInterface {
     protected name: string;
     constructor(name: any, game: any);
     execute(params: any): void;
+    teardown(): void;
 }

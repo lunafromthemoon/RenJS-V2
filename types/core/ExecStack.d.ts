@@ -23,6 +23,7 @@ export default class ExecStack {
     hash(): string;
     top(): ExecItem;
     bottom(): ExecItem;
+    clear(): void;
     replace(scope: string): void;
     stack(scope: any, total: any, index?: number, origin?: number): void;
     advance(): void;

@@ -1,3 +1,4 @@
+import Transition from '../screen-effects/Transition';
 import RJS from '../core/RJS';
 import { RJSSpriteManagerInterface } from './RJSManager';
 export interface CGSManagerInterface extends RJSSpriteManagerInterface {
@@ -8,12 +9,10 @@ export interface CGSManagerInterface extends RJSSpriteManagerInterface {
     hide(name: any, transition: any): Promise<any>;
 }
 export default class CGSManager implements CGSManagerInterface {
+    private game;
     cgs: object;
     current: object;
-    private transition;
-    private game;
-    private storyManager;
-    private tweenManager;
+    transition: Transition;
     constructor(game: RJS);
     set(current: any): Promise<void>;
     hideAll(transition?: string): Promise<any>;

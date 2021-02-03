@@ -57,7 +57,8 @@ export default class RJSGUI implements RJSGUIInterface {
     skipClickArea: any[];
     currentMenu: any;
     previousMenu: any;
-    constructor(gui: any, game: RJS);
+    currentMusic: any;
+    constructor(game: RJS);
     initAssets(gui: any): void;
     init(): void;
     initMenu(name: string, menuConfig: any): void;

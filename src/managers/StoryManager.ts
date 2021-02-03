@@ -16,6 +16,7 @@ export interface StoryManagerInterface<T> extends RJSManagerInterface {
     currentScene: any[];
     actorsIndex: object;
     interpreting: boolean;
+    assetLoader: RJSAssetLoader;
 }
 
 

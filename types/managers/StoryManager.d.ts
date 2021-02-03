@@ -1,6 +1,7 @@
 import RJSManager from './RJSManager';
 import { Group } from 'phaser-ce';
 import RJS from '../core/RJS';
+import RJSAssetLoader from '../core/RJSAssetLoader';
 import RJSManagerInterface from './RJSManager';
 export interface StoryManagerInterface<T> extends RJSManagerInterface {
     behindCharactersSprites: T;
@@ -12,8 +13,10 @@ export interface StoryManagerInterface<T> extends RJSManagerInterface {
     currentScene: any[];
     actorsIndex: object;
     interpreting: boolean;
+    assetLoader: RJSAssetLoader;
 }
 export default class StoryManager implements StoryManagerInterface<Group> {
+    private game;
     behindCharactersSprites: Group;
     cgsSprites: Group;
     characterSprites: Group;
@@ -21,13 +24,15 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     currentScene: any[];
     backgroundSprites: Group;
     interpreting: boolean;
-    private game;
+    assetLoader: RJSAssetLoader;
     constructor(game: RJS);
     setupStory(): void;
     set(...args: any): void;
     interpret(): void;
-    startScene(name: string): void;
+    clearScene(): void;
+    startScene(name: string): Promise<void>;
     getActorType(actor: any): string;
     getManagerByActorType(type: string): RJSManager;
-    interpretAction(action: any): void;
+    parseAction(action: any): any;
+    interpretAction(actionRaw: any): void;
 }

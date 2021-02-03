@@ -5,7 +5,6 @@ export default class Ambient implements RJSScreenEffectInterface {
     clearFunctions: any[];
     private game;
     private audioManager;
-    private storyManager;
     constructor(game: RJS);
     addEmitter(options: any, params: any): Emitter;
     destroyEmitters(emitters: any, maxLifespan: any): void;

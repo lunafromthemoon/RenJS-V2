@@ -120,7 +120,7 @@ export default class RJS extends Game {
             // decode audio for all game
             const audioList = Object.keys(this.setup.music).concat(Object.keys(this.setup.sfx));
             await this.managers.audio.decodeAudio(audioList);
-        }
+        } 
         // preload the fonts by adding text, else they wont be fully loaded :\
         for (const font of this.gui.fonts){
             this.add.text(20, -100, font, {font: '42px ' + font});

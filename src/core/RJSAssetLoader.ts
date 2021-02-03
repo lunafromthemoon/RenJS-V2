@@ -35,6 +35,10 @@ export default class RJSAssetLoader {
             this.episodes = this.game.setup.lazyloading.episodes;
             if (!this.episodes) this.episodes = [];
         }
+        if (this.game.setup.lazyloading.backgroundLoading){
+            this.loadEpisodeInBackground(0);
+            // we start loading the episode
+        }
     }
 
     getEpisode(sceneName: string){
@@ -56,13 +60,20 @@ export default class RJSAssetLoader {
         return this.loadAssets(toLoad);
     }
 
+    loadEpisodeInBackground(episodeIdx){
+        if(episodeIdx<=this.episodes.length-1){
+            console.log("Loading episode "+episodeIdx+" in background");
+            this.backgroundLoading = this.loadEpisode(episodeIdx,false,true);
+        }
+        
+    }
+
     async loadEpisode(episodeIdx, loadNextAfter, background?){
         if (this.loadedEpisodes[episodeIdx]){
             console.log("Episode "+episodeIdx+" already loaded.");
             // this episode was already loaded, but we try to load the next one anyway
-            if (loadNextAfter && episodeIdx<this.episodes.length-1){
-                console.log("Loading next episode "+(episodeIdx+1));
-                this.backgroundLoading = this.loadEpisode(episodeIdx+1,false,true);
+            if (loadNextAfter){
+                this.loadEpisodeInBackground(episodeIdx+1);
             }
             return;
         }
@@ -75,11 +86,10 @@ export default class RJSAssetLoader {
             toLoad = {...toLoad, ...this.assetsPerScene[this.episodes[episodeIdx][i]]};
         }
         let promise = this.loadAssets(toLoad,background);
-        if (loadNextAfter && episodeIdx<this.episodes.length-1){
+        if (loadNextAfter){
             promise.then(()=>{
                 // after loading the current episode, we set to load the next one in the background
-                console.log("Loading next episode "+(episodeIdx+1)+" after right now.");
-                this.backgroundLoading = this.loadEpisode(episodeIdx+1,false,true);
+                this.loadEpisodeInBackground(episodeIdx+1);
             })
         }
         return promise;

@@ -19,12 +19,14 @@ export interface RJSGameConfig extends IGameConfig {
                 x: number;
                 y: number;
             };
+            direction: number;
             size: {
                 w: number;
                 h: number;
             };
             fullBar?: string;
         };
+        fade: boolean;
     };
     fonts: string;
     guiConfig: string;
@@ -32,6 +34,7 @@ export interface RJSGameConfig extends IGameConfig {
     storyConfig: string;
     storyText: string[];
     i18n?: i18nInterface;
+    debugMode: boolean;
 }
 export interface StoryConfig extends IGameConfig {
     positions: any;
@@ -40,6 +43,7 @@ export interface StoryConfig extends IGameConfig {
     autotime: number;
     timeout: number;
     logChoices: boolean;
+    lazyloading: boolean;
     transitions: {
         defaults: {
             characters: string;
@@ -51,5 +55,6 @@ export interface StoryConfig extends IGameConfig {
         visualChoices: string;
         textChoices: string;
         menus: string;
+        skippable: boolean;
     };
 }
