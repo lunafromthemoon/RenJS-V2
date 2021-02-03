@@ -38,11 +38,10 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     set (name): void {
         if (this.current){
             this.current.destroy();
-            // this.current.alpha = 0;
         }
         this.current = this.createBackground(name);
-        // this.current.alpha = 1;
-        // this.backgrounds[name].visible = true;
+        this.current.alpha = 1;
+        this.current.visible = true;
         if (this.current.animated){
             this.current.animations.play('run', null, true);
         }

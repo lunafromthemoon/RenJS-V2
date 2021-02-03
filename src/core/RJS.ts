@@ -227,8 +227,9 @@ export default class RJS extends Game {
         const data = {
             background: this.managers.background.current.name,
             characters: this.managers.character.showing,
-            audio: this.managers.audio.current,
+            audio: this.managers.audio.getActive(),
             cgs: this.managers.cgs.current,
+            ambients: this.screenEffects.ambient.current,
             stack: this.control.execStack.shallowCopy(),
             vars: this.managers.logic.vars
             // should include any interrupts showing
@@ -260,7 +261,6 @@ export default class RJS extends Game {
             return;
         }
         const dataParsed = JSON.parse(data);
-
         this.setBlackOverlay();
         this.managers.story.clearScene();
         this.managers.background.set(dataParsed.background);
@@ -268,6 +268,7 @@ export default class RJS extends Game {
         this.managers.audio.set(dataParsed.audio);
         await this.managers.cgs.set(dataParsed.cgs);
         this.managers.logic.set(dataParsed.vars);
+        this.screenEffects.ambient.set(dataParsed.ambients);
         this.gui.clear();
         // resolve stack
         this.control.execStack = new ExecStack(dataParsed.stack);

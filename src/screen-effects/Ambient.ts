@@ -10,10 +10,29 @@ export default class Ambient implements RJSScreenEffectInterface {
 
     private game: RJS
     private audioManager: AudioManagerInterface
+    public current: string[] = []
 
     constructor(game: RJS) {
         this.game = game
         this.audioManager = game.managers.audio
+    }
+
+    start(name: string): void{
+        // start ambient from here or from plugin
+        this.current.push(name);
+        if (this[name]){
+            this[name]();
+        } else if (this.game.pluginsRJS[name]){
+            this.game.pluginsRJS[name].execute();
+        }
+    }
+
+    set(ambients:[]){
+        if(!ambients) return;
+        // set ambients after loading game
+        for (var i = 0; i < ambients.length; i++) {
+            this.start(ambients[i]);
+        }
     }
 
     addEmitter (options,params): Emitter {
@@ -55,6 +74,7 @@ export default class Ambient implements RJSScreenEffectInterface {
     CLEAR (): void {
         this.clearFunctions.forEach(func => func())
         this.clearFunctions = [];
+        this.current = [];
     }
 
     RAIN (): void {

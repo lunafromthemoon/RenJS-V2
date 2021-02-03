@@ -66,13 +66,13 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     }
 
     clearScene(): void{
-        console.log("Clearing scene")
         this.game.control.execStack.clear();
         this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.game.managers.character.hideAll("CUT");
         this.game.managers.audio.stopAll()
         this.game.managers.cgs.hideAll("CUT");
         this.game.managers.background.hide(null,"CUT");
+        this.game.screenEffects.ambient.CLEAR();
         this.currentScene = [];
     }
 

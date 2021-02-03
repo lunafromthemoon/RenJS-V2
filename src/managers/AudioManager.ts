@@ -11,25 +11,29 @@ export interface AudioManagerInterface extends RJSManagerInterface {
     mute(): void;
     changeVolume(type, volume): void;
     stopAll(): void;
+    getActive():object;
     current: {
         bgm: Phaser.Sound;
         bgs: Phaser.Sound;
     };
     // audioLoaded: boolean;
-    sfx: object;
-    musicList: object;
 }
 
 export default class AudioManager implements AudioManagerInterface {
     current = { bgm: null, bgs: null };
     // audioLoaded: boolean;
-    musicList: object = {};
-    sfx: object = {};
     private game: RJS
 
     constructor(game: RJS) {
         this.game = game
         this.changeVolume("bgm",game.userPreferences.bgmv)
+    }
+
+    getActive():object{
+       return { 
+            bgm: (this.current.bgm) ? this.current.bgm.key : null, 
+            bgs: (this.current.bgs) ? this.current.bgs.key : null 
+        };
     }
 
     play (key,type,looped,transition): void {
@@ -72,20 +76,16 @@ export default class AudioManager implements AudioManagerInterface {
 
     playSFX(key): void {
         if (!this.game.userPreferences.muted){
-            const sfx = this.game.sound.play(key,this.game.userPreferences.sfxv);
-            sfx.onStop.addOnce(()=>{
-                sfx.destroy();
-            })
+            let sfx = this.game.sound.play(key,this.game.userPreferences.sfxv);
         }
     }
 
-    set (current): void {
-        this.current = current;
-        if (current.bgm){
-            this.play(current.bgm,'bgm',true,'FADE');
+    set (active): void {
+        if (active.bgm){
+            this.play(active.bgm,'bgm',true,'FADE');
         }
-        if (current.bgs){
-            this.play(current.bgs,'bgs',true,'FADE');
+        if (active.bgs){
+            this.play(active.bgs,'bgs',true,'FADE');
         }
 
     }
@@ -95,19 +95,6 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     async decodeAudio(audioList:string[]):Promise<any> {
-        // if (this.game.setup.music){
-
-        //     Object.keys(this.game.setup.music).forEach(key => {
-        //         this.musicList[key] = this.game.add.audio(key);
-        //         audioList.push(this.musicList[key]);
-        //     },this);
-        // }
-        // if (this.game.setup.sfx){
-        //     Object.keys(this.game.setup.sfx).forEach(key => {
-        //         this.sfx[key] = this.game.add.audio(key);
-        //         audioList.push(this.sfx[key]);
-        //     });
-        // }
         if (audioList.length==0) return;
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(audioList, () => {
@@ -129,17 +116,17 @@ export default class AudioManager implements AudioManagerInterface {
     mute(): void {
         if (this.game.userPreferences.muted){
             if (this.current.bgm) {
-                this.musicList[this.current.bgm].play('',0,1,true);
+                this.current.bgm.play('',0,1,true);
             }
             if (this.current.bgs) {
-                this.musicList[this.current.bgs].play('',0,1,true);
+                this.current.bgs.play('',0,1,true);
             }
         } else {
             if (this.current.bgm) {
-                this.musicList[this.current.bgm].stop();
+                this.current.bgm.stop();
             }
             if (this.current.bgs) {
-                this.musicList[this.current.bgs].stop();
+                this.current.bgs.stop();
             }
         }
         this.game.userPreferences.setPreference('muted',!this.game.userPreferences.muted)
