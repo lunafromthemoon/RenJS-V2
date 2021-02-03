@@ -113,14 +113,19 @@ export default class RJS extends Game {
         
         // init game and start main menu
         this.managers.story.setupStory()
-        this.gui.init();
+        await this.gui.init();
+
         this.initInput();
         
         if (!this.setup.lazyloading){
             // decode audio for all game
             const audioList = Object.keys(this.setup.music).concat(Object.keys(this.setup.sfx));
             await this.managers.audio.decodeAudio(audioList);
-        } 
+        }  else {
+            if (this.setup.lazyloading.backgroundLoading){
+                this.managers.story.assetLoader.loadEpisodeInBackground(0);
+            }
+        }
         // preload the fonts by adding text, else they wont be fully loaded :\
         for (const font of this.gui.fonts){
             this.add.text(20, -100, font, {font: '42px ' + font});

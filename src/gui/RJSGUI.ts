@@ -77,7 +77,16 @@ export default class RJSGUI implements RJSGUIInterface {
         // has to init this.assets, this.fonts and this.config
     }
 
-    init() {
+    async init() {
+        // decode audios used in the menu
+        let audioList = [];
+        for (var i = 0; i < this.assets.length; i++) {
+            if (this.assets[i].type=="audio"){
+                audioList.push(this.assets[i].key);
+            }
+        }
+        await this.game.managers.audio.decodeAudio(audioList);
+        // create the GUI
         this.initHUD(this.config.hud);
         this.initMenu('main',this.config.menus.main)
         this.initMenu('settings',this.config.menus.settings)

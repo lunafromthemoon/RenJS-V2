@@ -35,10 +35,7 @@ export default class RJSAssetLoader {
             this.episodes = this.game.setup.lazyloading.episodes;
             if (!this.episodes) this.episodes = [];
         }
-        if (this.game.setup.lazyloading.backgroundLoading){
-            this.loadEpisodeInBackground(0);
-            // we start loading the episode
-        }
+        
     }
 
     getEpisode(sceneName: string){

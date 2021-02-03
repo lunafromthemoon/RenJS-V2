@@ -108,6 +108,7 @@ export default class AudioManager implements AudioManagerInterface {
         //         audioList.push(this.sfx[key]);
         //     });
         // }
+        if (audioList.length==0) return;
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(audioList, () => {
                 // this.audioLoaded = true;
