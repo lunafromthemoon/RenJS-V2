@@ -22,7 +22,10 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
 
     createBackground(name): void {
         const str = this.backgrounds[name].split(' ');
-        let bg = this.game.managers.story.backgroundSprites.create(this.game.world.centerX, this.game.world.centerY, name);
+        const pos = this.game.storyConfig.positions.BACKGROUND ? 
+                this.game.storyConfig.positions.BACKGROUND :
+                {x:this.game.world.centerX, y:this.game.world.centerY};
+        let bg = this.game.managers.story.backgroundSprites.create(pos.x,pos.y, name);
         bg.alpha = 0;
         bg.visible = false;
         bg.name = name;
@@ -56,7 +59,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
                 this.current.animations.play('run', null, true);
             }
         }
-        let transitioning: Promise<any> = this.game.screenEffects.transition.get(transitionName)(oldBg,this.current,{ x: this.game.world.centerX, y: this.game.world.centerY}, 1);
+        let transitioning: Promise<any> = this.game.screenEffects.transition.get(transitionName)(oldBg,this.current);
         transitioning.then(()=>{
             if (oldBg) oldBg.destroy();
         })

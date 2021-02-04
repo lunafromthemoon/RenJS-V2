@@ -119,6 +119,8 @@ export default class RJS extends Game {
         
         if (!this.setup.lazyloading){
             // decode audio for all game
+            if (!this.setup.music) this.setup.music = {};
+            if (!this.setup.sfx) this.setup.sfx = {};
             const audioList = Object.keys(this.setup.music).concat(Object.keys(this.setup.sfx));
             await this.managers.audio.decodeAudio(audioList);
         }  else {
@@ -179,7 +181,9 @@ export default class RJS extends Game {
         this.gameStarted = false;
         this.control.paused = true;
         for (const plugin in this.pluginsRJS) {
-            this.pluginsRJS[plugin].teardown();
+            if (this.pluginsRJS[plugin].teardown){
+                this.pluginsRJS[plugin].teardown();
+            }
         }
         this.removeBlackOverlay();
         this.gui.showMenu('main');
@@ -190,10 +194,13 @@ export default class RJS extends Game {
         this.control.paused = false;
         this.managers.story.clearScene();
         await this.managers.story.startScene('start');
-
+        for (const plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin].onStart){
+                this.pluginsRJS[plugin].onStart();
+            }
+        }
         this.removeBlackOverlay();
         this.gameStarted = true;
-
         this.managers.story.interpret();
     }
 
@@ -223,6 +230,11 @@ export default class RJS extends Game {
         }
         if (!slot){
             slot = 0;
+        }
+        for (const plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin].onSave){
+                 this.pluginsRJS[plugin].onSave();
+            }
         }
         const data = {
             background: this.managers.background.current.name,
@@ -273,6 +285,12 @@ export default class RJS extends Game {
         // resolve stack
         this.control.execStack = new ExecStack(dataParsed.stack);
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
+        
+        for (const plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin].onLoad){
+                this.pluginsRJS[plugin].onLoad();
+            }
+        }
         this.gameStarted = true;
         this.removeBlackOverlay();
         this.unpause(true);

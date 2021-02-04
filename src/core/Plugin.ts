@@ -13,9 +13,13 @@ export default class Plugin implements PluginInterface {
 		this.name = name
 	}
 
-	execute(params): void {
+	onStart(): void {}
 
-	}
+	onLoad(): void {}
+
+	onSave(): void {}
+
+	execute(params): void {}
 
 	teardown(): void {
 

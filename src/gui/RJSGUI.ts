@@ -131,6 +131,9 @@ export default class RJSGUI implements RJSGUIInterface {
             text.wordWrapWidth = mBox['text-width'];
             this.messageBox.message = text;
             this.messageBox.addChild(text);
+            if (mBox['always-on']){
+                this.messageBox.alwaysOn=true;
+            }
         }
         if (hudConfig['name-box']){
             const x = hudConfig['name-box'].x - mBox.x;
@@ -408,7 +411,9 @@ export default class RJSGUI implements RJSGUIInterface {
     }
 
     hideText() {
-        this.messageBox.visible = false;
+        if(!this.messageBox.alwaysOn){
+            this.messageBox.visible = false;
+        }
         this.messageBox.message.text = '';
         if (this.ctc){
             this.ctc.visible = false;

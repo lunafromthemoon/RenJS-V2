@@ -27,7 +27,7 @@ export default class Transition implements RJSScreenEffectInterface {
         if (this[name]){
             return this[name].bind(this)
         } else if (this.game.pluginsRJS[name]){
-            return this.game.pluginsRJS[name].execute.bind(this)
+            return this.game.pluginsRJS[name].execute.bind(this.game.pluginsRJS[name])
         }
     }
 
@@ -132,12 +132,12 @@ export default class Transition implements RJSScreenEffectInterface {
         });
     }
 
-    async FADETOBLACK (from, to, position?): Promise<void> {
-        return this.FADETOCOLOUR(from,to,0x000000, position, null)
+    async FADETOBLACK (from, to, position?, scaleX?): Promise<void> {
+        return this.FADETOCOLOUR(from,to,0x000000, position, scaleX)
     }
 
-    async FADETOWHITE (from, to, position?): Promise<void> {
-        return this.FADETOCOLOUR(from, to, 0xFFFFFF, position, null)
+    async FADETOWHITE (from, to, position?, scaleX?): Promise<void> {
+        return this.FADETOCOLOUR(from, to, 0xFFFFFF, position, scaleX)
     }
 }
 
