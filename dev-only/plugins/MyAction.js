@@ -1,6 +1,6 @@
 class HelloWorld extends RenJS.Plugin {
 
-	execute(params) {
+	onCall(params) {
 		console.log('helloworld function');
 		setTimeout(() => {
 			console.log(params.param1 + ' ' +params.param2);

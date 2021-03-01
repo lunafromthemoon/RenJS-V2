@@ -91,6 +91,7 @@ export default class RJS extends Game {
     }
 
     async initStory () {
+        
         this.managers = {
             tween: new TweenManager(this),
             story: new StoryManager(this),
@@ -116,6 +117,12 @@ export default class RJS extends Game {
         await this.gui.init();
 
         this.initInput();
+
+        for (const plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin].onInit){
+                this.pluginsRJS[plugin].onInit();
+            }
+        }
         
         if (!this.setup.lazyloading){
             // decode audio for all game
@@ -128,10 +135,7 @@ export default class RJS extends Game {
                 this.managers.story.assetLoader.loadEpisodeInBackground(0);
             }
         }
-        // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of this.gui.fonts){
-            this.add.text(20, -100, font, {font: '42px ' + font});
-        }
+        
     }
 
     pause (): void {
@@ -159,7 +163,8 @@ export default class RJS extends Game {
     setBlackOverlay (): void {
         this.blackOverlay = this.add.graphics(0, 0);
         this.managers.story.cgsSprites.addChild(this.blackOverlay);
-        this.blackOverlay.beginFill(0x000000, 1);
+        const color = this.config.backgroundColor ? this.config.backgroundColor : 0x000000;
+        this.blackOverlay.beginFill(color, 1);
         this.blackOverlay.drawRect(0, 0, this.config.w, this.config.h);
         this.blackOverlay.endFill();
     }
@@ -181,8 +186,8 @@ export default class RJS extends Game {
         this.gameStarted = false;
         this.control.paused = true;
         for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].teardown){
-                this.pluginsRJS[plugin].teardown();
+            if (this.pluginsRJS[plugin].onTeardown){
+                this.pluginsRJS[plugin].onTeardown();
             }
         }
         this.removeBlackOverlay();
@@ -231,11 +236,7 @@ export default class RJS extends Game {
         if (!slot){
             slot = 0;
         }
-        for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].onSave){
-                 this.pluginsRJS[plugin].onSave();
-            }
-        }
+        
         const data = {
             background: this.managers.background.current.name,
             characters: this.managers.character.showing,
@@ -246,10 +247,14 @@ export default class RJS extends Game {
             vars: this.managers.logic.vars
             // should include any interrupts showing
         }
-        const dataSerialized = JSON.stringify(data);
         
+        for (const plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin].onSave){
+                 this.pluginsRJS[plugin].onSave(slot,data);
+            }
+        }
+        const dataSerialized = JSON.stringify(data);
         localStorage.setItem('RenJSDATA' + this.config.name + slot,dataSerialized);
-
 
         if (this.gui.addThumbnail && this.xShots && this.xShots.length) {
             const thumbnail = this.xShots[this.xShots.length-1];
@@ -273,6 +278,11 @@ export default class RJS extends Game {
             return;
         }
         const dataParsed = JSON.parse(data);
+        for (const plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin].onLoad){
+                this.pluginsRJS[plugin].onLoad(slot,dataParsed);
+            }
+        }
         this.setBlackOverlay();
         this.managers.story.clearScene();
         this.managers.background.set(dataParsed.background);
@@ -286,11 +296,7 @@ export default class RJS extends Game {
         this.control.execStack = new ExecStack(dataParsed.stack);
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
         
-        for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].onLoad){
-                this.pluginsRJS[plugin].onLoad();
-            }
-        }
+        
         this.gameStarted = true;
         this.removeBlackOverlay();
         this.unpause(true);

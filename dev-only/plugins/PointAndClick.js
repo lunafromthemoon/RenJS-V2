@@ -1,6 +1,6 @@
 class PointAndClick extends RenJS.Plugin {
 
-	execute(params) {
+	onCall(params) {
 		// called during runtime to add or remove objects
 
 		const action = params.body.split(" ")[0];
@@ -20,8 +20,9 @@ class PointAndClick extends RenJS.Plugin {
 					}
 					room.pointAndClick.map[obj].destroy();
 					this.game.resolveAction();
-					return;
+					
 				})
+				return;
 			}
 		}
 		if (action=="add"){
@@ -62,7 +63,7 @@ class PointAndClickTransition extends RenJS.Plugin {
 
 	onLoad() { this.onStart();}
 
-	execute(from, to, position, scaleX) {
+	onCall(from, to, position, scaleX) {
 		// Transitioning from one background to another
 		// Add objects to the background before showing it
 		let room = to.name;
@@ -94,6 +95,9 @@ class PointAndClickTransition extends RenJS.Plugin {
 		}
 		
 		// FADE TO BLACK to the new background
+		if (this.game.config.backgroundColor){
+			return this.game.screenEffects.transition.FADETOCOLOUR(from, to, this.game.config.backgroundColor, position, scaleX);
+		}
 		return this.game.screenEffects.transition.FADETOBLACK (from, to, position, scaleX);
 	}
 }

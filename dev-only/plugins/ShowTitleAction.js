@@ -1,6 +1,6 @@
 class SHOWTITLE extends RenJS.Plugin {
 
-	execute(params) {
+	onCall(params) {
 		const bg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'title');
         bg.alpha = 0;
         bg.anchor.set(0.5);

@@ -10,11 +10,12 @@ export default class StoryActionText extends StoryAction {
     }
 
     execute(): void {
+        let transitioning: Promise<any> = null;
     	if (this.params.actor){
-    		this.game.managers.text.say(this.params.actor, this.params.look, this.params.body);
+    		transitioning = this.game.managers.text.say(this.params.actor, this.params.look, this.params.body);
     	} else {
-    		this.game.managers.text.show(this.params.body);
+    		transitioning = this.game.managers.text.show(this.params.body);
     	}
-        // this action will resolve on its own
+        this.resolve(transitioning);
     }
 }

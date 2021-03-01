@@ -1,7 +1,7 @@
 
 class AttackEffect extends RenJS.Plugin {
 
-	execute(params) {
+	onCall(params) {
         let flashEffect = this.game.screenEffects.effects.FLASHIMAGE.bind(this.game.screenEffects.effects);
         flashEffect({
             image:"chainattack1",

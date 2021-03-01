@@ -13,15 +13,17 @@ export default class Plugin implements PluginInterface {
 		this.name = name
 	}
 
+	onInit(): void {}
+
 	onStart(): void {}
 
-	onLoad(): void {}
+	onLoad(slot,data): void {}
 
-	onSave(): void {}
+	onSave(slot,data): void {}
 
-	execute(params): void {}
+	onCall(params): void {}
 
-	teardown(): void {
+	onTeardown(): void {
 
 	}
 }

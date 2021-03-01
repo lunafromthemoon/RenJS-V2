@@ -45,7 +45,7 @@ export default class Effects implements RJSScreenEffectInterface {
                 credits.addChild(nextLine);
             }
         }
-        const timePerLine = params.time ? params.timePerLine : 700;
+        const timePerLine = params.timePerLine ? params.timePerLine : 700;
         const tweenChain: any = [
             {sprite: bg, tweenables: {alpha: 1}, time: this.game.storyConfig.fadetime},
             {sprite: credits, tweenables: {y: -(separation * params.text.length + 30)}, time: timePerLine * params.text.length},

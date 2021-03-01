@@ -78,7 +78,10 @@ class Boot extends RJSState {
         } else {
             game.gui = new RJSSimpleGUI(game)
         }
-
+        // preload the fonts by adding text, else they wont be fully loaded :\
+        for (const font of game.gui.fonts){
+            game.add.text(20, -100, font, {font: '42px ' + font});
+        }
         game.state.add('preloadStory', PreloadStory);
         game.state.start('preloadStory');
     }

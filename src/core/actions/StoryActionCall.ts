@@ -11,7 +11,7 @@ export default class StoryActionCall extends StoryAction {
 
     execute(): void {
       const plugin = this.game.pluginsRJS[this.params.actor];
-      plugin.execute(this.params);
+      plugin.onCall(this.params);
       // custom action should know when it resolves
     }
 }

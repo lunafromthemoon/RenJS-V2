@@ -5,6 +5,9 @@ export default class Plugin implements PluginInterface {
     protected game: RJS;
     protected name: string;
     constructor(name: any, game: any);
-    execute(params: any): void;
-    teardown(): void;
+    onStart(): void;
+    onLoad(): void;
+    onSave(): void;
+    onCall(params: any): void;
+    onTeardown(): void;
 }

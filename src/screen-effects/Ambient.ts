@@ -23,7 +23,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         if (this[name]){
             this[name]();
         } else if (this.game.pluginsRJS[name]){
-            this.game.pluginsRJS[name].execute();
+            this.game.pluginsRJS[name].onCall();
         }
     }
 

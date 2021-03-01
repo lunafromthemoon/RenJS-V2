@@ -10,27 +10,25 @@ export interface AudioManagerInterface extends RJSManagerInterface {
     mute(): void;
     changeVolume(type: any, volume: any): void;
     stopAll(): void;
+    getActive(): object;
     current: {
         bgm: Phaser.Sound;
         bgs: Phaser.Sound;
     };
-    sfx: object;
-    musicList: object;
 }
 export default class AudioManager implements AudioManagerInterface {
     current: {
         bgm: any;
         bgs: any;
     };
-    musicList: object;
-    sfx: object;
     private game;
     constructor(game: RJS);
+    getActive(): object;
     play(key: any, type: any, looped: any, transition: any): void;
     stop(type: string, transition: string): void;
     stopAudio(audio: Phaser.Sound, transition: string): void;
     playSFX(key: any): void;
-    set(current: any): void;
+    set(active: any): void;
     changeVolume(type: any, volume: any): void;
     decodeAudio(audioList: string[]): Promise<any>;
     isMusic(actor: any): boolean;

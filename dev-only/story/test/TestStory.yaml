@@ -56,7 +56,7 @@ testAnim:
   - animate horse:
     spritesheet: run LOOPED
     time: 1500
-  - deuzi says: When the animation stops, the image will freeze in whatever frame it gets
+  - deuzi says: When the animation stops, the image will freeze in whatever frame it gets to
   - deuzi says: If you want to reset it to the normal view, call animation stop
   - animate horse:
     spritesheet: STOP
@@ -87,7 +87,7 @@ testAnim:
     alpha: 0
     time: 1500
   - hide horse: WITH CUT
-  - deuzi says: Cgs con now also be placed behind characters
+  - deuzi says: Cgs can now also be placed behind characters
   - show horse: AT 180,350 BEHIND
   - deuzi says: Check how the horse runs behind me
   - animate horse:

@@ -60,7 +60,7 @@ export default class RJSGUI implements RJSGUIInterface {
     currentMusic: any;
     constructor(game: RJS);
     initAssets(gui: any): void;
-    init(): void;
+    init(): Promise<void>;
     initMenu(name: string, menuConfig: any): void;
     initHUD(hudConfig: any): void;
     getTextStyle(type: any): {

@@ -11,6 +11,7 @@ export interface RJSGameConfig extends IGameConfig {
     name: string;
     w: number;
     h: number;
+    backgroundColor: number;
     splash: {
         loadingScreen: string;
         loadingBar: {

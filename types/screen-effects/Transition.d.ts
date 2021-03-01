@@ -19,6 +19,7 @@ export default class Transition implements RJSScreenEffectInterface {
     FUSION(from: any, to: any, position?: any, scaleX?: any): Promise<void>;
     MOVE(from: any, to: any, position: any, scaleX?: any): Promise<void>;
     FADETOCOLOUR(from: any, to: any, colour: any, position?: any, scaleX?: any): Promise<void>;
-    FADETOBLACK(from: any, to: any, position?: any): Promise<void>;
-    FADETOWHITE(from: any, to: any, position?: any): Promise<void>;
+    FADETOBLACK(from: any, to: any, position?: any, scaleX?: any): Promise<void>;
+    FADETOWHITE(from: any, to: any, position?: any, scaleX?: any): Promise<void>;
+    FADETOBG(from: any, to: any, position?: any, scaleX?: any): Promise<void>;
 }
