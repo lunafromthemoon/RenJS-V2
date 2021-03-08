@@ -6,7 +6,7 @@ export default class TextManager implements TextManagerInterface {
     private game;
     constructor(game: RJS);
     set(...args: any): void;
-    show(text: any, title?: any, colour?: any): void;
+    show(text: any, title?: any, colour?: any): Promise<any>;
     hide(): void;
-    say(name: any, look: any, text: any): void;
+    say(name: any, look: any, text: any): Promise<any>;
 }

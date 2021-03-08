@@ -5,9 +5,10 @@ export default class Plugin implements PluginInterface {
     protected game: RJS;
     protected name: string;
     constructor(name: any, game: any);
+    onInit(): void;
     onStart(): void;
-    onLoad(): void;
-    onSave(): void;
+    onLoad(slot: any, data: any): void;
+    onSave(slot: any, data: any): void;
     onCall(params: any): void;
     onTeardown(): void;
 }
