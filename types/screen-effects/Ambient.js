@@ -3,9 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Ambient = /** @class */ (function () {
     function Ambient(game) {
         this.clearFunctions = [];
+        this.current = [];
         this.game = game;
         this.audioManager = game.managers.audio;
     }
+    Ambient.prototype.start = function (name) {
+        // start ambient from here or from plugin
+        this.current.push(name);
+        if (this[name]) {
+            this[name]();
+        }
+        else if (this.game.pluginsRJS[name]) {
+            this.game.pluginsRJS[name].onCall();
+        }
+    };
+    Ambient.prototype.set = function (ambients) {
+        if (!ambients)
+            return;
+        // set ambients after loading game
+        for (var i = 0; i < ambients.length; i++) {
+            this.start(ambients[i]);
+        }
+    };
     Ambient.prototype.addEmitter = function (options, params) {
         var emitter = this.game.add.emitter(this.game.world.centerX, -32, options.maxParticles);
         emitter.width = this.game.world.width * 1.5;
@@ -41,6 +60,7 @@ var Ambient = /** @class */ (function () {
     Ambient.prototype.CLEAR = function () {
         this.clearFunctions.forEach(function (func) { return func(); });
         this.clearFunctions = [];
+        this.current = [];
     };
     Ambient.prototype.RAIN = function () {
         var _this = this;

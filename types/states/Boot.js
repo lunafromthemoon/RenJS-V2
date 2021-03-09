@@ -3,10 +3,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -101,6 +103,11 @@ var Boot = /** @class */ (function (_super) {
         }
         else {
             game.gui = new RJSSimpleGUI_1.default(game);
+        }
+        // preload the fonts by adding text, else they wont be fully loaded :\
+        for (var _i = 0, _a = game.gui.fonts; _i < _a.length; _i++) {
+            var font = _a[_i];
+            game.add.text(20, -100, font, { font: '42px ' + font });
         }
         game.state.add('preloadStory', PreloadStory_1.default);
         game.state.start('preloadStory');

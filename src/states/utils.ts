@@ -2,24 +2,24 @@ import RJS from '../core/RJS';
 import {Sprite} from 'phaser-ce';
 import RJSSprite from '../components/RJSSprite';
 
-export function initSplash (game: RJS): Sprite {
-    const splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
-    splash.anchor.set(0.5)
-    return splash
-}
+// export function initSplash (game: RJS): Sprite {
+//     const splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
+//     splash.anchor.set(0.5)
+//     return splash
+// }
 
-export function initLoadingBar (game: RJS): RJSSprite {
-    const position = game.config.splash.loadingBar.position;
-    let loadingBar: RJSSprite = game.add.sprite(position.x,position.y , 'loading') ;
-    if (loadingBar.animations.frameTotal > 1){
-        // load second frame as full bar
-        const bg = loadingBar;
-        loadingBar = game.add.sprite(position.x,position.y , 'loading',1);
-        loadingBar.background = bg;
-    }
+// export function initLoadingBar (game: RJS): RJSSprite {
+//     const position = game.config.loadingScreen.loadingBar.position;
+//     let loadingBar: RJSSprite = game.add.sprite(position.x,position.y , 'loading') ;
+//     if (loadingBar.animations.frameTotal > 1){
+//         // load second frame as full bar
+//         const bg = loadingBar;
+//         loadingBar = game.add.sprite(position.x,position.y , 'loading',1);
+//         loadingBar.background = bg;
+//     }
 
-    return loadingBar
-}
+//     return loadingBar
+// }
 
 export function preparePath(path: string, game: RJS): string {
     if (game.config.i18n){
@@ -63,9 +63,6 @@ export function preloadCharacter(chName: string, game:RJS):void {
 }
 
 export function preloadExtra(asset:string, type:string, game:RJS){
-    // console.log("loading extra");
-    // console.log(asset);
-    // console.log(type);
     if (type === 'spritesheets') {
         const str = game.setup.extra[type][asset].split(' ');
         game.load.spritesheet(asset, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));

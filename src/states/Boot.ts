@@ -1,5 +1,5 @@
 import jsyaml from 'js-yaml'
-import {initLoadingBar, initSplash, loadStyle, preparePath} from './utils';
+import {loadStyle, preparePath} from './utils';
 import RJSState from './RJSState';
 import {Sprite} from 'phaser-ce';
 import PreloadStory from './PreloadStory';
@@ -31,17 +31,17 @@ class Boot extends RJSState {
     }
 
     preload (): void {
-        if (this.game.config.splash.loadingScreen){
-            this.game.load.image('loadingScreenBg',  preparePath(this.game.config.splash.loadingScreen, this.game));
+        if (this.game.config.loadingScreen.background){
+            this.game.load.image('loadingScreenBg',  preparePath(this.game.config.loadingScreen.background, this.game));
         }
-        if (this.game.config.splash.loadingBar) {
-            if (this.game.config.splash.loadingBar.fullBar){
-                this.game.load.image('loadingScreenBar',  preparePath(this.game.config.splash.loadingBar.fullBar, this.game));
+        if (this.game.config.loadingScreen.loadingBar) {
+            if (this.game.config.loadingScreen.loadingBar.fullBar){
+                this.game.load.image('loadingScreenBar',  preparePath(this.game.config.loadingScreen.loadingBar.fullBar, this.game));
             }
-            if (this.game.config.splash.loadingBar.asset){
-                const w = this.game.config.splash.loadingBar.size.w;
-                const h = this.game.config.splash.loadingBar.size.h;
-                this.game.load.spritesheet('loadingScreenBar',  preparePath(this.game.config.splash.loadingBar.asset, this.game),w,h);
+            if (this.game.config.loadingScreen.loadingBar.asset){
+                const w = this.game.config.loadingScreen.loadingBar.size.w;
+                const h = this.game.config.loadingScreen.loadingBar.size.h;
+                this.game.load.spritesheet('loadingScreenBar',  preparePath(this.game.config.loadingScreen.loadingBar.asset, this.game),w,h);
             }
         }
         loadStyle(preparePath(this.game.config.fonts, this.game));

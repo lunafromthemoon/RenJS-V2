@@ -45,7 +45,10 @@ var BackgroundManager = /** @class */ (function () {
     }
     BackgroundManager.prototype.createBackground = function (name) {
         var str = this.backgrounds[name].split(' ');
-        var bg = this.game.managers.story.backgroundSprites.create(this.game.world.centerX, this.game.world.centerY, name);
+        var pos = this.game.storyConfig.positions.BACKGROUND ?
+            this.game.storyConfig.positions.BACKGROUND :
+            { x: this.game.world.centerX, y: this.game.world.centerY };
+        var bg = this.game.managers.story.backgroundSprites.create(pos.x, pos.y, name);
         bg.alpha = 0;
         bg.visible = false;
         bg.name = name;
@@ -60,11 +63,10 @@ var BackgroundManager = /** @class */ (function () {
     BackgroundManager.prototype.set = function (name) {
         if (this.current) {
             this.current.destroy();
-            // this.current.alpha = 0;
         }
         this.current = this.createBackground(name);
-        // this.current.alpha = 1;
-        // this.backgrounds[name].visible = true;
+        this.current.alpha = 1;
+        this.current.visible = true;
         if (this.current.animated) {
             this.current.animations.play('run', null, true);
         }
@@ -81,7 +83,7 @@ var BackgroundManager = /** @class */ (function () {
                         this.current.animations.play('run', null, true);
                     }
                 }
-                transitioning = this.game.screenEffects.transition.get(transitionName)(oldBg, this.current, { x: this.game.world.centerX, y: this.game.world.centerY }, 1);
+                transitioning = this.game.screenEffects.transition.get(transitionName)(oldBg, this.current);
                 transitioning.then(function () {
                     if (oldBg)
                         oldBg.destroy();

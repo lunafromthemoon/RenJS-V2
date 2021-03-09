@@ -39,12 +39,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var AudioManager = /** @class */ (function () {
     function AudioManager(game) {
         this.current = { bgm: null, bgs: null };
-        // audioLoaded: boolean;
-        this.musicList = {};
-        this.sfx = {};
         this.game = game;
         this.changeVolume("bgm", game.userPreferences.bgmv);
     }
+    AudioManager.prototype.getActive = function () {
+        return {
+            bgm: (this.current.bgm) ? this.current.bgm.key : null,
+            bgs: (this.current.bgs) ? this.current.bgs.key : null
+        };
+    };
     AudioManager.prototype.play = function (key, type, looped, transition) {
         if (looped === undefined) {
             looped = true;
@@ -84,19 +87,15 @@ var AudioManager = /** @class */ (function () {
     };
     AudioManager.prototype.playSFX = function (key) {
         if (!this.game.userPreferences.muted) {
-            var sfx_1 = this.game.sound.play(key, this.game.userPreferences.sfxv);
-            sfx_1.onStop.addOnce(function () {
-                sfx_1.destroy();
-            });
+            var sfx = this.game.sound.play(key, this.game.userPreferences.sfxv);
         }
     };
-    AudioManager.prototype.set = function (current) {
-        this.current = current;
-        if (current.bgm) {
-            this.play(current.bgm, 'bgm', true, 'FADE');
+    AudioManager.prototype.set = function (active) {
+        if (active.bgm) {
+            this.play(active.bgm, 'bgm', true, 'FADE');
         }
-        if (current.bgs) {
-            this.play(current.bgs, 'bgs', true, 'FADE');
+        if (active.bgs) {
+            this.play(active.bgs, 'bgs', true, 'FADE');
         }
     };
     AudioManager.prototype.changeVolume = function (type, volume) {
@@ -106,18 +105,8 @@ var AudioManager = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
-                // if (this.game.setup.music){
-                //     Object.keys(this.game.setup.music).forEach(key => {
-                //         this.musicList[key] = this.game.add.audio(key);
-                //         audioList.push(this.musicList[key]);
-                //     },this);
-                // }
-                // if (this.game.setup.sfx){
-                //     Object.keys(this.game.setup.sfx).forEach(key => {
-                //         this.sfx[key] = this.game.add.audio(key);
-                //         audioList.push(this.sfx[key]);
-                //     });
-                // }
+                if (audioList.length == 0)
+                    return [2 /*return*/];
                 return [2 /*return*/, new Promise(function (resolve) {
                         _this.game.sound.setDecodedCallback(audioList, function () {
                             // this.audioLoaded = true;
@@ -136,18 +125,18 @@ var AudioManager = /** @class */ (function () {
     AudioManager.prototype.mute = function () {
         if (this.game.userPreferences.muted) {
             if (this.current.bgm) {
-                this.musicList[this.current.bgm].play('', 0, 1, true);
+                this.current.bgm.play('', 0, 1, true);
             }
             if (this.current.bgs) {
-                this.musicList[this.current.bgs].play('', 0, 1, true);
+                this.current.bgs.play('', 0, 1, true);
             }
         }
         else {
             if (this.current.bgm) {
-                this.musicList[this.current.bgm].stop();
+                this.current.bgm.stop();
             }
             if (this.current.bgs) {
-                this.musicList[this.current.bgs].stop();
+                this.current.bgs.stop();
             }
         }
         this.game.userPreferences.setPreference('muted', !this.game.userPreferences.muted);

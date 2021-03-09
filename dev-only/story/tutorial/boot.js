@@ -4,9 +4,9 @@ const globalConfig =  {
   'h': 600,
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
-  'splash': {
+  'loadingScreen': {
     fade: true,
-    'loadingScreen': 'assets/gui/loaderloaderbackground.png',
+    'background': 'assets/gui/loaderloaderbackground.png',
     'loadingBar': {
       'asset': 'assets/gui/loaderloading-bar.png',
       'position': {

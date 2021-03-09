@@ -13,11 +13,14 @@ var TextManager = /** @class */ (function () {
     };
     TextManager.prototype.show = function (text, title, colour) {
         var _this = this;
-        var t = this.game.managers.logic.parseVars(text.toString());
-        this.game.gui.showText(t, title, colour, function () {
-            _this.game.waitForClick(function () {
-                _this.game.gui.hideText();
-                _this.game.resolveAction();
+        return new Promise(function (resolve) {
+            var t = _this.game.managers.logic.parseVars(text.toString());
+            _this.game.gui.showText(t, title, colour, function () {
+                _this.game.waitForClick(function () {
+                    _this.game.gui.hideText();
+                    // this.game.resolveAction();
+                    resolve(true);
+                });
             });
         });
     };
@@ -30,7 +33,7 @@ var TextManager = /** @class */ (function () {
         if (look) {
             this.game.managers.character.show(name, this.game.storyConfig.transitions.say, { look: look });
         }
-        this.show(text, character.name, character.speechColour);
+        return this.show(text, character.name, character.speechColour);
     };
     return TextManager;
 }());

@@ -11,8 +11,8 @@ export default class RJSLoadingScreen {
     constructor(private game: RJS) {
         this.container = game.add.group();
         this.container.alpha = 0;
-        const config = game.config.splash;
-        if (config.loadingScreen){
+        const config = game.config.loadingScreen;
+        if (config.background){
             this.background = this.container.create(game.world.centerX, game.world.centerY, 'loadingScreenBg');
             this.background.anchor.set(0.5);
         }
@@ -34,7 +34,7 @@ export default class RJSLoadingScreen {
 
     setLoadingBar(game): void{
         if (!this.loadingBar) return;
-        const dir = game.config.splash.loadingBar.direction ? game.config.splash.loadingBar.direction : 0;
+        const dir = game.config.loadingScreen.loadingBar.direction ? game.config.loadingScreen.loadingBar.direction : 0;
         game.load.setPreloadSprite(this.loadingBar,dir);
     }
 
@@ -45,7 +45,7 @@ export default class RJSLoadingScreen {
     }
 
     destroy(game): void {
-        if (game.config.splash.fade){
+        if (game.config.loadingScreen.fade){
             const tween:Tween = game.add.tween(this.container).to({alpha:0},500);
             tween.onComplete.addOnce(()=>{
                 this.container.destroy();

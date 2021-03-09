@@ -71,10 +71,29 @@ var RJSGUI = /** @class */ (function () {
         // has to init this.assets, this.fonts and this.config
     };
     RJSGUI.prototype.init = function () {
-        this.initHUD(this.config.hud);
-        this.initMenu('main', this.config.menus.main);
-        this.initMenu('settings', this.config.menus.settings);
-        this.initMenu('saveload', this.config.menus.saveload);
+        return __awaiter(this, void 0, void 0, function () {
+            var audioList, i;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        audioList = [];
+                        for (i = 0; i < this.assets.length; i++) {
+                            if (this.assets[i].type == "audio") {
+                                audioList.push(this.assets[i].key);
+                            }
+                        }
+                        return [4 /*yield*/, this.game.managers.audio.decodeAudio(audioList)];
+                    case 1:
+                        _a.sent();
+                        // create the GUI
+                        this.initHUD(this.config.hud);
+                        this.initMenu('main', this.config.menus.main);
+                        this.initMenu('settings', this.config.menus.settings);
+                        this.initMenu('saveload', this.config.menus.saveload);
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     RJSGUI.prototype.initMenu = function (name, menuConfig) {
         if (!menuConfig)
@@ -115,6 +134,9 @@ var RJSGUI = /** @class */ (function () {
             text.wordWrapWidth = mBox['text-width'];
             this.messageBox.message = text;
             this.messageBox.addChild(text);
+            if (mBox['always-on']) {
+                this.messageBox.alwaysOn = true;
+            }
         }
         if (hudConfig['name-box']) {
             var x = hudConfig['name-box'].x - mBox.x;
@@ -450,7 +472,9 @@ var RJSGUI = /** @class */ (function () {
         this.hideText();
     };
     RJSGUI.prototype.hideText = function () {
-        this.messageBox.visible = false;
+        if (!this.messageBox.alwaysOn) {
+            this.messageBox.visible = false;
+        }
         this.messageBox.message.text = '';
         if (this.ctc) {
             this.ctc.visible = false;

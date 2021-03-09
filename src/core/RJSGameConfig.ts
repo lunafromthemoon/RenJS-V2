@@ -3,6 +3,7 @@ import {IGameConfig} from 'phaser-ce';
 // eslint-disable-next-line @typescript-eslint/class-name-casing
 export interface i18nInterface {
     langs: string[];
+    background: string;
     path: string;
     format: string;
     w: number;
@@ -15,8 +16,8 @@ export interface RJSGameConfig extends IGameConfig {
     w: number;
     h: number;
     backgroundColor:number;
-    splash: {
-        loadingScreen: string;
+    loadingScreen: {
+        background: string;
         loadingBar: {
             asset: string;
             position: {

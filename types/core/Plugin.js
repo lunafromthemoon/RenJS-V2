@@ -5,9 +5,12 @@ var Plugin = /** @class */ (function () {
         this.game = game;
         this.name = name;
     }
-    Plugin.prototype.execute = function (params) {
-    };
-    Plugin.prototype.teardown = function () {
+    Plugin.prototype.onInit = function () { };
+    Plugin.prototype.onStart = function () { };
+    Plugin.prototype.onLoad = function (slot, data) { };
+    Plugin.prototype.onSave = function (slot, data) { };
+    Plugin.prototype.onCall = function (params) { };
+    Plugin.prototype.onTeardown = function () {
     };
     return Plugin;
 }());

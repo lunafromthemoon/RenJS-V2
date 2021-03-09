@@ -46,7 +46,7 @@ var Transition = /** @class */ (function () {
             return this[name].bind(this);
         }
         else if (this.game.pluginsRJS[name]) {
-            return this.game.pluginsRJS[name].execute.bind(this);
+            return this.game.pluginsRJS[name].onCall.bind(this.game.pluginsRJS[name]);
         }
     };
     Transition.prototype.CUT = function (from, to, position, scaleX) {
@@ -182,17 +182,26 @@ var Transition = /** @class */ (function () {
             });
         });
     };
-    Transition.prototype.FADETOBLACK = function (from, to, position) {
+    Transition.prototype.FADETOBLACK = function (from, to, position, scaleX) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.FADETOCOLOUR(from, to, 0x000000, position, null)];
+                return [2 /*return*/, this.FADETOCOLOUR(from, to, 0x000000, position, scaleX)];
             });
         });
     };
-    Transition.prototype.FADETOWHITE = function (from, to, position) {
+    Transition.prototype.FADETOWHITE = function (from, to, position, scaleX) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.FADETOCOLOUR(from, to, 0xFFFFFF, position, null)];
+                return [2 /*return*/, this.FADETOCOLOUR(from, to, 0xFFFFFF, position, scaleX)];
+            });
+        });
+    };
+    Transition.prototype.FADETOBG = function (from, to, position, scaleX) {
+        return __awaiter(this, void 0, void 0, function () {
+            var bgColor;
+            return __generator(this, function (_a) {
+                bgColor = this.game.config.backgroundColor;
+                return [2 /*return*/, this.FADETOCOLOUR(from, to, bgColor, position, scaleX)];
             });
         });
     };

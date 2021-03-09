@@ -85,8 +85,6 @@ var RJSAssetLoader = /** @class */ (function () {
             if (!this.episodes)
                 this.episodes = [];
         }
-        if ()
-            ;
     }
     RJSAssetLoader.prototype.getEpisode = function (sceneName) {
         for (var i = 0; i < this.episodes.length; i++) {

@@ -35,12 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -86,13 +84,13 @@ var StoryManager = /** @class */ (function () {
         }
     };
     StoryManager.prototype.clearScene = function () {
-        console.log("Clearing scene");
         this.game.control.execStack.clear();
         this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.game.managers.character.hideAll("CUT");
         this.game.managers.audio.stopAll();
         this.game.managers.cgs.hideAll("CUT");
         this.game.managers.background.hide(null, "CUT");
+        this.game.screenEffects.ambient.CLEAR();
         this.currentScene = [];
     };
     StoryManager.prototype.startScene = function (name) {
@@ -110,7 +108,7 @@ var StoryManager = /** @class */ (function () {
                     case 2:
                         this.game.control.execStack.replace(name);
                         this.game.managers.logic.clearChoices(); // For any interrup still showing
-                        this.currentScene = __spreadArrays(this.game.story[name]);
+                        this.currentScene = __spreadArray([], this.game.story[name]);
                         return [2 /*return*/];
                 }
             });

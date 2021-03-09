@@ -3,10 +3,12 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -27,7 +29,7 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
@@ -93,7 +95,7 @@ var LanguageChooser_1 = __importDefault(require("../states/LanguageChooser"));
 var RJS = /** @class */ (function (_super) {
     __extends(RJS, _super);
     function RJS(config) {
-        var _this = _super.call(this, config.w, config.h, config.renderer) || this;
+        var _this = _super.call(this, config.w, config.h, config.renderer, config.parent) || this;
         _this.gameStarted = false;
         _this.xShots = [];
         _this.pluginsRJS = {};
@@ -129,9 +131,9 @@ var RJS = /** @class */ (function (_super) {
     };
     RJS.prototype.initStory = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var audioList, _i, _a, font;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var plugin, audioList;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         this.managers = {
                             tween: new TweenManager_1.default(this),
@@ -152,21 +154,32 @@ var RJS = /** @class */ (function (_super) {
                         this.managers.cgs.transition = this.screenEffects.transition;
                         // init game and start main menu
                         this.managers.story.setupStory();
-                        this.gui.init();
+                        return [4 /*yield*/, this.gui.init()];
+                    case 1:
+                        _a.sent();
                         this.initInput();
-                        if (!!this.setup.lazyloading) return [3 /*break*/, 2];
+                        for (plugin in this.pluginsRJS) {
+                            if (this.pluginsRJS[plugin].onInit) {
+                                this.pluginsRJS[plugin].onInit();
+                            }
+                        }
+                        if (!!this.setup.lazyloading) return [3 /*break*/, 3];
+                        // decode audio for all game
+                        if (!this.setup.music)
+                            this.setup.music = {};
+                        if (!this.setup.sfx)
+                            this.setup.sfx = {};
                         audioList = Object.keys(this.setup.music).concat(Object.keys(this.setup.sfx));
                         return [4 /*yield*/, this.managers.audio.decodeAudio(audioList)];
-                    case 1:
-                        _b.sent();
-                        _b.label = 2;
                     case 2:
-                        // preload the fonts by adding text, else they wont be fully loaded :\
-                        for (_i = 0, _a = this.gui.fonts; _i < _a.length; _i++) {
-                            font = _a[_i];
-                            this.add.text(20, -100, font, { font: '42px ' + font });
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        if (this.setup.lazyloading.backgroundLoading) {
+                            this.managers.story.assetLoader.loadEpisodeInBackground(0);
                         }
-                        return [2 /*return*/];
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -193,7 +206,8 @@ var RJS = /** @class */ (function (_super) {
     RJS.prototype.setBlackOverlay = function () {
         this.blackOverlay = this.add.graphics(0, 0);
         this.managers.story.cgsSprites.addChild(this.blackOverlay);
-        this.blackOverlay.beginFill(0x000000, 1);
+        var color = this.config.backgroundColor ? this.config.backgroundColor : 0x000000;
+        this.blackOverlay.beginFill(color, 1);
         this.blackOverlay.drawRect(0, 0, this.config.w, this.config.h);
         this.blackOverlay.endFill();
     };
@@ -214,13 +228,16 @@ var RJS = /** @class */ (function (_super) {
         this.gameStarted = false;
         this.control.paused = true;
         for (var plugin in this.pluginsRJS) {
-            this.pluginsRJS[plugin].teardown();
+            if (this.pluginsRJS[plugin].onTeardown) {
+                this.pluginsRJS[plugin].onTeardown();
+            }
         }
         this.removeBlackOverlay();
         this.gui.showMenu('main');
     };
     RJS.prototype.start = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var plugin;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -230,6 +247,11 @@ var RJS = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.managers.story.startScene('start')];
                     case 1:
                         _a.sent();
+                        for (plugin in this.pluginsRJS) {
+                            if (this.pluginsRJS[plugin].onStart) {
+                                this.pluginsRJS[plugin].onStart();
+                            }
+                        }
                         this.removeBlackOverlay();
                         this.gameStarted = true;
                         this.managers.story.interpret();
@@ -265,12 +287,18 @@ var RJS = /** @class */ (function (_super) {
         var data = {
             background: this.managers.background.current.name,
             characters: this.managers.character.showing,
-            audio: this.managers.audio.current,
+            audio: this.managers.audio.getActive(),
             cgs: this.managers.cgs.current,
+            ambients: this.screenEffects.ambient.current,
             stack: this.control.execStack.shallowCopy(),
             vars: this.managers.logic.vars
             // should include any interrupts showing
         };
+        for (var plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin].onSave) {
+                this.pluginsRJS[plugin].onSave(slot, data);
+            }
+        }
         var dataSerialized = JSON.stringify(data);
         localStorage.setItem('RenJSDATA' + this.config.name + slot, dataSerialized);
         if (this.gui.addThumbnail && this.xShots && this.xShots.length) {
@@ -284,7 +312,7 @@ var RJS = /** @class */ (function (_super) {
     };
     RJS.prototype.loadSlot = function (slot) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, dataParsed;
+            var data, dataParsed, plugin;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -297,6 +325,11 @@ var RJS = /** @class */ (function (_super) {
                             return [2 /*return*/];
                         }
                         dataParsed = JSON.parse(data);
+                        for (plugin in this.pluginsRJS) {
+                            if (this.pluginsRJS[plugin].onLoad) {
+                                this.pluginsRJS[plugin].onLoad(slot, dataParsed);
+                            }
+                        }
                         this.setBlackOverlay();
                         this.managers.story.clearScene();
                         this.managers.background.set(dataParsed.background);
@@ -308,6 +341,7 @@ var RJS = /** @class */ (function (_super) {
                     case 2:
                         _a.sent();
                         this.managers.logic.set(dataParsed.vars);
+                        this.screenEffects.ambient.set(dataParsed.ambients);
                         this.gui.clear();
                         // resolve stack
                         this.control.execStack = new ExecStack_1.default(dataParsed.stack);
