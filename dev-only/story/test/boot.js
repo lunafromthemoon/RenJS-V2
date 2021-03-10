@@ -5,7 +5,7 @@ const globalConfig =  {
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
-    'background': 'assets/gui/loaderloaderbackground.png',
+    'background': 'assets/gui/quickstartbg.png',
     'loadingBar': {
       'asset': 'assets/gui/loaderloading-bar.png',
       'position': {

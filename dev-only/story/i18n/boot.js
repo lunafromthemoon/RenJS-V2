@@ -5,7 +5,7 @@ const globalConfig =  {
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
-    'background': 'assets/gui/loaderloaderbackground.png',
+    'background': 'assets/gui/quickstartbg.png',
     'loadingBar': {
       'asset': 'assets/gui/LANG/loaderloading-bar.png',
       'position': {
@@ -27,7 +27,7 @@ const globalConfig =  {
     'story/i18n/LANG/Story.yaml'
   ],
   i18n: {
-    background: 'assets/gui/loaderloaderbackground.png',
+    background: 'assets/gui/quickstartbg.png',
     langs: {
       "en": {
         'asset': 'assets/gui/i18n/en.png',

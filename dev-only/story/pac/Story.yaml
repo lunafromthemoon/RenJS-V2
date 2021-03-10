@@ -1,0 +1,73 @@
+start:
+  - play morningBGM:
+  - show room: WITH PaCTransition CONTINUE
+  - show deuzi: happy AT CENTER WITH FADE
+  - deuzi says: Hello, welcome to (bold)the Point and Click demo!(end)
+  - deuzi says normal: After this scene is over, you can click on any object in the screen.
+  - deuzi says: Are you ready?
+  - choice:
+    - "Yes!":
+      - deuzi says happy: That's great! Go ahead!
+  - hide deuzi:
+  - var rat: 0
+
+ratScene:
+  - var rat: "{rat} + 1"
+  - text: You touched the rat {rat} times.
+
+slimeSceneDay:
+  - text: You touch the slime and fall asleep
+  - show room_night: WITH PaCTransition
+  - text: The night brings other creatures.
+  - text: Each room has its own objects, you define them in the Setup.yaml file.
+
+batScene:
+  - text: You try to touch the bat, but it flies away.
+  - call pointAndClick: remove bat
+  - text: You can add and remove objects from the current room.
+  - call pointAndClick: add
+    name: slime
+    x: 500
+    y: 300
+    scene: slimeSceneNight
+
+slimeSceneNight:
+  - text: You again touch the slime, and fall asleep.
+  - show room: WITH PaCTransition
+  - text: When you wake up, it's morning. The bat enters again throught the window.
+  - call pointAndClick: add
+    name: bat
+    key: bat
+    x: 200
+    y: 50
+    scene: endGame
+
+endGame:
+  - show deuzi: happy AT CENTER WITH FADE
+  - deuzi says normal: And that was the Point And Click plugin!
+  - effect ROLLINGCREDITS:
+    endGame: true
+    text:
+      - RenJS.V2 created by
+      - lunafromthemoon
+      - null
+      - In collaboration with
+      - RockDaFox
+      - null
+      - Powered by PhaserJS
+      - null
+      - null
+      - Thanks for playing
+      - The PointAndClick Plugin Game
+      - null
+      - background art and cgs by
+      - konett
+      - null
+      - characters by
+      - Shida
+      - null
+      - music by
+      - Evan Schaeffer
+      - null
+      - monsters by
+      - Red Chan

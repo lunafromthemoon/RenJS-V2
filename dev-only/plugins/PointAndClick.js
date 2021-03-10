@@ -31,16 +31,16 @@ class PointAndClick extends RenJS.Plugin {
 			}
 			infoPaC.added[room.name][obj]={
 				name:params.name,
-				key:params.key,
-				x:params.x,
-				y:params.y,
+				key:params.key ? params.key : params.name,
+				x:params.x-room.width/2,
+				y:params.y-room.height/2,
 				scene:params.scene
 			}
 			// if it was previously deleted
 			if (infoPaC.removed[room.name] && infoPaC.removed[room.name][obj]){
 				delete infoPaC.removed[room.name][obj];
 			}
-			createObject(this.game,room,infoPaC.added[room.name][obj]);
+			createObject(this.game,room,infoPaC.added[room.name][obj],"FADE");
 			this.game.resolveAction();
 			return;
 		}
@@ -102,7 +102,7 @@ class PointAndClickTransition extends RenJS.Plugin {
 	}
 }
 
-function createObject(game,room,obj){
+function createObject(game,room,obj, transition){
 	// Create object in room
 	if (!room.pointAndClick){
 		room.pointAndClick = {
@@ -120,6 +120,10 @@ function createObject(game,room,obj){
         
     },game,1,0,1,0,room.pointAndClick.group);
 	room.pointAndClick.map[obj.name] = btn;
+	if (transition){
+		btn.alpha=0;
+		game.screenEffects.transition.FADEIN(btn);
+	}
 }
 
 RenJSGame.addPlugin('pointAndClick',PointAndClick)

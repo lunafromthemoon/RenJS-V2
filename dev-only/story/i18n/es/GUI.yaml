@@ -356,7 +356,7 @@ assets:
   images:
     loaderbackground:
       name: loaderbackground
-      fileName: loaderloaderbackground.png
+      fileName: quickstartbg.png
     asset16:
       name: asset16
       fileName: saveloadasset16.png

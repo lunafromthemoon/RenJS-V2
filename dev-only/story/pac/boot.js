@@ -5,7 +5,6 @@ const globalConfig =  {
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
-    fade: true,
     'background': 'assets/gui/quickstartbg.png',
     'loadingBar': {
       'asset': 'assets/gui/loaderloading-bar.png',
@@ -23,9 +22,9 @@ const globalConfig =  {
   'fonts': 'assets/gui/fonts.css',
   'guiConfig': 'story/GUI.yaml',
   'storyConfig': 'story/Config.yaml',
-  storySetup: 'story/tutorial/Setup.yaml',
+  storySetup: 'story/pac/Setup.yaml',
   'storyText': [
-    'story/tutorial/Story.yaml'
+    'story/pac/Story.yaml'
   ],
   debugMode:true
 }
