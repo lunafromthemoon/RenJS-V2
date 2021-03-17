@@ -17,7 +17,9 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
     current = null;
 
     constructor(private game: RJS) {
-        this.backgrounds = game.setup.backgrounds
+        if (game.setup.backgrounds){
+            this.backgrounds = game.setup.backgrounds
+        }
     }
 
     createBackground(name): void {
