@@ -13,6 +13,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     vars: object;
     currentChoices: any[];
     visualChoices: Group;
+    showingText: boolean;
     constructor(game: RJS);
     set(vars: any): void;
     setVar(name: any, value: any): void;
@@ -25,7 +26,8 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     createVisualChoice(image: any, position: any, index: any, key: any, execId: any): Phaser.Button;
     choose(index: any, choiceText: any, execId: any): void;
     getExecStackId(): string;
-    showChoices(choices: any): void;
+    checkTextAction(firstChoice: any): Promise<boolean>;
+    showChoices(choices: any): Promise<void>;
     interrupt(steps: any, choices: any): any;
     updateInterruptions(): void;
     clearChoices(): any;

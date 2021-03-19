@@ -148,6 +148,13 @@ testtext:
   # - play morningBGM:
   - show bus_station:
   - show deuzi: happy
+  - choice:
+    - deuzi says: Choose a name
+    - Deuzi:
+      - text: You chose Deuzi
+    - Liz:
+      - text: You chose Liz
+  - show liz: AT CENTER
   - deuzi says:  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
   - text:  Text with styles
   - text: This is (italic)italic(end), this is (bold)bold(end).
@@ -161,7 +168,9 @@ testtext:
   - deuzi says: 1
   - liz says: 2
   - deuzi says: 3
+
   - choice:
+    - text: choose a number!
     - "4":
       - var chosenNumber: 4
     - "5":

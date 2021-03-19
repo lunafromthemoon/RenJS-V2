@@ -16,6 +16,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     currentChoices: any[];
     // interrupting: boolean;
     visualChoices: Group = null;
+    showingText: boolean = false;
 
     constructor(private game: RJS) {
         const log = localStorage.getItem('RenJSChoiceLog'+game.config.name);
@@ -154,6 +155,11 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     choose(index, choiceText, execId): void {
+        // remove message box if showing message
+        if (this.showingText){
+            this.game.managers.text.hide()
+            this.showingText = false;
+        }
         // update choice log
         this.updateChoiceLog(execId,choiceText);
         let chosenOption = this.currentChoices[index];
@@ -184,7 +190,25 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return execId;
     }
 
-    showChoices(choices): void {
+    async checkTextAction(firstChoice){
+        let action=this.game.managers.story.parseAction({...firstChoice});
+        console.log(action);
+        if (action.mainAction == "say" || action.mainAction == "text"){
+            if (action.actor){
+                await this.game.managers.text.say(action.actor, action.look, action.body, true);
+            } else {
+                await this.game.managers.text.show(action.body,null,null,true);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    async showChoices(choices) {
+        this.showingText = await this.checkTextAction(choices[0]);
+        if (this.showingText){
+            choices.shift();
+        }
         const ch = choices.map(choice => ({...choice})).filter(choice => this.evalChoice(choice))
         this.currentChoices = this.currentChoices.concat(ch);
         this.game.gui.showChoices(this.currentChoices,this.getExecStackId());
@@ -226,6 +250,10 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // this.interrupting = false;
         if (this.visualChoices){
             this.visualChoices.destroy();
+        }
+        if (this.showingText){
+            this.game.managers.text.hide()
+            this.showingText = false;
         }
     }
 }
