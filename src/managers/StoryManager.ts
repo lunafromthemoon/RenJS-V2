@@ -159,6 +159,19 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             }
         }
 
+        if (mainAction == "play"){
+            const str = params ? params.split(' ') : [];
+            const loopedParamIdx = str.indexOf('LOOPED');
+            if (loopedParamIdx !== -1){
+                action.looped = true;
+                if (str[loopedParamIdx+1] == "FROM"){
+                    action.fromSeconds = parseFloat(str[loopedParamIdx+2])
+                }
+            } else {
+                action.looped = false;
+            }
+        }
+
         if (mainAction == "show" && action.actorType == "cgs"){
             const str = params ? params.split(' ') : [];
             if (str.indexOf('BEHIND') !== -1){

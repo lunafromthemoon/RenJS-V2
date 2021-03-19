@@ -192,7 +192,6 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     async checkTextAction(firstChoice){
         let action=this.game.managers.story.parseAction({...firstChoice});
-        console.log(action);
         if (action.mainAction == "say" || action.mainAction == "text"){
             if (action.actor){
                 await this.game.managers.text.say(action.actor, action.look, action.body, true);

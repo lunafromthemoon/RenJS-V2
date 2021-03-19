@@ -68,7 +68,7 @@ export default class Ambient implements RJSScreenEffectInterface {
     }
 
     BGS (sound: string): void {
-        this.audioManager.play(sound, 'bgs', true, 'FADE');
+        this.audioManager.play(sound, 'bgs', true,null, 'FADE');
     }
 
     CLEAR (): void {
@@ -78,7 +78,7 @@ export default class Ambient implements RJSScreenEffectInterface {
     }
 
     RAIN (): void {
-        this.audioManager.play('rainBGS','bgs',true,'FADE');
+        this.audioManager.play('rainBGS','bgs',true,null,'FADE');
         let maxLifespan = 1600;
         let emitter = this.addEmitter({
             maxParticles: 400,

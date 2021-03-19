@@ -25,7 +25,7 @@ export default class Effects implements RJSScreenEffectInterface {
         this.game.control.unskippable = true;
         const bg = this.game.add.graphics(0, 0);
         if (params.music){
-            this.audioManager.play(params.music, 'bgm', true, 'FADE');
+            this.audioManager.play(params.music, 'bgm', true, null, 'FADE');
         }
         
         bg.beginFill(0x000000, 1);

@@ -1,7 +1,7 @@
 import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
 export interface AudioManagerInterface extends RJSManagerInterface {
-    play(key: string, type: string, looped: boolean, transition: string): void;
+    play(key: string, type: string, looped: boolean, fromSeconds: number, transition: string): void;
     stop(type: string, transition: string): void;
     playSFX(key: string): void;
     isMusic(actor: any): boolean;
@@ -24,7 +24,7 @@ export default class AudioManager implements AudioManagerInterface {
     private game;
     constructor(game: RJS);
     getActive(): object;
-    play(key: any, type: any, looped: any, transition: any): void;
+    play(key: any, type: any, looped: any, fromSeconds: any, transition: any): void;
     stop(type: string, transition: string): void;
     stopAudio(audio: Phaser.Sound, transition: string): void;
     playSFX(key: any): void;

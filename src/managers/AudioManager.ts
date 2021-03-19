@@ -2,7 +2,7 @@ import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
 
 export interface AudioManagerInterface extends RJSManagerInterface {
-    play(key: string, type: string, looped: boolean, transition: string): void;
+    play(key: string, type: string, looped: boolean, fromSeconds:number, transition: string): void;
     stop (type: string, transition: string): void;
     playSFX (key: string): void;
     isMusic(actor): boolean;
@@ -36,19 +36,27 @@ export default class AudioManager implements AudioManagerInterface {
         };
     }
 
-    play (key,type,looped,transition): void {
-        if (looped === undefined){
-            looped = true;
-        }
+    play (key,type,looped,fromSeconds,transition): void {
         // stop old music
         this.stop(type,transition);
         // add new music
-        this.current[type] = this.game.add.audio(key);
+        const music = this.game.add.audio(key);
+        this.current[type] = music;
         if (!this.game.userPreferences.muted) {
+            let marker = ''
+            if (looped && fromSeconds){
+                marker = 'intro';
+                // looped = false;
+                music.addMarker(marker,0,fromSeconds,1,false);
+                music.onMarkerComplete.addOnce(()=>{
+                    music.addMarker("looped",fromSeconds,music.totalDuration-fromSeconds,1,true);
+                    music.play("looped");
+                })
+            }
             if (transition === 'FADE') {
-                this.current[type].fadeIn(1500,looped);
+                music.fadeIn(1500,looped,marker);
             } else {
-                this.current[type].play('',0,1,looped);
+                music.play(marker,0,1,looped);
             }
         }
     }
@@ -82,10 +90,10 @@ export default class AudioManager implements AudioManagerInterface {
 
     set (active): void {
         if (active.bgm){
-            this.play(active.bgm,'bgm',true,'FADE');
+            this.play(active.bgm,'bgm',true,null,'FADE');
         }
         if (active.bgs){
-            this.play(active.bgs,'bgs',true,'FADE');
+            this.play(active.bgs,'bgs',true,null,'FADE');
         }
 
     }
@@ -96,6 +104,8 @@ export default class AudioManager implements AudioManagerInterface {
 
     async decodeAudio(audioList:string[]):Promise<any> {
         if (audioList.length==0) return;
+        console.log("decoding list")
+        console.log(audioList)
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(audioList, () => {
                 // this.audioLoaded = true;

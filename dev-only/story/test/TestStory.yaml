@@ -9,10 +9,23 @@ start:
       - scene: testAaE
     - test logic:
       - scene: testLogic
+    - test sound:
+      - scene: testSound
     - test animations:
       - scene: testAnim
     - test end game:
       - scene: endgame
+
+testSound:
+  - text: play music once
+  - play helloBGS: 
+  - text: normal loop
+  - play helloBGS: LOOPED
+  - text: looped from 0.5
+  - play helloBGS: LOOPED FROM 0.5
+  - text: stop sound
+  - stop bgm:
+  - scene: start
 
 endgame:
   - text: What kind of ending?
@@ -149,11 +162,11 @@ testtext:
   - show bus_station:
   - show deuzi: happy
   - choice:
-    - deuzi says: Choose a name
-    - Deuzi:
-      - text: You chose Deuzi
+    - deuzi says: Choose a partner!
+    - Deuzilene:
+      - text: You chose Deuzilene!
     - Liz:
-      - text: You chose Liz
+      - text: You chose Liz!
   - show liz: AT CENTER
   - deuzi says:  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
   - text:  Text with styles

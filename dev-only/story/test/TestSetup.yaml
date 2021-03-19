@@ -64,6 +64,7 @@ music:
   storeBGM: assets/audio/Evan_Schaeffer_-_18_-_Big_Tree.mp3
   cicadas: assets/audio/Cicada.mp3
   rainBGS: assets/audio/Rain.mp3
+  helloBGS: assets/audio/hello.wav
 sfx:
   ringtoneSFX: assets/audio/nokia6210-24-elise.mp3
   ringtoneSFX2: assets/audio/alcatel-top_secret.mp3

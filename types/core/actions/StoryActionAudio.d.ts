@@ -6,6 +6,7 @@ export default class StoryActionAudio extends StoryAction {
         looped: boolean;
         transition: string;
         actorType: any;
+        fromSeconds: number;
     };
     constructor(params: any, game: any, action: any);
     execute(): void;
