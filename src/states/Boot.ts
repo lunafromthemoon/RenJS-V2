@@ -60,6 +60,7 @@ class Boot extends RJSState {
             }
         });
         // load the setup
+        game.jsyaml = jsyaml;
         game.setup = jsyaml.load(game.cache.getText('storySetup'));
         if (!game.setup) game.setup = {};
         game.storyConfig = jsyaml.load(game.cache.getText('storyConfig'));
