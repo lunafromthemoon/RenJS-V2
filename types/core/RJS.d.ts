@@ -25,6 +25,7 @@ export default class RJS extends Game {
     story: object;
     guiSetup: any;
     gui: RJSGUI;
+    tools: any;
     pluginsRJS: any;
     addPlugin(name: string, cls: any): void;
     config: RJSGameConfig;
