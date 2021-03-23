@@ -139,13 +139,15 @@ export default class RJS extends Game {
         
     }
 
-    pause (): void {
+    pause (keepGUI?: boolean): void {
         this.control.paused = true;
         this.control.skipping = false;
         this.control.auto = false;
 
         this.takeXShot();
-        this.gui.hideHUD();
+        if (!keepGUI){
+            this.gui.hideHUD();
+        }
     }
 
     takeXShot (): void {

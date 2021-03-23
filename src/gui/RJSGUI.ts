@@ -51,7 +51,7 @@ export default class RJSGUI implements RJSGUIInterface {
     textLoop = null;
 
     sliderLimits = {
-        textSpeed: [10,150],
+        textSpeed: [10,100],
         autoSpeed: [50,300],
         bgmv: [0,1],
         sfxv: [0,1]
@@ -606,6 +606,11 @@ export default class RJSGUI implements RJSGUIInterface {
             text.setTextBounds(offsetX,offsetY, sprite.width, sprite.height);
             text.boundsAlignH = component.align;
             text.boundsAlignV = 'top'
+            if (component['text-width']){
+                text.wordWrap = true;
+                text.align = component.align;
+                text.wordWrapWidth = component['text-width'];
+            }
         }
         sprite.addChild(text);
         sprite.text = text;

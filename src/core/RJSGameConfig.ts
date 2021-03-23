@@ -67,4 +67,11 @@ export interface StoryConfig extends IGameConfig {
         menus: string;
         skippable: boolean;
     };
+    userPreferences?: {
+        textSpeed: number;
+        autoSpeed: number;
+        bgmv: number;
+        sfxv: number;
+        muted: boolean;
+    }
 }

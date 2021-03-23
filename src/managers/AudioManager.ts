@@ -104,8 +104,6 @@ export default class AudioManager implements AudioManagerInterface {
 
     async decodeAudio(audioList:string[]):Promise<any> {
         if (audioList.length==0) return;
-        console.log("decoding list")
-        console.log(audioList)
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(audioList, () => {
                 // this.audioLoaded = true;

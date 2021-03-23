@@ -51,7 +51,7 @@ export default class RJS extends Game {
     launch(): void;
     setupScreen(): void;
     initStory(): Promise<void>;
-    pause(): void;
+    pause(keepGUI?: boolean): void;
     takeXShot(): void;
     unpause(force?: any): void;
     setBlackOverlay(): void;

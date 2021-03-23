@@ -10,21 +10,21 @@ export interface UserPreferencesInterface {
 }
 
 export default class UserPreferences implements UserPreferencesInterface {
-    textSpeed = 50;
+    textSpeed = 20;
     autoSpeed = 150;
     bgmv = 0.5;
     sfxv = 0.5;
     muted = false;
 
     constructor(private game: RJS){
-        let data = localStorage.getItem('RenJSUserPreferences' + game.config.name);
-        if (data){
-            const savedPreferences = JSON.parse(data);
-            this.textSpeed = savedPreferences.textSpeed;
-            this.autoSpeed = savedPreferences.autoSpeed;
-            this.bgmv = savedPreferences.bgmv;
-            this.sfxv = savedPreferences.sfxv;
-            this.muted = savedPreferences.muted;
+        const data = localStorage.getItem('RenJSUserPreferences' + game.config.name);
+        let preferences = data ? JSON.parse(data) : game.storyConfig.userPreferences;
+        if (preferences) {
+            this.textSpeed = preferences.textSpeed;
+            this.autoSpeed = preferences.autoSpeed;
+            this.bgmv = preferences.bgmv;
+            this.sfxv = preferences.sfxv;
+            this.muted = preferences.muted;
         }
     }
 

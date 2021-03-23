@@ -43,3 +43,9 @@ logChoices: true
 # Default waiting time for timeouts if not specified
 timeout: 5000
 
+userPreferences:
+  textSpeed: 20
+  autoSpeed: 150
+  bgmv: 0.5
+  sfxv: 0.5
+  muted: false
