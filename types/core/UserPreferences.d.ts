@@ -15,6 +15,7 @@ export default class UserPreferences implements UserPreferencesInterface {
     sfxv: number;
     muted: boolean;
     constructor(game: RJS);
+    setPreferences(preferences: any): void;
     setPreference(type: any, value: any): void;
     savePreferences(): void;
 }

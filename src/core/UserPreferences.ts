@@ -18,7 +18,11 @@ export default class UserPreferences implements UserPreferencesInterface {
 
     constructor(private game: RJS){
         const data = localStorage.getItem('RenJSUserPreferences' + game.config.name);
-        let preferences = data ? JSON.parse(data) : game.storyConfig.userPreferences;
+        let preferences = JSON.parse(data);
+        this.setPreferences(preferences);
+    }
+
+    setPreferences(preferences){
         if (preferences) {
             this.textSpeed = preferences.textSpeed;
             this.autoSpeed = preferences.autoSpeed;
