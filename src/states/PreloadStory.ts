@@ -7,6 +7,7 @@ import RJSLoadingScreen from '../components/RJSLoadingScreen';
 
 class PreloadStory extends RJSState {
     loadingScreen:RJSLoadingScreen
+    readyToStart: boolean = false;
 
     constructor() {
         super();
@@ -18,6 +19,19 @@ class PreloadStory extends RJSState {
 
     preload(): void {
         this.loadingScreen.setLoadingBar(this.game);
+        // wait a minimal amount of time in the loading loadingScreen
+        // to use as splash screen
+        if (this.game.config.loadingScreen.minTime){
+            setTimeout(()=>{
+                if (this.readyToStart){
+                    this.initGame();
+                } else {
+                    this.readyToStart = true;
+                }
+            },this.game.config.loadingScreen.minTime)
+        } else {
+            this.readyToStart = true;
+        }
         // preload gui assets
         for (const asset of this.game.gui.assets) {
             if (asset.type === 'spritesheet') {
@@ -80,6 +94,15 @@ class PreloadStory extends RJSState {
         // we add a tween to the loading bar to make it a bit less static
         this.loadingScreen.waitingScreen();
         await this.game.initStory();
+        if (this.readyToStart){
+            this.initGame();
+        } else {
+            this.readyToStart = true;
+        }
+        
+    }
+
+    initGame(){
         this.loadingScreen.destroy(this.game);
         this.game.gui.showMenu('main');
     }

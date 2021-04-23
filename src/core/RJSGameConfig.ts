@@ -17,6 +17,7 @@ export interface RJSGameConfig extends IGameConfig {
     h: number;
     backgroundColor:number;
     loadingScreen: {
+        minTime?: number;
         background: string;
         loadingBar: {
             asset: string;
@@ -53,6 +54,7 @@ export interface StoryConfig extends IGameConfig {
     timeout: number;
     // wether the game keeps a log of the player choices for replay purposes
     logChoices: boolean;
+    logText: boolean;
     lazyloading: boolean;
     transitions: {
         defaults: {

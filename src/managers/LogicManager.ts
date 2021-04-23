@@ -162,6 +162,9 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
         // update choice log
         this.updateChoiceLog(execId,choiceText);
+        if (this.game.storyConfig.logText){
+            this.game.managers.text.textLog.push({text:choiceText,title:"choice"});
+        }
         let chosenOption = this.currentChoices[index];
         // add new action to scene
         const actions = chosenOption[choiceText];

@@ -67,6 +67,8 @@ export default class StoryManager implements StoryManagerInterface<Group> {
 
     clearScene(): void{
         this.game.control.execStack.clear();
+        this.game.gui.clear();
+        this.game.control.waitForClick = false;
         this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.game.managers.character.hideAll("CUT");
         this.game.managers.audio.stopAll()

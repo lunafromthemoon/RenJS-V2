@@ -26,6 +26,7 @@ export default class RJS extends Game {
     guiSetup: any;
     gui: RJSGUI;
     tools: any;
+    screenReady: boolean;
     pluginsRJS: any;
     addPlugin(name: string, cls: any): void;
     config: RJSGameConfig;

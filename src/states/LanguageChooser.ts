@@ -29,6 +29,7 @@ export default class LanguageChooser extends RJSState {
             const cfg:any = this.game.config.i18n.langs[lang];
             this.game.add.button(cfg.position.x,cfg.position.y,"languageTag"+lang, sprite => {
                 this.game.config.i18n.current = lang;
+                localStorage.setItem('RenJS_I18N' + this.game.config.name,lang);
                 this.game.state.start('bootstrap');
             },this,1,0,1,0);
         }

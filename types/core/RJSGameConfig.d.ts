@@ -14,6 +14,7 @@ export interface RJSGameConfig extends IGameConfig {
     h: number;
     backgroundColor: number;
     loadingScreen: {
+        minTime?: number;
         background: string;
         loadingBar: {
             asset: string;
@@ -45,6 +46,7 @@ export interface StoryConfig extends IGameConfig {
     autotime: number;
     timeout: number;
     logChoices: boolean;
+    logText: boolean;
     lazyloading: boolean;
     transitions: {
         defaults: {

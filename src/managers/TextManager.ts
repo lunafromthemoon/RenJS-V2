@@ -7,6 +7,7 @@ export interface TextManagerInterface extends RJSManagerInterface {}
 export default class TextManager implements TextManagerInterface {
 
     private game: RJS
+    textLog: Array<any> = []
 
     constructor(game: RJS) {
         this.game = game
@@ -16,8 +17,12 @@ export default class TextManager implements TextManagerInterface {
     }
 
     show (text, title?, colour?, dontHide?): Promise<any> {
+
         return new Promise(resolve=> {
             const t = this.game.managers.logic.parseVars(text.toString());
+            if (this.game.storyConfig.logText){
+                this.textLog.push({text:t,title:title,colour:colour});
+            }
             this.game.gui.showText(t, title, colour, () => {
                 this.game.waitForClick(() => {
                     if (!dontHide){

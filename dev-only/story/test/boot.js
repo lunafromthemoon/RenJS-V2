@@ -1,7 +1,9 @@
 const globalConfig =  {
   'name': 'Quickstart',
-  'w': 800,
-  'h': 600,
+  w: 800,
+  h: 600,
+  // resolution: 2,
+  parent: "game-canvas",
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {

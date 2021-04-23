@@ -30,10 +30,12 @@ export default class RJS extends Game {
     guiSetup: any
     gui: RJSGUI
     tools: any = {}
+    screenReady: boolean = false;
 
     pluginsRJS: any = {}
 
     addPlugin(name: string, cls: any): void {
+        this.pluginsRJS[name] = new cls(name,this)
         this.pluginsRJS[name] = new cls(name,this)
     }
 
@@ -74,20 +76,56 @@ export default class RJS extends Game {
         // this.state.start('loader')
         this.state.add('bootstrap', Boot)
         if (this.config.i18n){
-            this.state.add('chooseLang', LanguageChooser);
-            this.state.start('chooseLang')
+            // try to load previously chosen Language
+            const lang = localStorage.getItem('RenJS_I18N' + this.config.name);
+            if (this.config.i18n.langs[lang]){
+                this.config.i18n.current = lang;
+                this.state.start('bootstrap');
+            } else {
+                this.state.add('chooseLang', LanguageChooser);
+                this.state.start('chooseLang');
+            }
         } else {
             this.state.start('bootstrap')
         }
     }
 
     setupScreen(): void {
+        if (this.screenReady) return;
+        this.scale.scaleMode = Phaser.ScaleManager[this.config.scaleMode];
         if (!(this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT)){
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
-        }
-        this.scale.scaleMode = Phaser.ScaleManager[this.config.scaleMode];
+        }        
+
+        this.scale.setResizeCallback((scale,parentBounds)=>{
+            var windowWidth = window.innerWidth;
+            var windowHeight = window.innerHeight;
+            if (this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT){
+                scale.width = windowWidth;
+                scale.height = windowHeight;
+            } else if (this.config.scaleMode === Phaser.ScaleManager.SHOW_ALL){
+                // try to scale vertically first
+                var newScale = windowHeight / this.height;  
+                var newHeight = windowHeight;
+                var newWidth = this.width*newScale;
+                if (newWidth>windowWidth){
+                    // width still doesn't fit, scale horizontally
+                    newScale = windowWidth / this.width;
+                    newWidth = windowWidth;
+                    newHeight = this.height*newScale;
+                }          
+                scale.width = newWidth;
+                scale.height = newHeight;
+            }
+        },this)
+        // this.scale.setupScale(400,300);
+        
         this.scale.refresh();
+        this.screenReady = true;
+        // this.stage.disableVisibilityChange = true;
+
+
     }
 
     async initStory () {
