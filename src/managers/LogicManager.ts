@@ -103,15 +103,18 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     evalChoice(choice): any {
         const choiceText = Object.keys(choice)[0];
         choice.choiceId = 'Choice'+ guid();
-        choice.choiceText = choiceText;
+        // choice text can have vars
+        choice.choiceText = this.parseVars(choiceText);
+        // actions when chose will be kept in actions
+        choice.actions = choice[choiceText];
+        delete choice[choiceText];
+        // check conditional option
         const params = choiceText.split('!if');
         if (params.length > 1){
             const val = this.evalExpression(params[1]);
             if (val) {
-                const next = choice[choiceText];
-                delete choice[choiceText];
+                // remove the if part of the text
                 choice.choiceText = params[0];
-                choice[params[0]] = next;
             }
             return val;
         }
@@ -167,7 +170,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
         let chosenOption = this.currentChoices[index];
         // add new action to scene
-        const actions = chosenOption[choiceText];
+        const actions = chosenOption.actions;
         this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
         // update stack
         if (chosenOption.interrupt){
