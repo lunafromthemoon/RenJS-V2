@@ -45,6 +45,8 @@ export interface StoryConfig extends IGameConfig {
     skiptime: number;
     autotime: number;
     timeout: number;
+    punctuationMarks?: string[];
+    punctuationWait?: number;
     logChoices: boolean;
     logText: boolean;
     lazyloading: boolean;

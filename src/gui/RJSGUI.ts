@@ -18,7 +18,7 @@ export interface RJSGUIInterface {
     hideChoices();
     changeToLastInterrupt(choiceId);
     clear();
-    showText(text, title, colour, callback);
+    showText(text, title, colour, sfx, callback);
     hideText();
     ignoreTap(pointer);
     addThumbnail?(thumbnail, slot);
@@ -59,6 +59,9 @@ export default class RJSGUI implements RJSGUIInterface {
 
     skipClickArea = []
 
+    punctuationMarks;
+    punctuationWait;
+
     // menu navigation
     currentMenu = null
     previousMenu = null
@@ -90,7 +93,10 @@ export default class RJSGUI implements RJSGUIInterface {
         this.initHUD(this.config.hud);
         this.initMenu('main',this.config.menus.main)
         this.initMenu('settings',this.config.menus.settings)
-        this.initMenu('saveload',this.config.menus.saveload)
+        this.initMenu('saveload',this.config.menus.saveload);
+
+        this.punctuationMarks = this.game.storyConfig.punctuationMarks ? this.game.storyConfig.punctuationMarks : [];
+        this.punctuationWait = this.game.storyConfig.punctuationWait ? this.game.storyConfig.punctuationWait : 5;
     }
 
     initMenu(name: string, menuConfig: any) {
@@ -124,6 +130,14 @@ export default class RJSGUI implements RJSGUIInterface {
             mBox = hudConfig['message-box'];
             this.messageBox = this.game.add.sprite(mBox.x,mBox.y,mBox.id,0,this.hud);
             this.messageBox.visible = false;
+            this.messageBox.sfx =  (mBox.sfx != 'none') ? this.game.add.audio(mBox.sfx) : null;
+            if (this.messageBox.sfx){
+                this.messageBox.sfx.volume = 0;
+                this.messageBox.sfx.play();
+                this.messageBox.sfx.stop();
+                this.messageBox.sfx.volume = 1;
+            }
+
             const textStyle = this.getTextStyle('message-box');
             const text = this.game.add.text(mBox['offset-x'],mBox['offset-y'], '', textStyle);
             text.wordWrap = true;
@@ -483,12 +497,16 @@ export default class RJSGUI implements RJSGUIInterface {
       return text;
     }
 
-    showText(text, title, colour, callback) {
+    showText(text, title, colour, sfx, callback) {
         if  (this.nameBox) {
             this.nameBox.text.text = title!=undefined ? title : "";
             this.nameBox.text.fill = colour;
             this.nameBox.visible = title!=undefined;
+
         } 
+        if (!sfx && this.messageBox.sfx){
+            sfx = this.messageBox.sfx;
+        }
         let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
         if (this.game.control.skipping || textSpeed < 10){
             this.messageBox.message.text = text;
@@ -508,9 +526,38 @@ export default class RJSGUI implements RJSGUIInterface {
             this.game.gui.ctc.visible = true;
             callback();
         }
+        let waitingFor = 0;
+        // how many characters to add per sfx played
+        let charPerSfx = 1;
+        
+        if (sfx){
+            charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
+        }
+        // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
+        let sfxCharCount = 0;
+
 
         this.textLoop = setInterval(() => {
+            if (waitingFor>0) {
+                waitingFor--;
+                return;
+            }
             textObj.text += (words[count]);
+
+            if (sfx){
+                if (words[count] == " " || this.punctuationMarks.includes(words[count]) || sfxCharCount==charPerSfx){
+                    // reset count, but don't play
+                    sfxCharCount=-1;
+                } else if (sfxCharCount==0){
+                    sfx.play();
+                }
+                sfxCharCount++;
+            }
+
+            if (this.punctuationMarks.includes(words[count])){
+                waitingFor = this.punctuationWait;
+                
+            }
             count++;
             if (count >= words.length){
                 completeText();

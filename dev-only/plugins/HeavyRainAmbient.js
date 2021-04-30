@@ -4,7 +4,7 @@ class HEAVYRAIN extends RenJS.Plugin {
     // Ambients don't need to call resolveAction
 
 	onCall(params) {
-        this.game.managers.audio.play('rainBGS','bgs',true,'FADE');
+        this.game.managers.audio.play('rainBGS','bgs',true,null,'FADE');
         let maxLifespan = 1600;
         let ambientManager = this.game.screenEffects.ambient;
         let e1 = ambientManager.addEmitter({

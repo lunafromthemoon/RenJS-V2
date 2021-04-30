@@ -14,7 +14,7 @@ export interface RJSGUIInterface {
     hideChoices(): any;
     changeToLastInterrupt(choiceId: any): any;
     clear(): any;
-    showText(text: any, title: any, colour: any, callback: any): any;
+    showText(text: any, title: any, colour: any, sfx: any, callback: any): any;
     hideText(): any;
     ignoreTap(pointer: any): any;
     addThumbnail?(thumbnail: any, slot: any): any;
@@ -55,6 +55,8 @@ export default class RJSGUI implements RJSGUIInterface {
         sfxv: number[];
     };
     skipClickArea: any[];
+    punctuationMarks: any;
+    punctuationWait: any;
     currentMenu: any;
     previousMenu: any;
     currentMusic: any;
@@ -87,7 +89,7 @@ export default class RJSGUI implements RJSGUIInterface {
     changeToLastInterrupt(choiceId: any): void;
     hideChoices(): void;
     setTextStyles(text: any, text_obj: any): string;
-    showText(text: any, title: any, colour: any, callback: any): void;
+    showText(text: any, title: any, colour: any, sfx: any, callback: any): void;
     showChoices(choices: any, execId: any): void;
     createChoiceBox(choice: any, pos: any, index: any, choiceConfig: any, execId: any): ChoiceButton;
     toHexColor(color: any): number;

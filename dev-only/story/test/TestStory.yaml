@@ -168,7 +168,7 @@ testtext:
     - Liz:
       - text: You chose Liz!
   - show liz: AT CENTER
-  - deuzi says:  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  - deuzi says:  Lorem ipsum dolor sit amet, consectetur adipiscing elit... Aasdf qwer! asdfasdf.
   - text:  Text with styles
   - text: This is (italic)italic(end), this is (bold)bold(end).
   - text: Text can have (color:red)color(end) too. With hex (color:#f593e6)this is pink(end).

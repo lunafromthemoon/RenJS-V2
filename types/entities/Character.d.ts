@@ -1,9 +1,11 @@
+import { Sound } from 'phaser-ce';
 export interface CharacterInterface {
     keyName: string;
     name: string;
     speechColour: any;
     lastScale: number;
     currentLook?: any;
+    voice: Sound;
 }
 export default class Character implements CharacterInterface {
     keyName: string;
@@ -11,5 +13,6 @@ export default class Character implements CharacterInterface {
     speechColour: any;
     currentLook: any;
     lastScale: number;
-    constructor(keyName: any, name: any, speechColour: any);
+    voice: any;
+    constructor(keyName: any, name: any, speechColour: any, voice: any);
 }

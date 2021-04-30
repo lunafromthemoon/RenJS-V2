@@ -12,6 +12,7 @@ characters:
   deuzi:
     displayName: Deuzilene
     speechColour: "#ca90cf"
+    voice: voiceHigh
     looks:
       normal: assets/characters/Char3NormalSchool.png
       happy: assets/characters/Char3HappySchool.png
@@ -22,6 +23,7 @@ characters:
   liz:
     displayName: Liz
     speechColour: "#d5e6e7"
+    voice: voiceMedium
     looks:
       normal: assets/characters/Char2NormalSchool.png
       happy: assets/characters/Char2HappySchool.png
@@ -32,6 +34,7 @@ characters:
   marco:
     displayName: Marco
     speechColour: "#123022"
+    voice: voiceMedium
     looks:
       normal: assets/characters/Char1NormalSchool.png
       happy: assets/characters/Char1HappySchool.png
@@ -43,6 +46,7 @@ characters:
   jair:
     displayName: Jair
     speechColour: "#6a2b2b"
+    voice: voiceLow
     looks:
       normal: assets/characters/Char4NormalSchool.png
       happy: assets/characters/Char4HappySchool.png
@@ -70,6 +74,9 @@ sfx:
   ringtoneSFX2: assets/audio/alcatel-top_secret.mp3
   thunderSFX: assets/audio/thunder_strike_1.mp3
   lashSFX: assets/audio/51755__erkanozan__whip-01.wav
+  voiceLow: assets/voices/lowvoice.wav
+  voiceHigh: assets/voices/highvoice.wav
+  voiceMedium: assets/voices/mediumvoice.wav
 extra:
   image:
     title: assets/gui/titles.png

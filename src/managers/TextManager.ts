@@ -16,14 +16,14 @@ export default class TextManager implements TextManagerInterface {
         //
     }
 
-    show (text, title?, colour?, dontHide?): Promise<any> {
+    show (text, title?, colour?,sfx?, dontHide?): Promise<any> {
 
         return new Promise(resolve=> {
             const t = this.game.managers.logic.parseVars(text.toString());
             if (this.game.storyConfig.logText){
                 this.textLog.push({text:t,title:title,colour:colour});
             }
-            this.game.gui.showText(t, title, colour, () => {
+            this.game.gui.showText(t, title, colour,sfx, () => {
                 this.game.waitForClick(() => {
                     if (!dontHide){
                         this.game.gui.hideText();
@@ -45,7 +45,7 @@ export default class TextManager implements TextManagerInterface {
         if (look){
             this.game.managers.character.show(name, this.game.storyConfig.transitions.say,{look});
         }
-        return this.show(text,character.name,character.speechColour,dontHide);
+        return this.show(text,character.name,character.speechColour,character.voice,dontHide);
     }
 
 }

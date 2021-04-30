@@ -1,4 +1,4 @@
-import {Sprite} from 'phaser-ce';
+import {Sprite,Sound} from 'phaser-ce';
 
 export interface CharacterInterface {
     keyName: string
@@ -6,6 +6,7 @@ export interface CharacterInterface {
     speechColour: any;
     lastScale: number;
     currentLook?: any;
+    voice: Sound;
 }
 
 export default class Character implements CharacterInterface {
@@ -14,10 +15,13 @@ export default class Character implements CharacterInterface {
     speechColour: any
     currentLook = null
     lastScale = 1;
-    constructor(keyName,name, speechColour) {
+    voice = null;
+    constructor(keyName,name, speechColour,voice) {
         this.keyName = keyName
         this.name = name
         this.speechColour = speechColour
+        this.voice = voice;
+        
     }
 
 

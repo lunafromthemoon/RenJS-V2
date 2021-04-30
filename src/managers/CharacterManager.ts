@@ -27,8 +27,17 @@ export default class CharacterManager implements CharacterManagerInterface {
         for (const name in this.game.setup.characters){
             const character = this.game.setup.characters[name];
             const displayName = character.displayName ? character.displayName : name;
+            let voice = null;
+            if (character.voice){
+                voice = this.game.add.audio(character.voice);
+                // play silently once so we have the duration set
+                voice.volume = 0;
+                voice.play();
+                voice.stop();
+                voice.volume = 1;
+            }
             // this.add(name,displayName,character.speechColour,character.looks);
-            this.characters[name] = new Character(name,displayName,character.speechColour);
+            this.characters[name] = new Character(name,displayName,character.speechColour,voice);
         }
     }
 

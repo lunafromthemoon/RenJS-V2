@@ -52,6 +52,9 @@ export interface StoryConfig extends IGameConfig {
     skiptime: number;
     autotime: number;
     timeout: number;
+    punctuationMarks?: string[];
+    punctuationWait?: number;
+
     // wether the game keeps a log of the player choices for replay purposes
     logChoices: boolean;
     logText: boolean;

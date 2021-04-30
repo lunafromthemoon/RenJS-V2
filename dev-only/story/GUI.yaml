@@ -129,10 +129,11 @@ config:
       offset-y: '24'
       offset-x: '24'
       align: left
+      # sfx: textaudio
+      sfx: none
       color: '#89BAA8'
       font: fontsaudimat-mono
       size: '20'
-      sfx: none
       'y': 449
       x: 40
       assetType: images
@@ -442,5 +443,9 @@ assets:
       fileName: audioEvan_Schaeffer_-_01_-_Aqueduct.mp3
       name: Evan_Schaeffer_-_01_-_Aqueduct
       type: music
+    textaudio:
+      fileName: generaltextaudio.wav
+      name: textaudio
+      type: sfx
 madeWithRenJSBuilder: true
 assetsPath: assets/gui/
