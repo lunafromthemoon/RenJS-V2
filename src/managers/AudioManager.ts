@@ -81,7 +81,6 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     stop(type: string, transition: string = 'FADE'): void {
-        console.log("stopping "+type)
         if (!this.current[type]){
             return;
         }
