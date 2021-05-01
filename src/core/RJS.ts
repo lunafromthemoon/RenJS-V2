@@ -66,7 +66,7 @@ export default class RJS extends Game {
         super(config.w,config.h,config.renderer, config.parent)
         this.control = new RJSControl();
         this.config = config;
-        this.userPreferences = new UserPreferences(this);
+        // this.userPreferences = new UserPreferences(this);
     }
 
     launch (): void {
@@ -129,8 +129,7 @@ export default class RJS extends Game {
     }
 
     async initStory () {
-
-        this.userPreferences.setPreferences(this.storyConfig.userPreferences);
+        this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
         
         this.managers = {
             tween: new TweenManager(this),

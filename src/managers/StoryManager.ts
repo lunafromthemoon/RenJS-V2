@@ -172,6 +172,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             } else {
                 action.looped = false;
             }
+            action.force = str.includes('FORCE');
         }
 
         if (mainAction == "show" && action.actorType == "cgs"){

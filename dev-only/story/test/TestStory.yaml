@@ -20,9 +20,9 @@ testSound:
   - text: play music once
   - play helloBGS: 
   - text: normal loop
-  - play helloBGS: LOOPED
+  - play helloBGS: LOOPED FORCE
   - text: looped from 0.5
-  - play helloBGS: LOOPED FROM 0.5
+  - play helloBGS: LOOPED FROM 0.5 FORCE
   - text: stop sound
   - stop bgm:
   - scene: start
@@ -181,7 +181,7 @@ testtext:
   - deuzi says: 1
   - liz says: 2
   - deuzi says: 3
-
+  - deuzi says: asdf
   - choice:
     - text: choose a number!
     - "4":

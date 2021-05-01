@@ -108,9 +108,10 @@ export default class RJSGUI implements RJSGUIInterface {
             this.game.add.image(0,0,menuConfig.background.id,0,this.menus[name]);
         }
         this.loadGeneralComponents(menuConfig,this.menus[name]);
-        if (menuConfig.backgroundMusic){
-            menuConfig.backgroundMusic = this.game.add.audio(menuConfig.backgroundMusic);
-        }
+        // if (menuConfig.backgroundMusic){
+        //     menuConfig.backgroundMusic = this.game.add.audio(menuConfig.backgroundMusic);
+
+        // }
     }
 
     initHUD(hudConfig: any) {
@@ -132,10 +133,8 @@ export default class RJSGUI implements RJSGUIInterface {
             this.messageBox.visible = false;
             this.messageBox.sfx =  (mBox.sfx != 'none') ? this.game.add.audio(mBox.sfx) : null;
             if (this.messageBox.sfx){
-                this.messageBox.sfx.volume = 0;
                 this.messageBox.sfx.play();
                 this.messageBox.sfx.stop();
-                this.messageBox.sfx.volume = 1;
             }
 
             const textStyle = this.getTextStyle('message-box');
@@ -228,9 +227,7 @@ export default class RJSGUI implements RJSGUIInterface {
     loadButton(component, menu) {
         const btn: RJSButton = this.game.add.button(component.x,component.y,component.id,() => {
             if (component.sfx && component.sfx !== 'none') {
-                const sfx = this.game.add.audio(component.sfx);
-                sfx.onStop.addOnce(sfx.destroy);
-                sfx.play()
+                this.game.managers.audio.playSFX(component.sfx);
             }
             this.buttonsAction[component.binding](component)
         },this,1,0,2,0,menu);
@@ -315,13 +312,8 @@ export default class RJSGUI implements RJSGUIInterface {
         this.menus[menu].alpha = 0;
         this.menus[menu].visible = true;
         this.game.control.unskippable = true;
-        let music = this.config.menus[menu].backgroundMusic;
-        if (music && !music.isPlaying && !this.game.userPreferences.muted){
-            if (this.currentMusic){
-                this.currentMusic.fadeOut(1000);
-            }
-            this.currentMusic = music;
-            this.currentMusic.fadeIn(1000);
+        if (this.config.menus[menu].backgroundMusic){
+            this.game.managers.audio.play(this.config.menus[menu].backgroundMusic,"bgm",true);
         }
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         await transition(null, this.menus[menu]);
@@ -330,13 +322,11 @@ export default class RJSGUI implements RJSGUIInterface {
     }
 
     async hideMenu(menu, mute, callback?) {
-
         if (!menu){
             menu = this.currentMenu;
         }
-        if (mute && this.currentMusic && this.currentMusic.isPlaying){
-            this.currentMusic.fadeOut(400);
-            this.currentMusic = null;
+        if (mute){
+            this.game.managers.audio.stop('bgm');
         }
         this.game.control.unskippable = true;
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
@@ -362,7 +352,7 @@ export default class RJSGUI implements RJSGUIInterface {
         if (previous){
             if (menu) {
                 // hide previous menu and show this
-                await this.hideMenu(previous,this.config.menus[menu].backgroundMusic);
+                await this.hideMenu(previous,false);
                 await this.showMenu(menu);
                 this.previousMenu = previous;
                 return
@@ -550,6 +540,7 @@ export default class RJSGUI implements RJSGUIInterface {
                     sfxCharCount=-1;
                 } else if (sfxCharCount==0){
                     sfx.play();
+                    sfx.volume = this.game.userPreferences.sfxv;
                 }
                 sfxCharCount++;
             }
@@ -597,9 +588,7 @@ export default class RJSGUI implements RJSGUIInterface {
         const separation = index*(parseInt(choiceConfig.height, 10)+parseInt(choiceConfig.separation, 10));
         const chBox: ChoiceButton = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
             if (choiceConfig.sfx && choiceConfig.sfx !== 'none') {
-                const sfx = this.game.add.audio(choiceConfig.sfx);
-                sfx.onStop.addOnce(sfx.destroy);
-                sfx.play();
+                this.game.managers.audio.playSFX(choiceConfig.sfx);
             }
             let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
             transition(this.choices,null).then(()=>{

@@ -16,19 +16,20 @@ export default class UserPreferences implements UserPreferencesInterface {
     sfxv = 0.5;
     muted = false;
 
-    constructor(private game: RJS){
+    constructor(private game: RJS,defaultPreferences){
         const data = localStorage.getItem('RenJSUserPreferences' + game.config.name);
-        let preferences = JSON.parse(data);
-        this.setPreferences(preferences);
+        if (data) {
+            this.setPreferences(JSON.parse(data));
+        } else {
+            this.setPreferences(defaultPreferences);
+        }
     }
 
     setPreferences(preferences){
         if (preferences) {
-            this.textSpeed = preferences.textSpeed;
-            this.autoSpeed = preferences.autoSpeed;
-            this.bgmv = preferences.bgmv;
-            this.sfxv = preferences.sfxv;
-            this.muted = preferences.muted;
+            for (var prefence in preferences) {
+                this[prefence] = preferences[prefence];
+            }
         }
     }
 

@@ -21,6 +21,9 @@ export interface AudioManagerInterface extends RJSManagerInterface {
 
 export default class AudioManager implements AudioManagerInterface {
     current = { bgm: null, bgs: null };
+    active = { bgm: null, bgs: null };
+
+    private sfxCache = {};
     // audioLoaded: boolean;
     private game: RJS
 
@@ -30,44 +33,62 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     getActive():object{
-       return { 
-            bgm: (this.current.bgm) ? this.current.bgm.key : null, 
-            bgs: (this.current.bgs) ? this.current.bgs.key : null 
-        };
+       return this.active;
     }
 
-    play (key,type,looped,fromSeconds,transition): void {
+    play (key,type='bgm',looped=false,fromSeconds=null,transition='FADE',force=false): void {
+        if (!force && this.current[type] && this.current[type].key == key){
+            // music is the same, do nothing
+            return;
+        }
         // stop old music
         this.stop(type,transition);
         // add new music
         const music = this.game.add.audio(key);
+        this.active[type] = {
+            key: key,
+            looped: looped,
+            fromSeconds: fromSeconds,
+            transition: transition
+        }
         this.current[type] = music;
-        if (!this.game.userPreferences.muted) {
-            let marker = ''
-            if (looped && fromSeconds){
-                marker = 'intro';
-                // looped = false;
-                music.addMarker(marker,0,fromSeconds,1,false);
-                music.onMarkerComplete.addOnce(()=>{
-                    music.addMarker("looped",fromSeconds,music.totalDuration-fromSeconds,1,true);
-                    music.play("looped");
-                })
-            }
-            if (transition === 'FADE') {
-                music.fadeIn(1500,looped,marker);
-            } else {
-                music.play(marker,0,1,looped);
-            }
+        if (!looped){
+            music.onStop.addOnce(()=>{
+                this.current[type] = null;
+                this.active[type] = null;
+            })
+        }
+        let marker = ''
+        if (looped && fromSeconds){
+            marker = 'intro';
+            // looped = false;
+            music.addMarker(marker,0,fromSeconds,null,false);
+            music.onMarkerComplete.addOnce(()=>{
+                music.addMarker("looped",fromSeconds,music.totalDuration-fromSeconds,null,true);
+                music.play("looped");
+                music.volume = this.game.userPreferences.bgmv;
+            })
+        }
+
+        music.play(marker,0,null,looped);
+        // volume has to be set after it starts or it will ignore it
+        if (transition == 'FADE'){
+            music.volume = 0;
+            this.game.add.tween(music).to({volume: this.game.userPreferences.bgmv},1500,null,true);
+        } else {
+            music.volume = this.game.userPreferences.bgmv;
         }
     }
 
-    stop(type: string, transition: string): void {
+    stop(type: string, transition: string = 'FADE'): void {
+        console.log("stopping "+type)
         if (!this.current[type]){
             return;
         }
         if (!this.game.userPreferences.muted) {
             this.stopAudio(this.current[type],transition);
             this.current[type]=null;
+            this.active[type]=null;
         }
     }
 
@@ -84,22 +105,27 @@ export default class AudioManager implements AudioManagerInterface {
 
     playSFX(key): void {
         if (!this.game.userPreferences.muted){
-            let sfx = this.game.sound.play(key,this.game.userPreferences.sfxv);
+            const sfx = this.sfxCache[key] ? this.sfxCache[key] : this.game.add.audio(key);
+            this.sfxCache[key] = sfx;
+            sfx.play();
+            sfx.volume=this.game.userPreferences.sfxv;
         }
     }
 
     set (active): void {
-        if (active.bgm){
-            this.play(active.bgm,'bgm',true,null,'FADE');
+        for (let type in ['bgm','bgs']){
+            this.play(active[type].key,type,active[type].looped,active[type].fromSeconds,active[type].transition);
         }
-        if (active.bgs){
-            this.play(active.bgs,'bgs',true,null,'FADE');
-        }
-
     }
 
     changeVolume(type, volume): void {
-        this.game.sound.volume = volume;
+        if (this.current.bgm){
+            this.current.bgm.volume = this.game.userPreferences.bgmv;
+        }
+        if (this.current.bgs){
+            this.current.bgs.volume = this.game.userPreferences.bgmv;
+        }
+        
     }
 
     async decodeAudio(audioList:string[]):Promise<any> {
@@ -123,19 +149,9 @@ export default class AudioManager implements AudioManagerInterface {
 
     mute(): void {
         if (this.game.userPreferences.muted){
-            if (this.current.bgm) {
-                this.current.bgm.play('',0,1,true);
-            }
-            if (this.current.bgs) {
-                this.current.bgs.play('',0,1,true);
-            }
+            this.game.sound.volume = this.game.userPreferences.bgmv;
         } else {
-            if (this.current.bgm) {
-                this.current.bgm.stop();
-            }
-            if (this.current.bgs) {
-                this.current.bgs.stop();
-            }
+            this.game.sound.volume = 0;
         }
         this.game.userPreferences.setPreference('muted',!this.game.userPreferences.muted)
     }

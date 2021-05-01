@@ -51,6 +51,7 @@ punctuationWait: 5
 userPreferences:
   textSpeed: 60
   autoSpeed: 150
-  bgmv: 0.5
+  bgmv: 0.8
   sfxv: 0.5
+  voicesv: 0.2
   muted: false

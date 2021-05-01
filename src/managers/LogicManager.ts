@@ -202,7 +202,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             if (action.actor){
                 await this.game.managers.text.say(action.actor, action.look, action.body, true);
             } else {
-                await this.game.managers.text.show(action.body,null,null,true);
+                await this.game.managers.text.show(action.body,null,null,null,true);
             }
             return true;
         }

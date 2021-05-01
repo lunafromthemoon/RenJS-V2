@@ -31,10 +31,8 @@ export default class CharacterManager implements CharacterManagerInterface {
             if (character.voice){
                 voice = this.game.add.audio(character.voice);
                 // play silently once so we have the duration set
-                voice.volume = 0;
                 voice.play();
                 voice.stop();
-                voice.volume = 1;
             }
             // this.add(name,displayName,character.speechColour,character.looks);
             this.characters[name] = new Character(name,displayName,character.speechColour,voice);

@@ -21,11 +21,16 @@ export default class AudioManager implements AudioManagerInterface {
         bgm: any;
         bgs: any;
     };
+    active: {
+        bgm: any;
+        bgs: any;
+    };
+    private sfxCache;
     private game;
     constructor(game: RJS);
     getActive(): object;
-    play(key: any, type: any, looped: any, fromSeconds: any, transition: any): void;
-    stop(type: string, transition: string): void;
+    play(key: any, type?: string, looped?: boolean, fromSeconds?: any, transition?: string, force?: boolean): void;
+    stop(type: string, transition?: string): void;
     stopAudio(audio: Phaser.Sound, transition: string): void;
     playSFX(key: any): void;
     set(active: any): void;
