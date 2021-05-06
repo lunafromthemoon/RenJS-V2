@@ -37,8 +37,8 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     play (key,type='bgm',looped=false,fromSeconds=null,transition='FADE',force=false): void {
-        if (!force && this.current[type] && this.current[type].key == key){
-            // music is the same, do nothing
+        if (!force && this.current[type] && this.current[type].key == key && this.current[type].isPlaying){
+            // music is the same, and it's playing, do nothing
             return;
         }
         // stop old music
@@ -52,12 +52,6 @@ export default class AudioManager implements AudioManagerInterface {
             transition: transition
         }
         this.current[type] = music;
-        if (!looped){
-            music.onStop.addOnce(()=>{
-                this.current[type] = null;
-                this.active[type] = null;
-            })
-        }
         let marker = ''
         if (looped && fromSeconds){
             marker = 'intro';

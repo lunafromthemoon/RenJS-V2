@@ -4,6 +4,7 @@ export default class StoryActionAudio extends StoryAction {
     protected params: {
         actor: string;
         looped: boolean;
+        asBGS: boolean;
         transition: string;
         actorType: any;
         fromSeconds: number;

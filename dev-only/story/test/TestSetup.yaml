@@ -69,6 +69,8 @@ music:
   cicadas: assets/audio/Cicada.mp3
   rainBGS: assets/audio/Rain.mp3
   helloBGS: assets/audio/hello.wav
+  ambientBGS: assets/audio/ambient.ogg
+  music1: assets/audio/KevinMacLeod-ErikSatieGymnopedieNo1.mp3
 sfx:
   ringtoneSFX: assets/audio/nokia6210-24-elise.mp3
   ringtoneSFX2: assets/audio/alcatel-top_secret.mp3

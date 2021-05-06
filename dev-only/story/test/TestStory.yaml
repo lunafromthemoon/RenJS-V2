@@ -17,6 +17,13 @@ start:
       - scene: endgame
 
 testSound:
+  - text: Play normal once
+  - play music1:
+  - text: Play looped bgs
+  - play ambientBGS: LOOPED
+  - text: Change for music 1
+  - play music1:
+  - text: What happened?
   - text: play music once
   - play helloBGS: 
   - text: normal loop

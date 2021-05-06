@@ -97,7 +97,7 @@ export default class ExecStack {
                 actions = newActions.concat(actions);
             }
         }
-        return actions;
+        return actions ? actions : [];
     }
 
 }
