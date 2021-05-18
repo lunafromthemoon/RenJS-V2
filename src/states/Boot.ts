@@ -61,8 +61,6 @@ class Boot extends RJSState {
         });
         // load the setup
         this.game.tools.jsyaml = jsyaml;
-        console.log("is story setup there?")
-        console.log(this.game.cache.checkTextKey('storySetup'));
         this.game.setup = jsyaml.load(this.game.cache.getText('storySetup'));
         if (!game.setup) this.game.setup = {};
         this.game.storyConfig = jsyaml.load(this.game.cache.getText('storyConfig'));
@@ -70,8 +68,6 @@ class Boot extends RJSState {
         const story = {};
         this.game.config.storyText.forEach((file,index) => {
             const text = jsyaml.load(this.game.cache.getText('story' + index));
-            console.log("text")
-            console.log(text)
             Object.assign(story, {...text})
         })
 

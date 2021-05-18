@@ -92,19 +92,21 @@ export default class RJS extends Game {
 
     setupScreen(): void {
         if (this.screenReady) return;
-        this.scale.scaleMode = Phaser.ScaleManager[this.config.scaleMode];
+        this.scale.scaleMode = this.config.scaleMode;
         if (!(this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT)){
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
         }        
 
         this.scale.setResizeCallback((scale,parentBounds)=>{
+            // this wont do anything unless scaleMode == undefined
             var windowWidth = window.innerWidth;
             var windowHeight = window.innerHeight;
-            if (this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT){
-                scale.width = windowWidth;
-                scale.height = windowHeight;
-            } else if (this.config.scaleMode === Phaser.ScaleManager.SHOW_ALL){
+
+            // if (this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT){
+            //     scale.width = windowWidth;
+            //     scale.height = windowHeight;
+            // } else if (this.config.scaleMode === Phaser.ScaleManager.SHOW_ALL){
                 // try to scale vertically first
                 var newScale = windowHeight / this.height;  
                 var newHeight = windowHeight;
@@ -117,7 +119,7 @@ export default class RJS extends Game {
                 }          
                 scale.width = newWidth;
                 scale.height = newHeight;
-            }
+            // }
         },this)
         // this.scale.setupScale(400,300);
         
