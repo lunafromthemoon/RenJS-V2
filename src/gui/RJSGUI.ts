@@ -611,7 +611,10 @@ export default class RJSGUI implements RJSGUIInterface {
         chBox.name = choice.choiceId;
 
         const textStyle = this.getTextStyle('choice');
-        const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
+
+        const text = this.game.add.text(0, 0, "" , textStyle);
+        const finalText = this.setTextStyles(choice.choiceText,text);
+        text.text = finalText;
         text.visible = false;
         this.setTextPosition(chBox,text, choiceConfig);
         setTimeout(()=>{text.visible = true},20)

@@ -121,20 +121,23 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return true; // unconditional choice
     }
 
-    showVisualChoices(choices): void {
+    async showVisualChoices(choices) {
+        this.showingText = await this.checkTextAction(choices[0]);
+        if (this.showingText){
+            choices.shift();
+        }
         // clone
         const ch = choices.map(choice => ({...choice}));
         // filter (eval choice modifies the choice adding id and clearing text)
-        this.currentChoices = ch.filter(this.evalChoice);
+        this.currentChoices = ch.filter(this.evalChoice.bind(this));
         this.visualChoices = this.game.add.group();
         this.visualChoices.alpha = 0;
         const execId = this.getExecStackId();
         for (let i = 0; i < this.currentChoices.length; i++) {
-            const key = Object.keys(this.currentChoices[i])[0];
-            const str = key.split(' ');
+            const str = this.currentChoices[i].choiceText.split(' ');
             const pos = str[2].split(',');
             const position = {x: parseInt(pos[0], 10), y: parseInt(pos[1], 10)};
-            this.createVisualChoice(str[0],position,i,key,execId);
+            this.createVisualChoice(str[0],position,i,this.currentChoices[i].choiceText,execId);
         }
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
         transition(null,this.visualChoices);
