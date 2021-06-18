@@ -34,6 +34,8 @@ export interface RJSGameConfig extends IGameConfig {
     // logChoices: boolean;
     parent: string;
     fonts: string;
+    scaleMode: number;
+    userScale: (scale:any,parent:any)=>any;
     guiConfig: string;
     storySetup: string;
     storyConfig: string;
@@ -52,7 +54,7 @@ export interface StoryConfig extends IGameConfig {
     timeout: number;
     punctuationMarks?: string[];
     punctuationWait?: number;
-
+    charPerSfx?: any;
     // wether the game keeps a log of the player choices for replay purposes
     logChoices: boolean;
     logText: boolean;

@@ -6,7 +6,7 @@ export interface CharacterInterface {
     speechColour: any;
     lastScale: number;
     currentLook?: any;
-    voice: Sound;
+    voice: any;
 }
 
 export default class Character implements CharacterInterface {

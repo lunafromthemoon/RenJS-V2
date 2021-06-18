@@ -29,6 +29,8 @@ export interface RJSGameConfig extends IGameConfig {
     };
     parent: string;
     fonts: string;
+    scaleMode: number;
+    userScale: (scale: any, parent: any) => any;
     guiConfig: string;
     storySetup: string;
     storyConfig: string;
@@ -44,6 +46,7 @@ export interface StoryConfig extends IGameConfig {
     timeout: number;
     punctuationMarks?: string[];
     punctuationWait?: number;
+    charPerSfx?: any;
     logChoices: boolean;
     logText: boolean;
     lazyloading: boolean;
