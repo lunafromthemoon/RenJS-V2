@@ -215,10 +215,12 @@ export default class RJS extends Game {
         this.gui.showMenu('main');
     }
 
-    async start () {
+    async start (initialVars = {}) {
         this.setBlackOverlay();
         this.control.paused = false;
         this.managers.story.clearScene();
+        // on start game, clear the vars o initialize for a new game +
+        this.managers.logic.vars = initialVars;
         await this.managers.story.startScene('start');
         for (const plugin in this.pluginsRJS) {
             if (this.pluginsRJS[plugin].onStart){
@@ -257,9 +259,9 @@ export default class RJS extends Game {
         if (!slot){
             slot = 0;
         }
-        
+        const bg = this.managers.background.current;
         const data = {
-            background: this.managers.background.current.name,
+            background: bg ? bg.name : null,
             characters: this.managers.character.showing,
             audio: this.managers.audio.getActive(),
             cgs: this.managers.cgs.current,
