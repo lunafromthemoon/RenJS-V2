@@ -325,7 +325,7 @@ export default class RJSGUI implements RJSGUIInterface {
         if (!menu){
             menu = this.currentMenu;
         }
-        if (mute){
+        if (mute && this.config.menus[menu].backgroundMusic){
             this.game.managers.audio.stop('bgm');
         }
         this.game.control.unskippable = true;
@@ -341,10 +341,23 @@ export default class RJSGUI implements RJSGUIInterface {
 
     showHUD() {
         this.hud.visible = true;
+        if (this.choices){
+            this.choices.visible = true;
+        }
+        if (this.interrupts){
+            this.interrupts.visible = true;
+        }
+        
     }
 
     hideHUD() {
         this.hud.visible = false;
+        if (this.choices){
+            this.choices.visible = false;
+        }
+        if (this.interrupts){
+            this.interrupts.visible = false;
+        }
     }    
 
     async changeMenu(menu) {

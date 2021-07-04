@@ -73,8 +73,9 @@ export default class ExecStack {
             // there are some nested scopes
             for (let i = this.execStack.length-2;i>=0;i--){
                 // nested scope should be the action at the counter
-                let nestedScope = allActions[stack.c-1];
+                let nestedScope = allActions[stack.c];
                 stack = this.execStack[i];
+
                 switch(stack.scope){
                     case 'interrupt':
                         // the nested scope will not be the last counter, but in the stack origin
@@ -85,6 +86,7 @@ export default class ExecStack {
                     case 'choice':
                         // find sub scope corresponding to index
                         let ch_op = Object.keys(nestedScope.choice[stack.index])[0]
+
                         allActions = nestedScope.choice[stack.index][ch_op];
                         break;
                     case 'if':

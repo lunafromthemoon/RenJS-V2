@@ -5,6 +5,7 @@ import RJSManagerInterface from './RJSManager';
 export interface LogicManagerInterface<T> extends RJSManagerInterface {
     choicesLog: object;
     vars: object;
+
     currentChoices: any[];
     // interrupting: boolean;
     visualChoices?: T;
@@ -161,11 +162,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     choose(index, choiceText, execId): void {
-        // remove message box if showing message
-        if (this.showingText){
-            this.game.managers.text.hide()
-            this.showingText = false;
-        }
+
         // update choice log
         this.updateChoiceLog(execId,choiceText);
         if (this.game.storyConfig.logText){
@@ -175,6 +172,13 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // add new action to scene
         const actions = chosenOption.actions;
         this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
+        // remove message box if showing message
+        if (this.showingText){
+            this.game.managers.text.hide()
+            this.showingText = false;
+            // correct stack index, so it will skip the text action
+            index++;
+        }
         // update stack
         if (chosenOption.interrupt){
             // resolving an interrupt, add actions and update stack 

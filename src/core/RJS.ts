@@ -212,7 +212,7 @@ export default class RJS extends Game {
             }
         }
         this.removeBlackOverlay();
-        this.gui.showMenu('main');
+        this.gui.changeMenu('main');
     }
 
     async start (initialVars = {}) {
