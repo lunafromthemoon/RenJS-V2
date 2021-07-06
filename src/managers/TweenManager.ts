@@ -34,6 +34,13 @@ export default class TweenManager implements TweenManagerInterface {
             tween.start();
             if (this.canSkip() && !unskippable) {
                 this.game.waitForClick(() => this.skip());
+            } else {
+                // if tween is unskippable, lock the input
+                this.game.input.enabled = false
+                tween.onComplete.addOnce(()=>{
+                    // enable input back when tween finishes
+                    this.game.input.enabled = true
+                }, this);
             }
         }
         this.current.push(tween);

@@ -58,6 +58,8 @@ export default class ExecStack {
         // if counter is total, then this scope (scene, if or choice) is over
         if (this.top().c === this.top().total){
             this.execStack.shift();
+            // shift also new top
+            this.top().c++;
         }
         // if execStack is empty, game over
     }
@@ -86,7 +88,6 @@ export default class ExecStack {
                     case 'choice':
                         // find sub scope corresponding to index
                         let ch_op = Object.keys(nestedScope.choice[stack.index])[0]
-
                         allActions = nestedScope.choice[stack.index][ch_op];
                         break;
                     case 'if':
