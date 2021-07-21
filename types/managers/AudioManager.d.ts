@@ -27,6 +27,7 @@ export default class AudioManager implements AudioManagerInterface {
     };
     private sfxCache;
     private game;
+    private unavailableAudio;
     constructor(game: RJS);
     getActive(): object;
     play(key: any, type?: string, looped?: boolean, fromSeconds?: any, transition?: string, force?: boolean): void;
