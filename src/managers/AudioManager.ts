@@ -26,6 +26,7 @@ export default class AudioManager implements AudioManagerInterface {
     private sfxCache = {};
     // audioLoaded: boolean;
     private game: RJS
+    private unavailableAudio: string[];
 
     constructor(game: RJS) {
         this.game = game
@@ -43,6 +44,11 @@ export default class AudioManager implements AudioManagerInterface {
         }
         // stop old music
         this.stop(type,transition);
+
+        if (this.unavailableAudio.includes(key)) {
+            console.warn(`Audio related to key ${key} is unavailable for playback.`);
+            return;
+        }
         // add new music
         const music = this.game.add.audio(key);
         this.active[type] = {
@@ -95,8 +101,14 @@ export default class AudioManager implements AudioManagerInterface {
             audio.destroy();
         }
     }
-
+  
     playSFX(key,volume?): void {
+      if (this.unavailableAudio.includes(key)) {
+          console.warn(
+            `SFX related to key ${key} is unavailable for playback.`
+          );
+          return;
+        }
         if (!this.game.userPreferences.muted){
             const sfx = this.sfxCache[key] ? this.sfxCache[key] : this.game.add.audio(key);
             this.sfxCache[key] = sfx;
@@ -124,11 +136,14 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     async decodeAudio(audioList:string[]):Promise<any> {
-        if (audioList.length==0) return;
+        const availableAudios = audioList.filter(audio => this.game.cache.checkSoundKey(audio));
+        this.unavailableAudio = audioList.filter(audio => !this.game.cache.checkSoundKey(audio));
+        
+        if (availableAudios.length == 0) return;
         return new Promise(resolve=>{
-            this.game.sound.setDecodedCallback(audioList, () => {
-                // this.audioLoaded = true;
-                resolve();
+            this.game.sound.setDecodedCallback(availableAudios, () => {
+              // this.audioLoaded = true;
+              resolve();
             });
         })
         
