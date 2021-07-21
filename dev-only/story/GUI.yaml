@@ -142,6 +142,7 @@ config:
       offset-y: '0'
       offset-x: '0'
       align: left
+      tintStyle: box
       color: '#FFFFFF'
       font: fontsaudimat-mono
       size: 26

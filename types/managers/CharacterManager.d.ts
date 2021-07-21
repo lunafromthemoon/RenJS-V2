@@ -17,6 +17,7 @@ export default class CharacterManager implements CharacterManagerInterface {
     showing: {};
     transition: Transition;
     constructor(game: RJS);
+    loadCharacters(): void;
     createLook(character: Character, lookName: any): Sprite;
     set(showing: any): Promise<any>;
     show(name: any, transitionName: any, props: any): Promise<any>;

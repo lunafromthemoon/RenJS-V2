@@ -1,11 +1,7 @@
 import { IGameConfig } from 'phaser-ce';
 export interface i18nInterface {
-    langs: string[];
     background: string;
-    path: string;
-    format: string;
-    w: number;
-    h: number;
+    langs: any;
     current?: string;
 }
 export interface RJSGameConfig extends IGameConfig {
@@ -31,7 +27,10 @@ export interface RJSGameConfig extends IGameConfig {
         };
         fade: boolean;
     };
+    parent: string;
     fonts: string;
+    scaleMode: number;
+    userScale: (scale: any, parent: any) => any;
     guiConfig: string;
     storySetup: string;
     storyConfig: string;
@@ -47,6 +46,7 @@ export interface StoryConfig extends IGameConfig {
     timeout: number;
     punctuationMarks?: string[];
     punctuationWait?: number;
+    charPerSfx?: any;
     logChoices: boolean;
     logText: boolean;
     lazyloading: boolean;

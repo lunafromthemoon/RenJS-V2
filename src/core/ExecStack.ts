@@ -58,6 +58,8 @@ export default class ExecStack {
         // if counter is total, then this scope (scene, if or choice) is over
         if (this.top().c === this.top().total){
             this.execStack.shift();
+            // shift also new top
+            this.top().c++;
         }
         // if execStack is empty, game over
     }
@@ -73,8 +75,9 @@ export default class ExecStack {
             // there are some nested scopes
             for (let i = this.execStack.length-2;i>=0;i--){
                 // nested scope should be the action at the counter
-                let nestedScope = allActions[stack.c-1];
+                let nestedScope = allActions[stack.c];
                 stack = this.execStack[i];
+
                 switch(stack.scope){
                     case 'interrupt':
                         // the nested scope will not be the last counter, but in the stack origin

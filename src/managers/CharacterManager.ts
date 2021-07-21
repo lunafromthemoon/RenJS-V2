@@ -24,11 +24,15 @@ export default class CharacterManager implements CharacterManagerInterface {
 
     constructor(private game: RJS) {
         // this.characters = this.game.setup.characters;
+        this.loadCharacters();
+    }
+
+    loadCharacters(){
         for (const name in this.game.setup.characters){
             const character = this.game.setup.characters[name];
             const displayName = character.displayName ? character.displayName : name;
-            let voice = null;
-            if (character.voice){
+            let voice = character.voice;
+            if (voice && voice!="none"){
                 voice = this.game.add.audio(character.voice);
                 // play silently once so we have the duration set
                 voice.play();

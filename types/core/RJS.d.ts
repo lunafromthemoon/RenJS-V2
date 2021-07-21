@@ -58,7 +58,7 @@ export default class RJS extends Game {
     setBlackOverlay(): void;
     removeBlackOverlay(): void;
     endGame(): void;
-    start(): Promise<void>;
+    start(initialVars?: {}): Promise<void>;
     skip(): void;
     auto(): void;
     mute(): void;

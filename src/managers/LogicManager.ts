@@ -5,6 +5,7 @@ import RJSManagerInterface from './RJSManager';
 export interface LogicManagerInterface<T> extends RJSManagerInterface {
     choicesLog: object;
     vars: object;
+
     currentChoices: any[];
     // interrupting: boolean;
     visualChoices?: T;
@@ -27,7 +28,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     set(vars): void {
-        this.vars = vars;
+        this.vars = {...this.vars, ...vars};
         this.currentChoices = [];
         // this.interrupting = false;
         if (this.visualChoices){
@@ -121,20 +122,23 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return true; // unconditional choice
     }
 
-    showVisualChoices(choices): void {
+    async showVisualChoices(choices) {
+        this.showingText = await this.checkTextAction(choices[0]);
+        if (this.showingText){
+            choices.shift();
+        }
         // clone
         const ch = choices.map(choice => ({...choice}));
         // filter (eval choice modifies the choice adding id and clearing text)
-        this.currentChoices = ch.filter(this.evalChoice);
+        this.currentChoices = ch.filter(this.evalChoice.bind(this));
         this.visualChoices = this.game.add.group();
         this.visualChoices.alpha = 0;
         const execId = this.getExecStackId();
         for (let i = 0; i < this.currentChoices.length; i++) {
-            const key = Object.keys(this.currentChoices[i])[0];
-            const str = key.split(' ');
+            const str = this.currentChoices[i].choiceText.split(' ');
             const pos = str[2].split(',');
             const position = {x: parseInt(pos[0], 10), y: parseInt(pos[1], 10)};
-            this.createVisualChoice(str[0],position,i,key,execId);
+            this.createVisualChoice(str[0],position,i,this.currentChoices[i].choiceText,execId);
         }
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
         transition(null,this.visualChoices);
@@ -158,11 +162,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     choose(index, choiceText, execId): void {
-        // remove message box if showing message
-        if (this.showingText){
-            this.game.managers.text.hide()
-            this.showingText = false;
-        }
+
         // update choice log
         this.updateChoiceLog(execId,choiceText);
         if (this.game.storyConfig.logText){
@@ -172,6 +172,13 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // add new action to scene
         const actions = chosenOption.actions;
         this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
+        // remove message box if showing message
+        if (this.showingText){
+            this.game.managers.text.hide()
+            this.showingText = false;
+            // correct stack index, so it will skip the text action
+            index++;
+        }
         // update stack
         if (chosenOption.interrupt){
             // resolving an interrupt, add actions and update stack 

@@ -101,25 +101,25 @@ export default class AudioManager implements AudioManagerInterface {
             audio.destroy();
         }
     }
-
-    playSFX(key): void {
-        if (this.unavailableAudio.includes(key)) {
+  
+    playSFX(key,volume?): void {
+      if (this.unavailableAudio.includes(key)) {
           console.warn(
             `SFX related to key ${key} is unavailable for playback.`
           );
           return;
         }
-        
         if (!this.game.userPreferences.muted){
             const sfx = this.sfxCache[key] ? this.sfxCache[key] : this.game.add.audio(key);
             this.sfxCache[key] = sfx;
+            sfx.volume= volume ? volume : this.game.userPreferences.sfxv;
             sfx.play();
-            sfx.volume=this.game.userPreferences.sfxv;
         }
     }
 
     set (active): void {
-        for (let type in ['bgm','bgs']){
+        for (let type of ['bgm','bgs']){
+
             if (!active[type]) continue;
             this.play(active[type].key,type,active[type].looped,active[type].fromSeconds,active[type].transition);
         }

@@ -275,6 +275,10 @@ export default class RJSGUI implements RJSGUIInterface {
             if (sprite.binding == "bgmv"){
                 this.game.managers.audio.changeVolume('bgm',newVal);
             }
+            if (component.sfx && component.sfx !== 'none') {
+                const volume = sprite.binding == "bgmv" ? newVal : this.game.userPreferences.sfxv;
+                this.game.managers.audio.playSFX(component.sfx,volume);
+            }
         });
     }
 
@@ -325,7 +329,7 @@ export default class RJSGUI implements RJSGUIInterface {
         if (!menu){
             menu = this.currentMenu;
         }
-        if (mute){
+        if (mute && this.config.menus[menu].backgroundMusic){
             this.game.managers.audio.stop('bgm');
         }
         this.game.control.unskippable = true;
@@ -341,10 +345,23 @@ export default class RJSGUI implements RJSGUIInterface {
 
     showHUD() {
         this.hud.visible = true;
+        if (this.choices){
+            this.choices.visible = true;
+        }
+        if (this.interrupts){
+            this.interrupts.visible = true;
+        }
+        
     }
 
     hideHUD() {
         this.hud.visible = false;
+        if (this.choices){
+            this.choices.visible = false;
+        }
+        if (this.interrupts){
+            this.interrupts.visible = false;
+        }
     }    
 
     async changeMenu(menu) {
@@ -490,13 +507,25 @@ export default class RJSGUI implements RJSGUIInterface {
     showText(text, title, colour, sfx, callback) {
         if  (this.nameBox) {
             this.nameBox.text.text = title!=undefined ? title : "";
-            this.nameBox.text.fill = colour;
+            if (colour && this.config.hud['name-box'].tintStyle == "box"){
+                // tint the whole box
+                this.nameBox.tint = this.toHexColor(colour);
+                this.nameBox.text.fill = this.config.hud['name-box'].color;
+            } else {
+                // change name color
+                this.nameBox.text.fill = colour;
+            }
+            
             this.nameBox.visible = title!=undefined;
 
-        } 
-        if (!sfx && this.messageBox.sfx){
+        }
+        if (sfx=='none'){
+            // if character voice configured as none, don't make any sound
+            sfx=null;
+        } else if (!sfx && this.messageBox.sfx){
             sfx = this.messageBox.sfx;
         }
+        
         let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
         if (this.game.control.skipping || textSpeed < 10){
             this.messageBox.message.text = text;
@@ -518,9 +547,9 @@ export default class RJSGUI implements RJSGUIInterface {
         }
         let waitingFor = 0;
         // how many characters to add per sfx played
-        let charPerSfx = 1;
+        let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
         
-        if (sfx){
+        if (sfx && charPerSfx=='auto'){
             charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
         }
         // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
@@ -611,7 +640,10 @@ export default class RJSGUI implements RJSGUIInterface {
         chBox.name = choice.choiceId;
 
         const textStyle = this.getTextStyle('choice');
-        const text = this.game.add.text(0, 0, choice.choiceText, textStyle);
+
+        const text = this.game.add.text(0, 0, "" , textStyle);
+        const finalText = this.setTextStyles(choice.choiceText,text);
+        text.text = finalText;
         text.visible = false;
         this.setTextPosition(chBox,text, choiceConfig);
         setTimeout(()=>{text.visible = true},20)

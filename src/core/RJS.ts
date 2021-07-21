@@ -96,38 +96,16 @@ export default class RJS extends Game {
         if (!(this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT)){
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
-        }        
+        }
 
-        this.scale.setResizeCallback((scale,parentBounds)=>{
-            // this wont do anything unless scaleMode == undefined
-            var windowWidth = window.innerWidth;
-            var windowHeight = window.innerHeight;
-
-            // if (this.config.scaleMode === Phaser.ScaleManager.EXACT_FIT){
-            //     scale.width = windowWidth;
-            //     scale.height = windowHeight;
-            // } else if (this.config.scaleMode === Phaser.ScaleManager.SHOW_ALL){
-                // try to scale vertically first
-                var newScale = windowHeight / this.height;  
-                var newHeight = windowHeight;
-                var newWidth = this.width*newScale;
-                if (newWidth>windowWidth){
-                    // width still doesn't fit, scale horizontally
-                    newScale = windowWidth / this.width;
-                    newWidth = windowWidth;
-                    newHeight = this.height*newScale;
-                }          
-                scale.width = newWidth;
-                scale.height = newHeight;
-            // }
-        },this)
-        // this.scale.setupScale(400,300);
+        if (this.config.scaleMode===undefined){
+            this.scale.setResizeCallback((scale,parentBounds)=>{
+                this.config.userScale(scale,parentBounds);
+            },this)
+        }
         
         this.scale.refresh();
         this.screenReady = true;
-        // this.stage.disableVisibilityChange = true;
-
-
     }
 
     async initStory () {
@@ -161,7 +139,7 @@ export default class RJS extends Game {
 
         for (const plugin in this.pluginsRJS) {
             if (this.pluginsRJS[plugin].onInit){
-                this.pluginsRJS[plugin].onInit();
+                await this.pluginsRJS[plugin].onInit();
             }
         }
         
@@ -198,7 +176,7 @@ export default class RJS extends Game {
     unpause (force?): void{
         this.control.paused = false;
         this.gui.showHUD();
-        if (!this.control.waitForClick){
+        if (!this.control.waitForClick && this.managers.logic.currentChoices.length==0){
             this.resolveAction();
         }
     }
@@ -234,13 +212,15 @@ export default class RJS extends Game {
             }
         }
         this.removeBlackOverlay();
-        this.gui.showMenu('main');
+        this.gui.changeMenu('main');
     }
 
-    async start () {
+    async start (initialVars = {}) {
         this.setBlackOverlay();
         this.control.paused = false;
         this.managers.story.clearScene();
+        // on start game, clear the vars o initialize for a new game +
+        this.managers.logic.vars = initialVars;
         await this.managers.story.startScene('start');
         for (const plugin in this.pluginsRJS) {
             if (this.pluginsRJS[plugin].onStart){
@@ -279,9 +259,9 @@ export default class RJS extends Game {
         if (!slot){
             slot = 0;
         }
-        
+        const bg = this.managers.background.current;
         const data = {
-            background: this.managers.background.current.name,
+            background: bg ? bg.name : null,
             characters: this.managers.character.showing,
             audio: this.managers.audio.getActive(),
             cgs: this.managers.cgs.current,

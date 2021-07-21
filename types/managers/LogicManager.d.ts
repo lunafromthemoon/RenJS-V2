@@ -22,7 +22,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     branch(expression: any, branches: any): void;
     parseVars(text: any, useQM?: any): string;
     evalChoice(choice: any): any;
-    showVisualChoices(choices: any): void;
+    showVisualChoices(choices: any): Promise<void>;
     createVisualChoice(image: any, position: any, index: any, key: any, execId: any): Phaser.Button;
     choose(index: any, choiceText: any, execId: any): void;
     getExecStackId(): string;
