@@ -96,12 +96,12 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    playSFX(key): void {
+    playSFX(key,volume?): void {
         if (!this.game.userPreferences.muted){
             const sfx = this.sfxCache[key] ? this.sfxCache[key] : this.game.add.audio(key);
             this.sfxCache[key] = sfx;
+            sfx.volume= volume ? volume : this.game.userPreferences.sfxv;
             sfx.play();
-            sfx.volume=this.game.userPreferences.sfxv;
         }
     }
 

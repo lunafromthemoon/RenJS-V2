@@ -28,7 +28,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     set(vars): void {
-        this.vars = vars;
+        this.vars = {...this.vars, ...vars};
         this.currentChoices = [];
         // this.interrupting = false;
         if (this.visualChoices){

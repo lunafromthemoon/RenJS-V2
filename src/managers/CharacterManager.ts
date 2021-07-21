@@ -24,6 +24,10 @@ export default class CharacterManager implements CharacterManagerInterface {
 
     constructor(private game: RJS) {
         // this.characters = this.game.setup.characters;
+        this.loadCharacters();
+    }
+
+    loadCharacters(){
         for (const name in this.game.setup.characters){
             const character = this.game.setup.characters[name];
             const displayName = character.displayName ? character.displayName : name;

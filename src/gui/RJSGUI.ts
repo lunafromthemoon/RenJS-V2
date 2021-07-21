@@ -275,6 +275,10 @@ export default class RJSGUI implements RJSGUIInterface {
             if (sprite.binding == "bgmv"){
                 this.game.managers.audio.changeVolume('bgm',newVal);
             }
+            if (component.sfx && component.sfx !== 'none') {
+                const volume = sprite.binding == "bgmv" ? newVal : this.game.userPreferences.sfxv;
+                this.game.managers.audio.playSFX(component.sfx,volume);
+            }
         });
     }
 
