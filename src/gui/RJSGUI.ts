@@ -131,7 +131,7 @@ export default class RJSGUI implements RJSGUIInterface {
             mBox = hudConfig['message-box'];
             this.messageBox = this.game.add.sprite(mBox.x,mBox.y,mBox.id,0,this.hud);
             this.messageBox.visible = false;
-            this.messageBox.sfx =  (mBox.sfx != 'none') ? this.game.add.audio(mBox.sfx) : null;
+            this.messageBox.sfx =  (mBox.sfx != 'none' && this.game.cache.checkSoundKey(mBox.sfx)) ? this.game.add.audio(mBox.sfx) : null;
             if (this.messageBox.sfx){
                 this.messageBox.sfx.play();
                 this.messageBox.sfx.stop();
@@ -141,6 +141,7 @@ export default class RJSGUI implements RJSGUIInterface {
             const text = this.game.add.text(mBox['offset-x'],mBox['offset-y'], '', textStyle);
             text.wordWrap = true;
             text.align = mBox.align;
+            text.lineSpacing = mBox.lineSpacing ? mBox.lineSpacing : 0;
             text.wordWrapWidth = mBox['text-width'];
             this.messageBox.message = text;
             this.messageBox.addChild(text);
@@ -215,13 +216,19 @@ export default class RJSGUI implements RJSGUIInterface {
                 spr.animations.add('do').play()
                 break;
             case 'buttons' :  this.loadButton(component,menu); break;
-            case 'labels' :
-                const color = component.color ? component.color : '#ffffff'
-                this.game.add.text(component.x, component.y, component.text, {font: component.size+'px '+component.font, fill: color},menu);
-                break;
+            case 'labels' : this.loadLabel(component,menu); break;
             case 'sliders' : this.loadSlider(component,menu); break;
             case 'save-slots' : this.loadSaveSlot(component,menu); break;
         }
+    }
+
+    loadLabel(component,menu){
+        const color = component.color ? component.color : '#ffffff'
+        const label = this.game.add.text(component.x, component.y, "" , {font: component.size+'px '+component.font, fill: color},menu);
+        if (component.lineSpacing) {
+            label.lineSpacing = component.lineSpacing;
+        }
+        label.text = this.setTextStyles(component.text,label);
     }
 
     loadButton(component, menu) {
@@ -664,6 +671,7 @@ export default class RJSGUI implements RJSGUIInterface {
     }
 
     setTextPosition(sprite, text, component) {
+        text.lineSpacing = component.lineSpacing ? component.lineSpacing : 0;
         if (component.isTextCentered) {
             text.setTextBounds(0,0, sprite.width, sprite.height);
             text.boundsAlignH = 'center';

@@ -71,6 +71,7 @@ export default class RJSGUI implements RJSGUIInterface {
     };
     loadGeneralComponents(menuConfig: any, menu: any): void;
     loadComponent(type: any, component: any, menu: any): void;
+    loadLabel(component: any, menu: any): void;
     loadButton(component: any, menu: any): void;
     loadSaveSlot(component: any, menu: any): void;
     loadSlider(component: any, menu: any): void;

@@ -134,6 +134,7 @@ config:
       color: '#89BAA8'
       font: fontsaudimat-mono
       size: '20'
+      # lineSpacing: -10
       'y': 449
       x: 40
       assetType: images
