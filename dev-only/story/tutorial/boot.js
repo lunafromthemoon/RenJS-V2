@@ -6,16 +6,16 @@ const globalConfig =  {
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
     fade: true,
-    'background': 'assets/gui/quickstartbg.png',
+    'background': 'assets/gui_pink/loaderasset1.png',
     'loadingBar': {
-      'asset': 'assets/gui/loaderloading-bar.png',
-      'position': {
-        'x': 109,
-        'y': 458
+      'asset': 'assets/gui_pink/loaderasset2.png',
+      "position": {
+        "x": 82,
+        "y": 460
       },
-      'size': {
-        'w': 578,
-        'h': 82
+      "size": {
+        "w": 636,
+        "h": 84
       }
     }
   },

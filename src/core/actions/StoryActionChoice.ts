@@ -12,6 +12,7 @@ export default class StoryActionText extends StoryAction {
     execute(): void {
         // stop skipping in player choice
         this.game.control.skipping = false;
+        this.game.input.enabled = true;
         if (this.isVisualChoice){
             this.game.managers.logic.showVisualChoices([...this.params.body]);
         } else if (this.isInterrupt){

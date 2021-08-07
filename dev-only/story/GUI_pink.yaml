@@ -1,0 +1,352 @@
+name: NewTutorial
+resolution:
+  - 800
+  - 600
+assetCounter: 30
+config:
+  loader:
+    inactive: false
+    background:
+      id: asset1
+      assetType: images
+    loading-bar:
+      id: asset2
+      height: '84'
+      width: '636'
+      'y': 460
+      x: 82
+      assetType: spritesheets
+  main:
+    inactive: false
+    background:
+      id: asset1
+      assetType: images
+    buttons:
+      - id: asset4
+        sfx: none
+        slot: '0'
+        binding: start
+        height: '84'
+        width: '204'
+        'y': 460
+        x: 82
+        assetType: spritesheets
+      - id: asset5
+        sfx: none
+        slot: '0'
+        binding: saveload
+        height: '84'
+        width: '204'
+        'y': 460
+        x: 298
+        assetType: spritesheets
+      - id: asset6
+        sfx: none
+        slot: '0'
+        binding: settings
+        height: '83'
+        width: '204'
+        'y': 460
+        x: 514
+        assetType: spritesheets
+  settings:
+    inactive: false
+    background:
+      id: asset7
+      assetType: images
+    buttons:
+      - id: asset14
+        sfx: none
+        slot: '0'
+        binding: return
+        height: '84'
+        width: '204'
+        'y': '460'
+        x: 514
+        assetType: spritesheets
+    sliders:
+      - id: asset10
+        binding: bgmv
+        height: '51'
+        width: '240'
+        'y': 238
+        x: 90
+        assetType: spritesheets
+      - id: asset10
+        binding: sfxv
+        height: '51'
+        width: '240'
+        'y': 238
+        x: 460
+        assetType: spritesheets
+      - id: asset10
+        binding: textSpeed
+        height: '51'
+        width: '240'
+        'y': 365
+        x: 460
+        assetType: spritesheets
+      - id: asset10
+        binding: autoSpeed
+        height: '51'
+        width: '240'
+        'y': '365'
+        x: '90'
+        assetType: spritesheets
+  hud:
+    inactive: false
+    message-box:
+      id: asset18
+      text-width: '620'
+      offset-y: '20'
+      offset-x: '20'
+      align: left
+      color: '#FFFFFF'
+      font: nakula
+      lineSpacing: '0'
+      size: '20'
+      sfx: none
+      'y': 446
+      x: 36
+      assetType: images
+    name-box:
+      id: asset19
+      offset-y: '0'
+      offset-x: '0'
+      align: left
+      color: '#FFFFFF'
+      # tintStyle: box
+      font: nakula
+      lineSpacing: '0'
+      size: '30'
+      'y': 376
+      x: 36
+      isTextCentered: true
+      assetType: images
+    ctc:
+      id: asset20
+      height: '24'
+      width: '26'
+      'y': 540
+      x: 600
+      assetType: spritesheets
+    images:
+      - id: asset21
+        'y': 466
+        x: 640
+        assetType: images
+    choice:
+      id: asset22
+      offset-y: '0'
+      offset-x: '0'
+      align: left
+      chosen-color: '#898CD2'
+      color: '#FFFFFF'
+      font: nakula
+      lineSpacing: '0'
+      size: 27
+      separation: '10'
+      height: '60'
+      width: '716'
+      sfx: none
+      isTextCentered: true
+      isBoxCentered: true
+      assetType: spritesheets
+      sample: 2
+    buttons:
+      - id: asset23
+        sfx: none
+        slot: '0'
+        binding: saveload
+        height: '39'
+        width: '41'
+        'y': 470
+        x: 688
+        assetType: spritesheets
+      - id: asset24
+        sfx: none
+        slot: '0'
+        binding: auto
+        height: '39'
+        width: '41'
+        'y': 513
+        x: 644
+        assetType: spritesheets
+      - id: asset27
+        sfx: none
+        slot: '0'
+        binding: settings
+        height: '39'
+        width: '41'
+        'y': 470
+        x: 644
+        assetType: spritesheets
+      - id: asset28
+        sfx: none
+        slot: '0'
+        binding: skip
+        height: '39'
+        width: '41'
+        'y': 513
+        x: '688'
+        assetType: spritesheets
+    interrupt:
+      id: asset30
+      offset-y: '0'
+      offset-x: '0'
+      align: left
+      color: '#FFFFFF'
+      font: nakula
+      lineSpacing: '0'
+      size: 27
+      separation: ''
+      height: '60'
+      width: '716'
+      sfx: none
+      'y': 0
+      x: 0
+      isTextCentered: true
+      isBoxCentered: false
+      textStyleAsChoice: true
+      textPositionAsChoice: true
+      inlineWithChoice: true
+      assetType: spritesheets
+  saveload:
+    inactive: false
+    background:
+      id: asset13
+      assetType: images
+    buttons:
+      - id: asset14
+        sfx: none
+        slot: '0'
+        binding: return
+        height: '84'
+        width: '204'
+        'y': 460
+        x: '514'
+        assetType: spritesheets
+    save-slots:
+      - id: asset15
+        slot: '0'
+        thumbnail-height: '177'
+        thumbnail-width: '204'
+        thumbnail-y: '0'
+        thumbnail-x: '0'
+        'y': 154
+        x: 80
+        assetType: images
+      - id: asset15
+        slot: '0'
+        thumbnail-height: '177'
+        thumbnail-width: '204'
+        thumbnail-y: '0'
+        thumbnail-x: '0'
+        'y': 154
+        x: 298
+        assetType: images
+      - id: asset15
+        slot: '0'
+        thumbnail-height: '177'
+        thumbnail-width: '204'
+        thumbnail-y: '0'
+        thumbnail-x: '0'
+        'y': '154'
+        x: 516
+        assetType: images
+assets:
+  images:
+    asset1:
+      name: asset1
+      fileName: loaderasset1.png
+    asset7:
+      name: asset7
+      fileName: settingsasset7.png
+    asset13:
+      name: asset13
+      fileName: saveloadasset13.png
+    asset15:
+      name: asset15
+      fileName: saveloadasset15.png
+    asset18:
+      name: asset18
+      fileName: hudasset18.png
+    asset19:
+      name: asset19
+      fileName: hudasset19.png
+    asset21:
+      name: asset21
+      fileName: hudasset21.png
+  spritesheets:
+    asset2:
+      name: asset2
+      fileName: loaderasset2.png
+      w: 636
+      h: 84
+    asset4:
+      name: asset4
+      fileName: mainasset4.png
+      w: 204
+      h: 84
+    asset5:
+      name: asset5
+      fileName: mainasset5.png
+      w: 204
+      h: 84
+    asset6:
+      name: asset6
+      fileName: mainasset6.png
+      w: 204
+      h: 83
+    asset10:
+      name: asset10
+      fileName: settingsasset10.png
+      w: 240
+      h: 51
+    asset14:
+      name: asset14
+      fileName: saveloadasset14.png
+      w: 204
+      h: 84
+    asset20:
+      name: asset20
+      fileName: hudasset20.png
+      w: 26
+      h: 24
+    asset22:
+      name: asset22
+      fileName: hudasset22.png
+      w: 716
+      h: 60
+    asset23:
+      name: asset23
+      fileName: hudasset23.png
+      w: 41
+      h: 39
+    asset24:
+      name: asset24
+      fileName: hudasset24.png
+      w: 41
+      h: 39
+    asset27:
+      name: asset27
+      fileName: hudasset27.png
+      w: 41
+      h: 39
+    asset28:
+      name: asset28
+      fileName: hudasset28.png
+      w: 41
+      h: 39
+    asset30:
+      name: asset30
+      fileName: hudasset30.png
+      w: 716
+      h: 60
+  fonts:
+    nakula:
+      fileName: generalnakula.ttf
+      name: nakula
+  audio: {}
+madeWithRenJSBuilder: true
+assetsPath: assets/gui_pink/
