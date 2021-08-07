@@ -125,7 +125,10 @@ testAnim:
 
 testimages:
   - show room_night: WITH FADE2 CONTINUE
-  - show deuzi: happy AT CENTER WITH FADE
+  - show deuzi: happyC AT CENTER WITH FADE
+  - jair says: asdf qwer 
+  - show deuzi: AT RIGHT
+  - deuzi says: asdf qwer sadf as
   - text: deuzi moves
   - call helloWorld:
     param1: 'hello'

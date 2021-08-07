@@ -77,7 +77,7 @@ export default class CharacterManager implements CharacterManagerInterface {
     show(name, transitionName, props): Promise<any> {
         const ch = this.characters[name];
         const oldLook = ch.currentLook;
-        const newLook = props.look ? props.look : "normal"
+        const newLook = props.look ? props.look : oldLook ? oldLook.name : "normal";
         ch.currentLook = this.createLook(ch,newLook);
 
         if (!props.position){
