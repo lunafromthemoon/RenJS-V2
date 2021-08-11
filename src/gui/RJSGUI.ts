@@ -1,9 +1,9 @@
 import RJS from '../core/RJS';
 import {Group} from 'phaser-ce';
-import RJSSlider from '../components/RJSSlider';
-import RJSSprite from '../components/RJSSprite';
-import RJSButton from '../components/RJSButton';
-import ChoiceButton from '../components/ChoiceButton';
+import RJSSlider from '../elements/RJSSlider';
+import RJSSprite from '../elements/RJSSprite';
+import RJSButton from '../elements/RJSButton';
+import ChoiceButton from '../elements/ChoiceButton';
 import {GUIAssets} from './Assets';
 
 export interface RJSGUIInterface {
@@ -38,7 +38,7 @@ export default class RJSGUI implements RJSGUIInterface {
     config = {hud:null, menus: {main:null,settings:null,saveload:null}}
     assets: GUIAssets[] = []
     fonts: string[] = []
-    // gui graphical components
+    // gui graphical elements
     menus = {};
     hud: Group = null;
     messageBox: any
@@ -103,11 +103,12 @@ export default class RJSGUI implements RJSGUIInterface {
         if (!menuConfig) return;
         this.menus[name] = this.game.add.group();
         this.menus[name].visible = false;
+        this.loadElements(menuConfig,this.menus[name]);
         // load bg
-        if (menuConfig.background){
-            this.game.add.image(0,0,menuConfig.background.id,0,this.menus[name]);
-        }
-        this.loadGeneralComponents(menuConfig,this.menus[name]);
+        // if (menuConfig.background){
+        //     this.game.add.image(0,0,menuConfig.background.id,0,this.menus[name]);
+        // }
+        // this.loadGeneralComponents(menuConfig,this.menus[name]);
         // if (menuConfig.backgroundMusic){
         //     menuConfig.backgroundMusic = this.game.add.audio(menuConfig.backgroundMusic);
 
@@ -180,7 +181,7 @@ export default class RJSGUI implements RJSGUIInterface {
             this.interrupts = this.game.add.group();
         }
 
-        this.loadGeneralComponents(hudConfig,this.hud)
+        // this.loadGeneralComponents(hudConfig,this.hud)
     }
 
     getTextStyle(type){
@@ -192,72 +193,78 @@ export default class RJSGUI implements RJSGUIInterface {
     }
 
     // ----------------------------------------------------------------
-    // Load different GUI component: images, animations, buttons, etc
+    // Load different GUI element: images, animations, buttons, etc
     // ----------------------------------------------------------------
 
-    loadGeneralComponents(menuConfig, menu) {
-        const components = ['images','animations','labels','save-slots','buttons','sliders'];
-        components.forEach(component => {
-            if (component in menuConfig) {
-                for (let i = menuConfig[component].length - 1; i >= 0; i--) {
-                    this.loadComponent(component,menuConfig[component][i],menu)
-                }
-            }
-        });
+    loadElements(menuConfig, menu) {
+        menuConfig.elements.forEach(element => {
+            this.loadElement(element, menu);
+        })
     }
 
-    loadComponent(type, component, menu) {
-        switch (type) {
+    // loadGeneralComponents(menuConfig, menu) {
+    //     const elements = ['images','animations','labels','save-slots','buttons','sliders'];
+    //     elements.forEach(element => {
+    //         if (element in menuConfig) {
+    //             for (let i = menuConfig[element].length - 1; i >= 0; i--) {
+    //                 this.loadComponent(element,menuConfig[element][i],menu)
+    //             }
+    //         }
+    //     });
+    // }
+
+    loadElement(element, menu) {
+        switch (element.type) {
             case 'images' :
-                this.game.add.image(component.x,component.y,component.id,0,menu);
+                this.game.add.image(element.x,element.y,element.id,0,menu);
                 break;
             case 'animations' :
-                const spr = this.game.add.sprite(component.x,component.y,component.id,0,menu);
+                const spr = this.game.add.sprite(element.x,element.y,element.id,0,menu);
                 spr.animations.add('do').play()
                 break;
-            case 'buttons' :  this.loadButton(component,menu); break;
-            case 'labels' : this.loadLabel(component,menu); break;
-            case 'sliders' : this.loadSlider(component,menu); break;
-            case 'save-slots' : this.loadSaveSlot(component,menu); break;
+            case 'buttons' :  this.loadButton(element,menu); break;
+            case 'labels' : this.loadLabel(element,menu); break;
+            case 'sliders' : this.loadSlider(element,menu); break;
+            case 'save-slots' : this.loadSaveSlot(element,menu); break;
         }
     }
 
-    loadLabel(component,menu){
-        const color = component.color ? component.color : '#ffffff'
-        const label = this.game.add.text(component.x, component.y, "" , {font: component.size+'px '+component.font, fill: color},menu);
-        if (component.lineSpacing) {
-            label.lineSpacing = component.lineSpacing;
+    loadLabel(element,menu){
+        const color = element.color ? element.color : '#ffffff'
+        const label = this.game.add.text(element.x, element.y, "" , {font: element.size+'px '+element.font, fill: color},menu);
+        if (element.lineSpacing) {
+            label.lineSpacing = element.lineSpacing;
         }
-        label.text = this.setTextStyles(component.text,label);
+        label.text = this.setTextStyles(element.text,label);
     }
 
-    loadButton(component, menu) {
-        const btn: RJSButton = this.game.add.button(component.x,component.y,component.id,() => {
-            if (component.sfx && component.sfx !== 'none') {
-                this.game.managers.audio.playSFX(component.sfx);
+    loadButton(element, menu) {
+        const btn: RJSButton = this.game.add.button(element.x,element.y,element.id,() => {
+            if (element.sfx && element.sfx !== 'none') {
+                this.game.managers.audio.playSFX(element.sfx);
             }
-            this.buttonsAction[component.binding](component)
+            this.buttonsAction[element.binding](element)
         },this,1,0,2,0,menu);
-        btn.component = component;
+        btn.element = element;
         if (btn.animations.frameTotal === 2){
             btn.setFrames(1,0,1,0)
         }
     }
 
-    loadSaveSlot(component, menu) {
-        const sprite: RJSSprite = this.game.add.sprite(component.x,component.y,component.id,0,menu);
-        sprite.config = component;
-        const thumbnail = this.game.getSlotThumbnail(component.slot);
+    loadSaveSlot(element, menu) {
+        const sprite: RJSSprite = this.game.add.sprite(element.x,element.y,element.id,0,menu);
+        sprite.config = element;
+        const thumbnail = this.game.getSlotThumbnail(element.slot);
         if (thumbnail) {
             this.loadThumbnail(thumbnail,sprite);
         }
-        this.saveSlots[component.slot] = sprite;
+        this.saveSlots[element.slot] = sprite;
     }
 
-    loadSlider(component, menu) {
-        let sliderFull: RJSSlider = this.game.add.sprite(component.x,component.y,component.id,0,menu);
+    loadSlider(element, menu) {
+        let sliderFull: RJSSlider = this.game.add.sprite(element.x,element.y,element.id,0,menu);
         if (sliderFull.animations.frameTotal === 2){
-            sliderFull = this.game.add.sprite(component.x,component.y,component.id,0,menu);
+            sliderFull = this.game.add.sprite(element.x,element.y,element.id,0,menu);
             sliderFull.frame = 1;
         }
         const createMask = (slider: RJSSlider,currentVal) => {
@@ -268,9 +275,9 @@ export default class RJSGUI implements RJSGUIInterface {
             sliderMask.endFill();
             return sliderMask;
         }
-        const currentVal = this.game.userPreferences[component.binding];
-        sliderFull.limits = this.sliderLimits[component.binding];
-        sliderFull.binding = component.binding;
+        const currentVal = this.game.userPreferences[element.binding];
+        sliderFull.limits = this.sliderLimits[element.binding];
+        sliderFull.binding = element.binding;
         sliderFull.mask = createMask(sliderFull,currentVal);
         sliderFull.inputEnabled = true;
         sliderFull.events.onInputDown.add((sprite,pointer) => {
@@ -282,9 +289,9 @@ export default class RJSGUI implements RJSGUIInterface {
             if (sprite.binding == "bgmv"){
                 this.game.managers.audio.changeVolume('bgm',newVal);
             }
-            if (component.sfx && component.sfx !== 'none') {
+            if (element.sfx && element.sfx !== 'none') {
                 const volume = sprite.binding == "bgmv" ? newVal : this.game.userPreferences.sfxv;
-                this.game.managers.audio.playSFX(component.sfx,volume);
+                this.game.managers.audio.playSFX(element.sfx,volume);
             }
         });
     }
@@ -398,17 +405,17 @@ export default class RJSGUI implements RJSGUIInterface {
                 await game.gui.changeMenu(null);
                 game.start();
             },
-            async load (component){
+            async load (element){
                 game.gui.showHUD();
                 await game.gui.changeMenu(null);
-                game.loadSlot(parseInt(component.slot, 10));
+                game.loadSlot(parseInt(element.slot, 10));
             },
 
             auto: game.auto.bind(game),
             skip: game.skip.bind(game),
             mute: game.mute.bind(game),
-            save (component) {
-                game.save(parseInt(component.slot, 10));
+            save (element) {
+                game.save(parseInt(element.slot, 10));
             },
             saveload (argument?) {
                 game.pause();
@@ -670,22 +677,22 @@ export default class RJSGUI implements RJSGUIInterface {
 
     }
 
-    setTextPosition(sprite, text, component) {
-        text.lineSpacing = component.lineSpacing ? component.lineSpacing : 0;
-        if (component.isTextCentered) {
+    setTextPosition(sprite, text, element) {
+        text.lineSpacing = element.lineSpacing ? element.lineSpacing : 0;
+        if (element.isTextCentered) {
             text.setTextBounds(0,0, sprite.width, sprite.height);
             text.boundsAlignH = 'center';
             text.boundsAlignV = 'middle';
         } else {
-            const offsetX = parseInt(component['offset-x'], 10);
-            const offsetY = parseInt(component['offset-y'], 10);
+            const offsetX = parseInt(element['offset-x'], 10);
+            const offsetY = parseInt(element['offset-y'], 10);
             text.setTextBounds(offsetX,offsetY, sprite.width, sprite.height);
-            text.boundsAlignH = component.align;
+            text.boundsAlignH = element.align;
             text.boundsAlignV = 'top'
-            if (component['text-width']){
+            if (element['text-width']){
                 text.wordWrap = true;
-                text.align = component.align;
-                text.wordWrapWidth = component['text-width'];
+                text.align = element.align;
+                text.wordWrapWidth = element['text-width'];
             }
         }
         sprite.addChild(text);
