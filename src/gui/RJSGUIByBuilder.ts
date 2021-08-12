@@ -1,7 +1,7 @@
 import RJSGUI from './RJSGUI';
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
-import {GUIAssets} from './Assets';
+import {GUIAsset} from './elements/GUIAsset';
 import RJSSlider from '../components/RJSSlider';
 import RJSSprite from '../components/RJSSprite';
 import RJSButton from '../components/RJSButton';
@@ -11,7 +11,7 @@ export default class RJSGUIByBuilder extends RJSGUI {
 
     initAssets(gui: any){
         // convert specific gui config to general one
-        const toAssetList = (list,type,path): GUIAssets[] => {
+        const toAssetList = (list,type,path): GUIAsset[] => {
             return Object.keys(list).map(key => (
                 {
                     key,

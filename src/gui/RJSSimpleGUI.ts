@@ -1,5 +1,5 @@
 import RJSGUI from './RJSGUI';
-import {GUIAssets} from './Assets';
+import {GUIAsset} from './elements/GUIAsset';
 // export interface RJSSimpleGUIInterface extends RJSGUI {}
 
 // todo to impl
@@ -7,7 +7,7 @@ export default class RJSSimpleGUI extends RJSGUI {
 
     initAssets(gui: any){
         // convert specific gui config to general one
-        const toAssetList = (list,type:string): GUIAssets[] => {
+        const toAssetList = (list,type:string): GUIAsset[] => {
             return Object.entries(list).map(([key, file]) => {
                 if (type == "spritesheet"){
                     const asset = String(file).split(" ");

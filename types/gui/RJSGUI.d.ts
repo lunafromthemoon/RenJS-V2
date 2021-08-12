@@ -2,11 +2,11 @@ import RJS from '../core/RJS';
 import { Group } from 'phaser-ce';
 import RJSSprite from '../components/RJSSprite';
 import ChoiceButton from '../components/ChoiceButton';
-import { GUIAssets } from './Assets';
+import { GUIAsset } from './Assets';
 export interface RJSGUIInterface {
     init(): any;
     getTextStyle(type: string): any;
-    assets: GUIAssets[];
+    assets: GUIAsset[];
     fonts: string[];
     showMenu(menu: any): any;
     showChoices(choices: any, execId: any): any;
@@ -37,7 +37,7 @@ export default class RJSGUI implements RJSGUIInterface {
             saveload: any;
         };
     };
-    assets: GUIAssets[];
+    assets: GUIAsset[];
     fonts: string[];
     menus: {};
     hud: Group;

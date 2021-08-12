@@ -1,4 +1,4 @@
-export interface GUIAssets {
+export interface GUIAsset {
     key: string;
     file: string;
     type: string;

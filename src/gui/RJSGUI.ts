@@ -4,12 +4,13 @@ import RJSSlider from '../elements/RJSSlider';
 import RJSSprite from '../elements/RJSSprite';
 import RJSButton from '../elements/RJSButton';
 import ChoiceButton from '../elements/ChoiceButton';
-import {GUIAssets} from './Assets';
+import {GUIAsset} from './elements/GUIAsset';
+import MessageBox from './elements/MessageBox';
+import {setTextStyles} from '../states/utils'
 
 export interface RJSGUIInterface {
     init();
-    getTextStyle(type:string);
-    assets: GUIAssets[]
+    assets: GUIAsset[]
     fonts: string[]
 
     showMenu(menu);
@@ -36,7 +37,7 @@ export default class RJSGUI implements RJSGUIInterface {
     buttonsAction = {};
 
     config = {hud:null, menus: {main:null,settings:null,saveload:null}}
-    assets: GUIAssets[] = []
+    assets: GUIAsset[] = []
     fonts: string[] = []
     // gui graphical elements
     menus = {};
@@ -95,8 +96,7 @@ export default class RJSGUI implements RJSGUIInterface {
         this.initMenu('settings',this.config.menus.settings)
         this.initMenu('saveload',this.config.menus.saveload);
 
-        this.punctuationMarks = this.game.storyConfig.punctuationMarks ? this.game.storyConfig.punctuationMarks : [];
-        this.punctuationWait = this.game.storyConfig.punctuationWait ? this.game.storyConfig.punctuationWait : 5;
+        
     }
 
     initMenu(name: string, menuConfig: any) {
@@ -235,7 +235,7 @@ export default class RJSGUI implements RJSGUIInterface {
         if (element.lineSpacing) {
             label.lineSpacing = element.lineSpacing;
         }
-        label.text = this.setTextStyles(element.text,label);
+        label.text = setTextStyles(element.text,label);
     }
 
     loadButton(element, menu) {
@@ -475,48 +475,48 @@ export default class RJSGUI implements RJSGUIInterface {
         this.choices.removeAll();
     }
 
-    setTextStyles(text,text_obj): string {
-      text_obj.clearFontValues();
-      text_obj.clearColors()
-      let styles = []
-      while(true){
-        let re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
-        let match = text.match(re);
-        if (match){
-          let s = {
-            start: text.search(re),
-            style: match[1].includes("color") ? "color" : match[1],
-            end: -1,
-            color: null
-          }
-          if (s.style == "color"){
-            s.color = match[2];
-          }
-          text = text.replace(re,"")
-          let endIdx = text.indexOf("(end)");
-          if (endIdx!=-1){
-            text = text.replace("(end)","")
-            s.end = endIdx;
-            styles.push(s)
-          }
-        } else break;
-      }
-      styles.forEach(s=>{
-        if (s.style=="italic"){
-          text_obj.addFontStyle("italic", s.start);
-          text_obj.addFontStyle("normal", s.end);
-        }
-        if (s.style=="bold"){
-          text_obj.addFontWeight("bold", s.start);
-          text_obj.addFontWeight("normal", s.end);
-        }
-        if (s.style=="color"){
-          text_obj.addColor(s.color, s.start)
-          text_obj.addColor(text_obj.fill, s.end)
-        }
-      })
-      return text;
-    }
+    // setTextStyles(text,text_obj): string {
+    //   text_obj.clearFontValues();
+    //   text_obj.clearColors()
+    //   let styles = []
+    //   while(true){
+    //     let re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
+    //     let match = text.match(re);
+    //     if (match){
+    //       let s = {
+    //         start: text.search(re),
+    //         style: match[1].includes("color") ? "color" : match[1],
+    //         end: -1,
+    //         color: null
+    //       }
+    //       if (s.style == "color"){
+    //         s.color = match[2];
+    //       }
+    //       text = text.replace(re,"")
+    //       let endIdx = text.indexOf("(end)");
+    //       if (endIdx!=-1){
+    //         text = text.replace("(end)","")
+    //         s.end = endIdx;
+    //         styles.push(s)
+    //       }
+    //     } else break;
+    //   }
+    //   styles.forEach(s=>{
+    //     if (s.style=="italic"){
+    //       text_obj.addFontStyle("italic", s.start);
+    //       text_obj.addFontStyle("normal", s.end);
+    //     }
+    //     if (s.style=="bold"){
+    //       text_obj.addFontWeight("bold", s.start);
+    //       text_obj.addFontWeight("normal", s.end);
+    //     }
+    //     if (s.style=="color"){
+    //       text_obj.addColor(s.color, s.start)
+    //       text_obj.addColor(text_obj.fill, s.end)
+    //     }
+    //   })
+    //   return text;
+    // }
 
     showText(text, title, colour, sfx, callback) {
         if  (this.nameBox) {
@@ -550,7 +550,7 @@ export default class RJSGUI implements RJSGUIInterface {
         }
         const textObj = this.messageBox.message;
         textObj.text = '';
-        let finalText = this.setTextStyles(text,textObj)
+        let finalText = setTextStyles(text,textObj)
         const words = finalText.split('');
         let count = 0;
         const completeText = () => {
@@ -656,7 +656,7 @@ export default class RJSGUI implements RJSGUIInterface {
         const textStyle = this.getTextStyle('choice');
 
         const text = this.game.add.text(0, 0, "" , textStyle);
-        const finalText = this.setTextStyles(choice.choiceText,text);
+        const finalText = setTextStyles(choice.choiceText,text);
         text.text = finalText;
         text.visible = false;
         this.setTextPosition(chBox,text, choiceConfig);

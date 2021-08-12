@@ -1,7 +1,6 @@
 import {preparePath} from './utils';
 import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from './utils';
 import RJSState from './RJSState';
-import {GUIAssets} from '../gui/Assets';
 import RJSSprite from '../components/RJSSprite';
 import RJSLoadingScreen from '../components/RJSLoadingScreen';
 
