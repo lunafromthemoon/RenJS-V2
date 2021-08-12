@@ -3,16 +3,28 @@ import {Button,Text} from 'phaser-ce';
 import {toHexColor,setTextStyles} from '../../states/utils'
 
 export default class ChoiceBox extends Button {
-    id: string
     text: Text
 
-    constructor(game: RJS, private config, id:string, text:string, previouslyChosen:boolean, callback) {
+    config: {
+        chosenColor: string,
+        text: {
+            x: number,
+            y: number,
+            lineSpacing: number,
+            style: any
+        },
+    }
+
+    constructor(game: RJS, config, private id:string, choiceText:string, previouslyChosen:boolean, callback) {
         super(game, 0, 0,config.asset,callback,game,1,0,2,0);
         this.visible = false;
-        this.id = config.id;
+        // this.id = this.config.id;
         // this.nameBox.visible = false;
-        this.text = this.game.add.text(config.text.x,config.text.y, '', config.text.style);
-        this.text.text = setTextStyles(text,this.text);
+        this.text = this.game.add.text(this.config.text.x,config.text.y, '', this.config.text.style);
+        if (this.config.text.lineSpacing){
+            this.text.lineSpacing = this.config.text.lineSpacing;
+        }
+        this.text.text = setTextStyles(choiceText,this.text);
         this.addChild(this.text);
 
         // const chBox: ChoiceButton = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
@@ -36,7 +48,7 @@ export default class ChoiceBox extends Button {
         //         chBox.setFrames(4,3,5,3);
         //     }
         // }
-        this.id = id;
+        // this.id = id;
         // chBox.name = choice.choiceId;
 
         // const textStyle = this.getTextStyle('choice');
@@ -45,7 +57,7 @@ export default class ChoiceBox extends Button {
         
         // setTimeout(()=>{this.text.visible = true},20)
         if (previouslyChosen){
-            this.tint = toHexColor(config.chosenColor);
+            this.tint = toHexColor(this.config.chosenColor);
         }
     }
 

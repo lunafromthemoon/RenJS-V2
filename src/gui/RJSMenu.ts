@@ -1,32 +1,44 @@
 import RJS from '../core/RJS';
 import {Group,Text} from 'phaser-ce';
-import {toHexColor,setTextStyles} from '../../states/utils'
+import {toHexColor,setTextStyles} from '../states/utils'
+import MaskSlider from './elements/MaskSlider'
+import SaveSlot from './elements/SaveSlot'
 
 export default class RJSMenu extends Group {
     id: string
     game: RJS
+    elementFactory: {}
+    // if element has id, index it for quick reference
+    indexedElements: {} = {}
 
     constructor(game: RJS, private config) {
         super(game, config.x, config.y,config.asset);
         this.game = game;
         this.visible = false;
         this.id = config.id;
+        this.indexedElements
+
+        this.elementFactory = {
+            image: this.createImage,            
+            button: this.createButton,
+            label: this.createLabel,
+            slider: this.createSlider,
+            saveSlot: this.createSaveSlot
+        }
     }
 
-    createElement(element):void {
-        switch (element.type) {
-            case 'images' :
-                this.game.add.image(element.x,element.y,element.id,0,this);
-                break;
-            case 'animations' :
-                const spr = this.game.add.sprite(element.x,element.y,element.id,0,this);
-                spr.animations.add('do').play()
-                break;
-            case 'buttons' :  this.createButton(element); break;
-            case 'labels' : this.createLabel(element); break;
-            case 'sliders' : this.loadSlider(element,menu); break;
-            case 'save-slots' : this.loadSaveSlot(element,menu); break;
+    createImage(element) {
+        const spr = this.game.add.sprite(element.x,element.y,element.asset,0,this);
+        if (spr.animations.frameTotal){
+            spr.animations.add('do').play()
         }
+        return spr;
+    }
+
+    createLabel(element) {
+        const label = this.game.add.text(element.x, element.y, "" , element.style, this);
+        label.text = setTextStyles(element.text,label);
+        return label
     }
 
     createButton(element) {
@@ -39,16 +51,25 @@ export default class RJSMenu extends Group {
         if (btn.animations.frameTotal === 2){
             btn.setFrames(1,0,1,0)
         }
-        if (element.pushButton)
+        if (element.pushButton){
+
+        }
+        return btn;
     }
 
-    createLabel(element){
-        const label = this.game.add.text(element.x, element.y, "" , element.style, this);
-        label.text = setTextStyles(element.text,label);
+    createSlider(element) {
+        const startVal = this.game.userPreferences[element.binding];
+        const range = this.game.propertyRanges[element.binding];
+        const slider = new MaskSlider(this.game,element,startVal,range[0],range[1]);
+        return slider
+    }
+
+    createSaveSlot(element) {
+        return new SaveSlot(this.game,element)
+        // this.saveSlots[element.slot] = sprite;
     }
 
     show(text,color): void {
-
         this.visible = true;
     }
 

@@ -62,6 +62,18 @@ export default class RJS extends Game {
         transition: Transition;
     }
 
+    propertyRanges: {
+        textSpeed: number[];
+        autoSpeed: number[];
+        bgmv: number[];
+        sfxv: number[];
+    } = {
+        textSpeed: [10,100],
+        autoSpeed: [50,300],
+        bgmv: [0,1],
+        sfxv: [0,1]
+    };
+
     constructor(config: RJSGameConfig) {
         super(config.w,config.h,config.renderer, config.parent)
         this.control = new RJSControl();

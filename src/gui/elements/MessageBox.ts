@@ -19,27 +19,54 @@ export default class MessageBox extends Sprite{
 
     game: RJS
 
-    constructor(game: RJS,private config: any) {
+    config: {
+        id: string,
+        x: number,
+        y: number,
+        asset: string,
+        sfx: string,
+        text: {
+            x: number,
+            y: number,
+            lineSpacing: number,
+            style: any
+        },
+        ctc: {
+            x: number,
+            y: number,
+            asset: string,
+            sfx: string,
+            animationStyle: string,
+        },
+        alwaysOn: boolean
+    }
+
+    constructor(game: RJS, config) {
         super(game,config.x,config.y,config.asset);
+        this.config = config;
         this.game = game;
         this.visible = false;
-        this.id = config.id;
+        this.id = this.config.id;
         // create sound effects
-        if (config.sfx != 'none' && this.game.cache.checkSoundKey(config.sfx)){
-            this.defaultSfx = this.game.add.audio(config.sfx);
+        if (this.config.sfx != 'none' && this.game.cache.checkSoundKey(this.config.sfx)){
+            this.defaultSfx = this.game.add.audio(this.config.sfx);
             // play and stop to load the sound for real, it's a phaser thing
             this.defaultSfx.play();
             this.defaultSfx.stop();
         }
         // create text
-        this.text = this.game.add.text(config.text.x,config.text.y, '', config.text.Style);
+        this.text = this.game.add.text(this.config.text.x,this.config.text.y, '', this.config.text.style);
+        if (this.config.text.lineSpacing){
+            this.text.lineSpacing = this.config.text.lineSpacing;
+        }
+        
         this.addChild(this.text);
         // create ctc
-        if (config.ctc){
-            const x = config.ctc.x - config.x;
-            const y = config.ctc.y - config.y;
+        if (this.config.ctc){
+            const x = this.config.ctc.x - this.config.x;
+            const y = this.config.ctc.y - this.config.y;
             this.ctc = this.game.add.sprite(x,y,config.ctc.asset);
-            if (config.ctc.animationStyle === 'spritesheet') {
+            if (this.config.ctc.animationStyle === 'spritesheet') {
                 this.ctc.animations.add('do').play()
             } else {
                 this.ctc.alpha = 0;
