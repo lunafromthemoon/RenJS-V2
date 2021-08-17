@@ -1,6 +1,5 @@
 import RJS from '../../core/RJS';
 import {Sprite} from 'phaser-ce';
-import {toHexColor,setTextStyles} from '../../states/utils'
 
 export default class SaveSlot extends Sprite {
     thumbnail: Sprite
@@ -22,6 +21,7 @@ export default class SaveSlot extends Sprite {
     constructor(game: RJS, config) {
         super(game, config.x, config.y,config.asset);
         this.game = game;
+        this.config = config;
         const thumbnailData = this.game.getSlotThumbnail(this.config.slot);
         if (thumbnailData) {
             this.loadThumbnail(thumbnailData);

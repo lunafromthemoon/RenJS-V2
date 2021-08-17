@@ -1,5 +1,5 @@
 import {Sprite,Text} from 'phaser-ce';
-import {toHexColor} from '../../states/utils'
+import {toHexColor,createText} from '../../utils/gui'
 
 
 export default class NameBox extends Sprite {
@@ -14,6 +14,8 @@ export default class NameBox extends Sprite {
         text: {
             x: number,
             y: number,
+            width: number,
+            height: number,
             style: any,
             lineSpacing: number
         }
@@ -24,15 +26,15 @@ export default class NameBox extends Sprite {
         this.config = config;
         this.visible = false;
         this.id = this.config.id;
-        // this.nameBox.visible = false;
-        this.text = this.game.add.text(this.config.text.x,this.config.text.y, '', this.config.text.style);
-        if (this.config.text.lineSpacing){
-            this.text.lineSpacing = this.config.text.lineSpacing;
-        }
+        this.config.text.width = this.width;
+        this.config.text.height = this.height;
+        this.text = createText(this.game,this.config.text);
         this.addChild(this.text);
     }
 
     show(text,color): void {
+        console.log(text)
+        console.log(color)
         this.text.text = text;
         if (this.config.tintStyle == 'box'){
             this.tint = toHexColor(color);

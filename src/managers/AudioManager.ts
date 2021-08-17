@@ -9,7 +9,7 @@ export interface AudioManagerInterface extends RJSManagerInterface {
     isSfx(actor): boolean;
     decodeAudio(audioList): Promise<any>;
     mute(): void;
-    changeVolume(type, volume): void;
+    changeVolume(volume): void;
     stopAll(): void;
     getActive():object;
     current: {
@@ -30,7 +30,7 @@ export default class AudioManager implements AudioManagerInterface {
 
     constructor(game: RJS) {
         this.game = game
-        this.changeVolume("bgm",game.userPreferences.bgmv)
+        this.changeVolume(game.userPreferences.bgmv)
     }
 
     getActive():object{
@@ -112,8 +112,8 @@ export default class AudioManager implements AudioManagerInterface {
         if (!this.game.userPreferences.muted){
             const sfx = this.sfxCache[key] ? this.sfxCache[key] : this.game.add.audio(key);
             this.sfxCache[key] = sfx;
-            sfx.volume= volume ? volume : this.game.userPreferences.sfxv;
             sfx.play();
+            sfx.volume= volume ? volume : this.game.userPreferences.sfxv;
         }
     }
 
@@ -125,14 +125,13 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    changeVolume(type, volume): void {
+    changeVolume(volume): void {
         if (this.current.bgm){
             this.current.bgm.volume = this.game.userPreferences.bgmv;
         }
         if (this.current.bgs){
             this.current.bgs.volume = this.game.userPreferences.bgmv;
         }
-        
     }
 
     async decodeAudio(audioList:string[]):Promise<any> {

@@ -74,8 +74,7 @@ var Transition = /** @class */ (function () {
                 return [2 /*return*/, new Promise(function (resolve) {
                         _this.tweenManager.chain([
                             {
-                                sprite: from, tweenables: { alpha: 0 },
-                                callback: function () {
+                                sprite: from, tweenables: { alpha: 0 }, callback: function () {
                                     setNewProperties(to, position, scaleX);
                                     resolve();
                                 }
@@ -159,8 +158,7 @@ var Transition = /** @class */ (function () {
                 return [2 /*return*/, new Promise(function (resolve) {
                         _this.tweenManager.chain([
                             {
-                                sprite: sprBg, tweenables: { alpha: 1 },
-                                callback: function () {
+                                sprite: sprBg, tweenables: { alpha: 1 }, callback: function () {
                                     if (from) {
                                         from.alpha = 0;
                                     }
@@ -171,8 +169,7 @@ var Transition = /** @class */ (function () {
                                 }
                             },
                             {
-                                sprite: sprBg, tweenables: { alpha: 0 },
-                                callback: function () {
+                                sprite: sprBg, tweenables: { alpha: 0 }, callback: function () {
                                     sprBg.destroy();
                                     resolve();
                                 }

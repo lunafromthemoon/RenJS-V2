@@ -98,14 +98,23 @@ var RJS = /** @class */ (function (_super) {
         var _this = _super.call(this, config.w, config.h, config.renderer, config.parent) || this;
         _this.gameStarted = false;
         _this.xShots = [];
+        _this.tools = {};
+        _this.screenReady = false;
         _this.pluginsRJS = {};
         _this.interruptAction = null;
+        _this.propertyRanges = {
+            textSpeed: [10, 100],
+            autoSpeed: [50, 300],
+            bgmv: [0, 1],
+            sfxv: [0, 1]
+        };
         _this.control = new RJSControl_1.default();
         _this.config = config;
-        _this.userPreferences = new UserPreferences_1.default(_this);
         return _this;
+        // this.userPreferences = new UserPreferences(this);
     }
     RJS.prototype.addPlugin = function (name, cls) {
+        this.pluginsRJS[name] = new cls(name, this);
         this.pluginsRJS[name] = new cls(name, this);
     };
     RJS.prototype.launch = function () {
@@ -114,27 +123,45 @@ var RJS = /** @class */ (function (_super) {
         // this.state.start('loader')
         this.state.add('bootstrap', Boot_1.default);
         if (this.config.i18n) {
-            this.state.add('chooseLang', LanguageChooser_1.default);
-            this.state.start('chooseLang');
+            // try to load previously chosen Language
+            var lang = localStorage.getItem('RenJS_I18N' + this.config.name);
+            if (this.config.i18n.langs[lang]) {
+                this.config.i18n.current = lang;
+                this.state.start('bootstrap');
+            }
+            else {
+                this.state.add('chooseLang', LanguageChooser_1.default);
+                this.state.start('chooseLang');
+            }
         }
         else {
             this.state.start('bootstrap');
         }
     };
     RJS.prototype.setupScreen = function () {
+        var _this = this;
+        if (this.screenReady)
+            return;
+        this.scale.scaleMode = this.config.scaleMode;
         if (!(this.config.scaleMode === phaser_ce_1.default.ScaleManager.EXACT_FIT)) {
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
         }
-        this.scale.scaleMode = phaser_ce_1.default.ScaleManager[this.config.scaleMode];
+        if (this.config.scaleMode === undefined) {
+            this.scale.setResizeCallback(function (scale, parentBounds) {
+                _this.config.userScale(scale, parentBounds);
+            }, this);
+        }
         this.scale.refresh();
+        this.screenReady = true;
     };
     RJS.prototype.initStory = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var plugin, audioList;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a, _b, _i, plugin, audioList;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
+                        this.userPreferences = new UserPreferences_1.default(this, this.storyConfig.userPreferences);
                         this.managers = {
                             tween: new TweenManager_1.default(this),
                             story: new StoryManager_1.default(this),
@@ -156,14 +183,26 @@ var RJS = /** @class */ (function (_super) {
                         this.managers.story.setupStory();
                         return [4 /*yield*/, this.gui.init()];
                     case 1:
-                        _a.sent();
+                        _c.sent();
                         this.initInput();
-                        for (plugin in this.pluginsRJS) {
-                            if (this.pluginsRJS[plugin].onInit) {
-                                this.pluginsRJS[plugin].onInit();
-                            }
-                        }
-                        if (!!this.setup.lazyloading) return [3 /*break*/, 3];
+                        _a = [];
+                        for (_b in this.pluginsRJS)
+                            _a.push(_b);
+                        _i = 0;
+                        _c.label = 2;
+                    case 2:
+                        if (!(_i < _a.length)) return [3 /*break*/, 5];
+                        plugin = _a[_i];
+                        if (!this.pluginsRJS[plugin].onInit) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.pluginsRJS[plugin].onInit()];
+                    case 3:
+                        _c.sent();
+                        _c.label = 4;
+                    case 4:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 5:
+                        if (!!this.setup.lazyloading) return [3 /*break*/, 7];
                         // decode audio for all game
                         if (!this.setup.music)
                             this.setup.music = {};
@@ -171,25 +210,27 @@ var RJS = /** @class */ (function (_super) {
                             this.setup.sfx = {};
                         audioList = Object.keys(this.setup.music).concat(Object.keys(this.setup.sfx));
                         return [4 /*yield*/, this.managers.audio.decodeAudio(audioList)];
-                    case 2:
-                        _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
+                    case 6:
+                        _c.sent();
+                        return [3 /*break*/, 8];
+                    case 7:
                         if (this.setup.lazyloading.backgroundLoading) {
                             this.managers.story.assetLoader.loadEpisodeInBackground(0);
                         }
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        _c.label = 8;
+                    case 8: return [2 /*return*/];
                 }
             });
         });
     };
-    RJS.prototype.pause = function () {
+    RJS.prototype.pause = function (keepGUI) {
         this.control.paused = true;
         this.control.skipping = false;
         this.control.auto = false;
         this.takeXShot();
-        this.gui.hideHUD();
+        if (!keepGUI) {
+            this.gui.hideHUD();
+        }
     };
     RJS.prototype.takeXShot = function () {
         if (!this.xShots)
@@ -199,7 +240,7 @@ var RJS = /** @class */ (function (_super) {
     RJS.prototype.unpause = function (force) {
         this.control.paused = false;
         this.gui.showHUD();
-        if (!this.control.waitForClick) {
+        if (!this.control.waitForClick && this.managers.logic.currentChoices.length == 0) {
             this.resolveAction();
         }
     };
@@ -233,9 +274,10 @@ var RJS = /** @class */ (function (_super) {
             }
         }
         this.removeBlackOverlay();
-        this.gui.showMenu('main');
+        this.gui.changeMenu('main');
     };
-    RJS.prototype.start = function () {
+    RJS.prototype.start = function (initialVars) {
+        if (initialVars === void 0) { initialVars = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var plugin;
             return __generator(this, function (_a) {
@@ -244,6 +286,8 @@ var RJS = /** @class */ (function (_super) {
                         this.setBlackOverlay();
                         this.control.paused = false;
                         this.managers.story.clearScene();
+                        // on start game, clear the vars o initialize for a new game +
+                        this.managers.logic.vars = initialVars;
                         return [4 /*yield*/, this.managers.story.startScene('start')];
                     case 1:
                         _a.sent();
@@ -284,8 +328,9 @@ var RJS = /** @class */ (function (_super) {
         if (!slot) {
             slot = 0;
         }
+        var bg = this.managers.background.current;
         var data = {
-            background: this.managers.background.current.name,
+            background: bg ? bg.name : null,
             characters: this.managers.character.showing,
             audio: this.managers.audio.getActive(),
             cgs: this.managers.cgs.current,

@@ -21,7 +21,6 @@ export default class MaskedSlider extends Sprite {
         super(game, config.x, config.y,config.asset);
         this.config = config;
         this.game = game;
-        this.visible = false;
         this.id = config.id;
         this.range = this.max-this.min;
 
@@ -35,19 +34,18 @@ export default class MaskedSlider extends Sprite {
             const val = (pointer.x-this.x);
             this.currentValue = (val/this.width)*this.range+this.min;
             this.updateMask();
-            this.game.gui.buttonsAction[this.config.binding](this.config,this.currentValue)
-            // this.game.userPreferences.setPreference(sprite.binding,newVal);
-            // if (sprite.binding == "bgmv"){
-            //     this.game.managers.audio.changeVolume('bgm',newVal);
-            // }
+            this.game.gui.bindingActions[this.config.binding](this.config,this.currentValue)
+            
             if (this.config.sfx && this.config.sfx !== 'none') {
-                const volume = this.config.binding == "bgmv" ? this.currentValue : this.game.userPreferences.sfxv;
+
+                const volume = this.config.binding == "changeUserPreference" ? this.currentValue : null;
                 this.game.managers.audio.playSFX(this.config.sfx,volume);
             }
         });
     }
 
     updateMask(){
+        // left to right
         if (this.sliderFull.mask) this.sliderFull.mask.destroy();
         const sliderMask = this.game.add.graphics(this.config.x,this.config.y);
         sliderMask.beginFill(0xffffff);

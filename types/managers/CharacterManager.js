@@ -47,13 +47,23 @@ var CharacterManager = /** @class */ (function () {
         this.characters = {};
         this.showing = {};
         // this.characters = this.game.setup.characters;
+        this.loadCharacters();
+    }
+    CharacterManager.prototype.loadCharacters = function () {
         for (var name_1 in this.game.setup.characters) {
             var character = this.game.setup.characters[name_1];
             var displayName = character.displayName ? character.displayName : name_1;
+            var voice = character.voice;
+            if (voice && voice != "none") {
+                voice = this.game.add.audio(character.voice);
+                // play silently once so we have the duration set
+                voice.play();
+                voice.stop();
+            }
             // this.add(name,displayName,character.speechColour,character.looks);
-            this.characters[name_1] = new Character_1.default(name_1, displayName, character.speechColour);
+            this.characters[name_1] = new Character_1.default(name_1, displayName, character.speechColour, voice);
         }
-    }
+    };
     // add (name, displayName, speechColour, looks): void {
     // this.characters[name] = new Character(displayName,speechColour);
     // for (const look in looks) {
@@ -94,7 +104,7 @@ var CharacterManager = /** @class */ (function () {
     CharacterManager.prototype.show = function (name, transitionName, props) {
         var ch = this.characters[name];
         var oldLook = ch.currentLook;
-        var newLook = props.look ? props.look : "normal";
+        var newLook = props.look ? props.look : oldLook ? oldLook.name : "normal";
         ch.currentLook = this.createLook(ch, newLook);
         if (!props.position) {
             props.position = (oldLook !== null) ? { x: oldLook.x, y: oldLook.y } : this.game.storyConfig.positions.DEFAULT;

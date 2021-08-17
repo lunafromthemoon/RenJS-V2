@@ -22,6 +22,14 @@ var TweenManager = /** @class */ (function () {
             if (this.canSkip() && !unskippable) {
                 this.game.waitForClick(function () { return _this.skip(); });
             }
+            else {
+                // if tween is unskippable, lock the input
+                this.game.input.enabled = false;
+                tween.onComplete.addOnce(function () {
+                    // enable input back when tween finishes
+                    _this.game.input.enabled = true;
+                }, this);
+            }
         }
         this.current.push(tween);
         if (this.game.control.skipping) {

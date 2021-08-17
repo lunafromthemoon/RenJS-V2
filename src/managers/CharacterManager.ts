@@ -39,7 +39,7 @@ export default class CharacterManager implements CharacterManagerInterface {
                 voice.stop();
             }
             // this.add(name,displayName,character.speechColour,character.looks);
-            this.characters[name] = new Character(name,displayName,character.speechColour,voice);
+            this.characters[name] = new Character(name,displayName,character.speechColour,voice,character.nameBox);
         }
     }
 

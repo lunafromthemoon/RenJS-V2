@@ -15,25 +15,21 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     choicesLog: object;
     vars: object = {};
     currentChoices: any[];
-    // interrupting: boolean;
-    visualChoices: Group = null;
+    interrupting?: {origin:number,execId:string};
     showingText: boolean = false;
 
     constructor(private game: RJS) {
-        const log = localStorage.getItem('RenJSChoiceLog'+game.config.name);
         if (this.game.setup.vars){
             this.vars = this.game.setup.vars
         }
+        const log = localStorage.getItem('RenJSChoiceLog'+game.config.name);
         this.choicesLog = log ? JSON.parse(log) : {};
     }
 
     set(vars): void {
         this.vars = {...this.vars, ...vars};
         this.currentChoices = [];
-        // this.interrupting = false;
-        if (this.visualChoices){
-            this.visualChoices.destroy();
-        }
+        this.interrupting = null;
     }
 
     setVar(name, value): void {
@@ -47,15 +43,18 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
     }
 
-    updateChoiceLog(execId,choiceText){
-        if (!this.choicesLog[execId].includes(choiceText)){
-
-            this.choicesLog[execId].push(choiceText);
+    updateChoiceLog(index){
+        const execId = this.interrupting ? this.interrupting.execId : this.getExecStackId()
+        if (!this.choicesLog[execId].includes(index)){
+            this.choicesLog[execId].push(index);
             // Save choices log
             const log = JSON.stringify(this.choicesLog);
             localStorage.setItem('RenJSChoiceLog' + this.game.config.name,log);
         }
-        
+    }
+
+    choiceInLog(index){
+        return this.choicesLog[this.getExecStackId()].includes(index);
     }
 
     evalExpression(expression): any {
@@ -101,97 +100,65 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return text;
     }
 
-    evalChoice(choice): any {
-        const choiceText = Object.keys(choice)[0];
-        choice.choiceId = 'Choice'+ guid();
-        // choice text can have vars
-        choice.choiceText = this.parseVars(choiceText);
-        // actions when chose will be kept in actions
-        choice.actions = choice[choiceText];
-        delete choice[choiceText];
+    parseChoice(index,choice): any {
+        let rawText = Object.keys(choice)[0];
+        const parsedChoice:any = {
+            index: index,
+            actions: choice[rawText],
+            available: true,
+            choiceText: this.parseVars(rawText),
+            previouslyChosen: this.choiceInLog(index)
+        }
         // check conditional option
-        const params = choiceText.split('!if');
+        const params = rawText.split('!if');
         if (params.length > 1){
-            const val = this.evalExpression(params[1]);
-            if (val) {
-                // remove the if part of the text
-                choice.choiceText = params[0];
-            }
-            return val;
+            parsedChoice.available = this.evalExpression(params[1]);
+            parsedChoice.choiceText = params[0];
         }
-        return true; // unconditional choice
+        if (choice.interrupt){
+            parsedChoice.interrupt = true;
+            parsedChoice.origin = choice.interrupt;
+        }
+        return parsedChoice
     }
 
-    async showVisualChoices(choices) {
-        this.showingText = await this.checkTextAction(choices[0]);
-        if (this.showingText){
-            choices.shift();
-        }
-        // clone
-        const ch = choices.map(choice => ({...choice}));
-        // filter (eval choice modifies the choice adding id and clearing text)
-        this.currentChoices = ch.filter(this.evalChoice.bind(this));
-        this.visualChoices = this.game.add.group();
-        this.visualChoices.alpha = 0;
-        const execId = this.getExecStackId();
-        for (let i = 0; i < this.currentChoices.length; i++) {
-            const str = this.currentChoices[i].choiceText.split(' ');
-            const pos = str[2].split(',');
-            const position = {x: parseInt(pos[0], 10), y: parseInt(pos[1], 10)};
-            this.createVisualChoice(str[0],position,i,this.currentChoices[i].choiceText,execId);
-        }
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
-        transition(null,this.visualChoices);
-    }
 
-    createVisualChoice(image, position, index, key, execId): Phaser.Button {
-        const button = this.game.add.button(position.x,position.y,image,() => {
-            let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
-            transition(this.visualChoices,null).then(()=>{
-                this.visualChoices.destroy();
-                this.choose(index,key,execId);
-            })
-        },this,0,0,0,0,this.visualChoices);
 
-        // if (this.game.gui.getChosenOptionColor && this.choicesLog[execId].indexOf(key) !== -1){
-            // button.tint = this.game.gui.getChosenOptionColor();
-            // previously chosen choice
-        // }
-        button.anchor.set(0.5);
-        return button;
-    }
-
-    choose(index, choiceText, execId): void {
+    choose(index): void {
+        console.log("chooosen "+ index)
+        const chosenOption = this.currentChoices[index];
 
         // update choice log
-        this.updateChoiceLog(execId,choiceText);
+        this.updateChoiceLog(chosenOption.index);
         if (this.game.storyConfig.logText){
-            this.game.managers.text.textLog.push({text:choiceText,title:"choice"});
+            this.game.managers.text.textLog.push({text:chosenOption.choiceText,title:"choice"});
         }
-        let chosenOption = this.currentChoices[index];
         // add new action to scene
         const actions = chosenOption.actions;
         this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
         // remove message box if showing message
         if (this.showingText){
-            this.game.managers.text.hide()
+            this.game.gui.hud.clear()
             this.showingText = false;
             // correct stack index, so it will skip the text action
             index++;
         }
         // update stack
-        if (chosenOption.interrupt){
+        if (this.interrupting){
             // resolving an interrupt, add actions and update stack 
-            this.game.control.execStack.stack('interrupt',actions.length,index,chosenOption.origin);
+            this.game.control.execStack.stack('interrupt',actions.length,chosenOption.index,chosenOption.origin);
         } else {
-            this.game.control.execStack.stack('choice',actions.length,index);
+            this.game.control.execStack.stack('choice',actions.length,chosenOption.index);
         }
 
         this.currentChoices = [];
-        if (!chosenOption.interrupt){
+        if (!this.interrupting){
             // interrupts resolve immediately
             this.game.resolveAction();
-        } 
+        } else {
+            // not interrupting anymore
+            this.interrupting = null;
+        }
     }
 
 
@@ -207,75 +174,47 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         let action=this.game.managers.story.parseAction({...firstChoice});
         if (action.mainAction == "say" || action.mainAction == "text"){
             if (action.actor){
-                await this.game.managers.text.say(action.actor, action.look, action.body, true);
+                await this.game.managers.text.characterSays(action.actor, action.look, action.body, action.boxId,true);
             } else {
-                await this.game.managers.text.show(action.body,null,null,null,true);
+                await this.game.managers.text.display(action.body,action.boxId,true);
             }
             return true;
         }
         return false;
     }
 
-    async showChoices(choices) {
+    async showChoices(boxId,choices) {
+        this.clearChoices();
         this.showingText = await this.checkTextAction(choices[0]);
         if (this.showingText){
             choices.shift();
         }
-        const ch = choices.map(choice => ({...choice})).filter(choice => this.evalChoice(choice))
-        this.currentChoices = this.currentChoices.concat(ch);
-        this.game.gui.showChoices(this.currentChoices,this.getExecStackId());
+        // const ch = choices.map(choice => ({...choice})).filter(choice => this.evalChoice(choice))
+        this.currentChoices = choices.map((choice,index) => this.parseChoice(index,choice))
+        this.currentChoices = this.currentChoices.filter(choice=>choice.available)
+        let chosenIdx = -1;
+        if (boxId == 'visualChoices'){
+            chosenIdx = await this.game.gui.hud.showVisualChoices(this.currentChoices);
+        } else {
+            // text choices
+            chosenIdx = await this.game.gui.hud.showChoices(boxId,this.currentChoices);
+        }
+        this.choose(chosenIdx);
     }
 
-    interrupt(steps, choices): any {
-        // TODO: fix this shit
-        // this.interrupting = true;
-        const s = parseInt(steps, 10);
-        choices.forEach(choice => {
-            choice.interrupt = true;
-            choice.origin = this.game.control.execStack.top().c;
-            if (!isNaN(s) && s>0){
-                choice.remainingSteps = s+1;
-            }
-        })
-        this.showChoices(choices);
+    interrupt(boxId, choices): any {
+        this.interrupting = {origin: this.game.control.execStack.top().c, execId:this.getExecStackId()};
+        this.showChoices(boxId,choices);
         // interrupts don't wait for player to make the choice
         this.game.resolveAction();
     }
 
-    updateInterruptions():void {
-        var interrupts = this.currentChoices.filter(choice => choice.interrupt);
-        interrupts.forEach(interrupt => {
-            if (interrupt.remainingSteps){
-                interrupt.remainingSteps--;
-                if (interrupt.remainingSteps === 1){
-                    this.game.gui.changeToLastInterrupt(interrupt.choiceId);
-                } else if (interrupt.remainingSteps === 0){
-                    this.game.gui.hideChoice(interrupt.choiceId);
-                }
-            }
-        })
-    }
-
     clearChoices(): any {
-        this.game.gui.hideChoices();
+        this.game.gui.hud.clear();
+        this.interrupting = null;
         this.currentChoices = [];
-        // this.interrupting = false;
-        if (this.visualChoices){
-            this.visualChoices.destroy();
-        }
-        if (this.showingText){
-            this.game.managers.text.hide()
-            this.showingText = false;
-        }
+        this.showingText = false;
     }
 }
 
-function guid(): string {
-    return 'ss'.replace(/s/g, s4);
-}
 
-function s4(): string {
-    return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-}

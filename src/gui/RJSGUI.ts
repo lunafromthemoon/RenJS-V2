@@ -1,12 +1,12 @@
 import RJS from '../core/RJS';
 import {Group} from 'phaser-ce';
-import RJSSlider from '../elements/RJSSlider';
-import RJSSprite from '../elements/RJSSprite';
-import RJSButton from '../elements/RJSButton';
-import ChoiceButton from '../elements/ChoiceButton';
+// import RJSSlider from '../elements/RJSSlider';
+// import RJSSprite from '../elements/RJSSprite';
+// import RJSButton from '../elements/RJSButton';
+// import ChoiceButton from '../elements/ChoiceButton';
 import {GUIAsset} from './elements/GUIAsset';
-import MessageBox from './elements/MessageBox';
-import {setTextStyles} from '../states/utils'
+import RJSMenu from './RJSMenu';
+import RJSHUD from './RJSHUD';
 
 export interface RJSGUIInterface {
     init();
@@ -14,63 +14,58 @@ export interface RJSGUIInterface {
     fonts: string[]
 
     showMenu(menu);
-    showChoices(choices, execId);
-    hideChoice(choiceId);
-    hideChoices();
-    changeToLastInterrupt(choiceId);
-    clear();
-    showText(text, title, colour, sfx, callback);
-    hideText();
-    ignoreTap(pointer);
-    addThumbnail?(thumbnail, slot);
+    // showChoices(choices, execId);
+    // hideChoice(choiceId);
+    // hideChoices();
+    // changeToLastInterrupt(choiceId);
+    // clear();
+    // showText(text, title, colour, sfx, callback);
+    // hideText();
+    // ignoreTap(pointer);
+    // addThumbnail?(thumbnail, slot);
     changeMenu(menu): void;
-    sliderLimits: {
-        textSpeed: number[];
-        autoSpeed: number[];
-        bgmv: number[];
-        sfxv: number[];
-    };
 
 }
 
 export default class RJSGUI implements RJSGUIInterface {
-    buttonsAction = {};
+    bindingActions = {};
 
-    config = {hud:null, menus: {main:null,settings:null,saveload:null}}
+    // config = {hud:null, menus: {main:null,settings:null,saveload:null}}
+    config: any
     assets: GUIAsset[] = []
     fonts: string[] = []
     // gui graphical elements
-    menus = {};
-    hud: Group = null;
-    messageBox: any
-    ctc: RJSSprite
-    nameBox: RJSSprite
-    choices: Group
-    interrupts: Group
-    saveSlots = {}
+    menus = {string:RJSMenu};
+    hud: RJSHUD = null;
+    // messageBox: any
+    // ctc: RJSSprite
+    // nameBox: RJSSprite
+    // choices: Group
+    // interrupts: Group
+    // saveSlots = {}
     // interval object to show text per letter 
-    textLoop = null;
+    // textLoop = null;
 
-    sliderLimits = {
-        textSpeed: [10,100],
-        autoSpeed: [50,300],
-        bgmv: [0,1],
-        sfxv: [0,1]
-    };
+    // sliderLimits = {
+    //     textSpeed: [10,100],
+    //     autoSpeed: [50,300],
+    //     bgmv: [0,1],
+    //     sfxv: [0,1]
+    // };
 
-    skipClickArea = []
+    // skipClickArea = []
 
-    punctuationMarks;
-    punctuationWait;
+    // punctuationMarks;
+    // punctuationWait;
 
     // menu navigation
     currentMenu = null
     previousMenu = null
-    currentMusic = null
+    // currentMusic = null
 
     constructor(protected game: RJS) {
         this.initAssets(game.guiSetup);
-        this.initButtonsActions();
+        this.initBindingActions();
     }
 
     // ----------------------------------------------------------------
@@ -90,293 +85,65 @@ export default class RJSGUI implements RJSGUIInterface {
             }
         }
         await this.game.managers.audio.decodeAudio(audioList);
+        console.log("gui.config")
+        console.log(this.config)
+        for (const menuName in this.config){
+            console.log(menuName)
+            if (menuName == 'hud'){
+                this.hud = new RJSHUD(this.game,this.config.hud);
+                // add also as menu to switch menus quickly
+                this.menus['hud'] = this.hud;
+            } else {
+                this.menus[menuName] = new RJSMenu(this.game,this.config[menuName]);
+            }
+            this.menus[menuName].init();
+        }
         // create the GUI
-        this.initHUD(this.config.hud);
-        this.initMenu('main',this.config.menus.main)
-        this.initMenu('settings',this.config.menus.settings)
-        this.initMenu('saveload',this.config.menus.saveload);
+        // this.initHUD(this.config.hud);
+        // this.initMenu('main',this.config.menus.main)
+        // this.initMenu('settings',this.config.menus.settings)
+        // this.initMenu('saveload',this.config.menus.saveload);
 
         
     }
 
-    initMenu(name: string, menuConfig: any) {
-        if (!menuConfig) return;
-        this.menus[name] = this.game.add.group();
-        this.menus[name].visible = false;
-        this.loadElements(menuConfig,this.menus[name]);
-        // load bg
-        // if (menuConfig.background){
-        //     this.game.add.image(0,0,menuConfig.background.id,0,this.menus[name]);
-        // }
-        // this.loadGeneralComponents(menuConfig,this.menus[name]);
-        // if (menuConfig.backgroundMusic){
-        //     menuConfig.backgroundMusic = this.game.add.audio(menuConfig.backgroundMusic);
-
-        // }
-    }
-
-    initHUD(hudConfig: any) {
-        if (!hudConfig) return;
-        this.hud = this.game.add.group()
-        this.hud.visible = false;
-
-        if (hudConfig.buttons){
-            hudConfig.buttons.forEach(btn => {
-                const w = parseInt(btn.width, 10)
-                const h = parseInt(btn.height, 10)
-                this.skipClickArea.push(new Phaser.Rectangle(btn.x,btn.y,w,h))
-            },this);
-        }
-        let mBox
-        if (hudConfig['message-box']){
-            mBox = hudConfig['message-box'];
-            this.messageBox = this.game.add.sprite(mBox.x,mBox.y,mBox.id,0,this.hud);
-            this.messageBox.visible = false;
-            this.messageBox.sfx =  (mBox.sfx != 'none' && this.game.cache.checkSoundKey(mBox.sfx)) ? this.game.add.audio(mBox.sfx) : null;
-            if (this.messageBox.sfx){
-                this.messageBox.sfx.play();
-                this.messageBox.sfx.stop();
-            }
-
-            const textStyle = this.getTextStyle('message-box');
-            const text = this.game.add.text(mBox['offset-x'],mBox['offset-y'], '', textStyle);
-            text.wordWrap = true;
-            text.align = mBox.align;
-            text.lineSpacing = mBox.lineSpacing ? mBox.lineSpacing : 0;
-            text.wordWrapWidth = mBox['text-width'];
-            this.messageBox.message = text;
-            this.messageBox.addChild(text);
-            if (mBox['always-on']){
-                this.messageBox.alwaysOn=true;
-            }
-        }
-        if (hudConfig['name-box']){
-            const x = hudConfig['name-box'].x - mBox.x;
-            const y = hudConfig['name-box'].y - mBox.y;
-            this.nameBox = this.game.add.sprite(x,y,hudConfig['name-box'].id,0,this.hud);
-            // this.nameBox.visible = false;
-            const textStyle = this.getTextStyle('name-box');
-            const text = this.game.add.text(0,0, '', textStyle);
-            this.setTextPosition(this.nameBox,text, hudConfig['name-box'])
-            this.messageBox.addChild(this.nameBox)
-        }
-        if (hudConfig.ctc) {
-            const x = hudConfig.ctc.x - mBox.x;
-            const y = hudConfig.ctc.y - mBox.y;
-            this.ctc = this.game.add.sprite(x,y,hudConfig.ctc.id);
-            // this.ctc.visible = false;
-            if (hudConfig.ctc.animationStyle === 'spritesheet') {
-                this.ctc.animations.add('do').play()
-            } else {
-                this.ctc.alpha = 0;
-                // this.ctc.tween =
-                this.game.add.tween(this.ctc).to({ alpha: 1 }, 400, Phaser.Easing.Linear.None,true,0,-1);
-            }
-            this.messageBox.addChild(this.ctc)
-        }
-        if (hudConfig.choice){
-            this.choices = this.game.add.group();
-        }
-        if (hudConfig.interrupt && !hudConfig.interrupt.inlineWithChoice){
-            this.interrupts = this.game.add.group();
-        }
-
-        // this.loadGeneralComponents(hudConfig,this.hud)
-    }
-
-    getTextStyle(type){
-        let style = this.config.hud[type];
-        return {
-            font: style.size ? style.size+'px '+style.font : style.font, 
-            fill: style.color
-        }
-    }
-
-    // ----------------------------------------------------------------
-    // Load different GUI element: images, animations, buttons, etc
-    // ----------------------------------------------------------------
-
-    loadElements(menuConfig, menu) {
-        menuConfig.elements.forEach(element => {
-            this.loadElement(element, menu);
-        })
-    }
-
-    // loadGeneralComponents(menuConfig, menu) {
-    //     const elements = ['images','animations','labels','save-slots','buttons','sliders'];
-    //     elements.forEach(element => {
-    //         if (element in menuConfig) {
-    //             for (let i = menuConfig[element].length - 1; i >= 0; i--) {
-    //                 this.loadComponent(element,menuConfig[element][i],menu)
-    //             }
-    //         }
-    //     });
-    // }
-
-    loadElement(element, menu) {
-        switch (element.type) {
-            case 'images' :
-                this.game.add.image(element.x,element.y,element.id,0,menu);
-                break;
-            case 'animations' :
-                const spr = this.game.add.sprite(element.x,element.y,element.id,0,menu);
-                spr.animations.add('do').play()
-                break;
-            case 'buttons' :  this.loadButton(element,menu); break;
-            case 'labels' : this.loadLabel(element,menu); break;
-            case 'sliders' : this.loadSlider(element,menu); break;
-            case 'save-slots' : this.loadSaveSlot(element,menu); break;
-        }
-    }
-
-    loadLabel(element,menu){
-        const color = element.color ? element.color : '#ffffff'
-        const label = this.game.add.text(element.x, element.y, "" , {font: element.size+'px '+element.font, fill: color},menu);
-        if (element.lineSpacing) {
-            label.lineSpacing = element.lineSpacing;
-        }
-        label.text = setTextStyles(element.text,label);
-    }
-
-    loadButton(element, menu) {
-        const btn: RJSButton = this.game.add.button(element.x,element.y,element.id,() => {
-            if (element.sfx && element.sfx !== 'none') {
-                this.game.managers.audio.playSFX(element.sfx);
-            }
-            this.buttonsAction[element.binding](element)
-        },this,1,0,2,0,menu);
-        btn.element = element;
-        if (btn.animations.frameTotal === 2){
-            btn.setFrames(1,0,1,0)
-        }
-    }
-
-    loadSaveSlot(element, menu) {
-        const sprite: RJSSprite = this.game.add.sprite(element.x,element.y,element.id,0,menu);
-        sprite.config = element;
-        const thumbnail = this.game.getSlotThumbnail(element.slot);
-        if (thumbnail) {
-            this.loadThumbnail(thumbnail,sprite);
-        }
-        this.saveSlots[element.slot] = sprite;
-    }
-
-    loadSlider(element, menu) {
-        let sliderFull: RJSSlider = this.game.add.sprite(element.x,element.y,element.id,0,menu);
-        if (sliderFull.animations.frameTotal === 2){
-            sliderFull = this.game.add.sprite(element.x,element.y,element.id,0,menu);
-            sliderFull.frame = 1;
-        }
-        const createMask = (slider: RJSSlider,currentVal) => {
-            const sliderMask = this.game.add.graphics(slider.x,slider.y,menu);
-            sliderMask.beginFill(0xffffff);
-            const maskWidth = slider.width*(currentVal-slider.limits[0])/(slider.limits[1]-slider.limits[0]);
-            sliderMask.drawRect(0,0,maskWidth,slider.height);
-            sliderMask.endFill();
-            return sliderMask;
-        }
-        const currentVal = this.game.userPreferences[element.binding];
-        sliderFull.limits = this.sliderLimits[element.binding];
-        sliderFull.binding = element.binding;
-        sliderFull.mask = createMask(sliderFull,currentVal);
-        sliderFull.inputEnabled = true;
-        sliderFull.events.onInputDown.add((sprite,pointer) => {
-            const val = (pointer.x-sprite.x);
-            const newVal = (val/sprite.width)*(sprite.limits[1] - sprite.limits[0])+sprite.limits[0];
-            sprite.mask.destroy();
-            sprite.mask = createMask(sprite,newVal);
-            this.game.userPreferences.setPreference(sprite.binding,newVal);
-            if (sprite.binding == "bgmv"){
-                this.game.managers.audio.changeVolume('bgm',newVal);
-            }
-            if (element.sfx && element.sfx !== 'none') {
-                const volume = sprite.binding == "bgmv" ? newVal : this.game.userPreferences.sfxv;
-                this.game.managers.audio.playSFX(element.sfx,volume);
-            }
-        });
-    }
-
-    loadThumbnail(thumbnail, parent) {
-        const id = 'thumbnail'+Math.floor(Math.random() * 5000);
-        this.game.load.image(id, thumbnail);
-        this.game.load.onLoadComplete.addOnce(() => {
-            const thmbSprite = this.game.add.sprite(parent.config['thumbnail-x'],parent.config['thumbnail-y'],id);
-            thmbSprite.width = parent.config['thumbnail-width']
-            thmbSprite.height = parent.config['thumbnail-height']
-            parent.addChild(thmbSprite);
-        }, this);
-        this.game.load.start();
-    }
-
+  
     // ----------------------------------------------------------------
     // GUI user interaction, buttons and sliders
     // ----------------------------------------------------------------
 
-    ignoreTap(pointer) {
-        // If user clicks on buttons, the tap shouldn't count to continue the story
-        return this.skipClickArea.find(area => area.contains(pointer.x,pointer.y)) !== undefined;
-    }
+    // ignoreTap(pointer) {
+    //     // If user clicks on buttons, the tap shouldn't count to continue the story
+    //     return this.skipClickArea.find(area => area.contains(pointer.x,pointer.y)) !== undefined;
+    // }
 
-    addThumbnail(thumbnail, slot) {
-        if (this.saveSlots[slot]){
-            this.loadThumbnail(thumbnail,this.saveSlots[slot])
-        }
+    // addThumbnail(thumbnail, slot) {
+    //     if (this.saveSlots[slot]){
+    //         this.loadThumbnail(thumbnail,this.saveSlots[slot])
+    //     }
+    // }
+
+    getCurrent(){
+        return this.menus[this.currentMenu];
     }
 
     async showMenu(menu) {
-        this.game.pause();
+        // this.game.pause();
         this.previousMenu = this.currentMenu;
         this.currentMenu = menu;
-        this.menus[menu].alpha = 0;
-        this.menus[menu].visible = true;
-        this.game.control.unskippable = true;
-        if (this.config.menus[menu].backgroundMusic){
-            this.game.managers.audio.play(this.config.menus[menu].backgroundMusic,"bgm",true);
-        }
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
-        await transition(null, this.menus[menu]);
-        this.game.control.unskippable = false;
-        
+        await this.menus[menu].show();
     }
 
     async hideMenu(menu, mute, callback?) {
         if (!menu){
             menu = this.currentMenu;
         }
-        if (mute && this.config.menus[menu].backgroundMusic){
-            this.game.managers.audio.stop('bgm');
-        }
-        this.game.control.unskippable = true;
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
-        await transition(this.menus[menu], null);
-        this.game.control.unskippable = false;
-        this.menus[menu].visible = false;
+        await this.menus[menu].hide(mute);
         this.currentMenu = null;
         if (callback){
             callback()
         }
-    }
-
-    showHUD() {
-        this.hud.visible = true;
-        if (this.choices){
-            this.choices.visible = true;
-        }
-        if (this.interrupts){
-            this.interrupts.visible = true;
-        }
-        
-    }
-
-    hideHUD() {
-        this.hud.visible = false;
-        if (this.choices){
-            this.choices.visible = false;
-        }
-        if (this.interrupts){
-            this.interrupts.visible = false;
-        }
-    }    
+    }  
 
     async changeMenu(menu) {
         const previous = this.currentMenu;
@@ -397,42 +164,41 @@ export default class RJSGUI implements RJSGUIInterface {
         }
     }
 
-    initButtonsActions (): void {
-        const game = this.game
-        this.buttonsAction = {
-            async start() {
-                game.gui.showHUD();
-                await game.gui.changeMenu(null);
-                game.start();
+    initBindingActions (): void {
+        this.bindingActions = {
+            start: async () => {
+                await this.game.gui.changeMenu('hud');
+                this.game.start();
             },
-            async load (element){
-                game.gui.showHUD();
-                await game.gui.changeMenu(null);
-                game.loadSlot(parseInt(element.slot, 10));
+            load: async (element) => {
+                await this.game.gui.changeMenu('hud');
+                this.game.loadSlot(parseInt(element.slot, 10));
             },
-
-            auto: game.auto.bind(game),
-            skip: game.skip.bind(game),
-            mute: game.mute.bind(game),
-            save (element) {
-                game.save(parseInt(element.slot, 10));
+            save: (element) => {
+                this.game.save(parseInt(element.slot, 10));
             },
-            saveload (argument?) {
-                game.pause();
-                game.gui.changeMenu('saveload');
+            auto: this.game.auto.bind(this.game),
+            skip: this.game.skip.bind(this.game),
+            mute: this.game.mute.bind(this.game),
+            openMenu: (element)=>{
+                this.game.pause();
+                this.changeMenu(element.menu);
             },
-            settings(){
-                game.pause();
-                game.gui.changeMenu('settings');
-            },
-            async return(){
-                const prev = game.gui.previousMenu;
-                await game.gui.changeMenu(prev);
-                if (!prev) {
-                    game.unpause();
+            return: async () => {
+                const prev = this.previousMenu;
+                await this.game.gui.changeMenu(prev);
+                if (prev=='hud') {
+                    this.game.unpause();
                 }
             },
-            
+            // slider bindings
+            changeUserPreference: (element,value) => {
+                this.game.userPreferences.setPreference(element.userPreference,value);
+                if (element.userPreference == "bgmv"){
+                    // change music volume immediately
+                    this.game.managers.audio.changeVolume(value);
+                }
+            }
         };
     }
 
@@ -440,40 +206,40 @@ export default class RJSGUI implements RJSGUIInterface {
     // GUI story interaction
     // ----------------------------------------------------------------
 
-    clear() {
-        this.hideChoices();
-        this.hideText();
-    }
+    // clear() {
+    //     this.hideChoices();
+    //     this.hideText();
+    // }
 
-    hideText() {
-        if(!this.messageBox.alwaysOn){
-            this.messageBox.visible = false;
-        }
-        this.messageBox.message.text = '';
-        if (this.ctc){
-            this.ctc.visible = false;
-        }
-    }
+    // hideText() {
+    //     if(!this.messageBox.alwaysOn){
+    //         this.messageBox.visible = false;
+    //     }
+    //     this.messageBox.message.text = '';
+    //     if (this.ctc){
+    //         this.ctc.visible = false;
+    //     }
+    // }
 
-    hideChoice(choiceId): void {
-        const choice = this.choices.getByName(choiceId);
-        if (choice){
-            this.choices.remove(choice,true);
-        }
-    }
+    // hideChoice(choiceId): void {
+    //     const choice = this.choices.getByName(choiceId);
+    //     if (choice){
+    //         this.choices.remove(choice,true);
+    //     }
+    // }
 
-    changeToLastInterrupt(choiceId): void {
-        const choice = this.choices.getByName(choiceId);
-        if (choice.animations.frameTotal === 4) {
-            choice.setFrames(3,2,3,2);
-        } else {
-            choice.setFrames(4,3,5,3);
-        }
-    }
+    // changeToLastInterrupt(choiceId): void {
+    //     const choice = this.choices.getByName(choiceId);
+    //     if (choice.animations.frameTotal === 4) {
+    //         choice.setFrames(3,2,3,2);
+    //     } else {
+    //         choice.setFrames(4,3,5,3);
+    //     }
+    // }
 
-    hideChoices(): void {
-        this.choices.removeAll();
-    }
+    // hideChoices(): void {
+    //     this.choices.removeAll();
+    // }
 
     // setTextStyles(text,text_obj): string {
     //   text_obj.clearFontValues();
@@ -518,185 +284,185 @@ export default class RJSGUI implements RJSGUIInterface {
     //   return text;
     // }
 
-    showText(text, title, colour, sfx, callback) {
-        if  (this.nameBox) {
-            this.nameBox.text.text = title!=undefined ? title : "";
-            if (colour && this.config.hud['name-box'].tintStyle == "box"){
-                // tint the whole box
-                this.nameBox.tint = this.toHexColor(colour);
-                this.nameBox.text.fill = this.config.hud['name-box'].color;
-            } else {
-                // change name color
-                this.nameBox.text.fill = colour;
-            }
+    // showText(text, title, colour, sfx, callback) {
+    //     if  (this.nameBox) {
+    //         this.nameBox.text.text = title!=undefined ? title : "";
+    //         if (colour && this.config.hud['name-box'].tintStyle == "box"){
+    //             // tint the whole box
+    //             this.nameBox.tint = this.toHexColor(colour);
+    //             this.nameBox.text.fill = this.config.hud['name-box'].color;
+    //         } else {
+    //             // change name color
+    //             this.nameBox.text.fill = colour;
+    //         }
             
-            this.nameBox.visible = title!=undefined;
+    //         this.nameBox.visible = title!=undefined;
 
-        }
-        if (sfx=='none'){
-            // if character voice configured as none, don't make any sound
-            sfx=null;
-        } else if (!sfx && this.messageBox.sfx){
-            sfx = this.messageBox.sfx;
-        }
+    //     }
+    //     if (sfx=='none'){
+    //         // if character voice configured as none, don't make any sound
+    //         sfx=null;
+    //     } else if (!sfx && this.messageBox.sfx){
+    //         sfx = this.messageBox.sfx;
+    //     }
         
-        let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
-        if (this.game.control.skipping || textSpeed < 10){
-            this.messageBox.message.text = text;
-            this.messageBox.visible = true;
-            this.ctc.visible = true;
-            callback();
-            return;
-        }
-        const textObj = this.messageBox.message;
-        textObj.text = '';
-        let finalText = setTextStyles(text,textObj)
-        const words = finalText.split('');
-        let count = 0;
-        const completeText = () => {
-            clearTimeout(this.textLoop);
-            textObj.text = finalText;
-            this.game.gui.ctc.visible = true;
-            callback();
-        }
-        let waitingFor = 0;
-        // how many characters to add per sfx played
-        let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
+    //     let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
+    //     if (this.game.control.skipping || textSpeed < 10){
+    //         this.messageBox.message.text = text;
+    //         this.messageBox.visible = true;
+    //         this.ctc.visible = true;
+    //         callback();
+    //         return;
+    //     }
+    //     const textObj = this.messageBox.message;
+    //     textObj.text = '';
+    //     let finalText = setTextStyles(text,textObj)
+    //     const words = finalText.split('');
+    //     let count = 0;
+    //     const completeText = () => {
+    //         clearTimeout(this.textLoop);
+    //         textObj.text = finalText;
+    //         this.game.gui.ctc.visible = true;
+    //         callback();
+    //     }
+    //     let waitingFor = 0;
+    //     // how many characters to add per sfx played
+    //     let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
         
-        if (sfx && charPerSfx=='auto'){
-            charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
-        }
-        // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
-        let sfxCharCount = 0;
+    //     if (sfx && charPerSfx=='auto'){
+    //         charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
+    //     }
+    //     // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
+    //     let sfxCharCount = 0;
 
 
-        this.textLoop = setInterval(() => {
-            if (waitingFor>0) {
-                waitingFor--;
-                return;
-            }
-            textObj.text += (words[count]);
+    //     this.textLoop = setInterval(() => {
+    //         if (waitingFor>0) {
+    //             waitingFor--;
+    //             return;
+    //         }
+    //         textObj.text += (words[count]);
 
-            if (sfx){
-                if (words[count] == " " || this.punctuationMarks.includes(words[count]) || sfxCharCount==charPerSfx){
-                    // reset count, but don't play
-                    sfxCharCount=-1;
-                } else if (sfxCharCount==0){
-                    sfx.play();
-                    sfx.volume = this.game.userPreferences.sfxv;
-                }
-                sfxCharCount++;
-            }
+    //         if (sfx){
+    //             if (words[count] == " " || this.punctuationMarks.includes(words[count]) || sfxCharCount==charPerSfx){
+    //                 // reset count, but don't play
+    //                 sfxCharCount=-1;
+    //             } else if (sfxCharCount==0){
+    //                 sfx.play();
+    //                 sfx.volume = this.game.userPreferences.sfxv;
+    //             }
+    //             sfxCharCount++;
+    //         }
 
-            if (this.punctuationMarks.includes(words[count])){
-                waitingFor = this.punctuationWait;
+    //         if (this.punctuationMarks.includes(words[count])){
+    //             waitingFor = this.punctuationWait;
                 
-            }
-            count++;
-            if (count >= words.length){
-                completeText();
-            }
-        }, textSpeed);
-        this.messageBox.visible = true;
-        if (!this.game.control.auto){
-            this.game.waitForClick(completeText);
-        }
-    }
+    //         }
+    //         count++;
+    //         if (count >= words.length){
+    //             completeText();
+    //         }
+    //     }, textSpeed);
+    //     this.messageBox.visible = true;
+    //     if (!this.game.control.auto){
+    //         this.game.waitForClick(completeText);
+    //     }
+    // }
 
-    showChoices(choices, execId) {
-        this.choices.removeAll(true);
-        this.choices.alpha = 0;
-        let choiceConfig = this.config.hud.choice;
-        const interruptConfig = this.config.hud.interrupt;
+    // showChoices(choices, execId) {
+    //     this.choices.removeAll(true);
+    //     this.choices.alpha = 0;
+    //     let choiceConfig = this.config.hud.choice;
+    //     const interruptConfig = this.config.hud.interrupt;
 
-        if (interruptConfig && !interruptConfig.inlineWithChoice){
-            // separate choices from interrupts
-            choiceConfig = interruptConfig
-        }
-        const x = (choiceConfig.isBoxCentered) ? 
-            this.game.world.centerX - choiceConfig.width/2 : 
-            choiceConfig.x;
-        const y = (choiceConfig.isBoxCentered) ? 
-            this.game.world.centerY - (choiceConfig.height*choices.length + parseInt(choiceConfig.separation, 10)*(choices.length-1))/2 : 
-            choiceConfig.y;
+    //     if (interruptConfig && !interruptConfig.inlineWithChoice){
+    //         // separate choices from interrupts
+    //         choiceConfig = interruptConfig
+    //     }
+    //     const x = (choiceConfig.isBoxCentered) ? 
+    //         this.game.world.centerX - choiceConfig.width/2 : 
+    //         choiceConfig.x;
+    //     const y = (choiceConfig.isBoxCentered) ? 
+    //         this.game.world.centerY - (choiceConfig.height*choices.length + parseInt(choiceConfig.separation, 10)*(choices.length-1))/2 : 
+    //         choiceConfig.y;
 
-        choices.forEach((choice,index) => {
-            this.createChoiceBox(choice,[x,y],index,choiceConfig,execId)
-        });
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
-        transition(null,this.choices);
-    }
+    //     choices.forEach((choice,index) => {
+    //         this.createChoiceBox(choice,[x,y],index,choiceConfig,execId)
+    //     });
+    //     let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
+    //     transition(null,this.choices);
+    // }
 
-    createChoiceBox(choice, pos, index, choiceConfig, execId) {
-        const separation = index*(parseInt(choiceConfig.height, 10)+parseInt(choiceConfig.separation, 10));
-        const chBox: ChoiceButton = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
-            if (choiceConfig.sfx && choiceConfig.sfx !== 'none') {
-                this.game.managers.audio.playSFX(choiceConfig.sfx);
-            }
-            let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
-            transition(this.choices,null).then(()=>{
-                this.choices.removeAll(true);
-                this.game.managers.logic.choose(index,choice.choiceText,execId);
-            })
+    // createChoiceBox(choice, pos, index, choiceConfig, execId) {
+    //     const separation = index*(parseInt(choiceConfig.height, 10)+parseInt(choiceConfig.separation, 10));
+    //     const chBox: ChoiceButton = this.game.add.button(pos[0], pos[1]+separation, choiceConfig.id, () => {
+    //         if (choiceConfig.sfx && choiceConfig.sfx !== 'none') {
+    //             this.game.managers.audio.playSFX(choiceConfig.sfx);
+    //         }
+    //         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
+    //         transition(this.choices,null).then(()=>{
+    //             this.choices.removeAll(true);
+    //             this.game.managers.logic.choose(index,choice.choiceText,execId);
+    //         })
             
-        },this,1,0,2,0,this.choices);
-        if (chBox.animations.frameTotal === 2 || chBox.animations.frameTotal === 4){
-            chBox.setFrames(1,0,1,0)
-        }
-        if (choice.interrupt && choice.remainingSteps===1 && chBox.animations.frameTotal > 3){
-            if (chBox.animations.frameTotal === 4){
-                chBox.setFrames(3,2,3,2);
-            } else {
-                chBox.setFrames(4,3,5,3);
-            }
-        }
-        chBox.choiceId = choice.choiceId;
-        chBox.name = choice.choiceId;
+    //     },this,1,0,2,0,this.choices);
+    //     if (chBox.animations.frameTotal === 2 || chBox.animations.frameTotal === 4){
+    //         chBox.setFrames(1,0,1,0)
+    //     }
+    //     if (choice.interrupt && choice.remainingSteps===1 && chBox.animations.frameTotal > 3){
+    //         if (chBox.animations.frameTotal === 4){
+    //             chBox.setFrames(3,2,3,2);
+    //         } else {
+    //             chBox.setFrames(4,3,5,3);
+    //         }
+    //     }
+    //     chBox.choiceId = choice.choiceId;
+    //     chBox.name = choice.choiceId;
 
-        const textStyle = this.getTextStyle('choice');
+    //     const textStyle = this.getTextStyle('choice');
 
-        const text = this.game.add.text(0, 0, "" , textStyle);
-        const finalText = setTextStyles(choice.choiceText,text);
-        text.text = finalText;
-        text.visible = false;
-        this.setTextPosition(chBox,text, choiceConfig);
-        setTimeout(()=>{text.visible = true},20)
-        if (this.game.storyConfig.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) !== -1){
-            chBox.tint = this.toHexColor(choiceConfig['chosen-color']);
-        }
-        return chBox;
-    }
+    //     const text = this.game.add.text(0, 0, "" , textStyle);
+    //     const finalText = setTextStyles(choice.choiceText,text);
+    //     text.text = finalText;
+    //     text.visible = false;
+    //     this.setTextPosition(chBox,text, choiceConfig);
+    //     setTimeout(()=>{text.visible = true},20)
+    //     if (this.game.storyConfig.logChoices && this.game.managers.logic.choicesLog[execId].indexOf(choice.choiceText) !== -1){
+    //         chBox.tint = this.toHexColor(choiceConfig['chosen-color']);
+    //     }
+    //     return chBox;
+    // }
 
     // ----------------------------------------------------------------
     // Helper functions
     // ----------------------------------------------------------------
 
-    toHexColor(color) {
-        // eslint-disable-next-line no-bitwise
-        return (parseInt(color.substr(1), 16) << 8) / 256;
+    // toHexColor(color) {
+    //     // eslint-disable-next-line no-bitwise
+    //     return (parseInt(color.substr(1), 16) << 8) / 256;
 
-    }
+    // }
 
-    setTextPosition(sprite, text, element) {
-        text.lineSpacing = element.lineSpacing ? element.lineSpacing : 0;
-        if (element.isTextCentered) {
-            text.setTextBounds(0,0, sprite.width, sprite.height);
-            text.boundsAlignH = 'center';
-            text.boundsAlignV = 'middle';
-        } else {
-            const offsetX = parseInt(element['offset-x'], 10);
-            const offsetY = parseInt(element['offset-y'], 10);
-            text.setTextBounds(offsetX,offsetY, sprite.width, sprite.height);
-            text.boundsAlignH = element.align;
-            text.boundsAlignV = 'top'
-            if (element['text-width']){
-                text.wordWrap = true;
-                text.align = element.align;
-                text.wordWrapWidth = element['text-width'];
-            }
-        }
-        sprite.addChild(text);
-        sprite.text = text;
-    }
+    // setTextPosition(sprite, text, element) {
+    //     text.lineSpacing = element.lineSpacing ? element.lineSpacing : 0;
+    //     if (element.isTextCentered) {
+    //         text.setTextBounds(0,0, sprite.width, sprite.height);
+    //         text.boundsAlignH = 'center';
+    //         text.boundsAlignV = 'middle';
+    //     } else {
+    //         const offsetX = parseInt(element['offset-x'], 10);
+    //         const offsetY = parseInt(element['offset-y'], 10);
+    //         text.setTextBounds(offsetX,offsetY, sprite.width, sprite.height);
+    //         text.boundsAlignH = element.align;
+    //         text.boundsAlignV = 'top'
+    //         if (element['text-width']){
+    //             text.wordWrap = true;
+    //             text.align = element.align;
+    //             text.wordWrapWidth = element['text-width'];
+    //         }
+    //     }
+    //     sprite.addChild(text);
+    //     sprite.text = text;
+    // }
     
 }

@@ -3,22 +3,26 @@ import RJS from '../RJS';
 
 export default class StoryActionText extends StoryAction {
 
-	protected params: {body:[], actor:string}
+	protected params: {body:any, boxId:string}
 
     constructor(params, game, private isVisualChoice, private isInterrupt) {
     	super(params,game)
     }
 
     execute(): void {
+        if (this.isInterrupt && this.params.body == 'hide'){
+            this.game.managers.logic.clearChoices();
+            this.resolve()
+            return;
+        }
         // stop skipping in player choice
         this.game.control.skipping = false;
         this.game.input.enabled = true;
-        if (this.isVisualChoice){
-            this.game.managers.logic.showVisualChoices([...this.params.body]);
-        } else if (this.isInterrupt){
-            this.game.managers.logic.interrupt(this.params.actor,[...this.params.body]);
+        const boxId = this.isVisualChoice ? "visualChoices" : this.params.boxId;
+        if (this.isInterrupt){
+            this.game.managers.logic.interrupt(boxId,[...this.params.body]);
         } else {
-            this.game.managers.logic.showChoices([...this.params.body]);
+            this.game.managers.logic.showChoices(boxId,[...this.params.body]);
         }
         // this action is resolved on its own
     }

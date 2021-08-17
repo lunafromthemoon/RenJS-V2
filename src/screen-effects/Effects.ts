@@ -33,7 +33,8 @@ export default class Effects implements RJSScreenEffectInterface {
         bg.endFill();
         bg.alpha = 0;
 
-        const style = {...this.game.gui.getTextStyle('choice')};
+        // const style = {...this.game.gui.getTextStyle('choice')};
+        const style = {};
         // style.font = '25pt ' + this.game.gui.fonts[0];
         const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, params.text[0], style);
         credits.anchor.set(0.5);

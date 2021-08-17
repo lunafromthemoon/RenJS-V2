@@ -85,6 +85,8 @@ var StoryManager = /** @class */ (function () {
     };
     StoryManager.prototype.clearScene = function () {
         this.game.control.execStack.clear();
+        this.game.gui.clear();
+        this.game.control.waitForClick = false;
         this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.game.managers.character.hideAll("CUT");
         this.game.managers.audio.stopAll();
@@ -185,6 +187,21 @@ var StoryManager = /** @class */ (function () {
                 // default transition for the actor type
                 action.transition = this.game.storyConfig.transitions.defaults[action.actorType];
             }
+        }
+        if (mainAction == "play") {
+            var str = params ? params.split(' ') : [];
+            var loopedParamIdx = str.indexOf('LOOPED');
+            if (loopedParamIdx !== -1) {
+                action.looped = true;
+                if (str[loopedParamIdx + 1] == "FROM") {
+                    action.fromSeconds = parseFloat(str[loopedParamIdx + 2]);
+                }
+            }
+            else {
+                action.looped = false;
+            }
+            action.force = str.includes('FORCE');
+            action.asBGS = str.includes('BGS');
         }
         if (mainAction == "show" && action.actorType == "cgs") {
             var str = params ? params.split(' ') : [];

@@ -1,24 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loadStyle = exports.preloadExtra = exports.preloadCharacter = exports.preloadAudio = exports.preloadCGS = exports.preloadBackground = exports.preparePath = exports.initLoadingBar = exports.initSplash = void 0;
-function initSplash(game) {
-    var splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
-    splash.anchor.set(0.5);
-    return splash;
-}
-exports.initSplash = initSplash;
-function initLoadingBar(game) {
-    var position = game.config.splash.loadingBar.position;
-    var loadingBar = game.add.sprite(position.x, position.y, 'loading');
-    if (loadingBar.animations.frameTotal > 1) {
-        // load second frame as full bar
-        var bg = loadingBar;
-        loadingBar = game.add.sprite(position.x, position.y, 'loading', 1);
-        loadingBar.background = bg;
-    }
-    return loadingBar;
-}
-exports.initLoadingBar = initLoadingBar;
+exports.loadStyle = exports.toHexColor = exports.setTextStyles = exports.preloadExtra = exports.preloadCharacter = exports.preloadAudio = exports.preloadCGS = exports.preloadBackground = exports.preparePath = void 0;
+// export function initSplash (game: RJS): Sprite {
+//     const splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
+//     splash.anchor.set(0.5)
+//     return splash
+// }
+// export function initLoadingBar (game: RJS): RJSSprite {
+//     const position = game.config.loadingScreen.loadingBar.position;
+//     let loadingBar: RJSSprite = game.add.sprite(position.x,position.y , 'loading') ;
+//     if (loadingBar.animations.frameTotal > 1){
+//         // load second frame as full bar
+//         const bg = loadingBar;
+//         loadingBar = game.add.sprite(position.x,position.y , 'loading',1);
+//         loadingBar.background = bg;
+//     }
+//     return loadingBar
+// }
 function preparePath(path, game) {
     if (game.config.i18n) {
         return path.replace('LANG', game.config.i18n.current);
@@ -64,9 +62,6 @@ function preloadCharacter(chName, game) {
 }
 exports.preloadCharacter = preloadCharacter;
 function preloadExtra(asset, type, game) {
-    // console.log("loading extra");
-    // console.log(asset);
-    // console.log(type);
     if (type === 'spritesheets') {
         var str = game.setup.extra[type][asset].split(' ');
         game.load.spritesheet(asset, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));
@@ -76,6 +71,60 @@ function preloadExtra(asset, type, game) {
     }
 }
 exports.preloadExtra = preloadExtra;
+// sets text styles tags in a phaser text object (but NOT the text itself)
+// returns final text without tags, that has to be set to text object as text_obj.text 
+function setTextStyles(text, text_obj) {
+    text_obj.clearFontValues();
+    text_obj.clearColors();
+    var styles = [];
+    while (true) {
+        var re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/;
+        var match = text.match(re);
+        if (match) {
+            var s = {
+                start: text.search(re),
+                style: match[1].includes("color") ? "color" : match[1],
+                end: -1,
+                color: null
+            };
+            if (s.style == "color") {
+                s.color = match[2];
+            }
+            text = text.replace(re, "");
+            var endIdx = text.indexOf("(end)");
+            if (endIdx != -1) {
+                text = text.replace("(end)", "");
+                s.end = endIdx;
+                styles.push(s);
+            }
+        }
+        else
+            break;
+    }
+    styles.forEach(function (s) {
+        if (s.style == "italic") {
+            text_obj.addFontStyle("italic", s.start);
+            text_obj.addFontStyle("normal", s.end);
+        }
+        if (s.style == "bold") {
+            text_obj.addFontWeight("bold", s.start);
+            text_obj.addFontWeight("normal", s.end);
+        }
+        if (s.style == "color") {
+            text_obj.addColor(s.color, s.start);
+            text_obj.addColor(text_obj.fill, s.end);
+        }
+    });
+    return text;
+}
+exports.setTextStyles = setTextStyles;
+// convert hex color to number
+function toHexColor(color) {
+    // eslint-disable-next-line no-bitwise
+    return (parseInt(color.substr(1), 16) << 8) / 256;
+}
+exports.toHexColor = toHexColor;
+// load style css
 function loadStyle(href, callback) {
     // avoid duplicates
     for (var _i = 0, _a = Array.from(document.styleSheets); _i < _a.length; _i++) {

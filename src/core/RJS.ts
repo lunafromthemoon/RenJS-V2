@@ -43,6 +43,8 @@ export default class RJS extends Game {
     userPreferences: UserPreferences 
     storyConfig: StoryConfig
 
+    textLog: Array<any> = []
+
     interruptAction: any = null
 
     managers: {
@@ -176,7 +178,7 @@ export default class RJS extends Game {
 
         this.takeXShot();
         if (!keepGUI){
-            this.gui.hideHUD();
+            this.gui.hud.hide();
         }
     }
 
@@ -187,7 +189,7 @@ export default class RJS extends Game {
 
     unpause (force?): void{
         this.control.paused = false;
-        this.gui.showHUD();
+        this.gui.hud.show();
         if (!this.control.waitForClick && this.managers.logic.currentChoices.length==0){
             this.resolveAction();
         }
@@ -291,9 +293,9 @@ export default class RJS extends Game {
         const dataSerialized = JSON.stringify(data);
         localStorage.setItem('RenJSDATA' + this.config.name + slot,dataSerialized);
 
-        if (this.gui.addThumbnail && this.xShots && this.xShots.length) {
+        if (this.xShots && this.xShots.length) {
             const thumbnail = this.xShots[this.xShots.length-1];
-            this.gui.addThumbnail(thumbnail, slot)
+            this.gui.getCurrent().addThumbnail(thumbnail, slot)
             localStorage.setItem('RenJSThumbnail' + this.config.name + slot,thumbnail);
         }
 
@@ -326,7 +328,7 @@ export default class RJS extends Game {
         await this.managers.cgs.set(dataParsed.cgs);
         this.managers.logic.set(dataParsed.vars);
         this.screenEffects.ambient.set(dataParsed.ambients);
-        this.gui.clear();
+        this.gui.hud.clear();
         // resolve stack
         this.control.execStack = new ExecStack(dataParsed.stack);
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
@@ -374,7 +376,7 @@ export default class RJS extends Game {
         if (this.control.paused){
             return;
         }
-        if (pointer && this.gui.ignoreTap(pointer)){
+        if (pointer && this.gui.hud.ignoreTap(pointer)){
             return;
         }
 
@@ -419,8 +421,6 @@ export default class RJS extends Game {
         // update stack
         this.control.actionsCounter++;
         this.control.execStack.advance();
-        // update interrupts
-        this.managers.logic.updateInterruptions();
     }
 
 }

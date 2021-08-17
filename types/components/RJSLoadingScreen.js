@@ -5,8 +5,8 @@ var RJSLoadingScreen = /** @class */ (function () {
         this.game = game;
         this.container = game.add.group();
         this.container.alpha = 0;
-        var config = game.config.splash;
-        if (config.loadingScreen) {
+        var config = game.config.loadingScreen;
+        if (config.background) {
             this.background = this.container.create(game.world.centerX, game.world.centerY, 'loadingScreenBg');
             this.background.anchor.set(0.5);
         }
@@ -28,7 +28,7 @@ var RJSLoadingScreen = /** @class */ (function () {
     RJSLoadingScreen.prototype.setLoadingBar = function (game) {
         if (!this.loadingBar)
             return;
-        var dir = game.config.splash.loadingBar.direction ? game.config.splash.loadingBar.direction : 0;
+        var dir = game.config.loadingScreen.loadingBar.direction ? game.config.loadingScreen.loadingBar.direction : 0;
         game.load.setPreloadSprite(this.loadingBar, dir);
     };
     RJSLoadingScreen.prototype.waitingScreen = function () {
@@ -38,7 +38,7 @@ var RJSLoadingScreen = /** @class */ (function () {
     };
     RJSLoadingScreen.prototype.destroy = function (game) {
         var _this = this;
-        if (game.config.splash.fade) {
+        if (game.config.loadingScreen.fade) {
             var tween = game.add.tween(this.container).to({ alpha: 0 }, 500);
             tween.onComplete.addOnce(function () {
                 _this.container.destroy();

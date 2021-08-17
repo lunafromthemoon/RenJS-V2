@@ -48,6 +48,12 @@ export default class RJS extends Game {
         effects: Effects;
         transition: Transition;
     };
+    propertyRanges: {
+        textSpeed: number[];
+        autoSpeed: number[];
+        bgmv: number[];
+        sfxv: number[];
+    };
     constructor(config: RJSGameConfig);
     launch(): void;
     setupScreen(): void;

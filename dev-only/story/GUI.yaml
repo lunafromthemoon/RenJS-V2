@@ -126,15 +126,14 @@ config:
     message-box:
       id: asset19
       text-width: '540'
-      offset-y: '24'
-      offset-x: '24'
+      offset-y: 24
+      offset-x: 24
       align: left
       # sfx: textaudio
       sfx: none
       color: '#89BAA8'
       font: fontsaudimat-mono
       size: '20'
-      # lineSpacing: -10
       'y': 449
       x: 40
       assetType: images

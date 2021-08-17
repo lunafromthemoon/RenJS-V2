@@ -1,11 +1,9 @@
 import RJS from '../core/RJS';
 import { Group } from 'phaser-ce';
-import RJSSprite from '../components/RJSSprite';
-import ChoiceButton from '../components/ChoiceButton';
-import { GUIAsset } from './Assets';
+import RJSSprite from '../elements/RJSSprite';
+import { GUIAsset } from './elements/GUIAsset';
 export interface RJSGUIInterface {
     init(): any;
-    getTextStyle(type: string): any;
     assets: GUIAsset[];
     fonts: string[];
     showMenu(menu: any): any;
@@ -69,12 +67,12 @@ export default class RJSGUI implements RJSGUIInterface {
         font: any;
         fill: any;
     };
-    loadGeneralComponents(menuConfig: any, menu: any): void;
-    loadComponent(type: any, component: any, menu: any): void;
-    loadLabel(component: any, menu: any): void;
-    loadButton(component: any, menu: any): void;
-    loadSaveSlot(component: any, menu: any): void;
-    loadSlider(component: any, menu: any): void;
+    loadElements(menuConfig: any, menu: any): void;
+    loadElement(element: any, menu: any): void;
+    loadLabel(element: any, menu: any): void;
+    loadButton(element: any, menu: any): void;
+    loadSaveSlot(element: any, menu: any): void;
+    loadSlider(element: any, menu: any): void;
     loadThumbnail(thumbnail: any, parent: any): void;
     ignoreTap(pointer: any): boolean;
     addThumbnail(thumbnail: any, slot: any): void;
@@ -89,10 +87,9 @@ export default class RJSGUI implements RJSGUIInterface {
     hideChoice(choiceId: any): void;
     changeToLastInterrupt(choiceId: any): void;
     hideChoices(): void;
-    setTextStyles(text: any, text_obj: any): string;
     showText(text: any, title: any, colour: any, sfx: any, callback: any): void;
     showChoices(choices: any, execId: any): void;
-    createChoiceBox(choice: any, pos: any, index: any, choiceConfig: any, execId: any): ChoiceButton;
+    createChoiceBox(choice: any, pos: any, index: any, choiceConfig: any, execId: any): any;
     toHexColor(color: any): number;
-    setTextPosition(sprite: any, text: any, component: any): void;
+    setTextPosition(sprite: any, text: any, element: any): void;
 }

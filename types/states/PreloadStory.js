@@ -61,7 +61,9 @@ var RJSLoadingScreen_1 = __importDefault(require("../components/RJSLoadingScreen
 var PreloadStory = /** @class */ (function (_super) {
     __extends(PreloadStory, _super);
     function PreloadStory() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this.readyToStart = false;
+        return _this;
     }
     PreloadStory.prototype.init = function () {
         this.loadingScreen = new RJSLoadingScreen_1.default(this.game);
@@ -69,6 +71,21 @@ var PreloadStory = /** @class */ (function (_super) {
     PreloadStory.prototype.preload = function () {
         var _this = this;
         this.loadingScreen.setLoadingBar(this.game);
+        // wait a minimal amount of time in the loading loadingScreen
+        // to use as splash screen
+        if (this.game.config.loadingScreen.minTime) {
+            setTimeout(function () {
+                if (_this.readyToStart) {
+                    _this.initGame();
+                }
+                else {
+                    _this.readyToStart = true;
+                }
+            }, this.game.config.loadingScreen.minTime);
+        }
+        else {
+            this.readyToStart = true;
+        }
         // preload gui assets
         for (var _i = 0, _a = this.game.gui.assets; _i < _a.length; _i++) {
             var asset = _a[_i];
@@ -137,12 +154,20 @@ var PreloadStory = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.game.initStory()];
                     case 1:
                         _a.sent();
-                        this.loadingScreen.destroy(this.game);
-                        this.game.gui.showMenu('main');
+                        if (this.readyToStart) {
+                            this.initGame();
+                        }
+                        else {
+                            this.readyToStart = true;
+                        }
                         return [2 /*return*/];
                 }
             });
         });
+    };
+    PreloadStory.prototype.initGame = function () {
+        this.loadingScreen.destroy(this.game);
+        this.game.gui.showMenu('main');
     };
     return PreloadStory;
 }(RJSState_1.default));

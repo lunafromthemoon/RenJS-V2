@@ -57,7 +57,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             this.interpreting = true;
             // does extra stuff on every step
             // like updating the execution stack
-            // or counting the interruption steps
             this.game.onInterpretActions()
             // interpret the action at hand
             this.game.managers.story.interpretAction(currentAction)
@@ -67,7 +66,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
 
     clearScene(): void{
         this.game.control.execStack.clear();
-        this.game.gui.clear();
+        this.game.gui.hud.clear();
         this.game.control.waitForClick = false;
         this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.game.managers.character.hideAll("CUT");
@@ -129,6 +128,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             withTransition: ['show','hide','play','stop'],
             withPosition: ['show'],
             withContinue: ['show','hide'],
+            withBoxId: ['choice','interrupt','text','say'],
         }
         function getKey(act): any {
             return Object.keys(act)[0];
@@ -151,6 +151,13 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         // parse WITH and AT
         const params = action[key];
         action.body = params;
+        if (actionParams.withBoxId.includes(mainAction)){
+            if (keyParams.indexOf('IN') !== -1){
+                action.boxId = keyParams[keyParams.indexOf('IN') +1];
+            } else {
+                action.boxId = 'default';
+            }
+        }
         if (actionParams.withTransition.includes(mainAction)){
             const str = params ? params.split(' ') : [];
             if (str.indexOf('WITH') !== -1){

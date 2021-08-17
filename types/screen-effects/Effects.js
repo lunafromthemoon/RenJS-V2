@@ -70,7 +70,7 @@ var Effects = /** @class */ (function () {
                 this.game.control.unskippable = true;
                 bg = this.game.add.graphics(0, 0);
                 if (params.music) {
-                    this.audioManager.play(params.music, 'bgm', true, 'FADE');
+                    this.audioManager.play(params.music, 'bgm', true, null, 'FADE');
                 }
                 bg.beginFill(0x000000, 1);
                 bg.drawRect(0, 0, this.game.config.w, this.game.config.h);
@@ -79,7 +79,7 @@ var Effects = /** @class */ (function () {
                 style = __assign({}, this.game.gui.getTextStyle('choice'));
                 credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, params.text[0], style);
                 credits.anchor.set(0.5);
-                separation = 35;
+                separation = credits.height + 10;
                 for (i = 1; i < params.text.length; i++) {
                     if (params.text[i]) {
                         nextLine = this.game.add.text(0, i * separation, params.text[i], style);
@@ -94,8 +94,7 @@ var Effects = /** @class */ (function () {
                 ];
                 return [2 /*return*/, new Promise(function (resolve) {
                         tweenChain.push({
-                            sprite: bg, tweenables: { alpha: 0 }, time: _this.game.storyConfig.fadetime,
-                            callback: function () {
+                            sprite: bg, tweenables: { alpha: 0 }, time: _this.game.storyConfig.fadetime, callback: function () {
                                 bg.destroy();
                                 credits.destroy();
                                 _this.audioManager.stop('bgm', 'FADE');

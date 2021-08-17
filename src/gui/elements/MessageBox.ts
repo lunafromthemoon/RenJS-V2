@@ -1,6 +1,6 @@
 import RJS from '../../core/RJS';
 import {Sprite,Text,Sound} from 'phaser-ce';
-import {setTextStyles} from '../../states/utils'
+import {setTextStyles,createText} from '../../utils/gui'
 
 
 
@@ -28,6 +28,8 @@ export default class MessageBox extends Sprite{
         text: {
             x: number,
             y: number,
+            width: number,
+            height: number,
             lineSpacing: number,
             style: any
         },
@@ -55,17 +57,13 @@ export default class MessageBox extends Sprite{
             this.defaultSfx.stop();
         }
         // create text
-        this.text = this.game.add.text(this.config.text.x,this.config.text.y, '', this.config.text.style);
-        if (this.config.text.lineSpacing){
-            this.text.lineSpacing = this.config.text.lineSpacing;
-        }
+        console.log(this.config.text)
+        this.text = createText(this.game,this.config.text)
         
         this.addChild(this.text);
         // create ctc
         if (this.config.ctc){
-            const x = this.config.ctc.x - this.config.x;
-            const y = this.config.ctc.y - this.config.y;
-            this.ctc = this.game.add.sprite(x,y,config.ctc.asset);
+            this.ctc = this.game.add.sprite(this.config.ctc.x,this.config.ctc.y,config.ctc.asset);
             if (this.config.ctc.animationStyle === 'spritesheet') {
                 this.ctc.animations.add('do').play()
             } else {
@@ -91,7 +89,11 @@ export default class MessageBox extends Sprite{
     	super.destroy();
     }
 
-    show(text,sfx): Promise<any> {
+    // display message box with transition
+    // show text character per character, 
+    // when whole text is displayed, show click to continue and wait for click
+    // when player clicks, message box is hid with transition and action ends
+    show(text,sfx?): Promise<any> {
         if (sfx=='none'){
             // if character voice configured as none, don't make any sound
             sfx=null;
@@ -112,10 +114,12 @@ export default class MessageBox extends Sprite{
         
         // add new line characters at the end of each line
         const lines = this.text.precalculateWordWrap(finalText)
+        console.log(lines)
         finalText = '';
         for (const line of lines){
-            finalText+=line+'\n';
+            finalText+=line.replace(/.$/,"\n");
         }
+        console.log(finalText)
         // split in characters to add one by one
         const characters = finalText.split('');
         let charIdx = 0;

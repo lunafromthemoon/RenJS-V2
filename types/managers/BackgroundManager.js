@@ -41,7 +41,9 @@ var BackgroundManager = /** @class */ (function () {
         this.game = game;
         this.backgrounds = {};
         this.current = null;
-        this.backgrounds = game.setup.backgrounds;
+        if (game.setup.backgrounds) {
+            this.backgrounds = game.setup.backgrounds;
+        }
     }
     BackgroundManager.prototype.createBackground = function (name) {
         var str = this.backgrounds[name].split(' ');
@@ -63,6 +65,10 @@ var BackgroundManager = /** @class */ (function () {
     BackgroundManager.prototype.set = function (name) {
         if (this.current) {
             this.current.destroy();
+        }
+        if (!name) {
+            this.current = null;
+            return;
         }
         this.current = this.createBackground(name);
         this.current.alpha = 1;

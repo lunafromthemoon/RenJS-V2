@@ -35,6 +35,7 @@ var StoryActionText = /** @class */ (function (_super) {
     StoryActionText.prototype.execute = function () {
         // stop skipping in player choice
         this.game.control.skipping = false;
+        this.game.input.enabled = true;
         if (this.isVisualChoice) {
             this.game.managers.logic.showVisualChoices(__spreadArray([], this.params.body));
         }

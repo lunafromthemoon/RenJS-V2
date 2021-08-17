@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = require("../states/utils");
 var RJSGUI = /** @class */ (function () {
     function RJSGUI(game) {
         this.game = game;
@@ -43,14 +44,14 @@ var RJSGUI = /** @class */ (function () {
         this.config = { hud: null, menus: { main: null, settings: null, saveload: null } };
         this.assets = [];
         this.fonts = [];
-        // gui graphical components
+        // gui graphical elements
         this.menus = {};
         this.hud = null;
         this.saveSlots = {};
         // interval object to show text per letter 
         this.textLoop = null;
         this.sliderLimits = {
-            textSpeed: [10, 150],
+            textSpeed: [10, 100],
             autoSpeed: [50, 300],
             bgmv: [0, 1],
             sfxv: [0, 1]
@@ -100,14 +101,15 @@ var RJSGUI = /** @class */ (function () {
             return;
         this.menus[name] = this.game.add.group();
         this.menus[name].visible = false;
+        this.loadElements(menuConfig, this.menus[name]);
         // load bg
-        if (menuConfig.background) {
-            this.game.add.image(0, 0, menuConfig.background.id, 0, this.menus[name]);
-        }
-        this.loadGeneralComponents(menuConfig, this.menus[name]);
-        if (menuConfig.backgroundMusic) {
-            menuConfig.backgroundMusic = this.game.add.audio(menuConfig.backgroundMusic);
-        }
+        // if (menuConfig.background){
+        //     this.game.add.image(0,0,menuConfig.background.id,0,this.menus[name]);
+        // }
+        // this.loadGeneralComponents(menuConfig,this.menus[name]);
+        // if (menuConfig.backgroundMusic){
+        //     menuConfig.backgroundMusic = this.game.add.audio(menuConfig.backgroundMusic);
+        // }
     };
     RJSGUI.prototype.initHUD = function (hudConfig) {
         var _this = this;
@@ -127,10 +129,16 @@ var RJSGUI = /** @class */ (function () {
             mBox = hudConfig['message-box'];
             this.messageBox = this.game.add.sprite(mBox.x, mBox.y, mBox.id, 0, this.hud);
             this.messageBox.visible = false;
+            this.messageBox.sfx = (mBox.sfx != 'none' && this.game.cache.checkSoundKey(mBox.sfx)) ? this.game.add.audio(mBox.sfx) : null;
+            if (this.messageBox.sfx) {
+                this.messageBox.sfx.play();
+                this.messageBox.sfx.stop();
+            }
             var textStyle = this.getTextStyle('message-box');
             var text = this.game.add.text(mBox['offset-x'], mBox['offset-y'], '', textStyle);
             text.wordWrap = true;
             text.align = mBox.align;
+            text.lineSpacing = mBox.lineSpacing ? mBox.lineSpacing : 0;
             text.wordWrapWidth = mBox['text-width'];
             this.messageBox.message = text;
             this.messageBox.addChild(text);
@@ -169,7 +177,7 @@ var RJSGUI = /** @class */ (function () {
         if (hudConfig.interrupt && !hudConfig.interrupt.inlineWithChoice) {
             this.interrupts = this.game.add.group();
         }
-        this.loadGeneralComponents(hudConfig, this.hud);
+        // this.loadGeneralComponents(hudConfig,this.hud)
     };
     RJSGUI.prototype.getTextStyle = function (type) {
         var style = this.config.hud[type];
@@ -179,72 +187,82 @@ var RJSGUI = /** @class */ (function () {
         };
     };
     // ----------------------------------------------------------------
-    // Load different GUI component: images, animations, buttons, etc
+    // Load different GUI element: images, animations, buttons, etc
     // ----------------------------------------------------------------
-    RJSGUI.prototype.loadGeneralComponents = function (menuConfig, menu) {
+    RJSGUI.prototype.loadElements = function (menuConfig, menu) {
         var _this = this;
-        var components = ['images', 'animations', 'labels', 'save-slots', 'buttons', 'sliders'];
-        components.forEach(function (component) {
-            if (component in menuConfig) {
-                for (var i = menuConfig[component].length - 1; i >= 0; i--) {
-                    _this.loadComponent(component, menuConfig[component][i], menu);
-                }
-            }
+        menuConfig.elements.forEach(function (element) {
+            _this.loadElement(element, menu);
         });
     };
-    RJSGUI.prototype.loadComponent = function (type, component, menu) {
-        switch (type) {
+    // loadGeneralComponents(menuConfig, menu) {
+    //     const elements = ['images','animations','labels','save-slots','buttons','sliders'];
+    //     elements.forEach(element => {
+    //         if (element in menuConfig) {
+    //             for (let i = menuConfig[element].length - 1; i >= 0; i--) {
+    //                 this.loadComponent(element,menuConfig[element][i],menu)
+    //             }
+    //         }
+    //     });
+    // }
+    RJSGUI.prototype.loadElement = function (element, menu) {
+        switch (element.type) {
             case 'images':
-                this.game.add.image(component.x, component.y, component.id, 0, menu);
+                this.game.add.image(element.x, element.y, element.id, 0, menu);
                 break;
             case 'animations':
-                var spr = this.game.add.sprite(component.x, component.y, component.id, 0, menu);
+                var spr = this.game.add.sprite(element.x, element.y, element.id, 0, menu);
                 spr.animations.add('do').play();
                 break;
             case 'buttons':
-                this.loadButton(component, menu);
+                this.loadButton(element, menu);
                 break;
             case 'labels':
-                var color = component.color ? component.color : '#ffffff';
-                this.game.add.text(component.x, component.y, component.text, { font: component.size + 'px ' + component.font, fill: color }, menu);
+                this.loadLabel(element, menu);
                 break;
             case 'sliders':
-                this.loadSlider(component, menu);
+                this.loadSlider(element, menu);
                 break;
             case 'save-slots':
-                this.loadSaveSlot(component, menu);
+                this.loadSaveSlot(element, menu);
                 break;
         }
     };
-    RJSGUI.prototype.loadButton = function (component, menu) {
+    RJSGUI.prototype.loadLabel = function (element, menu) {
+        var color = element.color ? element.color : '#ffffff';
+        var label = this.game.add.text(element.x, element.y, "", { font: element.size + 'px ' + element.font, fill: color }, menu);
+        if (element.lineSpacing) {
+            label.lineSpacing = element.lineSpacing;
+        }
+        label.text = utils_1.setTextStyles(element.text, label);
+    };
+    RJSGUI.prototype.loadButton = function (element, menu) {
         var _this = this;
-        var btn = this.game.add.button(component.x, component.y, component.id, function () {
-            if (component.sfx && component.sfx !== 'none') {
-                var sfx = _this.game.add.audio(component.sfx);
-                sfx.onStop.addOnce(sfx.destroy);
-                sfx.play();
+        var btn = this.game.add.button(element.x, element.y, element.id, function () {
+            if (element.sfx && element.sfx !== 'none') {
+                _this.game.managers.audio.playSFX(element.sfx);
             }
-            _this.buttonsAction[component.binding](component);
+            _this.buttonsAction[element.binding](element);
         }, this, 1, 0, 2, 0, menu);
-        btn.component = component;
+        btn.element = element;
         if (btn.animations.frameTotal === 2) {
             btn.setFrames(1, 0, 1, 0);
         }
     };
-    RJSGUI.prototype.loadSaveSlot = function (component, menu) {
-        var sprite = this.game.add.sprite(component.x, component.y, component.id, 0, menu);
-        sprite.config = component;
-        var thumbnail = this.game.getSlotThumbnail(component.slot);
+    RJSGUI.prototype.loadSaveSlot = function (element, menu) {
+        var sprite = this.game.add.sprite(element.x, element.y, element.id, 0, menu);
+        sprite.config = element;
+        var thumbnail = this.game.getSlotThumbnail(element.slot);
         if (thumbnail) {
             this.loadThumbnail(thumbnail, sprite);
         }
-        this.saveSlots[component.slot] = sprite;
+        this.saveSlots[element.slot] = sprite;
     };
-    RJSGUI.prototype.loadSlider = function (component, menu) {
+    RJSGUI.prototype.loadSlider = function (element, menu) {
         var _this = this;
-        var sliderFull = this.game.add.sprite(component.x, component.y, component.id, 0, menu);
+        var sliderFull = this.game.add.sprite(element.x, element.y, element.id, 0, menu);
         if (sliderFull.animations.frameTotal === 2) {
-            sliderFull = this.game.add.sprite(component.x, component.y, component.id, 0, menu);
+            sliderFull = this.game.add.sprite(element.x, element.y, element.id, 0, menu);
             sliderFull.frame = 1;
         }
         var createMask = function (slider, currentVal) {
@@ -255,9 +273,9 @@ var RJSGUI = /** @class */ (function () {
             sliderMask.endFill();
             return sliderMask;
         };
-        var currentVal = this.game.userPreferences[component.binding];
-        sliderFull.limits = this.sliderLimits[component.binding];
-        sliderFull.binding = component.binding;
+        var currentVal = this.game.userPreferences[element.binding];
+        sliderFull.limits = this.sliderLimits[element.binding];
+        sliderFull.binding = element.binding;
         sliderFull.mask = createMask(sliderFull, currentVal);
         sliderFull.inputEnabled = true;
         sliderFull.events.onInputDown.add(function (sprite, pointer) {
@@ -268,6 +286,10 @@ var RJSGUI = /** @class */ (function () {
             _this.game.userPreferences.setPreference(sprite.binding, newVal);
             if (sprite.binding == "bgmv") {
                 _this.game.managers.audio.changeVolume('bgm', newVal);
+            }
+            if (element.sfx && element.sfx !== 'none') {
+                var volume = sprite.binding == "bgmv" ? newVal : _this.game.userPreferences.sfxv;
+                _this.game.managers.audio.playSFX(element.sfx, volume);
             }
         });
     };
@@ -297,7 +319,7 @@ var RJSGUI = /** @class */ (function () {
     };
     RJSGUI.prototype.showMenu = function (menu) {
         return __awaiter(this, void 0, void 0, function () {
-            var music, transition;
+            var transition;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -307,13 +329,8 @@ var RJSGUI = /** @class */ (function () {
                         this.menus[menu].alpha = 0;
                         this.menus[menu].visible = true;
                         this.game.control.unskippable = true;
-                        music = this.config.menus[menu].backgroundMusic;
-                        if (music && !music.isPlaying && !this.game.userPreferences.muted) {
-                            if (this.currentMusic) {
-                                this.currentMusic.fadeOut(1000);
-                            }
-                            this.currentMusic = music;
-                            this.currentMusic.fadeIn(1000);
+                        if (this.config.menus[menu].backgroundMusic) {
+                            this.game.managers.audio.play(this.config.menus[menu].backgroundMusic, "bgm", true);
                         }
                         transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
                         return [4 /*yield*/, transition(null, this.menus[menu])];
@@ -334,9 +351,8 @@ var RJSGUI = /** @class */ (function () {
                         if (!menu) {
                             menu = this.currentMenu;
                         }
-                        if (mute && this.currentMusic && this.currentMusic.isPlaying) {
-                            this.currentMusic.fadeOut(400);
-                            this.currentMusic = null;
+                        if (mute && this.config.menus[menu].backgroundMusic) {
+                            this.game.managers.audio.stop('bgm');
                         }
                         this.game.control.unskippable = true;
                         transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
@@ -356,9 +372,21 @@ var RJSGUI = /** @class */ (function () {
     };
     RJSGUI.prototype.showHUD = function () {
         this.hud.visible = true;
+        if (this.choices) {
+            this.choices.visible = true;
+        }
+        if (this.interrupts) {
+            this.interrupts.visible = true;
+        }
     };
     RJSGUI.prototype.hideHUD = function () {
         this.hud.visible = false;
+        if (this.choices) {
+            this.choices.visible = false;
+        }
+        if (this.interrupts) {
+            this.interrupts.visible = false;
+        }
     };
     RJSGUI.prototype.changeMenu = function (menu) {
         return __awaiter(this, void 0, void 0, function () {
@@ -370,7 +398,7 @@ var RJSGUI = /** @class */ (function () {
                         if (!previous) return [3 /*break*/, 5];
                         if (!menu) return [3 /*break*/, 3];
                         // hide previous menu and show this
-                        return [4 /*yield*/, this.hideMenu(previous, this.config.menus[menu].backgroundMusic)];
+                        return [4 /*yield*/, this.hideMenu(previous, false)];
                     case 1:
                         // hide previous menu and show this
                         _a.sent();
@@ -415,7 +443,7 @@ var RJSGUI = /** @class */ (function () {
                     });
                 });
             },
-            load: function (component) {
+            load: function (element) {
                 return __awaiter(this, void 0, void 0, function () {
                     return __generator(this, function (_a) {
                         switch (_a.label) {
@@ -424,7 +452,7 @@ var RJSGUI = /** @class */ (function () {
                                 return [4 /*yield*/, game.gui.changeMenu(null)];
                             case 1:
                                 _a.sent();
-                                game.loadSlot(parseInt(component.slot, 10));
+                                game.loadSlot(parseInt(element.slot, 10));
                                 return [2 /*return*/];
                         }
                     });
@@ -433,8 +461,8 @@ var RJSGUI = /** @class */ (function () {
             auto: game.auto.bind(game),
             skip: game.skip.bind(game),
             mute: game.mute.bind(game),
-            save: function (component) {
-                game.save(parseInt(component.slot, 10));
+            save: function (element) {
+                game.save(parseInt(element.slot, 10));
             },
             saveload: function (argument) {
                 game.pause();
@@ -498,56 +526,69 @@ var RJSGUI = /** @class */ (function () {
     RJSGUI.prototype.hideChoices = function () {
         this.choices.removeAll();
     };
-    RJSGUI.prototype.setTextStyles = function (text, text_obj) {
-        text_obj.clearFontValues();
-        text_obj.clearColors();
-        var styles = [];
-        while (true) {
-            var re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/;
-            var match = text.match(re);
-            if (match) {
-                var s = {
-                    start: text.search(re),
-                    style: match[1].includes("color") ? "color" : match[1],
-                    end: -1,
-                    color: null
-                };
-                if (s.style == "color") {
-                    s.color = match[2];
-                }
-                text = text.replace(re, "");
-                var endIdx = text.indexOf("(end)");
-                if (endIdx != -1) {
-                    text = text.replace("(end)", "");
-                    s.end = endIdx;
-                    styles.push(s);
-                }
-            }
-            else
-                break;
-        }
-        styles.forEach(function (s) {
-            if (s.style == "italic") {
-                text_obj.addFontStyle("italic", s.start);
-                text_obj.addFontStyle("normal", s.end);
-            }
-            if (s.style == "bold") {
-                text_obj.addFontWeight("bold", s.start);
-                text_obj.addFontWeight("normal", s.end);
-            }
-            if (s.style == "color") {
-                text_obj.addColor(s.color, s.start);
-                text_obj.addColor(text_obj.fill, s.end);
-            }
-        });
-        return text;
-    };
-    RJSGUI.prototype.showText = function (text, title, colour, callback) {
+    // setTextStyles(text,text_obj): string {
+    //   text_obj.clearFontValues();
+    //   text_obj.clearColors()
+    //   let styles = []
+    //   while(true){
+    //     let re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
+    //     let match = text.match(re);
+    //     if (match){
+    //       let s = {
+    //         start: text.search(re),
+    //         style: match[1].includes("color") ? "color" : match[1],
+    //         end: -1,
+    //         color: null
+    //       }
+    //       if (s.style == "color"){
+    //         s.color = match[2];
+    //       }
+    //       text = text.replace(re,"")
+    //       let endIdx = text.indexOf("(end)");
+    //       if (endIdx!=-1){
+    //         text = text.replace("(end)","")
+    //         s.end = endIdx;
+    //         styles.push(s)
+    //       }
+    //     } else break;
+    //   }
+    //   styles.forEach(s=>{
+    //     if (s.style=="italic"){
+    //       text_obj.addFontStyle("italic", s.start);
+    //       text_obj.addFontStyle("normal", s.end);
+    //     }
+    //     if (s.style=="bold"){
+    //       text_obj.addFontWeight("bold", s.start);
+    //       text_obj.addFontWeight("normal", s.end);
+    //     }
+    //     if (s.style=="color"){
+    //       text_obj.addColor(s.color, s.start)
+    //       text_obj.addColor(text_obj.fill, s.end)
+    //     }
+    //   })
+    //   return text;
+    // }
+    RJSGUI.prototype.showText = function (text, title, colour, sfx, callback) {
         var _this = this;
         if (this.nameBox) {
             this.nameBox.text.text = title != undefined ? title : "";
-            this.nameBox.text.fill = colour;
+            if (colour && this.config.hud['name-box'].tintStyle == "box") {
+                // tint the whole box
+                this.nameBox.tint = this.toHexColor(colour);
+                this.nameBox.text.fill = this.config.hud['name-box'].color;
+            }
+            else {
+                // change name color
+                this.nameBox.text.fill = colour;
+            }
             this.nameBox.visible = title != undefined;
+        }
+        if (sfx == 'none') {
+            // if character voice configured as none, don't make any sound
+            sfx = null;
+        }
+        else if (!sfx && this.messageBox.sfx) {
+            sfx = this.messageBox.sfx;
         }
         var textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed;
         if (this.game.control.skipping || textSpeed < 10) {
@@ -559,7 +600,7 @@ var RJSGUI = /** @class */ (function () {
         }
         var textObj = this.messageBox.message;
         textObj.text = '';
-        var finalText = this.setTextStyles(text, textObj);
+        var finalText = utils_1.setTextStyles(text, textObj);
         var words = finalText.split('');
         var count = 0;
         var completeText = function () {
@@ -568,8 +609,34 @@ var RJSGUI = /** @class */ (function () {
             _this.game.gui.ctc.visible = true;
             callback();
         };
+        var waitingFor = 0;
+        // how many characters to add per sfx played
+        var charPerSfx = this.game.storyConfig.charPerSfx ? this.game.storyConfig.charPerSfx : 1;
+        if (sfx && charPerSfx == 'auto') {
+            charPerSfx = Math.ceil(sfx.durationMS / textSpeed);
+        }
+        // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
+        var sfxCharCount = 0;
         this.textLoop = setInterval(function () {
+            if (waitingFor > 0) {
+                waitingFor--;
+                return;
+            }
             textObj.text += (words[count]);
+            if (sfx) {
+                if (words[count] == " " || _this.punctuationMarks.includes(words[count]) || sfxCharCount == charPerSfx) {
+                    // reset count, but don't play
+                    sfxCharCount = -1;
+                }
+                else if (sfxCharCount == 0) {
+                    sfx.play();
+                    sfx.volume = _this.game.userPreferences.sfxv;
+                }
+                sfxCharCount++;
+            }
+            if (_this.punctuationMarks.includes(words[count])) {
+                waitingFor = _this.punctuationWait;
+            }
             count++;
             if (count >= words.length) {
                 completeText();
@@ -607,9 +674,7 @@ var RJSGUI = /** @class */ (function () {
         var separation = index * (parseInt(choiceConfig.height, 10) + parseInt(choiceConfig.separation, 10));
         var chBox = this.game.add.button(pos[0], pos[1] + separation, choiceConfig.id, function () {
             if (choiceConfig.sfx && choiceConfig.sfx !== 'none') {
-                var sfx = _this.game.add.audio(choiceConfig.sfx);
-                sfx.onStop.addOnce(sfx.destroy);
-                sfx.play();
+                _this.game.managers.audio.playSFX(choiceConfig.sfx);
             }
             var transition = _this.game.screenEffects.transition.get(_this.game.storyConfig.transitions.textChoices);
             transition(_this.choices, null).then(function () {
@@ -631,7 +696,9 @@ var RJSGUI = /** @class */ (function () {
         chBox.choiceId = choice.choiceId;
         chBox.name = choice.choiceId;
         var textStyle = this.getTextStyle('choice');
-        var text = this.game.add.text(0, 0, choice.choiceText, textStyle);
+        var text = this.game.add.text(0, 0, "", textStyle);
+        var finalText = utils_1.setTextStyles(choice.choiceText, text);
+        text.text = finalText;
         text.visible = false;
         this.setTextPosition(chBox, text, choiceConfig);
         setTimeout(function () { text.visible = true; }, 20);
@@ -647,18 +714,24 @@ var RJSGUI = /** @class */ (function () {
         // eslint-disable-next-line no-bitwise
         return (parseInt(color.substr(1), 16) << 8) / 256;
     };
-    RJSGUI.prototype.setTextPosition = function (sprite, text, component) {
-        if (component.isTextCentered) {
+    RJSGUI.prototype.setTextPosition = function (sprite, text, element) {
+        text.lineSpacing = element.lineSpacing ? element.lineSpacing : 0;
+        if (element.isTextCentered) {
             text.setTextBounds(0, 0, sprite.width, sprite.height);
             text.boundsAlignH = 'center';
             text.boundsAlignV = 'middle';
         }
         else {
-            var offsetX = parseInt(component['offset-x'], 10);
-            var offsetY = parseInt(component['offset-y'], 10);
+            var offsetX = parseInt(element['offset-x'], 10);
+            var offsetY = parseInt(element['offset-y'], 10);
             text.setTextBounds(offsetX, offsetY, sprite.width, sprite.height);
-            text.boundsAlignH = component.align;
+            text.boundsAlignH = element.align;
             text.boundsAlignV = 'top';
+            if (element['text-width']) {
+                text.wordWrap = true;
+                text.align = element.align;
+                text.wordWrapWidth = element['text-width'];
+            }
         }
         sprite.addChild(text);
         sprite.text = text;

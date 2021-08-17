@@ -55,7 +55,7 @@ var Ambient = /** @class */ (function () {
         }, maxLifespan * 2);
     };
     Ambient.prototype.BGS = function (sound) {
-        this.audioManager.play(sound, 'bgs', true, 'FADE');
+        this.audioManager.play(sound, 'bgs', true, null, 'FADE');
     };
     Ambient.prototype.CLEAR = function () {
         this.clearFunctions.forEach(function (func) { return func(); });
@@ -64,7 +64,7 @@ var Ambient = /** @class */ (function () {
     };
     Ambient.prototype.RAIN = function () {
         var _this = this;
-        this.audioManager.play('rainBGS', 'bgs', true, 'FADE');
+        this.audioManager.play('rainBGS', 'bgs', true, null, 'FADE');
         var maxLifespan = 1600;
         var emitter = this.addEmitter({
             maxParticles: 400,

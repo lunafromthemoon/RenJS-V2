@@ -1,7 +1,7 @@
 class ChangeCTC extends RenJS.Plugin {
 
 	onInit(params) {
-		let ctc = this.game.gui.ctc;
+		let ctc = this.game.gui.hud.mBoxes.default.ctc;
 		// remove previous tween
 		this.game.tweens.removeFrom(ctc);
 		// add the tween you want
