@@ -9,13 +9,11 @@ export default class MessageBox extends Sprite{
     text: Text
     ctc?: Sprite
 
-    textSpeed: number
     textLoop: number
     punctuationMarks: string[] = []
     punctuationWait: number = 5
     // sound effects
     defaultSfx?: Sound
-    ctcSfx?: Sound
 
     game: RJS
 
@@ -85,7 +83,6 @@ export default class MessageBox extends Sprite{
         this.text.destroy();
     	if (this.ctc) this.ctc.destroy();
         if (this.defaultSfx) this.defaultSfx.destroy();
-        if (this.ctcSfx) this.ctcSfx.destroy();
     	super.destroy();
     }
 
@@ -102,8 +99,8 @@ export default class MessageBox extends Sprite{
         }
         
         let finalText = setTextStyles(text,this.text);
-        // let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
-        if (this.game.control.skipping || this.textSpeed < 10){
+        let textSpeed:number = this.game.userPreferences.get('textSpeed');
+        if (this.game.control.skipping || textSpeed < 10){
             this.text.text = finalText;
             this.visible = true;
             this.ctc.visible = true;
@@ -114,7 +111,6 @@ export default class MessageBox extends Sprite{
         
         // add new line characters at the end of each line
         const lines = this.text.precalculateWordWrap(finalText)
-        console.log(lines)
         finalText = '';
         for (const line of lines){
             finalText+=line.replace(/.$/,"\n");
@@ -129,7 +125,7 @@ export default class MessageBox extends Sprite{
         let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
         
         if (sfx && charPerSfx=='auto'){
-            charPerSfx = Math.ceil(sfx.durationMS/this.textSpeed);
+            charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
         }
         // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
         let sfxCharCount = 0;
@@ -142,9 +138,8 @@ export default class MessageBox extends Sprite{
                 // show ctc
                 if (this.ctc){
                     this.ctc.visible = true;
-                    if (this.ctcSfx){
-                        this.ctcSfx.volume = this.game.userPreferences.sfxv;
-                        this.ctcSfx.play();
+                    if (this.config.ctc.sfx){
+                        this.game.managers.audio.playSFX(this.config.ctc.sfx);
                     }
                 }
                 // finish promise
@@ -165,7 +160,7 @@ export default class MessageBox extends Sprite{
                         sfxCharCount=-1;
                     } else if (sfxCharCount==0){
                         sfx.play();
-                        sfx.volume = this.game.userPreferences.sfxv;
+                        sfx.volume = this.game.userPreferences.get('sfxv');
                     }
                     sfxCharCount++;
                 }
@@ -178,7 +173,7 @@ export default class MessageBox extends Sprite{
                 if (charIdx >= characters.length){
                     completeText();
                 }
-            }, this.textSpeed);
+            }, textSpeed);
             this.visible = true;
             // skip text animation on click
             if (!this.game.control.auto){

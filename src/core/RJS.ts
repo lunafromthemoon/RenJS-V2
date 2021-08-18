@@ -175,11 +175,10 @@ export default class RJS extends Game {
         this.control.paused = true;
         this.control.skipping = false;
         this.control.auto = false;
-
         this.takeXShot();
-        if (!keepGUI){
-            this.gui.hud.hide();
-        }
+        // if (!keepGUI){
+        //     this.gui.hud.hide();
+        // }
     }
 
     takeXShot (): void {
@@ -187,9 +186,9 @@ export default class RJS extends Game {
         this.xShots.push(this.canvas.toDataURL("image/jpeg"));
     }
 
-    unpause (force?): void{
+    async unpause (){
         this.control.paused = false;
-        this.gui.hud.show();
+        // await this.gui.hud.show();
         if (!this.control.waitForClick && this.managers.logic.currentChoices.length==0){
             this.resolveAction();
         }
@@ -215,22 +214,24 @@ export default class RJS extends Game {
         }
     }
 
-    endGame(): void {
-        this.setBlackOverlay();
+    async endGame() {
+        await this.managers.story.hide();
+        // this.setBlackOverlay();
         this.managers.story.clearScene();
         this.gameStarted = false;
-        this.control.paused = true;
+        this.pause();
         for (const plugin in this.pluginsRJS) {
             if (this.pluginsRJS[plugin].onTeardown){
                 this.pluginsRJS[plugin].onTeardown();
             }
         }
-        this.removeBlackOverlay();
+        // this.removeBlackOverlay();
+        // this.managers.story.show();
         this.gui.changeMenu('main');
     }
 
-    async start (initialVars = {}) {
-        this.setBlackOverlay();
+    async start(initialVars = {}) {
+        await this.managers.story.hide();
         this.control.paused = false;
         this.managers.story.clearScene();
         // on start game, clear the vars o initialize for a new game +
@@ -241,7 +242,8 @@ export default class RJS extends Game {
                 this.pluginsRJS[plugin].onStart();
             }
         }
-        this.removeBlackOverlay();
+        // this.removeBlackOverlay();
+        await this.managers.story.show();
         this.gameStarted = true;
         this.managers.story.interpret();
     }
@@ -320,12 +322,12 @@ export default class RJS extends Game {
                 this.pluginsRJS[plugin].onLoad(slot,dataParsed);
             }
         }
-        this.setBlackOverlay();
+        await this.managers.story.hide();
         this.managers.story.clearScene();
         this.managers.background.set(dataParsed.background);
-        await this.managers.character.set(dataParsed.characters);
+        this.managers.character.set(dataParsed.characters);
         this.managers.audio.set(dataParsed.audio);
-        await this.managers.cgs.set(dataParsed.cgs);
+        this.managers.cgs.set(dataParsed.cgs);
         this.managers.logic.set(dataParsed.vars);
         this.screenEffects.ambient.set(dataParsed.ambients);
         this.gui.hud.clear();
@@ -335,17 +337,17 @@ export default class RJS extends Game {
         
         
         this.gameStarted = true;
-        this.removeBlackOverlay();
-        this.unpause(true);
+        await this.managers.story.show();
+        this.unpause();
     }
 
     waitForClick (callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping || this.control.auto){
             let timeout = this.control.skipping ? this.storyConfig.skiptime : this.storyConfig.autotime;
-            if (this.control.auto && this.userPreferences.autoSpeed){
+            if (this.control.auto){
                 // max autospeed == 300
-                timeout = 350 - this.userPreferences.autoSpeed;
+                timeout = 350 - this.userPreferences.get('autoSpeed');
             }
             setTimeout(this.control.nextAction.bind(this), timeout);
         } else {

@@ -2,13 +2,23 @@ import RJS from '../core/RJS';
 import {Sprite,Text} from 'phaser-ce';
 import RJSSprite from '../components/RJSSprite';
 
+export function changeInputEnabled(displayObj,enabled){
+  if (displayObj.input){
+    displayObj.input.enabled = enabled;  
+  }
+  for (const child of displayObj.children){
+    changeInputEnabled(child,enabled);
+  }
+  
+}
+
 export function createText(game,config): Text{
     const text = game.add.text(config.x, config.y, "" , config.style);
     if (config.lineSpacing){
         text.lineSpacing = config.lineSpacing;
     }
     if (config.width && config.height){
-        text.setTextBounds(config.x,config.y,config.width,config.height);    
+      text.setTextBounds(config.x,config.y,config.width,config.height)
     }
     return text;
 }

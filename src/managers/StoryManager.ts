@@ -39,6 +39,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.characterSprites = this.game.add.group();
         this.cgsSprites = this.game.add.group();
 
+        this.backgroundSprites.visible = false;
+        this.behindCharactersSprites.visible = false;
+        this.characterSprites.visible = false;
+        this.cgsSprites.visible = false;
+
         if (this.game.setup.lazyloading){
             this.assetLoader = new RJSAssetLoader(this.game);
         }
@@ -46,6 +51,38 @@ export default class StoryManager implements StoryManagerInterface<Group> {
 
     set(...args: any): void {
         //
+    }
+
+    async show(){
+        if (this.characterSprites.visible) return;
+        console.log("showing story");
+        const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        this.backgroundSprites.visible = true;
+        this.behindCharactersSprites.visible = true;
+        this.characterSprites.visible = true;
+        this.cgsSprites.visible = true;
+        transition(null,this.backgroundSprites);
+        transition(null,this.behindCharactersSprites);
+        transition(null,this.characterSprites);
+        transition(null,this.cgsSprites);
+        await this.game.gui.hud.showHUD();
+    }
+
+    async hide(){
+        
+        if (!this.characterSprites.visible) return;
+        // only hide if things are visible
+        console.log("hiding story")
+        const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        transition(this.backgroundSprites, null);
+        transition(this.behindCharactersSprites, null);
+        transition(this.characterSprites, null);
+        transition(this.cgsSprites, null);
+        await this.game.gui.hud.hideHUD();
+        this.backgroundSprites.visible = false;
+        this.behindCharactersSprites.visible = false;
+        this.characterSprites.visible = false;
+        this.cgsSprites.visible = false;
     }
 
     interpret(): void {

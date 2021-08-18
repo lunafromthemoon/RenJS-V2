@@ -131,6 +131,7 @@ export default class RJSGUI implements RJSGUIInterface {
         // this.game.pause();
         this.previousMenu = this.currentMenu;
         this.currentMenu = menu;
+        this.game.world.bringToTop(this.menus[menu])
         await this.menus[menu].show();
     }
 
@@ -167,10 +168,12 @@ export default class RJSGUI implements RJSGUIInterface {
     initBindingActions (): void {
         this.bindingActions = {
             start: async () => {
+                // hide current menu
                 await this.game.gui.changeMenu('hud');
                 this.game.start();
             },
             load: async (element) => {
+                // hide current menu
                 await this.game.gui.changeMenu('hud');
                 this.game.loadSlot(parseInt(element.slot, 10));
             },
@@ -193,10 +196,10 @@ export default class RJSGUI implements RJSGUIInterface {
             },
             // slider bindings
             changeUserPreference: (element,value) => {
-                this.game.userPreferences.setPreference(element.userPreference,value);
+                this.game.userPreferences.set(element.userPreference,value);
                 if (element.userPreference == "bgmv"){
                     // change music volume immediately
-                    this.game.managers.audio.changeVolume(value);
+                    this.game.managers.audio.changeVolume(this.game.userPreferences.get(element.userPreference));
                 }
             }
         };

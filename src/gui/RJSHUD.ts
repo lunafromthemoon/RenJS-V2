@@ -6,6 +6,8 @@ import MessageBox from './elements/MessageBox'
 import NameBox from './elements/NameBox'
 import ChoiceHandler from './elements/ChoiceHandler'
 
+import {changeInputEnabled} from '../utils/gui'
+
 export default class RJSHUD extends RJSMenu {
     mBoxes = {}
     nBoxes = {}
@@ -139,6 +141,31 @@ export default class RJSHUD extends RJSMenu {
         for (const mBox in this.mBoxes) this.mBoxes[mBox].clear();
         for (const nBox in this.nBoxes) this.nBoxes[nBox].hide();
         for (const cHandler in this.cHandlers) this.cHandlers[cHandler].hide();
+    }
+
+    async showHUD(){
+        console.log("really showing hud")
+        await super.show();
+    }
+
+    async hideHUD(){
+        console.log("really hiding hud")
+        await super.hide();
+    }
+
+    // hud is shown along with the story layers
+    // when hiding/pausing, only disable input
+
+    async show() {
+        console.log("showing hud")
+        this.ignoreChildInput=false;
+        this.forEach(child => {changeInputEnabled(child,true)})
+    }
+
+    async hide(mute:boolean = true){
+        console.log("hiding hud")
+        this.ignoreChildInput=true;
+        this.forEach(child => {changeInputEnabled(child,false)})
     }
 
     destroy(): void {

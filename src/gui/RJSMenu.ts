@@ -50,6 +50,7 @@ export default class RJSMenu extends Group {
 
     createLabel(element:{x:number,y:number,text:string,lineSpacing:number,style:any}) {
         const label = createText(this.game,element)
+        label.text = setTextStyles(element.text,label);
         return label
     }
 
@@ -83,9 +84,12 @@ export default class RJSMenu extends Group {
     }
 
     createSlider(element: {x: number,y: number,asset: string,binding: string,userPreference:string,sfx: string, mask?:string}) {
-        const startVal = this.game.userPreferences[element.userPreference];
-        const range = this.game.propertyRanges[element.userPreference];
-        const slider = new MaskSlider(this.game,element,startVal,range[0],range[1]);
+        let value = 0.5;
+        if (element.binding == 'changeUserPreference'){
+            const preference = this.game.userPreferences.preferences[element.userPreference];
+            value = (preference.value-preference.min)/(preference.max - preference.min);
+        }
+        const slider = new MaskSlider(this.game,element,value);
         return slider
     }
 
@@ -103,6 +107,7 @@ export default class RJSMenu extends Group {
     }
 
     async show() {
+        if (this.visible) return;
         this.alpha = 0;
         this.visible = true;
         // menu transitions are unskippable
@@ -117,6 +122,7 @@ export default class RJSMenu extends Group {
     }
 
     async hide(mute:boolean = true){
+        if (!this.visible) return;
         if (mute && this.config.backgroundMusic){
             this.game.managers.audio.stop('bgm');
         }

@@ -223,10 +223,10 @@ export default class RJSGUIByBuilder extends RJSGUI {
             lineSpacing: config.lineSpacing,
             style: this.convertTextStyle(config)
         }
-        if (config.width && config.height){
-            text.width = parseInt(config.width)
-            text.height = parseInt(config.height)
-        }
+        // if (config.width && config.height){
+        //     text.width = parseInt(config.width)
+        //     text.height = parseInt(config.height)
+        // }
         return text
     }
 
@@ -247,7 +247,7 @@ export default class RJSGUIByBuilder extends RJSGUI {
             textStyle.boundsAlignH = 'center';
             textStyle.boundsAlignV = 'middle';
         } else {
-            textStyle.boundsAlignH = config.align
+            textStyle.boundsAlignH = config.align ? config.align : 'left'
             textStyle.boundsAlignV = 'top'
         }
         return textStyle;

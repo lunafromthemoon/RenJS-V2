@@ -30,6 +30,12 @@ export default class ChoiceHandler extends Graphics {
         super(game, 0, 0);
         this.game = game;
         this.config = config;
+        if (!this.config.text.style.wordWrap && this.config.text.style.boundsAlignH=='center'){
+            // center text in box by adding width and height
+            const asset = this.game.cache.getFrameData(this.config.asset).getFrame(0);
+            this.config.text.width = asset.width;
+            this.config.text.height = asset.height;
+        }
         this.visible = false;
     }
 
@@ -76,7 +82,6 @@ export default class ChoiceHandler extends Graphics {
         const text = createText(this.game,this.config.text);
         text.text = setTextStyles(choice.choiceText,text);
         chBox.addChild(text);
-        // text.visible = false;
         // setTimeout(()=>{text.visible = true},20)
         if (choice.previouslyChosen){
             chBox.tint = toHexColor(this.config.chosenColor);

@@ -30,7 +30,7 @@ export default class AudioManager implements AudioManagerInterface {
 
     constructor(game: RJS) {
         this.game = game
-        this.changeVolume(game.userPreferences.bgmv)
+        this.changeVolume(game.userPreferences.get('bgmv'))
     }
 
     getActive():object{
@@ -59,6 +59,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
         this.current[type] = music;
         let marker = ''
+        const volume = this.game.userPreferences.get('bgmv');
         if (looped && fromSeconds){
             marker = 'intro';
             // looped = false;
@@ -66,17 +67,18 @@ export default class AudioManager implements AudioManagerInterface {
             music.onMarkerComplete.addOnce(()=>{
                 music.addMarker("looped",fromSeconds,music.totalDuration-fromSeconds,null,true);
                 music.play("looped");
-                music.volume = this.game.userPreferences.bgmv;
+                music.volume = volume;
             })
         }
 
         music.play(marker,0,null,looped);
         // volume has to be set after it starts or it will ignore it
+
         if (transition == 'FADE'){
             music.volume = 0;
-            this.game.add.tween(music).to({volume: this.game.userPreferences.bgmv},1500,null,true);
+            this.game.add.tween(music).to({volume: volume},1500,null,true);
         } else {
-            music.volume = this.game.userPreferences.bgmv;
+            music.volume = volume;
         }
     }
 
@@ -84,7 +86,7 @@ export default class AudioManager implements AudioManagerInterface {
         if (!this.current[type]){
             return;
         }
-        if (!this.game.userPreferences.muted) {
+        if (!this.game.userPreferences.get('muted')) {
             this.stopAudio(this.current[type],transition);
             this.current[type]=null;
             this.active[type]=null;
@@ -109,11 +111,11 @@ export default class AudioManager implements AudioManagerInterface {
           );
           return;
         }
-        if (!this.game.userPreferences.muted){
+        if (!this.game.userPreferences.get('muted')){
             const sfx = this.sfxCache[key] ? this.sfxCache[key] : this.game.add.audio(key);
             this.sfxCache[key] = sfx;
             sfx.play();
-            sfx.volume= volume ? volume : this.game.userPreferences.sfxv;
+            sfx.volume= volume ? volume : this.game.userPreferences.get('sfxv');
         }
     }
 
@@ -127,10 +129,10 @@ export default class AudioManager implements AudioManagerInterface {
 
     changeVolume(volume): void {
         if (this.current.bgm){
-            this.current.bgm.volume = this.game.userPreferences.bgmv;
+            this.current.bgm.volume = this.game.userPreferences.get('bgmv');
         }
         if (this.current.bgs){
-            this.current.bgs.volume = this.game.userPreferences.bgmv;
+            this.current.bgs.volume = this.game.userPreferences.get('bgmv');
         }
     }
 
@@ -142,7 +144,7 @@ export default class AudioManager implements AudioManagerInterface {
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(availableAudios, () => {
               // this.audioLoaded = true;
-              resolve();
+              resolve(true);
             });
         })
         
@@ -157,12 +159,13 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     mute(): void {
-        if (this.game.userPreferences.muted){
-            this.game.sound.volume = this.game.userPreferences.bgmv;
+        const muted = this.game.userPreferences.get('muted');
+        if (muted){
+            this.game.sound.volume = this.game.userPreferences.get('bgmv');
         } else {
             this.game.sound.volume = 0;
         }
-        this.game.userPreferences.setPreference('muted',!this.game.userPreferences.muted)
+        this.game.userPreferences.set('muted',!muted)
     }
 
     stopAll(): void {
