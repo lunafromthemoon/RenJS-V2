@@ -14,15 +14,6 @@ export interface RJSGUIInterface {
     fonts: string[]
 
     showMenu(menu);
-    // showChoices(choices, execId);
-    // hideChoice(choiceId);
-    // hideChoices();
-    // changeToLastInterrupt(choiceId);
-    // clear();
-    // showText(text, title, colour, sfx, callback);
-    // hideText();
-    // ignoreTap(pointer);
-    // addThumbnail?(thumbnail, slot);
     changeMenu(menu): void;
 
 }
@@ -37,31 +28,10 @@ export default class RJSGUI implements RJSGUIInterface {
     // gui graphical elements
     menus = {string:RJSMenu};
     hud: RJSHUD = null;
-    // messageBox: any
-    // ctc: RJSSprite
-    // nameBox: RJSSprite
-    // choices: Group
-    // interrupts: Group
-    // saveSlots = {}
-    // interval object to show text per letter 
-    // textLoop = null;
-
-    // sliderLimits = {
-    //     textSpeed: [10,100],
-    //     autoSpeed: [50,300],
-    //     bgmv: [0,1],
-    //     sfxv: [0,1]
-    // };
-
-    // skipClickArea = []
-
-    // punctuationMarks;
-    // punctuationWait;
 
     // menu navigation
     currentMenu = null
     previousMenu = null
-    // currentMusic = null
 
     constructor(protected game: RJS) {
         this.initAssets(game.guiSetup);
@@ -85,8 +55,6 @@ export default class RJSGUI implements RJSGUIInterface {
             }
         }
         await this.game.managers.audio.decodeAudio(audioList);
-        console.log("gui.config")
-        console.log(this.config)
         for (const menuName in this.config){
             console.log(menuName)
             if (menuName == 'hud'){
@@ -98,30 +66,12 @@ export default class RJSGUI implements RJSGUIInterface {
             }
             this.menus[menuName].init();
         }
-        // create the GUI
-        // this.initHUD(this.config.hud);
-        // this.initMenu('main',this.config.menus.main)
-        // this.initMenu('settings',this.config.menus.settings)
-        // this.initMenu('saveload',this.config.menus.saveload);
-
-        
     }
 
   
     // ----------------------------------------------------------------
     // GUI user interaction, buttons and sliders
     // ----------------------------------------------------------------
-
-    // ignoreTap(pointer) {
-    //     // If user clicks on buttons, the tap shouldn't count to continue the story
-    //     return this.skipClickArea.find(area => area.contains(pointer.x,pointer.y)) !== undefined;
-    // }
-
-    // addThumbnail(thumbnail, slot) {
-    //     if (this.saveSlots[slot]){
-    //         this.loadThumbnail(thumbnail,this.saveSlots[slot])
-    //     }
-    // }
 
     getCurrent(){
         return this.menus[this.currentMenu];
@@ -182,7 +132,10 @@ export default class RJSGUI implements RJSGUIInterface {
             },
             auto: this.game.auto.bind(this.game),
             skip: this.game.skip.bind(this.game),
-            mute: this.game.mute.bind(this.game),
+            mute: (element,mute) =>{
+                // mutes or unmutes audio and saves preference
+                this.game.managers.audio.mute(mute);
+             },
             openMenu: (element)=>{
                 this.game.pause();
                 this.changeMenu(element.menu);

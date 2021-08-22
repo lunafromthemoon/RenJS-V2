@@ -28,7 +28,7 @@ export default class Transition implements RJSScreenEffectInterface {
             return this[name].bind(this)
         } else if (this.game.pluginsRJS[name]){
             return this.game.pluginsRJS[name].onCall.bind(this.game.pluginsRJS[name])
-        }
+        } else return this.CUT.bind(this)
     }
 
     async CUT(from, to, position?, scaleX?): Promise<void> {
@@ -66,6 +66,7 @@ export default class Transition implements RJSScreenEffectInterface {
     }
 
     async FADEIN(to, position?, scaleX?): Promise<void> {
+        console.log("fading in")
         return new Promise(resolve => {
             setNewProperties(to, position, scaleX);
             this.tweenManager.tween(to, {alpha: 1}, resolve, this.game.storyConfig.fadetime, true,0,false);

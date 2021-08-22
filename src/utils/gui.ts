@@ -2,6 +2,17 @@ import RJS from '../core/RJS';
 import {Sprite,Text} from 'phaser-ce';
 import RJSSprite from '../components/RJSSprite';
 
+export function getButtonFrames(total:number, pushed:boolean = false){
+  // button frames -> over|out|down|up
+  const buttonFrames = {
+      1: {normal: [0,0,0,0],pushed:[1,1,1,1]},
+      2: {normal: [1,0,1,0],pushed:[3,2,3,2]},
+      3: {normal: [1,0,2,0],pushed:[4,3,5,3]},
+      4: {normal: [1,0,2,3],pushed:[5,4,6,7]},
+  }
+  return buttonFrames[total][pushed ? 'pushed' : 'normal']
+}
+
 export function changeInputEnabled(displayObj,enabled){
   if (displayObj.input){
     displayObj.input.enabled = enabled;  
@@ -10,17 +21,6 @@ export function changeInputEnabled(displayObj,enabled){
     changeInputEnabled(child,enabled);
   }
   
-}
-
-export function createText(game,config): Text{
-    const text = game.add.text(config.x, config.y, "" , config.style);
-    if (config.lineSpacing){
-        text.lineSpacing = config.lineSpacing;
-    }
-    if (config.width && config.height){
-      text.setTextBounds(config.x,config.y,config.width,config.height)
-    }
-    return text;
 }
 
 // sets text styles tags in a phaser text object (but NOT the text itself)

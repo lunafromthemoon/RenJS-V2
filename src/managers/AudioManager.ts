@@ -8,7 +8,7 @@ export interface AudioManagerInterface extends RJSManagerInterface {
     isMusic(actor): boolean;
     isSfx(actor): boolean;
     decodeAudio(audioList): Promise<any>;
-    mute(): void;
+    mute(mute:boolean): void;
     changeVolume(volume): void;
     stopAll(): void;
     getActive():object;
@@ -105,7 +105,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
   
     playSFX(key,volume?): void {
-      if (this.unavailableAudio.includes(key)) {
+        if (this.unavailableAudio.includes(key)) {
           console.warn(
             `SFX related to key ${key} is unavailable for playback.`
           );
@@ -134,6 +134,9 @@ export default class AudioManager implements AudioManagerInterface {
         if (this.current.bgs){
             this.current.bgs.volume = this.game.userPreferences.get('bgmv');
         }
+        if (this.game.userPreferences.get('muted')){
+            this.game.sound.volume = 0;
+        }
     }
 
     async decodeAudio(audioList:string[]):Promise<any> {
@@ -158,14 +161,14 @@ export default class AudioManager implements AudioManagerInterface {
         return actor in this.game.setup.sfx
     }
 
-    mute(): void {
-        const muted = this.game.userPreferences.get('muted');
-        if (muted){
-            this.game.sound.volume = this.game.userPreferences.get('bgmv');
-        } else {
+    mute(mute:boolean): void {
+        if (mute){
             this.game.sound.volume = 0;
+        } else {
+            // unmute
+            this.game.sound.volume = this.game.userPreferences.get('bgmv');
         }
-        this.game.userPreferences.set('muted',!muted)
+        this.game.userPreferences.set('muted',mute)
     }
 
     stopAll(): void {

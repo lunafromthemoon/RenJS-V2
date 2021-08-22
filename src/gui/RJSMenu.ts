@@ -1,10 +1,12 @@
 import RJS from '../core/RJS';
 import {Group,Text} from 'phaser-ce';
 
-import {setTextStyles,createText} from '../utils/gui'
+import {setTextStyles,getButtonFrames} from '../utils/gui'
 
 import MaskSlider from './elements/MaskSlider'
 import SaveSlot from './elements/SaveSlot'
+import PushButton from './elements/PushButton'
+import Label from './elements/Label'
 
 export default class RJSMenu extends Group {
     id: string
@@ -49,37 +51,21 @@ export default class RJSMenu extends Group {
     }
 
     createLabel(element:{x:number,y:number,text:string,lineSpacing:number,style:any}) {
-        const label = createText(this.game,element)
-        label.text = setTextStyles(element.text,label);
-        return label
+        return new Label(this.game, element)
     }
 
     createButton(element:{x:number,y:number,asset:string,sfx:string,binding:string,slot:string,pushButton?:boolean,pushed?:boolean}) {
-        // button frames -> over|out|down|up
-        const buttonFrames = {
-            1: [[0,0,0,0],[1,1,1,1]],
-            2: [[1,0,1,0],[3,2,3,2]],
-            3: [[1,0,2,0],[4,3,5,3]],
-            4: [[1,0,2,3],[5,4,6,7]],
+        if (element.pushButton){
+            return new PushButton(this.game,element)
         }
+        // create normal button
         const btn = this.game.add.button(element.x,element.y,element.asset,() => {
             if (element.sfx && element.sfx !== 'none') {
                 this.game.managers.audio.playSFX(element.sfx);
             }
-            if (element.pushButton){
-                element.pushed = !element.pushed;
-                btn.setFrames(...buttonFrames[frames][element.pushed ? 1 : 0])
-            }
             this.game.gui.bindingActions[element.binding](element)
-        },this,0,0,0,0);
-        const frames = btn.animations.frameTotal/(element.pushButton ? 2 : 1);
-        
-        if (element.pushButton && element.pushed){
-            // change frames
-            btn.setFrames(...buttonFrames[frames][1])
-        } else {
-            btn.setFrames(...buttonFrames[frames][0])    
-        }
+        },this);
+        btn.setFrames(...getButtonFrames(btn.animations.frameTotal))
         return btn;
     }
 

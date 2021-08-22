@@ -1,6 +1,7 @@
 import RJS from '../../core/RJS';
 import {Graphics,Button} from 'phaser-ce';
-import {toHexColor,setTextStyles,createText} from '../../utils/gui'
+import {toHexColor,setTextStyles,getButtonFrames} from '../../utils/gui'
+import Label from './Label'
 
 export default class ChoiceHandler extends Graphics {
 
@@ -13,6 +14,7 @@ export default class ChoiceHandler extends Graphics {
         alignment: string, //centered|bottomUp|topDown
         separation: number,
         chosenColor: string,
+        transition?: string,
         sfx: string,
         text: {
             x: number,
@@ -30,35 +32,28 @@ export default class ChoiceHandler extends Graphics {
         super(game, 0, 0);
         this.game = game;
         this.config = config;
-        if (!this.config.text.style.wordWrap && this.config.text.style.boundsAlignH=='center'){
-            // center text in box by adding width and height
-            const asset = this.game.cache.getFrameData(this.config.asset).getFrame(0);
-            this.config.text.width = asset.width;
-            this.config.text.height = asset.height;
+        if (!this.config.transition){
+            this.config.transition = this.game.storyConfig.transitions.textChoices;
         }
+        this.alpha = 0;
         this.visible = false;
     }
 
     async show(choices: any[]): Promise<any> {
-        this.visible = true;
         return new Promise(resolve=>{
             choices.forEach((choice,index) => {
                 const box = this.createChoiceBox(choice,this.config.x,this.config.y,index,choices.length,resolve);
                 this.boxes.push(box)
             });
-            let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
-            transition(null,this); 
+            let transition = this.game.screenEffects.transition.get(this.config.transition);
+            // wait some miliseconds before showing the boxes so the text is properly set
+            setTimeout(()=>{
+                this.visible = true;
+                transition(null,this);
+            },20)
+             
         })
         
-    }
-
-    async hide(): Promise<any> {
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.textChoices);
-        await transition(this,null);
-        // hide all boxes
-        this.boxes.forEach(box=>box.destroy());
-        this.boxes = [];
-        this.visible = false;
     }
 
     createChoiceBox(choice, x,y, index,totalChoices,resolve) {
@@ -76,17 +71,26 @@ export default class ChoiceHandler extends Graphics {
         }
         const separation = index*(chBox.height+this.config.separation*(this.config.alignment=='bottomUp' ? -1 : 1))
         chBox.y += separation;
-        if (chBox.animations.frameTotal === 2 || chBox.animations.frameTotal === 4){
-            chBox.setFrames(1,0,1,0)
-        }
-        const text = createText(this.game,this.config.text);
+        chBox.setFrames(...getButtonFrames(chBox.animations.frameTotal))
+        const text = new Label(this.game,this.config.text,chBox);
         text.text = setTextStyles(choice.choiceText,text);
         chBox.addChild(text);
-        // setTimeout(()=>{text.visible = true},20)
+        
         if (choice.previouslyChosen){
             chBox.tint = toHexColor(this.config.chosenColor);
         }
         return chBox;
+    }
+
+    async hide(transitionName?): Promise<any> {
+        if (!this.visible) return;
+        if (!transitionName) transitionName = this.config.transition;
+        let transition = this.game.screenEffects.transition.get(transitionName);
+        await transition(this,null);
+        // hide all boxes
+        this.boxes.forEach(box=>box.destroy());
+        this.boxes = [];
+        this.visible = false;
     }
 
     destroy(): void {

@@ -246,7 +246,7 @@ export default class RJSGUIByBuilder extends RJSGUI {
         if (config.isTextCentered) {
             textStyle.boundsAlignH = 'center';
             textStyle.boundsAlignV = 'middle';
-        } else {
+        } else if (!config['text-width']){
             textStyle.boundsAlignH = config.align ? config.align : 'left'
             textStyle.boundsAlignV = 'top'
         }

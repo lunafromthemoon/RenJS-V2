@@ -69,7 +69,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     }
 
     async hide(){
-        
         if (!this.characterSprites.visible) return;
         // only hide if things are visible
         console.log("hiding story")
@@ -101,11 +100,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         }
     }
 
+    // removes everything from screen immediately
     clearScene(): void{
         this.game.control.execStack.clear();
-        this.game.gui.hud.clear();
+        this.game.gui.hud.clear("CUT");
         this.game.control.waitForClick = false;
-        this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.game.managers.character.hideAll("CUT");
         this.game.managers.audio.stopAll()
         this.game.managers.cgs.hideAll("CUT");
@@ -115,12 +114,12 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     }
 
     async startScene(name: string) {
+        await this.game.gui.hud.clear();
         if (this.game.setup.lazyloading){
             // load scene or episode assets (not loaded yet) 
             await this.assetLoader.loadScene(name);
         }
         this.game.control.execStack.replace(name);
-        this.game.managers.logic.clearChoices(); // For any interrup still showing
         this.currentScene = [...this.game.story[name]];
     }
 

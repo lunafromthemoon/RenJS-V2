@@ -194,29 +194,8 @@ export default class RJS extends Game {
         }
     }
 
-    setBlackOverlay (): void {
-        this.blackOverlay = this.add.graphics(0, 0);
-        this.managers.story.cgsSprites.addChild(this.blackOverlay);
-        const color = this.config.backgroundColor ? this.config.backgroundColor : 0x000000;
-        this.blackOverlay.beginFill(color, 1);
-        this.blackOverlay.drawRect(0, 0, this.config.w, this.config.h);
-        this.blackOverlay.endFill();
-    }
-
-    removeBlackOverlay (): void {
-        if (this.blackOverlay){
-            const tween = this.add.tween(this.blackOverlay);
-            tween.onComplete.addOnce(() => {
-                this.blackOverlay.destroy();
-                this.blackOverlay = null;
-            });
-            tween.to({ alpha: 0 }, this.storyConfig.fadetime * 2, Phaser.Easing.Linear.None, true);
-        }
-    }
-
     async endGame() {
         await this.managers.story.hide();
-        // this.setBlackOverlay();
         this.managers.story.clearScene();
         this.gameStarted = false;
         this.pause();
@@ -225,7 +204,6 @@ export default class RJS extends Game {
                 this.pluginsRJS[plugin].onTeardown();
             }
         }
-        // this.removeBlackOverlay();
         // this.managers.story.show();
         this.gui.changeMenu('main');
     }
@@ -242,7 +220,6 @@ export default class RJS extends Game {
                 this.pluginsRJS[plugin].onStart();
             }
         }
-        // this.removeBlackOverlay();
         await this.managers.story.show();
         this.gameStarted = true;
         this.managers.story.interpret();
@@ -262,10 +239,6 @@ export default class RJS extends Game {
             this.control.waitForClick = false;
             this.control.nextAction();
         }
-    }
-
-    mute(): void {
-        this.managers.audio.mute();
     }
 
     save (slot?): void {
@@ -330,12 +303,10 @@ export default class RJS extends Game {
         this.managers.cgs.set(dataParsed.cgs);
         this.managers.logic.set(dataParsed.vars);
         this.screenEffects.ambient.set(dataParsed.ambients);
-        this.gui.hud.clear();
+        await this.gui.hud.clear();
         // resolve stack
         this.control.execStack = new ExecStack(dataParsed.stack);
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
-        
-        
         this.gameStarted = true;
         await this.managers.story.show();
         this.unpause();
@@ -374,7 +345,6 @@ export default class RJS extends Game {
     }
 
     onTap (pointer, doubleTap?): void {
-
         if (this.control.paused){
             return;
         }

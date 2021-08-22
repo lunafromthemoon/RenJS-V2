@@ -75,6 +75,7 @@ export default class RJSHUD extends RJSMenu {
     }
 
     hideChoices(handlerId){
+        console.log("hiding")
         this.cHandlers[handlerId].hide()
     }
 
@@ -124,8 +125,9 @@ export default class RJSHUD extends RJSMenu {
         visualChoice.anchor.set(0.5);
     }
 
-    async hideVisualChoices() {
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
+    async hideVisualChoices(transitionName?) {
+        if (!transitionName) transitionName = this.game.storyConfig.transitions.visualChoices;
+        let transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this.visualChoices,null);
         this.visualChoices.destroy()
         this.visualChoices = null;
@@ -136,11 +138,13 @@ export default class RJSHUD extends RJSMenu {
         return this.skipClickArea.find(area => area.contains(pointer.x,pointer.y)) !== undefined;
     }
 
-    clear(): void {
-        if (this.visualChoices) this.hideVisualChoices();
-        for (const mBox in this.mBoxes) this.mBoxes[mBox].clear();
-        for (const nBox in this.nBoxes) this.nBoxes[nBox].hide();
-        for (const cHandler in this.cHandlers) this.cHandlers[cHandler].hide();
+    async clear(transition?) {
+        let hiding = [];
+        if (this.visualChoices) hiding.push(this.hideVisualChoices(transition));
+        for (const mBox in this.mBoxes) hiding.push(this.mBoxes[mBox].clear(transition));
+        for (const nBox in this.nBoxes) hiding.push(this.nBoxes[nBox].hide(transition));
+        for (const cHandler in this.cHandlers) hiding.push(this.cHandlers[cHandler].hide(transition));
+        await Promise.all(hiding);
     }
 
     async showHUD(){

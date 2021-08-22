@@ -1,12 +1,11 @@
 import RJS from '../../core/RJS';
 import {Sprite,Text,Sound} from 'phaser-ce';
-import {setTextStyles,createText} from '../../utils/gui'
-
+import {setTextStyles} from '../../utils/gui'
+import Label from './Label'
 
 
 export default class MessageBox extends Sprite{
-    id: string
-    text: Text
+    text: Label
     ctc?: Sprite
 
     textLoop: number
@@ -23,11 +22,10 @@ export default class MessageBox extends Sprite{
         y: number,
         asset: string,
         sfx: string,
+        transition?: string,
         text: {
             x: number,
             y: number,
-            width: number,
-            height: number,
             lineSpacing: number,
             style: any
         },
@@ -44,9 +42,11 @@ export default class MessageBox extends Sprite{
     constructor(game: RJS, config) {
         super(game,config.x,config.y,config.asset);
         this.config = config;
+        if (!this.config.transition){
+            this.config.transition = this.game.storyConfig.transitions.messageBox;
+        }
         this.game = game;
         this.visible = false;
-        this.id = this.config.id;
         // create sound effects
         if (this.config.sfx != 'none' && this.game.cache.checkSoundKey(this.config.sfx)){
             this.defaultSfx = this.game.add.audio(this.config.sfx);
@@ -54,10 +54,7 @@ export default class MessageBox extends Sprite{
             this.defaultSfx.play();
             this.defaultSfx.stop();
         }
-        // create text
-        console.log(this.config.text)
-        this.text = createText(this.game,this.config.text)
-        
+        this.text = new Label(this.game,this.config.text,this)
         this.addChild(this.text);
         // create ctc
         if (this.config.ctc){
@@ -129,7 +126,7 @@ export default class MessageBox extends Sprite{
         }
         // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
         let sfxCharCount = 0;
-        return new Promise(resolve=>{
+        return new Promise(async resolve=>{
             const completeText = () => {
                 // text finished showing, clear timeout
                 clearTimeout(this.textLoop);
@@ -145,6 +142,24 @@ export default class MessageBox extends Sprite{
                 // finish promise
                 resolve(true);
             }
+
+
+            this.visible = true;
+            let transition = this.game.screenEffects.transition.get(this.config.transition);
+            await transition(null,this);
+
+            if (sfx && charPerSfx==-1){
+                // play only once and mute
+                sfx.play();
+                sfx.volume = this.game.userPreferences.get('sfxv');
+                sfx = null;
+            }
+            // skip text animation on click
+            if (!this.game.control.auto){
+                this.game.waitForClick(completeText);
+            }
+
+
             this.textLoop = window.setInterval(() => {
                 if (waitingFor>0) {
                     // waiting after punctuation mark, don't do anything
@@ -174,17 +189,14 @@ export default class MessageBox extends Sprite{
                     completeText();
                 }
             }, textSpeed);
-            this.visible = true;
-            // skip text animation on click
-            if (!this.game.control.auto){
-                this.game.waitForClick(completeText);
-            }
         })
-        
     }
 
-    clear() {
-        if(!this.config.alwaysOn){
+    async clear(transitionName?) {
+        if(!this.config.alwaysOn && this.visible){
+            if (!transitionName) transitionName = this.config.transition;
+            let transition = this.game.screenEffects.transition.get(transitionName);
+            await transition(this,null);
             this.visible = false;
         }
         this.text.text = '';
@@ -192,6 +204,4 @@ export default class MessageBox extends Sprite{
             this.ctc.visible = false;
         }
     }
-
-
 }

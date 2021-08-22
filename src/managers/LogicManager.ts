@@ -124,7 +124,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
 
 
-    choose(index): void {
+    async choose(index) {
         console.log("chooosen "+ index)
         const chosenOption = this.currentChoices[index];
 
@@ -138,7 +138,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
         // remove message box if showing message
         if (this.showingText){
-            this.game.gui.hud.clear()
+            await this.game.gui.hud.clear()
             this.showingText = false;
             // correct stack index, so it will skip the text action
             index++;
@@ -184,7 +184,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     async showChoices(boxId,choices) {
-        this.clearChoices();
+        await this.clearChoices();
         this.showingText = await this.checkTextAction(choices[0]);
         if (this.showingText){
             choices.shift();
@@ -209,8 +209,8 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.game.resolveAction();
     }
 
-    clearChoices(): any {
-        this.game.gui.hud.clear();
+    async clearChoices() {
+        await this.game.gui.hud.clear();
         this.interrupting = null;
         this.currentChoices = [];
         this.showingText = false;
