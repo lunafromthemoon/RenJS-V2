@@ -2,10 +2,6 @@ import RJSGUI from './RJSGUI';
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import {GUIAsset} from './elements/GUIAsset';
-import RJSSlider from '../components/RJSSlider';
-import RJSSprite from '../components/RJSSprite';
-import RJSButton from '../components/RJSButton';
-import ChoiceButton from '../components/ChoiceButton';
 
 export default class RJSGUIByBuilder extends RJSGUI {
 
@@ -28,26 +24,23 @@ export default class RJSGUIByBuilder extends RJSGUI {
 
         this.assets = imgs.concat(audio).concat(sprts);
         this.fonts = Object.keys(gui.assets.fonts);
-        // this.config = {
-        //     hud: gui.config.hud, 
-        //     menus: {
-        //         main: gui.config.main,
-        //         settings: gui.config.settings,
-        //         saveload: gui.config.saveload
-        //     }
-        // }
+ 
         // convert to new scheme with elements list per menu 
         // each element has type and any other parameter it needs
         this.config = gui.config;
-        var menus = ['loader','main','settings','hud','saveload']
+        this.config.menus = {}
+        var menus = ['main','settings','hud','saveload']
         for (const menu of menus){
-            if (!gui.config[menu].elements){
-              gui.config[menu].elements = [];
-            }
+            if (!gui.config[menu]) continue;
+            const menuConfig = [];
+            
             // if background present, convert to normal image
             if (gui.config[menu].background){
-              console.log("adding background to "+menu);
-              gui.config[menu].elements.push({type:'image',x:0,y:0,asset:gui.config[menu].background.id});
+              menuConfig.push({type:'image',x:0,y:0,asset:gui.config[menu].background.id});
+              delete gui.config[menu].background
+            }
+            if (gui.config[menu].backgroundMusic){
+              menuConfig.push({type:'music',asset:gui.config[menu].backgroundMusic});
               delete gui.config[menu].background
             }
 
@@ -67,7 +60,7 @@ export default class RJSGUIByBuilder extends RJSGUI {
                     chosenColor: choiceConfig['chosen-color'],
                     text: this.convertText(choiceConfig) 
                 }
-                gui.config[menu].elements.push(choice);
+                menuConfig.push(choice);
                 delete gui.config[menu].choice
             }
 
@@ -92,9 +85,8 @@ export default class RJSGUIByBuilder extends RJSGUI {
                         animationStyle: ctcConfig.animationStyle,
                     }
                 }
-                gui.config[menu].elements.push(messageBox);
+                menuConfig.push(messageBox);
                 delete gui.config[menu]['message-box']
-                console.log("adding message box to "+menu);
             }
 
             if (gui.config[menu]['name-box']){
@@ -107,9 +99,8 @@ export default class RJSGUIByBuilder extends RJSGUI {
                     y: config.y,
                     text: this.convertText(config)
                 }
-                gui.config[menu].elements.push(nameBox);
+                menuConfig.push(nameBox);
                 delete gui.config[menu]['name-box']
-                console.log("adding name box to "+menu);
             }
 
             // list components
@@ -120,10 +111,9 @@ export default class RJSGUIByBuilder extends RJSGUI {
                 if (gui.config[menu][listType]){
                     for (var i = 0; i < gui.config[menu][listType].length; i++) {
                       const element = gui.config[menu][listType][i];
-                      gui.config[menu].elements.push({type:'image',x:element.x,y:element.y,asset:element.id});
+                      menuConfig.push({type:'image',x:element.x,y:element.y,asset:element.id});
                     }
                     delete gui.config[menu][listType]
-                    console.log("adding "+listType+" box to "+menu);
                 }
             }
 
@@ -144,10 +134,9 @@ export default class RJSGUIByBuilder extends RJSGUI {
                           height: parseInt(element['thumbnail-height']),
                       }
                   }
-                  gui.config[menu].elements.push(saveSlot);
+                  menuConfig.push(saveSlot);
                 }
                 delete gui.config[menu]['save-slots']
-                console.log("adding save-slots to "+menu);
             }
 
             // label -> {x:number,y:number,text:string,lineSpacing:number,style:any}
@@ -161,10 +150,9 @@ export default class RJSGUIByBuilder extends RJSGUI {
                       text: element.text,
                       style: this.convertTextStyle(element)
                   }
-                  gui.config[menu].elements.push(label);
+                  menuConfig.push(label);
                 }
                 delete gui.config[menu].labels
-                console.log("adding label to "+menu);
             }
             // slider -> {x: number,y: number,asset: string,binding: string,sfx: string, mask?:string}
             if (gui.config[menu].sliders){
@@ -180,10 +168,9 @@ export default class RJSGUIByBuilder extends RJSGUI {
                       sfx: element.sfx,
                       mask: 'horizontal'
                   }
-                  gui.config[menu].elements.push(slider);
+                  menuConfig.push(slider);
                 }
                 delete gui.config[menu].sliders
-                console.log("adding sliders to "+menu);
             }
             
             // button -> {x:number,y:number,asset:string,sfx:string,binding:string,pushButton?:boolean,pushed?:boolean}
@@ -208,11 +195,20 @@ export default class RJSGUIByBuilder extends RJSGUI {
                           button.slot = element.slot;
                       }
                   }
-                  gui.config[menu].elements.push(button);
+                  menuConfig.push(button);
                 }
                 delete gui.config[menu].buttons
-                console.log("adding buttons to "+menu);
             }
+            if (menu == 'hud'){
+                this.config.hud = menuConfig;
+            } else {
+                this.config.menus[menu] = menuConfig;
+                delete gui.config[menu]
+            }
+        }
+        if (this.game.config.debugMode){
+            console.log("Converted gui configuration");
+            console.log(this.config);
         }
     }
 

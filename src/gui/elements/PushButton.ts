@@ -1,8 +1,8 @@
 import RJS from '../../core/RJS';
-import {Button} from 'phaser-ce';
+import BaseButton from './BaseButton';
 import {getButtonFrames} from '../../utils/gui'
 
-export default class PushButton extends Button {
+export default class PushButton extends BaseButton {
 
     pushed: boolean;
 
@@ -18,16 +18,13 @@ export default class PushButton extends Button {
     }
 
     constructor(game: RJS, config) {
-        super(game, config.x, config.y,config.asset,()=>{
-            this.setPushed(!this.pushed);
-            if (config.sfx && config.sfx !== 'none') {
-                game.managers.audio.playSFX(config.sfx);
-            }
-            game.gui.bindingActions[config.binding](config,this.pushed);
-        },game);
-        this.config = config;
-        this.game = game;
+        super(game, config);
         this.setPushed(config.pushed)
+    }
+
+    onClick(){
+        this.setPushed(!this.pushed);
+        super.onClick();
     }
 
     setPushed(pushed:boolean){

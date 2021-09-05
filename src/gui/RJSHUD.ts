@@ -52,8 +52,20 @@ export default class RJSHUD extends RJSMenu {
         return btn;
     }
 
+    // if skip or auto are push buttons, they will be indexed as skipButton and autoButton
+    // these control setttings can be unset when tapping anywhere on the screen
+    // this function will be called when this happens, so it can reset the push buttons
+    unsetSkipButtons(){
+        if (this.indexedElements['skipButton']){
+            this.indexedElements['skipButton'].setPushed(false);
+        }
+        if (this.indexedElements['autoButton']){
+            this.indexedElements['autoButton'].setPushed(false);
+        }
+    }
+
+    // display character names
     showName(boxId, name, color){
-        console.log(boxId)
         this.nBoxes[boxId].show(name,color);
     }
 
@@ -75,7 +87,6 @@ export default class RJSHUD extends RJSMenu {
     }
 
     hideChoices(handlerId){
-        console.log("hiding")
         this.cHandlers[handlerId].hide()
     }
 
@@ -148,26 +159,24 @@ export default class RJSHUD extends RJSMenu {
     }
 
     async showHUD(){
-        console.log("really showing hud")
         await super.show();
     }
 
     async hideHUD(){
-        console.log("really hiding hud")
         await super.hide();
     }
+
+
 
     // hud is shown along with the story layers
     // when hiding/pausing, only disable input
 
     async show() {
-        console.log("showing hud")
         this.ignoreChildInput=false;
         this.forEach(child => {changeInputEnabled(child,true)})
     }
 
     async hide(mute:boolean = true){
-        console.log("hiding hud")
         this.ignoreChildInput=true;
         this.forEach(child => {changeInputEnabled(child,false)})
     }

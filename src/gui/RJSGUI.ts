@@ -1,9 +1,5 @@
 import RJS from '../core/RJS';
 import {Group} from 'phaser-ce';
-// import RJSSlider from '../elements/RJSSlider';
-// import RJSSprite from '../elements/RJSSprite';
-// import RJSButton from '../elements/RJSButton';
-// import ChoiceButton from '../elements/ChoiceButton';
 import {GUIAsset} from './elements/GUIAsset';
 import RJSMenu from './RJSMenu';
 import RJSHUD from './RJSHUD';
@@ -55,15 +51,12 @@ export default class RJSGUI implements RJSGUIInterface {
             }
         }
         await this.game.managers.audio.decodeAudio(audioList);
-        for (const menuName in this.config){
-            console.log(menuName)
-            if (menuName == 'hud'){
-                this.hud = new RJSHUD(this.game,this.config.hud);
-                // add also as menu to switch menus quickly
-                this.menus['hud'] = this.hud;
-            } else {
-                this.menus[menuName] = new RJSMenu(this.game,this.config[menuName]);
-            }
+        this.hud = new RJSHUD(this.game,this.config.hud);
+        this.hud.init();
+        // add also as menu to switch between menus and hud easily
+        this.menus['hud'] = this.hud;
+        for (const menuName in this.config.menus){
+            this.menus[menuName] = new RJSMenu(this.game,this.config.menus[menuName]);
             this.menus[menuName].init();
         }
     }

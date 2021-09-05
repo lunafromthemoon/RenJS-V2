@@ -6,6 +6,7 @@ import {setTextStyles,getButtonFrames} from '../utils/gui'
 import MaskSlider from './elements/MaskSlider'
 import SaveSlot from './elements/SaveSlot'
 import PushButton from './elements/PushButton'
+import BaseButton from './elements/BaseButton'
 import Label from './elements/Label'
 
 export default class RJSMenu extends Group {
@@ -15,13 +16,13 @@ export default class RJSMenu extends Group {
     saveSlots = {}
     // if element has id, index it for quick reference
     indexedElements: {} = {}
+    backgroundMusic: string = null;
 
     constructor(game: RJS, public config) {
-        super(game, config.x, config.y,config.asset);
+        super(game);
         this.game = game;
         this.visible = false;
         this.id = config.id;
-        this.indexedElements
 
         this.elementFactory = {
             image: this.createImage.bind(this),            
@@ -33,11 +34,18 @@ export default class RJSMenu extends Group {
     }
 
     init(){
-        for (const elementConfig of this.config.elements){
+        for (const elementConfig of this.config){
+            // create element with factory
+            if (elementConfig.type == 'music'){
+                this.backgroundMusic = elementConfig.asset;
+                continue;
+            }
             const element = this.elementFactory[elementConfig.type](elementConfig);
+            // index element if it has an id
             if (elementConfig.id){
                 this.indexedElements[elementConfig] = element;
             }
+            // add display element to group (this)
             this.addChild(element);
         }
     }
@@ -56,17 +64,15 @@ export default class RJSMenu extends Group {
 
     createButton(element:{x:number,y:number,asset:string,sfx:string,binding:string,slot:string,pushButton?:boolean,pushed?:boolean}) {
         if (element.pushButton){
-            return new PushButton(this.game,element)
-        }
-        // create normal button
-        const btn = this.game.add.button(element.x,element.y,element.asset,() => {
-            if (element.sfx && element.sfx !== 'none') {
-                this.game.managers.audio.playSFX(element.sfx);
+            const btn = new PushButton(this.game,element)
+            if (element.binding=='auto' || element.binding=='skip'){
+                // auto and skip will be unset when tapping anywhere in the screen
+                // always index for changing state when this happens
+                this.indexedElements[element.binding+'Button'] = btn;
             }
-            this.game.gui.bindingActions[element.binding](element)
-        },this);
-        btn.setFrames(...getButtonFrames(btn.animations.frameTotal))
-        return btn;
+            return btn;
+        }
+        return new BaseButton(this.game,element)
     }
 
     createSlider(element: {x: number,y: number,asset: string,binding: string,userPreference:string,sfx: string, mask?:string}) {
@@ -98,8 +104,8 @@ export default class RJSMenu extends Group {
         this.visible = true;
         // menu transitions are unskippable
         this.game.control.unskippable = true;
-        if (this.config.backgroundMusic){
-            this.game.managers.audio.play(this.config.backgroundMusic,"bgm",true);
+        if (this.backgroundMusic){
+            this.game.managers.audio.play(this.backgroundMusic,"bgm",true);
         }
         let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         await transition(null, this);
@@ -109,7 +115,7 @@ export default class RJSMenu extends Group {
 
     async hide(mute:boolean = true){
         if (!this.visible) return;
-        if (mute && this.config.backgroundMusic){
+        if (mute && this.backgroundMusic){
             this.game.managers.audio.stop('bgm');
         }
         this.game.control.unskippable = true;

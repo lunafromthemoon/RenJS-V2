@@ -1,8 +1,7 @@
 import {preparePath} from './utils';
 import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from './utils';
 import RJSState from './RJSState';
-import RJSSprite from '../components/RJSSprite';
-import RJSLoadingScreen from '../components/RJSLoadingScreen';
+import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 
 class PreloadStory extends RJSState {
     loadingScreen:RJSLoadingScreen

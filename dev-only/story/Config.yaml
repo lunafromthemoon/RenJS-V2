@@ -27,7 +27,7 @@ transitions:
   say: CUT #How to change character expression in say action
   # Transition to use when showing/hiding choices
   visualChoices: FADE
-  textChoices: FADE
+  textChoices: CUT
   menus: FADE
   # transitions can be skipped by the player by tapping
   skippable: false

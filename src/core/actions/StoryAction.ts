@@ -13,8 +13,6 @@ export default class StoryAction implements StoryActionInterface {
 	constructor(params, game){
 		this.game = game;
 		this.params = params;
-		console.log("Executing task")
-		console.log(this.params)
 	}
 
 	resolve(transitioning?: Promise<any>, cont?:boolean): void {

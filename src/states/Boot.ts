@@ -6,7 +6,7 @@ import PreloadStory from './PreloadStory';
 import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
 import RJSSimpleGUI from '../gui/RJSSimpleGUI';
 import RJS from '../core/RJS';
-import RJSLoadingScreen from '../components/RJSLoadingScreen';
+import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 
 
 class Boot extends RJSState {

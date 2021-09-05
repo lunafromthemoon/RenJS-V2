@@ -204,7 +204,6 @@ export default class RJS extends Game {
                 this.pluginsRJS[plugin].onTeardown();
             }
         }
-        // this.managers.story.show();
         this.gui.changeMenu('main');
     }
 
@@ -226,6 +225,10 @@ export default class RJS extends Game {
     }
 
     skip (): void {
+        if (this.control.skipping){
+            this.control.skipping = false;
+            return;
+        }
         this.control.skipping = true;
         if (this.control.waitForClick){
             this.control.waitForClick = false;
@@ -234,6 +237,10 @@ export default class RJS extends Game {
     }
 
     auto (): void {
+        if (this.control.auto){
+            this.control.auto = false;
+            return;
+        }
         this.control.auto = true;
         if (this.control.waitForClick){
             this.control.waitForClick = false;
@@ -273,7 +280,10 @@ export default class RJS extends Game {
             this.gui.getCurrent().addThumbnail(thumbnail, slot)
             localStorage.setItem('RenJSThumbnail' + this.config.name + slot,thumbnail);
         }
-
+        if (this.config.debugMode){
+            console.log("Saved data in slot "+slot);
+            console.log(data);
+        }
     }
 
     getSlotThumbnail (slot): string {
@@ -309,6 +319,10 @@ export default class RJS extends Game {
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
         this.gameStarted = true;
         await this.managers.story.show();
+        if (this.config.debugMode){
+            console.log("Loaded data from slot "+slot);
+            console.log(dataParsed);
+        }
         this.unpause();
     }
 
@@ -322,6 +336,9 @@ export default class RJS extends Game {
             }
             setTimeout(this.control.nextAction.bind(this), timeout);
         } else {
+            if (this.config.debugMode){
+                console.log("Waiting for click");
+            }
             this.control.waitForClick = true;
         }
     }
@@ -344,23 +361,32 @@ export default class RJS extends Game {
             }).bind(this),time ? time : this.storyConfig.timeout);
     }
 
+    // controls the game flow when an action requires the player to 'click to continue'
     onTap (pointer, doubleTap?): void {
         if (this.control.paused){
             return;
         }
+        // if skipping or autoplaying, the tap will only unset these settings
+        if (this.control.skipping || this.control.auto){
+            this.gui.hud.unsetSkipButtons();
+            this.control.skipping = false;
+            this.control.auto = false;
+            return;
+        }
+        // ignore the tap when clicking on a HUD button or other special areas
         if (pointer && this.gui.hud.ignoreTap(pointer)){
             return;
         }
-
+        // continue with next action and lock the click for some miliseconds
         if (this.control.waitForClick && !this.control.clickLocked){
+            if (this.config.debugMode){
+                console.log("Clicked, continue with next action.");
+            }
             this.control.waitForClick = false;
             this.lockClick();
             this.control.nextAction();
         }
-        if (this.control.skipping || this.control.auto){
-            this.control.skipping = false;
-            this.control.auto = false;
-        }
+        
     }
 
     initInput(): void {
@@ -382,6 +408,9 @@ export default class RJS extends Game {
 
     resolveAction(): void {
         this.control.waitForClick = false;
+        if (this.config.debugMode){
+            console.log("Resolving action.");
+        }
         if (!this.control.paused){
             this.managers.story.interpret()
         }

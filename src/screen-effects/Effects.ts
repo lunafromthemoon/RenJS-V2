@@ -2,6 +2,7 @@ import RJSScreenEffectInterface from './RJSScreenEffect';
 import {AudioManagerInterface} from '../managers/AudioManager';
 import {TweenManagerInterface} from '../managers/TweenManager';
 import RJS from '../core/RJS';
+import {setTextStyles} from '../utils/gui'
 
 export default class Effects implements RJSScreenEffectInterface {
 
@@ -23,53 +24,41 @@ export default class Effects implements RJSScreenEffectInterface {
     async ROLLINGCREDITS(params): Promise<void> {
         // params: text (list of strings), music (music id), timePerLine (int), endGame (boolean)
         this.game.control.unskippable = true;
-        const bg = this.game.add.graphics(0, 0);
+        await this.game.managers.story.hide();
         if (params.music){
             this.audioManager.play(params.music, 'bgm', true, null, 'FADE');
         }
         
-        bg.beginFill(0x000000, 1);
-        bg.drawRect(0, 0, this.game.config.w, this.game.config.h);
-        bg.endFill();
-        bg.alpha = 0;
-
-        // const style = {...this.game.gui.getTextStyle('choice')};
-        const style = {};
-        // style.font = '25pt ' + this.game.gui.fonts[0];
+        const style = this.game.gui.hud.cHandlers['default'].config.text.style;
         const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, params.text[0], style);
         credits.anchor.set(0.5);
         const separation = credits.height + 10;
         for (let i = 1; i < params.text.length; i++) {
             if (params.text[i]) {
-                const nextLine = this.game.add.text(0, i * separation, params.text[i], style);
+                const nextLine = this.game.add.text(0, i * separation,'', style);
+                nextLine.text = setTextStyles(params.text[i],nextLine);
                 nextLine.anchor.set(0.5);
                 credits.addChild(nextLine);
             }
         }
-        const timePerLine = params.timePerLine ? params.timePerLine : 700;
-        const tweenChain: any = [
-            {sprite: bg, tweenables: {alpha: 1}, time: this.game.storyConfig.fadetime},
-            {sprite: credits, tweenables: {y: -(separation * params.text.length + 30)}, time: timePerLine * params.text.length},
-
-        ];
+        const timePerLine = params.timePerLine ? params.timePerLine : 1500;
+        
         return new Promise(resolve => {
-            tweenChain.push(
-                {
-                    sprite: bg, tweenables: {alpha: 0}, time: this.game.storyConfig.fadetime, callback: () => {
-                        bg.destroy();
-                        credits.destroy();
-                        this.audioManager.stop('bgm','FADE');
-                        this.game.control.unskippable = false;
-                        if (!params.endGame) {
-                            resolve();
-                        } else {
-                            this.game.endGame();
-                        }
-                    }
-                })
-            this.tweenManager.chain(tweenChain,true);
+            this.tweenManager.tween(credits, {y: -(separation * params.text.length + 30)}, async ()=>{
+                credits.destroy();
+                if (params.music){
+                    this.audioManager.stop('bgm','FADE');
+                }
+                this.game.control.unskippable = false;
+                if (!params.endGame) {
+                    console.log("showing hud again")
+                    await this.game.managers.story.show();
+                } else {
+                    this.game.endGame();
+                }
+                resolve();
+            }, timePerLine * params.text.length, true, 0, true)
         })
-
     }
 
     async FLASHIMAGE(params): Promise<void> {

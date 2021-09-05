@@ -41,7 +41,7 @@ export interface RJSGameConfig extends IGameConfig {
     storyConfig: string;
     storyText: string[];
     i18n?: i18nInterface;
-    debugMode: boolean;
+    debugMode?: boolean;
 }
 
 export interface StoryConfig extends IGameConfig {

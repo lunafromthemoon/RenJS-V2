@@ -1,6 +1,5 @@
 import RJS from '../core/RJS';
 import {Sprite,Text} from 'phaser-ce';
-import RJSSprite from '../components/RJSSprite';
 
 export function getButtonFrames(total:number, pushed:boolean = false){
   // button frames -> over|out|down|up

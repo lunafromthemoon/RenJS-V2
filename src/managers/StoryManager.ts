@@ -55,7 +55,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
 
     async show(){
         if (this.characterSprites.visible) return;
-        console.log("showing story");
         const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         this.backgroundSprites.visible = true;
         this.behindCharactersSprites.visible = true;
@@ -71,7 +70,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     async hide(){
         if (!this.characterSprites.visible) return;
         // only hide if things are visible
-        console.log("hiding story")
         const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         transition(this.backgroundSprites, null);
         transition(this.behindCharactersSprites, null);
@@ -264,6 +262,10 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             return this.game.resolveAction();
         }
         const storyAction: StoryAction = StoryActionFactory(action.mainAction,action,this.game);
+        if (this.game.config.debugMode){
+            console.log("Executing action: "+action.mainAction);
+            console.log(action);
+        }
         storyAction.execute();
     }
 }

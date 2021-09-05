@@ -1,25 +1,5 @@
 import RJS from '../core/RJS';
 import {Sprite,Text} from 'phaser-ce';
-import RJSSprite from '../components/RJSSprite';
-
-// export function initSplash (game: RJS): Sprite {
-//     const splash = game.add.sprite(game.world.centerX, game.world.centerY, 'splash');
-//     splash.anchor.set(0.5)
-//     return splash
-// }
-
-// export function initLoadingBar (game: RJS): RJSSprite {
-//     const position = game.config.loadingScreen.loadingBar.position;
-//     let loadingBar: RJSSprite = game.add.sprite(position.x,position.y , 'loading') ;
-//     if (loadingBar.animations.frameTotal > 1){
-//         // load second frame as full bar
-//         const bg = loadingBar;
-//         loadingBar = game.add.sprite(position.x,position.y , 'loading',1);
-//         loadingBar.background = bg;
-//     }
-
-//     return loadingBar
-// }
 
 export function preparePath(path: string, game: RJS): string {
     if (game.config.i18n){

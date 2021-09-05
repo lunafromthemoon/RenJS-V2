@@ -76,6 +76,8 @@ export default class MessageBox extends Sprite{
         }
     }
 
+    onCharacter?: (characters:string[],index:number) => void;
+
     destroy(): void {
         this.text.destroy();
     	if (this.ctc) this.ctc.destroy();
@@ -112,7 +114,6 @@ export default class MessageBox extends Sprite{
         for (const line of lines){
             finalText+=line.replace(/.$/,"\n");
         }
-        console.log(finalText)
         // split in characters to add one by one
         const characters = finalText.split('');
         let charIdx = 0;
@@ -168,6 +169,9 @@ export default class MessageBox extends Sprite{
                 }
                 // add next character
                 this.text.text += (characters[charIdx]);
+                if (this.onCharacter){
+                    this.onCharacter(characters,charIdx);
+                }
                 // play sfx
                 if (sfx){
                     if (characters[charIdx] == " " || this.punctuationMarks.includes(characters[charIdx]) || sfxCharCount==charPerSfx){
@@ -192,12 +196,17 @@ export default class MessageBox extends Sprite{
         })
     }
 
+    async hide(transitionName?){
+        if (!this.visible) return;
+        if (!transitionName) transitionName = this.config.transition;
+        let transition = this.game.screenEffects.transition.get(transitionName);
+        await transition(this,null);
+        this.visible = false;
+    }
+
     async clear(transitionName?) {
-        if(!this.config.alwaysOn && this.visible){
-            if (!transitionName) transitionName = this.config.transition;
-            let transition = this.game.screenEffects.transition.get(transitionName);
-            await transition(this,null);
-            this.visible = false;
+        if(!this.config.alwaysOn){
+            await this.hide(transitionName)
         }
         this.text.text = '';
         if (this.ctc){

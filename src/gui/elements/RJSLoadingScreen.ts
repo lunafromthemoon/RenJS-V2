@@ -1,5 +1,5 @@
 import {Sprite,Group,Tween} from 'phaser-ce';
-import RJS from '../core/RJS';
+import RJS from '../../core/RJS';
 
 export default class RJSLoadingScreen {
     container: Group

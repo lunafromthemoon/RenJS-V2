@@ -125,9 +125,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
 
     async choose(index) {
-        console.log("chooosen "+ index)
         const chosenOption = this.currentChoices[index];
-
         // update choice log
         this.updateChoiceLog(chosenOption.index);
         if (this.game.storyConfig.logText){
@@ -136,10 +134,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // add new action to scene
         const actions = chosenOption.actions;
         this.game.managers.story.currentScene = actions.concat(this.game.managers.story.currentScene);
-        // remove message box if showing message
         if (this.showingText){
-            await this.game.gui.hud.clear()
-            this.showingText = false;
             // correct stack index, so it will skip the text action
             index++;
         }
@@ -150,13 +145,15 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         } else {
             this.game.control.execStack.stack('choice',actions.length,chosenOption.index);
         }
-
-        this.currentChoices = [];
+        if (this.game.config.debugMode){
+            console.log("Choice taken "+ index+ " : "+chosenOption.choiceText);
+        }
+        await this.clearChoices();
         if (!this.interrupting){
             // interrupts resolve immediately
             this.game.resolveAction();
         } else {
-            // not interrupting anymore
+            // stop interrupting
             this.interrupting = null;
         }
     }
@@ -184,7 +181,6 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     async showChoices(boxId,choices) {
-        await this.clearChoices();
         this.showingText = await this.checkTextAction(choices[0]);
         if (this.showingText){
             choices.shift();
@@ -210,8 +206,8 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     async clearChoices() {
+        // clears everything
         await this.game.gui.hud.clear();
-        this.interrupting = null;
         this.currentChoices = [];
         this.showingText = false;
     }

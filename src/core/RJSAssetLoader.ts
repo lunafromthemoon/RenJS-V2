@@ -1,5 +1,5 @@
 import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from '../states/utils';
-import RJSLoadingScreen from '../components/RJSLoadingScreen';
+import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 import jsyaml from 'js-yaml'
 
 export default class RJSAssetLoader {
@@ -98,8 +98,8 @@ export default class RJSAssetLoader {
             delete assets[asset]
         }
         if (this.game.config.debugMode){
-            // console.log("Loading assets:");
-            // console.log(assets)
+            console.log("Loading assets:");
+            console.log(assets)
         }
         if (Object.keys(assets).length==0){
             return Promise.resolve();
