@@ -109,11 +109,15 @@ export default class MessageBox extends Sprite{
         this.text.text = '';
         
         // add new line characters at the end of each line
-        const lines = this.text.precalculateWordWrap(finalText)
-        finalText = '';
-        for (const line of lines){
-            finalText+=line.replace(/.$/,"\n");
+        if (this.game.storyConfig.precomputeBreakLines){
+            const lines = this.text.precalculateWordWrap(finalText)
+            console.log(lines)
+            finalText = '';
+            for (const line of lines){
+                finalText+=line.replace(/.$/,"\n");
+            }
         }
+        
         // split in characters to add one by one
         const characters = finalText.split('');
         let charIdx = 0;

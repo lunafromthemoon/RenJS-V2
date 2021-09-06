@@ -4,7 +4,7 @@ class SHOWTITLE extends RenJS.Plugin {
 		const bg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'title');
         bg.alpha = 0;
         bg.anchor.set(0.5);
-        const style = {...this.game.gui.getTextStyle('choice')};
+        const style = {...this.game.gui.hud.cHandlers.default.config.text.style};
         style.font = '50pt ' + this.game.gui.fonts[0];
         const title = this.game.add.text(0, -20, params.title, style);
         style.font = '25pt ' + this.game.gui.fonts[0];

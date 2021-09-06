@@ -29,7 +29,7 @@ enterSchool:
   - deuzi says: RenJS doesn't come or is tied to any particular IDE (integrated development environment).
   - deuzi says: That is, a program to read and edit the files of the game, like your story script.
   - deuzi says: It doesn't have to be anything big or expensive. It can be any low level text processor you already have installed.
-  - deuzi says happy: But me, I like to use Brackets, a free and open source text editor, that comes with support for web development.
+  - deuzi says happy: "But me, I like to use Brackets, a free and open source text editor, that comes with support for\nweb development."
   - deuzi says: You can find a link to download the Brackets editor below.
   - deuzi says normal: Another thing you will need is RenJS itself.
   - deuzi says: RenJS is the library that will manage the flow, assets and interactivity of your game.
@@ -88,7 +88,7 @@ enterSchool:
   - deuzi says: But you can make games in any resolution you like, and if you do, you will need to change it right there with the 'w' and 'h' parameters.
   - deuzi says: The second important thing you might need to modify in this file is where to find the story itself.
   - deuzi says: The parameters 'guiConfig', 'storySetup', 'storyConfig' and 'storyText' are just for that.
-  - deuzi says: All of these point to a YAML file inside the 'story' directory, and they refer to the files that make up your story.
+  - deuzi says: "All of these point to a YAML file inside the 'story' directory, and they refer to the files\nthat make up your story."
   - deuzi says: These files can be named whatever you want, but you would need to modify the file path and name here.
   - deuzi says: But the most important thing here is that 'storyText' doesn't just point to a file, but a list of files.
   - deuzi says: That means that you can have as many story text files as you want. In this way, you can organize your story as you like.
