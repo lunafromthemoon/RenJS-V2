@@ -125,7 +125,7 @@ config:
   hud:
     message-box:
       id: asset19
-      text-width: '540'
+      text-width: '550'
       offset-y: 24
       offset-x: 24
       align: left
@@ -155,7 +155,7 @@ config:
       height: '20'
       width: '19'
       'y': 540
-      x: 577
+      x: 610
       assetType: spritesheets
     images:
       - id: asset22

@@ -96,21 +96,26 @@ export default class MessageBox extends Sprite{
         } else if (!sfx && this.defaultSfx){
             sfx = this.defaultSfx;
         }
-        
+        this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
         let finalText = setTextStyles(text,this.text);
         let textSpeed:number = this.game.userPreferences.get('textSpeed');
         if (this.game.control.skipping || textSpeed < 10){
             this.text.text = finalText;
             this.visible = true;
-            this.ctc.visible = true;
-            // callback();
+            this.alpha = 1;
+            if (this.ctc){
+                this.ctc.visible = true;
+            }
             return;
         }
         this.text.text = '';
         
         // add new line characters at the end of each line
         if (this.game.storyConfig.precomputeBreakLines){
+            
             const lines = this.text.precalculateWordWrap(finalText)
+            // make it much wider so adding the breaklines wont change again the word wrapping
+            this.text.wordWrapWidth = this.config.text.style.wordWrapWidth*2;
             finalText = '';
             for (const line of lines){
                 finalText+=line.replace(/.$/,"\n");
@@ -171,7 +176,12 @@ export default class MessageBox extends Sprite{
                     return;
                 }
                 // add next character
-                this.text.text += (characters[charIdx]);
+                // if (characters[charIdx]!="\n"){
+                    this.text.text += (characters[charIdx]);
+                // } else {
+                    // this.text.text += " "+(characters[charIdx]);
+                // }
+                
                 if (this.onCharacter){
                     this.onCharacter(characters,charIdx);
                 }
