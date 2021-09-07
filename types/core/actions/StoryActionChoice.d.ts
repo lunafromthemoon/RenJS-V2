@@ -3,8 +3,8 @@ export default class StoryActionText extends StoryAction {
     private isVisualChoice;
     private isInterrupt;
     protected params: {
-        body: [];
-        actor: string;
+        body: any;
+        boxId: string;
     };
     constructor(params: any, game: any, isVisualChoice: any, isInterrupt: any);
     execute(): void;

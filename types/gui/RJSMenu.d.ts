@@ -1,13 +1,17 @@
 import RJS from '../core/RJS';
-import { Group, Text } from 'phaser-ce';
+import { Group } from 'phaser-ce';
 import MaskSlider from './elements/MaskSlider';
 import SaveSlot from './elements/SaveSlot';
+import BaseButton from './elements/BaseButton';
+import Label from './elements/Label';
 export default class RJSMenu extends Group {
-    protected config: any;
+    config: any;
     id: string;
     game: RJS;
     elementFactory: {};
+    saveSlots: {};
     indexedElements: {};
+    backgroundMusic: string;
     constructor(game: RJS, config: any);
     init(): void;
     createImage(element: {
@@ -21,7 +25,7 @@ export default class RJSMenu extends Group {
         text: string;
         lineSpacing: number;
         style: any;
-    }): Text;
+    }): Label;
     createButton(element: {
         x: number;
         y: number;
@@ -31,12 +35,13 @@ export default class RJSMenu extends Group {
         slot: string;
         pushButton?: boolean;
         pushed?: boolean;
-    }): Phaser.Button;
+    }): BaseButton;
     createSlider(element: {
         x: number;
         y: number;
         asset: string;
         binding: string;
+        userPreference: string;
         sfx: string;
         mask?: string;
     }): MaskSlider;
@@ -52,7 +57,8 @@ export default class RJSMenu extends Group {
             height: number;
         };
     }): SaveSlot;
-    show(text: any, color: any): Promise<void>;
-    hide(mute: any): Promise<void>;
+    addThumbnail(thumbnail: any, slot: any): void;
+    show(): Promise<void>;
+    hide(mute?: boolean): Promise<void>;
     destroy(): void;
 }

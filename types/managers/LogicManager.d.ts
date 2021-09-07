@@ -12,23 +12,24 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     choicesLog: object;
     vars: object;
     currentChoices: any[];
-    visualChoices: Group;
+    interrupting?: {
+        origin: number;
+        execId: string;
+    };
     showingText: boolean;
     constructor(game: RJS);
     set(vars: any): void;
     setVar(name: any, value: any): void;
-    updateChoiceLog(execId: any, choiceText: any): void;
+    updateChoiceLog(index: any): void;
+    choiceInLog(index: any): any;
     evalExpression(expression: any): any;
     branch(expression: any, branches: any): void;
     parseVars(text: any, useQM?: any): string;
-    evalChoice(choice: any): any;
-    showVisualChoices(choices: any): Promise<void>;
-    createVisualChoice(image: any, position: any, index: any, key: any, execId: any): Phaser.Button;
-    choose(index: any, choiceText: any, execId: any): void;
+    parseChoice(index: any, choice: any): any;
+    choose(index: any): Promise<void>;
     getExecStackId(): string;
     checkTextAction(firstChoice: any): Promise<boolean>;
-    showChoices(choices: any): Promise<void>;
-    interrupt(steps: any, choices: any): any;
-    updateInterruptions(): void;
-    clearChoices(): any;
+    showChoices(boxId: any, choices: any): Promise<void>;
+    interrupt(boxId: any, choices: any): any;
+    clearChoices(): Promise<void>;
 }

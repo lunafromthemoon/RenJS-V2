@@ -36,7 +36,7 @@ export interface RJSGameConfig extends IGameConfig {
     storyConfig: string;
     storyText: string[];
     i18n?: i18nInterface;
-    debugMode: boolean;
+    debugMode?: boolean;
 }
 export interface StoryConfig extends IGameConfig {
     positions: any;
@@ -50,6 +50,7 @@ export interface StoryConfig extends IGameConfig {
     logChoices: boolean;
     logText: boolean;
     lazyloading: boolean;
+    precomputeBreakLines: boolean;
     transitions: {
         defaults: {
             characters: string;
@@ -60,6 +61,8 @@ export interface StoryConfig extends IGameConfig {
         say: string;
         visualChoices: string;
         textChoices: string;
+        messageBox: string;
+        nameBox: string;
         menus: string;
         skippable: boolean;
     };

@@ -32,6 +32,7 @@ export default class RJS extends Game {
     config: RJSGameConfig;
     userPreferences: UserPreferences;
     storyConfig: StoryConfig;
+    textLog: Array<any>;
     interruptAction: any;
     managers: {
         background?: BackgroundManager;
@@ -60,14 +61,11 @@ export default class RJS extends Game {
     initStory(): Promise<void>;
     pause(keepGUI?: boolean): void;
     takeXShot(): void;
-    unpause(force?: any): void;
-    setBlackOverlay(): void;
-    removeBlackOverlay(): void;
-    endGame(): void;
+    unpause(): Promise<void>;
+    endGame(): Promise<void>;
     start(initialVars?: {}): Promise<void>;
     skip(): void;
     auto(): void;
-    mute(): void;
     save(slot?: any): void;
     getSlotThumbnail(slot: any): string;
     loadSlot(slot: any): Promise<void>;

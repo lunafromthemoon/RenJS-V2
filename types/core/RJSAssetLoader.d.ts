@@ -1,4 +1,4 @@
-import RJSLoadingScreen from '../components/RJSLoadingScreen';
+import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 export default class RJSAssetLoader {
     private game;
     assetsPerScene: {};

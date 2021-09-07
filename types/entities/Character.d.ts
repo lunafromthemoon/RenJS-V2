@@ -5,6 +5,7 @@ export interface CharacterInterface {
     lastScale: number;
     currentLook?: any;
     voice: any;
+    nameBox: string;
 }
 export default class Character implements CharacterInterface {
     keyName: string;
@@ -13,5 +14,6 @@ export default class Character implements CharacterInterface {
     currentLook: any;
     lastScale: number;
     voice: any;
-    constructor(keyName: any, name: any, speechColour: any, voice: any);
+    nameBox: string;
+    constructor(keyName: any, name?: any, speechColour?: any, voice?: any, nameBox?: string);
 }

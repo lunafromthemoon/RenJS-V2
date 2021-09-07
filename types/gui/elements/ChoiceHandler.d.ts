@@ -9,18 +9,21 @@ export default class ChoiceHandler extends Graphics {
         alignment: string;
         separation: number;
         chosenColor: string;
+        transition?: string;
         sfx: string;
         text: {
             x: number;
             y: number;
+            width: number;
+            height: number;
             lineSpacing?: number;
             style: any;
         };
     };
     boxes: Button[];
     constructor(game: RJS, config: any);
-    showChoices(choices: any): Promise<any>;
-    hideChoices(): Promise<any>;
-    createChoiceBox(choice: any, x: any, y: any, index: any, resolve: any): Button;
+    show(choices: any[]): Promise<any>;
+    createChoiceBox(choice: any, x: any, y: any, index: any, totalChoices: any, resolve: any): Button;
+    hide(transitionName?: any): Promise<any>;
     destroy(): void;
 }

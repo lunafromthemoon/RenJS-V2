@@ -28,6 +28,8 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     constructor(game: RJS);
     setupStory(): void;
     set(...args: any): void;
+    show(): Promise<void>;
+    hide(): Promise<void>;
     interpret(): void;
     clearScene(): void;
     startScene(name: string): Promise<void>;
