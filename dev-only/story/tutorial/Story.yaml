@@ -1,5 +1,5 @@
 start:
-  - play morningBGM:
+  - play morningBGM: LOOPED
   - show street_morning: WITH FADE CONTINUE
   - show deuzi: normal AT CENTER WITH FADE
   - wait: 300
@@ -344,7 +344,7 @@ writingTheStory:
   - liz says: First thing we do is play music.
   - liz says: Notice the dash symbol. That dash indicates that this is a single action.
   - liz says: Every action starts with a dash, and has two main parts separated by a colon, the definition and the parameters.
-  - liz says: An action can omit the parameters part, in which case, you simple leave the right side of the action empty.
+  - liz says: An action can omit the parameters part, in which case, you simply leave the right side of the action empty.
   - liz says happy: Still, the colon is important. This first action, 'play', is an example of that.
   - liz says normal: This action will play the music with tag 'morningBGM', no other information is needed.
   - liz says: As you should have seen already with Jair, the file associated with this tag has to be declared in the setup file.
@@ -422,7 +422,7 @@ writingTheStory:
   - scene: interval
 
 interval:
-  - play cicadas: WITH FADE
+  - play cicadas: WITH FADE LOOPED
   - show room_night:
   - show room_night_light: WITH FUSION
   - show deuzi: normalC WITH FADE
@@ -444,12 +444,14 @@ interval:
   - deuzi says: Have you been there already?
   - deuzi says: You can't miss it.
   - deuzi says: So, ready to go?
-  - deuzi says happyC: Let's go!
+  - choice:
+    - Yeah:
+      - deuzi says happyC: Let's go!
   - hide ALL: WITH FADE
   - scene: storeAtNight
 
 storeAtNight:
-  - play storeBGM:
+  - play storeBGM: LOOPED
   - show store: 
   - show liz: happyC WITH FADE
   - liz says: Deuzi!!! Over here!
@@ -513,9 +515,8 @@ storeAtNight:
   - effect SHAKE:
   - liz says: "'SHAKE', a screen shake!"
   - liz says: The thunder from before was also an effect, called FLASHIMAGE.
-  - liz says: "'FLASHIMAGE', will flash an image very quickly, accompanied by a sound effect and a screen shake too, if you want."
-  - liz says: Another handy effect is ROLLINGCREDITS, that takes a list of text lines as parameter.
-  - liz says: And shows them as rolling credits from a film.
+  - liz says: "'FLASHIMAGE' will flash an image very quickly, accompanied by a sound effect and a screen shake too, if you want."
+  - liz says: Another handy effect is ROLLINGCREDITS, that takes a list of text lines as parameter and shows them as rolling credits from a film
   - liz says happyC: You will see them in action at the end of the game!
   - liz says normalC: With just these available options you can already do a lot, but you can also add new effects and ambients as Plugins.
   - liz says: One last thing about this subject.
@@ -540,15 +541,13 @@ storeAtNight:
   - marco says normalC: Hi, new kid!
   - liz says: Do you think you can find your way back to the dorms by yourself?
   - choice:
-    - Yes, no problem:
-      - liz says: Ok, then I guess I'll see you tomorrow, don't be late!
     - Sure:
       - liz says: Ok, then I guess I'll see you tomorrow, don't be late!
   - hide ALL:
   - scene: backToTheRoom
 
 backToTheRoom:
-  - play cicadas: WITH FADE
+  - play cicadas: WITH FADE LOOPED
   - show room_night:
   - show room_night_light: WITH FUSION  
   - text: Your day was very tiring, but you're closer to be a visual novel writer. Tomorrow is going to be another long day, you better rest.
@@ -558,7 +557,7 @@ backToTheRoom:
   - scene: day2
 
 day2:
-  - play morningBGM:
+  - play morningBGM: LOOPED
   - show school_morning: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: Welcome back!
@@ -586,10 +585,9 @@ day2:
   - liz says normal: "Let's see an example:"
   - show lessonChoice:
   - liz says: This part of the story is really recent.
-  - liz says: I asked you something.
-  - liz says: And you could have chosen between two different options.
+  - liz says: I asked you something and you had to choose between two different options.
   - liz says: That is achieved with the action 'choice'.
-  - liz says: This action then takes a list of choices, indented by two spaces, and starting each with a dash.
+  - liz says: This action takes a list of choices, indented by two spaces, and starting each with a dash.
   - liz says: Your choices here were 'Yes, Deuzi asks a lot of questions' and 'I don't think so'.
   - liz says: Inside each option, indented too by two spaces from the choice text, there's a new list.
   - liz says: Those are the actions to execute if that option is chosen.
@@ -610,8 +608,7 @@ day2:
   - liz says: And if she doesn't attend the call or chooses not to go, the scene will continue until the end and change to 'dormsScene'.
   - hide lessonScene:
   - liz says happy: Remember you can always say no to invitations, don't fall for peer pressure.
-  - liz says normal: There's another way of making a choice.
-  - liz says: Visual choices.
+  - liz says normal: "There's another way of making a choice: Visual choices."
   - liz says: With visual choices instead of using a text line, each option is an image you have to click.
   - liz says: Let's see it in action.
   - visualchoice:
@@ -832,7 +829,7 @@ lastClass:
   - deuzi says: Let's see what this file can contains.
   - deuzi says: "As with the other yaml files, the options are each a line or hierarchy with key:value, and indentation is important."
   - show deuzi: AT RIGHT WITH MOVE CONTINUE
-  - show lessonConfigPosition: AT 200,300
+  - show lessonConfigPosition:
   - deuzi says: The first tag, and maybe most important, is the positions.
   - deuzi says: These are the special positions you will have available while writing the game.
   - deuzi says: They depend on the dimensions of the game, since they are expressed in pixels.
@@ -842,6 +839,7 @@ lastClass:
   - deuzi says: So you can see, the CENTER position x is the middle of the screen, but the y is at the bottom. 
   - deuzi says: This will position the characters with their feet on the ground, in the middle of the screen.
   - deuzi says: 'The other position are what you expect:'
+  - hide lessonConfigPosition:
   - show lessonPositionExample:
   - show deuzi: AT CENTER WITH MOVE
   - deuzi says: This is the CENTER position, and there's also an OUTLEFT, that is, outside of the screen on the left side.
@@ -853,7 +851,6 @@ lastClass:
   - deuzi says: Make a character enter or leave the screen gracefully.
   - hide lessonPositionExample:
   - deuzi says: And as I said before, if you want to simply add another special position specific to your game, here is where you can add it.
-  - hide lessonConfigPosition:
   - deuzi says: Next option is 'transitions'.
   - show lessonConfigTransition: AT 300,300
   - deuzi says: You already know a bit about transitions, it's the way to show or hide characters, backgrounds or cgs.
@@ -869,7 +866,7 @@ lastClass:
   - deuzi says normal: Finally, there are some other options to check.
   - show lessonConfigTime: AT 300,300
   - deuzi says: The option 'fadetime' means how much the FADE transitions will take, in milliseconds. 
-  - deuzi says: You can modify this value if you want faster of slower FADE and FUSION transitions.
+  - deuzi says: You can modify this value if you want faster or slower FADE and FUSION transitions.
   - deuzi says: The skip and auto times set the waiting time for each action in their respective modes.
   - deuzi says: For example, on auto play, when text is shown, with a 'text' or 'say' action, the game will wait for a moment before continuing.
   - deuzi says: Skip mode is basically the same as auto play, but really really fast and skipping transitions.

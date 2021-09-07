@@ -22,7 +22,7 @@ const globalConfig =  {
   },
   'logChoices': true,
   'fonts': 'assets/gui/fonts.css',
-  'guiConfig': 'story/GUI.yaml',
+  'guiConfig': 'story/NewGUI.yaml',
   'storyConfig': 'story/Config.yaml',
   storySetup: 'story/test/TestSetup.yaml',
   'storyText': [

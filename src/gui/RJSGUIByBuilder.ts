@@ -1,33 +1,18 @@
-import RJSGUI from './RJSGUI';
+import RJSGUIByNewBuilder from './RJSGUIByNewBuilder';
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import {GUIAsset} from './elements/GUIAsset';
+import jsyaml from 'js-yaml'
 
-export default class RJSGUIByBuilder extends RJSGUI {
+export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
     initAssets(gui: any){
-        // convert specific gui config to general one
-        const toAssetList = (list,type,path): GUIAsset[] => {
-            return Object.keys(list).map(key => (
-                {
-                    key,
-                    file:path+list[key].fileName,
-                    type,
-                    w:list[key].w,
-                    h:list[key].h
-                }
-            ));
-        }
-        const imgs = toAssetList(gui.assets.images,'image',gui.assetsPath);
-        const audio = toAssetList(gui.assets.audio,'audio',gui.assetsPath);
-        const sprts = toAssetList(gui.assets.spritesheets,'spritesheet',gui.assetsPath);
+        // converts assets and fonts
+        super.initAssets(gui)
 
-        this.assets = imgs.concat(audio).concat(sprts);
-        this.fonts = Object.keys(gui.assets.fonts);
- 
         // convert to new scheme with elements list per menu 
         // each element has type and any other parameter it needs
-        this.config = gui.config;
+        
         this.config.menus = {}
         var menus = ['main','settings','hud','saveload']
         for (const menu of menus){
@@ -207,8 +192,12 @@ export default class RJSGUIByBuilder extends RJSGUI {
             }
         }
         if (this.game.config.debugMode){
+            delete gui.config.loader
             console.log("Converted gui configuration");
-            console.log(this.config);
+            console.log("Replace the config property for this into GUI.yaml file to use new gui configuration directly.");
+            console.log("MAKE SURE ===> madeWithRenJSBuilder=='2.0'");
+            const configText = jsyaml.safeDump(JSON.parse(JSON.stringify(this.config)))
+            console.log(configText);
         }
     }
 

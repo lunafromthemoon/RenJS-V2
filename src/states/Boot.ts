@@ -4,7 +4,7 @@ import RJSState from './RJSState';
 import {Sprite} from 'phaser-ce';
 import PreloadStory from './PreloadStory';
 import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
-import RJSSimpleGUI from '../gui/RJSSimpleGUI';
+import RJSGUIByNewBuilder from '../gui/RJSGUIByNewBuilder';
 import RJS from '../core/RJS';
 import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 
@@ -76,10 +76,15 @@ class Boot extends RJSState {
         this.game.story = story;
         // load and create the GUI
         this.game.guiSetup = jsyaml.load(this.game.cache.getText('guiConfig'));
-        if (game.guiSetup.madeWithRenJSBuilder){
+        if (game.guiSetup.madeWithRenJSBuilder=='2.0'){
+            game.gui = new RJSGUIByNewBuilder(game)
+        } else if (game.guiSetup.madeWithRenJSBuilder){
+            // game.gui = new RJSSimpleGUI(game)
             game.gui = new RJSGUIByBuilder(game)
         } else {
-            game.gui = new RJSSimpleGUI(game)
+            // older GUI configuration, now deprecated
+            console.error("Old GUI configuration is deprecated!!!!")
+            console.error("Check the docs at http://renjs.net/docs-page.html")
         }
         // preload the fonts by adding text, else they wont be fully loaded :\
         for (const font of game.gui.fonts){
