@@ -10,41 +10,46 @@ start:
       - deuzi says happy: That's great! Go ahead!
   - hide deuzi:
   - var rat: 0
+  - call PointAndClick: activate
 
 ratScene:
   - var rat: "{rat} + 1"
   - text: You touched the rat {rat} times.
+  - call PointAndClick: activate
 
 slimeSceneDay:
   - text: You touch the slime and fall asleep
   - show room_night: WITH PaCTransition
   - text: The night brings other creatures.
   - text: Each room has its own objects, you define them in the Setup.yaml file.
+  - call PointAndClick: activate
 
 batScene:
   - text: You try to touch the bat, but it flies away.
-  - call pointAndClick: remove bat
+  - call PointAndClick: remove bat
   - text: You can add and remove objects from the current room.
-  - call pointAndClick: add
+  - call PointAndClick: add
     name: slime
     x: 500
     y: 300
     scene: slimeSceneNight
+  - call PointAndClick: activate
 
 slimeSceneNight:
   - text: You again touch the slime, and fall asleep.
   - show room: WITH PaCTransition
   - text: When you wake up, it's morning. The bat enters again throught the window.
-  - call pointAndClick: add
+  - call PointAndClick: add
     name: bat
     key: bat
     x: 200
     y: 50
     scene: endGame
+  - call PointAndClick: activate
 
 endGame:
   - show deuzi: happy AT CENTER WITH FADE
-  - deuzi says normal: And that was the Point And Click plugin!
+  - deuzi says: And that was the Point And Click plugin!
   - effect ROLLINGCREDITS:
     endGame: true
     text:

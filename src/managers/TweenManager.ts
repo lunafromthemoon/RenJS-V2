@@ -45,6 +45,7 @@ export default class TweenManager implements TweenManagerInterface {
         }
         this.current.push(tween);
         if (this.game.control.skipping){
+            this.game.input.enabled = true
             this.skip();
         }
         return tween;

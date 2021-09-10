@@ -59,7 +59,10 @@ export default class RJSAssetLoader {
 
     loadEpisodeInBackground(episodeIdx){
         if(episodeIdx<=this.episodes.length-1){
-            console.log("Loading episode "+episodeIdx+" in background");
+            if (this.game.config.debugMode){
+                console.log("Loading episode "+episodeIdx+" in background");
+            }
+            
             this.backgroundLoading = this.loadEpisode(episodeIdx,false,true);
         }
         
@@ -67,14 +70,18 @@ export default class RJSAssetLoader {
 
     async loadEpisode(episodeIdx, loadNextAfter, background?){
         if (this.loadedEpisodes[episodeIdx]){
-            console.log("Episode "+episodeIdx+" already loaded.");
+            if (this.game.config.debugMode){
+                console.log("Episode "+episodeIdx+" already loaded.");
+            }
             // this episode was already loaded, but we try to load the next one anyway
             if (loadNextAfter){
                 this.loadEpisodeInBackground(episodeIdx+1);
             }
             return;
         }
-        console.log("Loading episode "+episodeIdx);
+        if (this.game.config.debugMode){
+            console.log("Loading episode "+episodeIdx);
+        }
         this.loadedEpisodes[episodeIdx]=true;
         let toLoad = {};
         

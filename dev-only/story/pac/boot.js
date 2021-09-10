@@ -26,7 +26,7 @@ const globalConfig =  {
   'storyText': [
     'story/pac/Story.yaml'
   ],
-  debugMode:true
+  // debugMode:true
 }
 
 const RenJSGame = new RenJS.game(globalConfig)

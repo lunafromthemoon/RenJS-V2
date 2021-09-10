@@ -25,7 +25,6 @@ export default class RJSGUIByNewBuilder extends RJSGUI {
         this.assets = imgs.concat(audio).concat(sprts);
         this.fonts = Object.keys(gui.assets.fonts);
         this.config = gui.config;
-        console.log(gui.config)
     }
 
 }
