@@ -14,6 +14,8 @@ export default class StoryActionHide extends StoryAction {
     	let transitioning: Promise<any> = null;
         if (this.params.actor === 'CHARS') {
             transitioning = this.game.managers.character.hideAll(this.params.transition)
+        } else if (this.params.actor === 'CGS') {
+            transitioning = this.game.managers.cgs.hideAll(this.params.transition)
         } else if (this.params.actor === 'ALL') {
             transitioning = Promise.all([
             	this.game.managers.background.hide(this.params.transition), 
