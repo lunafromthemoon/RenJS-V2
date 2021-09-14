@@ -34,7 +34,7 @@ export default class MessageBox extends Sprite{
             y: number,
             asset: string,
             sfx: string,
-            animationStyle: string,
+            animationStyle?: string,
         },
         alwaysOn: boolean
     }
@@ -61,7 +61,7 @@ export default class MessageBox extends Sprite{
             this.ctc = this.game.add.sprite(this.config.ctc.x,this.config.ctc.y,config.ctc.asset);
             if (this.config.ctc.animationStyle === 'spritesheet') {
                 this.ctc.animations.add('do').play()
-            } else {
+            } else if (this.config.ctc.animationStyle == 'tween') {
                 this.ctc.alpha = 0;
                 this.game.add.tween(this.ctc).to({ alpha: 1 }, 400, Phaser.Easing.Linear.None,true,0,-1,true);
             }

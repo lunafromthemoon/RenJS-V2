@@ -36,7 +36,6 @@ export default class RJS extends Game {
 
     addPlugin(name: string, cls: any): void {
         this.pluginsRJS[name] = new cls(name,this)
-        this.pluginsRJS[name] = new cls(name,this)
     }
 
     config: RJSGameConfig
@@ -151,11 +150,7 @@ export default class RJS extends Game {
 
         this.initInput();
 
-        for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].onInit){
-                await this.pluginsRJS[plugin].onInit();
-            }
-        }
+        await this.checkPlugins('onInit');
         
         if (!this.setup.lazyloading){
             // decode audio for all game
@@ -171,14 +166,19 @@ export default class RJS extends Game {
         
     }
 
+    async checkPlugins(signal:string,params?:any[]){
+        for (const plugin in this.pluginsRJS) {
+            if (this.pluginsRJS[plugin][signal]){
+                await this.pluginsRJS[plugin][signal](...params);
+            }
+        }
+    }
+
     pause (keepGUI?: boolean): void {
         this.control.paused = true;
         this.control.skipping = false;
         this.control.auto = false;
         this.takeXShot();
-        // if (!keepGUI){
-        //     this.gui.hud.hide();
-        // }
     }
 
     takeXShot (): void {
@@ -199,11 +199,7 @@ export default class RJS extends Game {
         this.managers.story.clearScene();
         this.gameStarted = false;
         this.pause();
-        for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].onTeardown){
-                this.pluginsRJS[plugin].onTeardown();
-            }
-        }
+        await this.checkPlugins('onTeardown');
         this.gui.changeMenu('main');
     }
 
@@ -214,11 +210,7 @@ export default class RJS extends Game {
         // on start game, clear the vars o initialize for a new game +
         this.managers.logic.vars = initialVars;
         await this.managers.story.startScene('start');
-        for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].onStart){
-                this.pluginsRJS[plugin].onStart();
-            }
-        }
+        await this.checkPlugins('onStart');
         await this.managers.story.show();
         this.gameStarted = true;
         this.managers.story.interpret();
@@ -248,7 +240,7 @@ export default class RJS extends Game {
         }
     }
 
-    save (slot?): void {
+    async save (slot?) {
         if (!this.gameStarted){
             return;
         }
@@ -267,11 +259,7 @@ export default class RJS extends Game {
             // should include any interrupts showing
         }
         
-        for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].onSave){
-                 this.pluginsRJS[plugin].onSave(slot,data);
-            }
-        }
+        await this.checkPlugins('onSave',[slot,data]);
         const dataSerialized = JSON.stringify(data);
         localStorage.setItem('RenJSDATA' + this.config.name + slot,dataSerialized);
 
@@ -300,11 +288,7 @@ export default class RJS extends Game {
             return;
         }
         const dataParsed = JSON.parse(data);
-        for (const plugin in this.pluginsRJS) {
-            if (this.pluginsRJS[plugin].onLoad){
-                this.pluginsRJS[plugin].onLoad(slot,dataParsed);
-            }
-        }
+        await this.checkPlugins('onLoad',[slot,dataParsed]);
         await this.managers.story.hide();
         this.managers.story.clearScene();
         this.managers.background.set(dataParsed.background);

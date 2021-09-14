@@ -76,7 +76,7 @@ class Boot extends RJSState {
         this.game.story = story;
         // load and create the GUI
         this.game.guiSetup = jsyaml.load(this.game.cache.getText('guiConfig'));
-        if (game.guiSetup.madeWithRenJSBuilder=='2.0'){
+        if (game.guiSetup.GUIVersion=='2.0' || game.guiSetup.madeWithRenJSBuilder=='2.0'){
             game.gui = new RJSGUIByNewBuilder(game)
         } else if (game.guiSetup.madeWithRenJSBuilder){
             // game.gui = new RJSSimpleGUI(game)

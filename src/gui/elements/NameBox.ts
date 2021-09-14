@@ -13,7 +13,7 @@ export default class NameBox extends Sprite {
         x: number,
         y: number,
         transition?: string,
-        tintStyle: string,
+        tintStyle?: string,
         text: {
             x: number,
             y: number,

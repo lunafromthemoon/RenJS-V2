@@ -36,5 +36,5 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     getActorType(actor: any): string;
     getManagerByActorType(type: string): RJSManager;
     parseAction(action: any): any;
-    interpretAction(actionRaw: any): void;
+    interpretAction(actionRaw: any): Promise<void>;
 }

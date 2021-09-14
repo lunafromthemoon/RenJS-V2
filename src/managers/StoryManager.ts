@@ -252,7 +252,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         return action;
     }
 
-    interpretAction(actionRaw): void {
+    async interpretAction(actionRaw) {
         const action = this.parseAction(actionRaw);
         // this.game.control.action = mainAction
         // this.game.control.wholeAction = params;
@@ -266,6 +266,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             console.log("Executing action: "+action.mainAction);
             console.log(action);
         }
+        await this.game.checkPlugins('onAction',[storyAction]);
         storyAction.execute();
     }
 }

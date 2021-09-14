@@ -393,5 +393,5 @@ assets:
       fileName: generaltextaudio.wav
       name: textaudio
       type: sfx
-madeWithRenJSBuilder: "2.0"
+GUIVersion: "2.0"
 assetsPath: assets/gui/

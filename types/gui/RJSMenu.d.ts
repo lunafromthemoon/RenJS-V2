@@ -32,7 +32,6 @@ export default class RJSMenu extends Group {
         asset: string;
         sfx: string;
         binding: string;
-        slot: string;
         pushButton?: boolean;
         pushed?: boolean;
     }): BaseButton;
@@ -41,7 +40,7 @@ export default class RJSMenu extends Group {
         y: number;
         asset: string;
         binding: string;
-        userPreference: string;
+        userPreference?: string;
         sfx: string;
         mask?: string;
     }): MaskSlider;

@@ -62,7 +62,7 @@ export default class RJSMenu extends Group {
         return new Label(this.game, element)
     }
 
-    createButton(element:{x:number,y:number,asset:string,sfx:string,binding:string,slot:string,pushButton?:boolean,pushed?:boolean}) {
+    createButton(element:{x:number,y:number,asset:string,sfx:string,binding:string,pushButton?:boolean,pushed?:boolean}) {
         if (element.pushButton){
             const btn = new PushButton(this.game,element)
             if (element.binding=='auto' || element.binding=='skip'){
@@ -75,7 +75,7 @@ export default class RJSMenu extends Group {
         return new BaseButton(this.game,element)
     }
 
-    createSlider(element: {x: number,y: number,asset: string,binding: string,userPreference:string,sfx: string, mask?:string}) {
+    createSlider(element: {x: number,y: number,asset: string,binding: string,userPreference?:string,sfx: string, mask?:string}) {
         let value = 0.5;
         if (element.binding == 'changeUserPreference'){
             const preference = this.game.userPreferences.preferences[element.userPreference];

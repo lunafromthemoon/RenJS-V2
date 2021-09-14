@@ -7,6 +7,11 @@ class HelloWorld extends RenJS.Plugin {
 			this.game.resolveAction();
 		}, 1500);
 	}
+
+	onAction(action) {
+		console.log("Hello")
+		console.log(action)
+	}
 }
 
 RenJSGame.addPlugin('helloWorld',HelloWorld)

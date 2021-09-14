@@ -1,20 +1,9 @@
-name: Quickstart
-resolution:
-  - 800
-  - 600
-assetCounter: 44
+# name: Quickstart
+# resolution:
+#   - 800
+#   - 600
+# assetCounter: 44
 config:
-  loader:
-    background:
-      id: loaderbackground
-      assetType: images
-    loading-bar:
-      id: loading-bar
-      height: '82'
-      width: '578'
-      'y': 458
-      x: 109
-      assetType: spritesheets
   main:
     background:
       id: loaderbackground

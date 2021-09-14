@@ -8,7 +8,6 @@ export default class BaseButton extends Button {
         asset: string;
         sfx: string;
         binding: string;
-        slot: string;
         pushed?: boolean;
     };
     constructor(game: RJS, config: any);

@@ -59,6 +59,7 @@ export default class RJS extends Game {
     launch(): void;
     setupScreen(): void;
     initStory(): Promise<void>;
+    checkPlugins(signal: string, params?: any[]): Promise<void>;
     pause(keepGUI?: boolean): void;
     takeXShot(): void;
     unpause(): Promise<void>;
@@ -66,7 +67,7 @@ export default class RJS extends Game {
     start(initialVars?: {}): Promise<void>;
     skip(): void;
     auto(): void;
-    save(slot?: any): void;
+    save(slot?: any): Promise<void>;
     getSlotThumbnail(slot: any): string;
     loadSlot(slot: any): Promise<void>;
     waitForClick(callback?: any): void;

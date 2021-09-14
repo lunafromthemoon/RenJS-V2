@@ -27,7 +27,7 @@ export default class MessageBox extends Sprite {
             y: number;
             asset: string;
             sfx: string;
-            animationStyle: string;
+            animationStyle?: string;
         };
         alwaysOn: boolean;
     };
