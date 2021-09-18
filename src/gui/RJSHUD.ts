@@ -66,11 +66,15 @@ export default class RJSHUD extends RJSMenu {
 
     // display character names
     showName(boxId, name, color){
-        this.nBoxes[boxId].show(name,color);
+        if (this.nBoxes[boxId]){
+            this.nBoxes[boxId].show(name,color);
+        }
     }
 
     hideName(boxId){
-        this.nBoxes[boxId].hide();
+        if (this.nBoxes[boxId]){
+            this.nBoxes[boxId].hide();
+        }
     }
 
     // display text on message box
