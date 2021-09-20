@@ -170,8 +170,6 @@ export default class RJSHUD extends RJSMenu {
         await super.hide();
     }
 
-
-
     // hud is shown along with the story layers
     // when hiding/pausing, only disable input
 

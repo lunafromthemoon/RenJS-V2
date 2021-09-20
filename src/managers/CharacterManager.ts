@@ -19,7 +19,6 @@ export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
 export default class CharacterManager implements CharacterManagerInterface {
 
     characters = {};
-    showing = {};
     transition: Transition
 
     constructor(private game: RJS) {
@@ -27,94 +26,71 @@ export default class CharacterManager implements CharacterManagerInterface {
         this.loadCharacters();
     }
 
+    getDefaultTransition(): string{
+        return this.game.storyConfig.transitions.defaults.characters;
+    }
+
     loadCharacters(){
         for (const name in this.game.setup.characters){
-            const character = this.game.setup.characters[name];
-            const displayName = character.displayName ? character.displayName : name;
-            let voice = character.voice;
-            if (voice && voice!="none"){
-                voice = this.game.add.audio(character.voice);
-                // play silently once so we have the duration set
-                voice.play();
-                voice.stop();
+            const characterData = this.game.setup.characters[name];
+            // for compatibility, speechColour is deprecated now
+            if (characterData.speechColour) {
+                characterData.color = characterData.speechColour;
             }
-            // this.add(name,displayName,character.speechColour,character.looks);
-            this.characters[name] = new Character(name,displayName,character.speechColour,voice,character.nameBox);
+            this.characters[name] = new Character(this.game,name,characterData,characterData.portraits)
         }
     }
 
-    // add (name, displayName, speechColour, looks): void {
-        // this.characters[name] = new Character(displayName,speechColour);
-        // for (const look in looks) {
-            // this.addLook(this.characters[name],look,name+'_'+look);
-        // }
-    // }
-
-    createLook (character: Character, lookName): Sprite {
-        const imgKey = character.keyName+'_'+lookName
-        const look: Sprite = this.game.managers.story.characterSprites.create(this.game.storyConfig.positions.DEFAULT.x, this.game.storyConfig.positions.DEFAULT.y, imgKey);
-        look.anchor.set(0.5,1);
-        look.alpha = 0;
-        look.name = lookName;
-        return look;
-
+    get showing(): { [key:string]: {look: string, position: {x:number,y:number}, flipped: boolean}}{
+        const showing = {}
+        for( const name in this.characters){
+            if (this.characters[name].currentLook){
+                showing[name] = this.characters[name].getLookData();
+            }
+        }
+        return showing;
     }
 
     async set (showing): Promise<any> {
         await this.hideAll(Transition.CUT);
-        this.showing = showing;
-        for (const name in this.showing) {
-            const props = this.showing[name];
-            const character = this.characters[name];
-            character.currentLook = this.createLook(character,props.look);
-            character.currentLook.x = props.position.x;
-            character.currentLook.y = props.position.y;
-            character.currentLook.scale.x = props.scaleX;
-            character.currentLook.alpha = 1;
+        for (const name in showing) {
+            const props = showing[name];
+            // for compatibility with older version
+            if (props.scaleX) {
+                props.flipped = props.scaleX == -1;
+            }
+            this.characters[name].createLook(props);
+            this.characters[name].currentLook.alpha = 1;
         }
     }
 
-    show(name, transitionName, props): Promise<any> {
-        const ch = this.characters[name];
-        const oldLook = ch.currentLook;
-        const newLook = props.look ? props.look : oldLook ? oldLook.name : "normal";
-        ch.currentLook = this.createLook(ch,newLook);
-
-        if (!props.position){
-            props.position = (oldLook !== null) ? {x:oldLook.x,y:oldLook.y} : this.game.storyConfig.positions.DEFAULT;
+    async show(name, transitionName?, props?): Promise<any> {
+        const character = this.characters[name];
+        // grab old look to transition
+        const oldLook = character.currentLook;
+        // create new look with new properties
+        const newLook = character.createLook(props);
+        if (!transitionName) {
+            transitionName = this.getDefaultTransition();
         }
-        if (props.flipped !== undefined){
-            if (props.flipped === 'flip'){
-                ch.lastScale *= -1; 
-            } else {
-                ch.lastScale = props.flipped ? -1 : 1;
-            }
-        }
-        this.showing[name] = {look: ch.currentLook.name,position:props.position,scaleX: ch.lastScale};
-        let transitioning: Promise<any> = this.transition.get(transitionName)(oldLook, ch.currentLook, props.position, ch.lastScale);
-        transitioning.then(()=>{
-            if (oldLook) oldLook.destroy();
-        })
-        return transitioning;
+        await this.transition.get(transitionName)(oldLook, newLook, {x:newLook.x,y:newLook.y},newLook.scale.x);
+        if (oldLook) oldLook.destroy();
     }
 
     async hide(name, transitionName): Promise<any> {
+        if (!transitionName) {
+            transitionName = this.getDefaultTransition();
+        }
         const ch = this.characters[name];
         const oldLook = ch.currentLook;
         ch.lastScale = 1;
         ch.currentLook = null;
         delete this.showing[name];
-        let transitioning: Promise<any> = this.transition.get(transitionName)(oldLook,null);
-        transitioning.then(()=>{
-            if (oldLook) oldLook.destroy();
-        })
-        return transitioning;
+        await this.transition.get(transitionName)(oldLook,null);
+        if (oldLook) oldLook.destroy();
     }
 
     async hideAll(transitionName?): Promise<any> {
-        if (!transitionName){
-            transitionName = () => this.transition.FADEOUT;
-        }
         const promises = []
         for (const char in this.showing){
             promises.push(this.hide(char,transitionName));
