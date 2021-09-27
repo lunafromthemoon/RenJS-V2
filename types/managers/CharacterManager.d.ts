@@ -1,8 +1,6 @@
 import { RJSSpriteManagerInterface } from './RJSManager';
 import Transition from '../screen-effects/Transition';
-import Character from '../entities/Character';
 import RJS from '../core/RJS';
-import { Sprite } from 'phaser-ce';
 export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
     characters: object;
     showing: object;
@@ -14,13 +12,22 @@ export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
 export default class CharacterManager implements CharacterManagerInterface {
     private game;
     characters: {};
-    showing: {};
     transition: Transition;
     constructor(game: RJS);
+    getDefaultTransition(): string;
     loadCharacters(): void;
-    createLook(character: Character, lookName: any): Sprite;
+    get showing(): {
+        [key: string]: {
+            look: string;
+            position: {
+                x: number;
+                y: number;
+            };
+            flipped: boolean;
+        };
+    };
     set(showing: any): Promise<any>;
-    show(name: any, transitionName: any, props: any): Promise<any>;
+    show(name: any, transitionName?: any, props?: any): Promise<any>;
     hide(name: any, transitionName: any): Promise<any>;
     hideAll(transitionName?: any): Promise<any>;
     isCharacter(actor: any): boolean;
