@@ -19,6 +19,11 @@ import {RJSGameConfig,StoryConfig} from './RJSGameConfig';
 import UserPreferences from './UserPreferences';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
+
+var PACKAGE = require('../../package.json');
+var version = PACKAGE.version;
+
+
 export default class RJS extends Game {
 
     gameStarted = false
@@ -36,6 +41,10 @@ export default class RJS extends Game {
 
     addPlugin(name: string, cls: any): void {
         this.pluginsRJS[name] = new cls(name,this)
+    }
+
+    get renjsversion():string{
+        return version
     }
 
     config: RJSGameConfig

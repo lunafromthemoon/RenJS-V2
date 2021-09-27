@@ -29,6 +29,7 @@ export default class RJS extends Game {
     screenReady: boolean;
     pluginsRJS: any;
     addPlugin(name: string, cls: any): void;
+    get renjsversion(): string;
     config: RJSGameConfig;
     userPreferences: UserPreferences;
     storyConfig: StoryConfig;
