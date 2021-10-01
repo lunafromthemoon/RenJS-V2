@@ -292,12 +292,12 @@ export default class RJS extends Game {
             slot = 0;
         }
         const data = localStorage.getItem('RenJSDATA' + this.config.name + slot);
-        if (!data){
+        const dataParsed = data ? JSON.parse(data) : {};
+        await this.checkPlugins('onLoad',[slot,dataParsed]);
+        if (Object.keys(dataParsed).length === 0){
             this.start();
             return;
         }
-        const dataParsed = JSON.parse(data);
-        await this.checkPlugins('onLoad',[slot,dataParsed]);
         await this.managers.story.hide();
         this.managers.story.clearScene();
         this.managers.background.set(dataParsed.background);
