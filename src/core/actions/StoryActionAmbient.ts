@@ -3,14 +3,15 @@ import RJS from '../RJS';
 
 export default class StoryActionAmbient extends StoryAction {
 
-	protected params: {actor:string}
+	actor: string
 
-    constructor(params, game) {
-    	super(params,game)
+    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+        super(game,actionType,properties)
+        this.actor = this.parseActor();
     }
 
     execute(): void {
-    	this.game.screenEffects.ambient.start(this.params.actor);
+    	this.game.screenEffects.ambient.start(this.actor);
         this.resolve();
     }
 }

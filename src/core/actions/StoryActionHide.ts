@@ -4,27 +4,38 @@ import {RJSSpriteManagerInterface} from '../../managers/RJSManager';
 
 export default class StoryActionHide extends StoryAction {
 
-	protected params: {actor:string, manager:RJSSpriteManagerInterface, transition:string, contAfterTrans:boolean}
+    actor: string
+    actorType: string
+    transition: string
+    contAfterTrans: boolean
 
-    constructor(params, game) {
-    	super(params,game)
+    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+    	super(game,actionType,properties)
+        this.actor = this.parseActor();
+        this.actorType = this.game.managers.story.getActorType(this.actor)
+        this.transition = this.parseParameter('WITH','string')
+        if (!this.transition) {
+            this.transition = this.game.storyConfig.transitions.defaults[this.actorType];
+        }
+        this.contAfterTrans = this.parseParameter('CONTINUE')
     }
 
     execute(): void {
     	let transitioning: Promise<any> = null;
-        if (this.params.actor === 'CHARS') {
-            transitioning = this.game.managers.character.hideAll(this.params.transition)
-        } else if (this.params.actor === 'CGS') {
-            transitioning = this.game.managers.cgs.hideAll(this.params.transition)
-        } else if (this.params.actor === 'ALL') {
+        if (this.actor === 'CHARS') {
+            transitioning = this.game.managers.character.hideAll(this.transition)
+        } else if (this.actor === 'CGS') {
+            transitioning = this.game.managers.cgs.hideAll(this.transition)
+        } else if (this.actor === 'ALL') {
             transitioning = Promise.all([
-            	this.game.managers.background.hide(this.params.transition), 
-            	this.game.managers.character.hideAll(this.params.transition), 
-            	this.game.managers.cgs.hideAll(this.params.transition)
+            	this.game.managers.background.hide(this.transition), 
+            	this.game.managers.character.hideAll(this.transition), 
+            	this.game.managers.cgs.hideAll(this.transition)
         	]);
         } else {
-            transitioning = this.params.manager.hide(this.params.actor, this.params.transition);
+            const manager:RJSSpriteManagerInterface = this.game.managers.story.getManagerByActorType(this.actorType);
+            transitioning = manager.hide(this.actor, this.transition);
         }
-        this.resolve(transitioning,this.params.contAfterTrans);
+        this.resolve(transitioning,this.contAfterTrans);
     }
 }

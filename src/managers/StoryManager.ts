@@ -3,8 +3,24 @@ import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSAssetLoader from '../core/RJSAssetLoader';
 import RJSManagerInterface from './RJSManager';
-import StoryActionFactory from '../core/actions/StoryActionFactory'
+import RJSSpriteManagerInterface from './RJSManager';
 import StoryAction from '../core/actions/StoryAction';
+
+import StoryActionShow from '../core/actions/StoryActionShow';
+import StoryActionHide from '../core/actions/StoryActionHide';
+import StoryActionAnimate from '../core/actions/StoryActionAnimate';
+import StoryActionText from '../core/actions/StoryActionText';
+import StoryActionSay from '../core/actions/StoryActionSay';
+import StoryActionWait from '../core/actions/StoryActionWait';
+import StoryActionChoice from '../core/actions/StoryActionChoice';
+import StoryActionAudio from '../core/actions/StoryActionAudio';
+import StoryActionScene from '../core/actions/StoryActionScene';
+import StoryActionVar from '../core/actions/StoryActionVar';
+import StoryActionEffect from '../core/actions/StoryActionEffect';
+import StoryActionAmbient from '../core/actions/StoryActionAmbient';
+import StoryActionIf from '../core/actions/StoryActionIf';
+import StoryActionCall from '../core/actions/StoryActionCall';
+import StoryActionEnd from '../core/actions/StoryActionEnd';
 
 export interface StoryManagerInterface<T> extends RJSManagerInterface {
     behindCharactersSprites: T;
@@ -29,8 +45,30 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     backgroundSprites: Group
     interpreting: boolean;
     assetLoader: RJSAssetLoader;
+    reservedWords = ['WITH','AT','IN','FLIP','CONTINUE','LOOPED','FROM','FORCE']
+    actionFactory: {[key: string]: typeof StoryAction}
 
     constructor(private game: RJS) {
+        this.actionFactory = {
+            'show': StoryActionShow,
+            'hide': StoryActionHide,
+            'animate': StoryActionAnimate,
+            'say': StoryActionSay,
+            'text': StoryActionText,
+            'wait': StoryActionWait,
+            'choice': StoryActionChoice,
+            'visualchoice': StoryActionChoice,
+            'interrupt': StoryActionChoice,
+            'play': StoryActionAudio,
+            'stop': StoryActionAudio,
+            'scene': StoryActionScene,
+            'var': StoryActionVar,
+            'effect': StoryActionEffect,
+            'ambient': StoryActionAmbient,
+            'if': StoryActionIf,
+            'call': StoryActionCall,
+            'endgame': StoryActionEnd,
+        }
     }
 
     setupStory(): void {
@@ -149,7 +187,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         return 'cgs';
     }
 
-    getManagerByActorType (type: string): RJSManager {
+    getManagerByActorType (type: string): RJSSpriteManagerInterface {
         switch (type) {
             case 'characters': return this.game.managers.character
             case 'backgrounds': return this.game.managers.background
@@ -253,18 +291,19 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     }
 
     async interpretAction(actionRaw) {
-        const action = this.parseAction(actionRaw);
-        // this.game.control.action = mainAction
-        // this.game.control.wholeAction = params;
+        // const action = this.parseAction(actionRaw);
+        const keyParams = Object.keys(actionRaw)[0].split(' ');
+        let actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
         this.game.control.nextAction = null;
-        if (action.mainAction === 'else'){
+        if (actionType === 'else'){
             // nothing to do, already resolved in previous if action
             return this.game.resolveAction();
         }
-        const storyAction: StoryAction = StoryActionFactory(action.mainAction,action,this.game);
+        const ActionClass = this.actionFactory[actionType];
+        const storyAction: StoryAction = new ActionClass(this.game,actionType,actionRaw);
         if (this.game.config.debugMode){
-            console.log("Executing action: "+action.mainAction);
-            console.log(action);
+            console.log("Executing action: "+actionType);
+            console.log(Object.getOwnPropertyNames(storyAction));
         }
         await this.game.checkPlugins('onAction',[storyAction]);
         storyAction.execute();

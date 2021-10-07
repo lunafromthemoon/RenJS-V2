@@ -3,22 +3,49 @@ import RJS from '../RJS';
 
 export default class StoryActionAudio extends StoryAction {
 
-	protected params: {actor:string, looped: boolean, asBGS:boolean, transition: string, actorType, fromSeconds: number, force: boolean}
+    actor: string
+    actorType: string
+    transition: string
 
-    constructor(params, game, private action) {
-    	super(params,game)
+    looped: boolean
+    fromSeconds: number
+    force: boolean
+    channel: string
+
+    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+        super(game,actionType,properties)
+        this.actor = this.keyParams[1]
+        this.actorType = this.game.managers.story.getActorType(this.actor)
+        this.transition = this.parseParameter('WITH','string')
+        if (this.key == 'play'){
+            // we don't care for these params when stopping
+            this.looped = this.parseParameter('LOOPED')
+            if (this.looped){
+                this.fromSeconds = this.parseParameter('FROM','number')
+            }
+            this.force = this.parseParameter('FORCE')
+            this.channel = this.parseParameter('IN','string')
+            if (this.parseParameter('BGS')){
+                // deprecated
+                this.channel = 'bgs'
+            }
+            if (!this.channel){
+                this.channel = 'bgm'
+            }
+        } else {
+            this.channel = this.actor
+        }
     }
 
     execute(): void {
-        if (this.action=='play'){
-            if (this.params.actorType === 'music') {
-                const audioType = this.params.asBGS ? 'bgs' : 'bgm';
-                this.game.managers.audio.play(this.params.actor, audioType, this.params.looped, this.params.fromSeconds, this.params.transition, this.params.force);
+        if (this.key=='play'){
+            if (this.actorType === 'music') {
+                this.game.managers.audio.play(this.actor, this.channel, this.looped, this.fromSeconds, this.transition, this.force);
             } else {
-                this.game.managers.audio.playSFX(this.params.actor);
+                this.game.managers.audio.playSFX(this.actor);
             }
         } else {
-            this.game.managers.audio.stop(this.params.actor, this.params.transition);
+            this.game.managers.audio.stop(this.channel, this.transition);
         }
         this.resolve()
     }
