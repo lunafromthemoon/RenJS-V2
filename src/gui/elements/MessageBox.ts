@@ -60,7 +60,7 @@ export default class MessageBox extends Sprite{
         if (this.config.ctc){
             this.ctc = this.game.add.sprite(this.config.ctc.x,this.config.ctc.y,config.ctc.asset);
             if (this.config.ctc.animationStyle === 'spritesheet') {
-                this.ctc.animations.add('do').play()
+                this.ctc.animations.add('do').play(4,true)
             } else if (this.config.ctc.animationStyle != 'none') {
                 this.ctc.alpha = 0;
                 this.game.add.tween(this.ctc).to({ alpha: 1 }, 400, Phaser.Easing.Linear.None,true,0,-1,true);
