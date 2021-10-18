@@ -188,9 +188,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         if (actionParams.withBoxId.includes(mainAction)){
             if (keyParams.indexOf('IN') !== -1){
                 action.boxId = keyParams[keyParams.indexOf('IN') +1];
-            } else {
-                action.boxId = 'default';
-            }
+            } 
         }
         if (actionParams.withTransition.includes(mainAction)){
             const str = params ? params.split(' ') : [];

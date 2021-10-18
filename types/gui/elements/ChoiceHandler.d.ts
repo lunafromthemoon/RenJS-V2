@@ -19,6 +19,11 @@ export default class ChoiceHandler extends Graphics {
             lineSpacing?: number;
             style: any;
         };
+        background?: {
+            x: number;
+            y: number;
+            asset: string;
+        };
     };
     boxes: Button[];
     constructor(game: RJS, config: any);

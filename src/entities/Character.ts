@@ -1,4 +1,5 @@
 import {Sprite,Sound} from 'phaser-ce';
+import MessageBox from '../gui/elements/MessageBox'
 
 export interface CharacterInterface {
     keyName: string
@@ -28,7 +29,7 @@ export default class Character implements CharacterInterface {
     currentLook = null;
     usePortraits = false;
     voice = null;
-    constructor(private game,public keyName,config,hasPortrait?:boolean) {
+    constructor(private game,public keyName,config,hasPortrait?) {
         Object.assign(this.config,config);
         if (this.config.voice != 'none'){
             this.voice = this.game.add.audio(this.config.voice);
@@ -36,7 +37,18 @@ export default class Character implements CharacterInterface {
             this.voice.play();
             this.voice.stop();
         }
-        this.usePortraits = (hasPortrait == true)
+        this.usePortraits = (hasPortrait != undefined)
+    }
+
+    createPortrait(portrait:String,parent:MessageBox) {
+        if (this.usePortraits && parent.config.portrait){
+            const imgKey = this.keyName+'_portrait_'+portrait;
+            const position = parent.config.portrait;
+            const sprite = this.game.add.sprite(position.x, position.y,imgKey);
+            sprite.anchor.set(0.5,1);
+            parent.addChild(sprite);
+            parent.portrait = sprite;
+        }
     }
 
     createLook(props: {look?: string,position?: {x:number,y:number},flipped?:any} = {}): Sprite {

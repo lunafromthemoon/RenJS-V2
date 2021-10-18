@@ -34,22 +34,32 @@ export default class TextManager implements TextManagerInterface {
 
     async characterSays(keyName, look, text, boxId,dontHide=false){
         // get character configuration
-        const character = this.game.managers.character.characters[keyName].config;
+        const character = this.game.managers.character.characters[keyName];
+        const chConfig = character.config;
         // change look or show portrait
-        if (look){
-            this.game.managers.character.show(keyName, this.game.storyConfig.transitions.say,{look});
-        }
+
         // show name in namebox
-        this.game.gui.hud.showName(character.nameBox,character.displayName,character.color);
+        this.game.gui.hud.showName(chConfig.nameBox,chConfig.displayName,chConfig.color);
         // if not specified in action, use character defined message box (or 'default')
         if (!boxId){
-            boxId = character.messageBox
+            boxId = chConfig.messageBox
+        }
+        if (look){
+            if (!character.usePortraits){
+                // usual behaviour, just change the character look
+                this.game.managers.character.show(keyName, this.game.storyConfig.transitions.say,{look});    
+            } else {
+                // obtain the message box
+                const messageBox = this.game.gui.hud.mBoxes[boxId];
+                character.createPortrait(look,messageBox);
+            }
+            
         }
         // display text and wait for click
         await this.display(text,boxId,dontHide);
         // hide namebox
         if (!dontHide){
-            this.game.gui.hud.hideName(character.nameBox);
+            this.game.gui.hud.hideName(chConfig.nameBox);
         }
     }
 

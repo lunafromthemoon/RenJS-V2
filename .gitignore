@@ -6,5 +6,6 @@ dev-only/story/img
 dev-only/img.html
 dev-only/sadcock.html
 dev-only/story/sadcock
+dev-only/clown
 dist/*
 !dist/renjs.js

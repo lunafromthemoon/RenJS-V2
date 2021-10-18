@@ -40,6 +40,9 @@ export function preloadCharacter(chName: string, game:RJS):void {
     for (const look in char.looks) {
         game.load.image(chName + '_' + look, preparePath(char.looks[look], game));
     }
+    for (const portrait in char.portraits) {
+        game.load.image(chName + '_portrait_' + portrait, preparePath(char.portraits[portrait], game));
+    }
 }
 
 export function preloadExtra(asset:string, type:string, game:RJS){

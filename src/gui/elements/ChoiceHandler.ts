@@ -24,6 +24,11 @@ export default class ChoiceHandler extends Graphics {
             lineSpacing?: number,
             style: any
         },
+        background?:{
+            x: number,
+            y: number,
+            asset: string
+        }
     }
 
     boxes: Button[] = []
@@ -37,6 +42,10 @@ export default class ChoiceHandler extends Graphics {
         }
         this.alpha = 0;
         this.visible = false;
+        if (this.config.background){
+            const bg = this.game.add.sprite(this.config.background.x,this.config.background.y, this.config.background.asset)
+            this.addChild(bg);
+        }
     }
 
     async show(choices: any[]): Promise<any> {

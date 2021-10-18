@@ -189,6 +189,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.currentChoices = choices.map((choice,index) => this.parseChoice(index,choice))
         this.currentChoices = this.currentChoices.filter(choice=>choice.available)
         let chosenIdx = -1;
+        if (!boxId) boxId = 'default';
         if (boxId == 'visualChoices'){
             chosenIdx = await this.game.gui.hud.showVisualChoices(this.currentChoices);
         } else {

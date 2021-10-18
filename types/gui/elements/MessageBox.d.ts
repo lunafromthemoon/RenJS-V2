@@ -4,6 +4,7 @@ import Label from './Label';
 export default class MessageBox extends Sprite {
     text: Label;
     ctc?: Sprite;
+    portrait?: Sprite;
     textLoop: number;
     punctuationMarks: string[];
     punctuationWait: number;
@@ -28,6 +29,10 @@ export default class MessageBox extends Sprite {
             asset: string;
             sfx: string;
             animationStyle?: string;
+        };
+        portrait?: {
+            x: number;
+            y: number;
         };
         alwaysOn: boolean;
     };
