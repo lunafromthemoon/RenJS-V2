@@ -21,8 +21,14 @@ export default class Effects implements RJSScreenEffectInterface {
         this.game.camera.shake(0.01, 200);
     }
 
-    async ROLLINGCREDITS(params): Promise<void> {
-        // params: text (list of strings), music (music id), timePerLine (int), endGame (boolean)
+    async ROLLINGCREDITS(params: {
+        /** lines to show in credits roll */
+        text: string[];
+        /** music id */
+        music?: string;
+        timePerLine?: number;
+        endGame?: boolean;
+    }): Promise<void> {
         this.game.control.unskippable = true;
         await this.game.managers.story.hide();
         if (params.music){
