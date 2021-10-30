@@ -54,7 +54,7 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
     }
 
     async hide (bg?: string, transitionName = 'FADEOUT'): Promise<void> {
-        if(!bg || bg === this.current?.name) await this.show(null,transitionName);
+        if(this.current && (!bg || bg === this.current.name)) await this.show(null,transitionName);
     }
 
     isBackground (actor: string): boolean {
