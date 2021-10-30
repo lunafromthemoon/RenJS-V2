@@ -72,3 +72,21 @@ export function toHexColor(color) {
     // eslint-disable-next-line no-bitwise
     return (parseInt(color.substr(1), 16) << 8) / 256;
 }
+
+/**
+ * compareFn for hud config elements.
+ * ensures that name box is on top of dialogue,
+ * and that choices and buttons are on top of both
+ */
+export function hudSort(a: { type: string }, b: { type: string }) {
+  const order = [
+    'messageBox',
+    'nameBox',
+    'button',
+    'choices',
+  ];
+  const idxA = order.indexOf(a.type);
+  const idxB = order.indexOf(b.type);
+  if (idxA === undefined || idxB === undefined) return 0;
+  return idxA - idxB;
+}
