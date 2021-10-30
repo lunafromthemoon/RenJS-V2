@@ -36,10 +36,10 @@ export default class Effects implements RJSScreenEffectInterface {
         }
         
         const style = this.game.gui.hud.cHandlers['default'].config.text.style;
-        const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, params.text[0], style);
+        const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, ' ', style);
         credits.anchor.set(0.5);
         const separation = credits.height + 10;
-        for (let i = 1; i < params.text.length; i++) {
+        for (let i = 0; i < params.text.length; i++) {
             if (params.text[i]) {
                 const nextLine = this.game.add.text(0, i * separation,'', style);
                 nextLine.text = setTextStyles(params.text[i],nextLine);
