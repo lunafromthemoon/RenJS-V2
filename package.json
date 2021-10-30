@@ -9,6 +9,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --hot --progress",
     "build": "webpack --config webpack.prod.js && cp `ls -rt ./dist/* | tail -1` ./dist/renjs.js",
+    "lint": "eslint \"./src/**/*.{j,t}s\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build"
   },
