@@ -19,7 +19,7 @@ RenJS is a HTML5 Visual Novel creator made for writers. The stories are written 
 
 RenJS is also powered by PhaserJS, a powerful 2D video game engine for HTML5. Thanks to it, a whole suite of tools to create special effects, minigames and most complex behaviours is readily available.
 
-![alt text](http://renjs.net/assets/images/codeexample.png "Script Example")
+![Screenshot of quickstart game next to script example for the scene](http://renjs.net/assets/images/codeexample.png "Script Example")
 
 Finally, RenJS GUI Builder is a tool to automate the creation of the GUI configuration file. This tool allows you to create the GUI by adding components visually, moving them around easily and adjusting every little detail until you have exactly the GUI you want. 
 
