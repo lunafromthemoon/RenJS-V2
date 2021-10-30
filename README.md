@@ -4,7 +4,7 @@
 
 The new version of RenJS is in!
 
-RenJS V2 is finally here! Coded from scratch in Typescript (thanks to RockDaFox!), RenJS V2 has better performance and a multitude of new features to make the Visual Novel of your dreams. There's also a new site where you can find the lastest version of the library, as well as the new Quickstart and RenJS GUI Builder tool, and documentation for anything you want to do, including a gallery of playable examples with their scripts.
+RenJS V2 is finally here! Coded from scratch in Typescript (thanks to RockDaFox!), RenJS V2 has better performance and a multitude of new features to make the Visual Novel of your dreams. There's also a new site where you can find the latest version of the library, as well as the new Quickstart and RenJS GUI Builder tool, and documentation for anything you want to do, including a gallery of playable examples with their scripts.
 
 ## But what's RenJS?
 
