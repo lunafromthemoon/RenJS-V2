@@ -1,6 +1,6 @@
 # RenJS - V2
 
-![alt text](http://renjs.net/assets/images/renjs-title.svg "RenJS Logo")
+![alt text](https://renjs.net/assets/images/renjs-title.svg "RenJS Logo")
 
 The new version of RenJS is in!
 
@@ -20,19 +20,19 @@ RenJS is a HTML5 Visual Novel creator made for writers. The stories are written 
 
 RenJS is also powered by PhaserJS, a powerful 2D video game engine for HTML5. Thanks to it, a whole suite of tools to create special effects, minigames and most complex behaviours is readily available.
 
-![Screenshot of quickstart game next to script example for the scene](http://renjs.net/assets/images/codeexample.png "Script Example")
+![Screenshot of quickstart game next to script example for the scene](https://renjs.net/assets/images/codeexample.png "Script Example")
 
 Finally, RenJS GUI Builder is a tool to automate the creation of the GUI configuration file. This tool allows you to create the GUI by adding components visually, moving them around easily and adjusting every little detail until you have exactly the GUI you want.
 
 ## What's new?
 
-The story scripts, setup and gui configurations are still compatible with the old version, since most of the changes are internal to the engine, but the bootstrapping of the library is slightly different, and you need a new **configuration** file, that lets you choose many important properties of the story, such as default transitions, special positions and more. Find [here in the Docs](http://renjs.net/docs-page.html#configuration-section) everything you need to know about this file.
+The story scripts, setup and gui configurations are still compatible with the old version, since most of the changes are internal to the engine, but the bootstrapping of the library is slightly different, and you need a new **configuration** file, that lets you choose many important properties of the story, such as default transitions, special positions and more. Find [here in the Docs](https://renjs.net/docs-page.html#configuration-section) everything you need to know about this file.
 
 Another big change is in how the extensions are handled. In the previous version there was a handy file called CustomContent.js, where you could add new functions to call from the script. But RenJS V2 is compiled from Typescript, so you won't be able to access the internals directly.
 
 So how to add new functionality? Easy, with the new Plugin System. The Plugins not only allow you to add new functions to call from the script, as the old CustomContent.js file did, but they can also be called from different key moments in the game. For example, add new menus or buttons at the start of the game with the `onInit()` handler, save to and from the cloud with the `onSave()` and `onLoad()` handlers, and much more.
 
-Find all the documentation about the Plugins and the most important aspects of RenJS internals in [the Docs](http://renjs.net/docs-page.html#plugins-section).
+Find all the documentation about the Plugins and the most important aspects of RenJS internals in [the Docs](https://renjs.net/docs-page.html#plugins-section).
 
 Finally, some of the most interesting new features:
 
