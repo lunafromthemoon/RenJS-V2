@@ -9,7 +9,6 @@ module.exports = merge(common, {
     mode: 'development',
     devtool: "inline-source-map",
     plugins: [
-        new CleanWebpackPlugin(),
         new CopyPlugin({
             patterns: [
                 // { from: path.resolve(__dirname, 'dev-only/assets'), to: 'assets' },
