@@ -36,7 +36,7 @@ export default class Effects implements RJSScreenEffectInterface {
         for (let i = 1; i < params.text.length; i++) {
             if (params.text[i]) {
                 const nextLine = this.game.add.text(0, i * separation,'', style);
-                nextLine.text = setTextStyles(params.text[i],nextLine);
+                nextLine.setText(setTextStyles(params.text[i],nextLine), true);
                 nextLine.anchor.set(0.5);
                 credits.addChild(nextLine);
             }

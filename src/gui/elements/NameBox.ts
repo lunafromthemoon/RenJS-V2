@@ -55,7 +55,7 @@ export default class NameBox extends Sprite {
         let transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this,null);
         this.visible = false;
-        this.text.text = '';
+        this.text.setText('', true);
     }
 
     destroy(): void {
