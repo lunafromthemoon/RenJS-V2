@@ -104,7 +104,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         let rawText = Object.keys(choice)[0];
         const parsedChoice:any = {
             index: index,
-            actions: choice[rawText],
+            actions: choice[rawText] || [],
             available: true,
             choiceText: this.parseVars(rawText),
             previouslyChosen: this.choiceInLog(index)
