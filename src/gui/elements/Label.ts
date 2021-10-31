@@ -25,7 +25,7 @@ export default class Label extends Text {
           this.setTextBounds(this.x,this.y,parent.width,parent.height)
         }
         if (this.config.text){
-            this.text = setTextStyles(this.config.text,this);
+            this.setText(setTextStyles(this.config.text,this), true);
         }
     }
 
