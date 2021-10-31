@@ -28,6 +28,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
                 this.game.storyConfig.positions.BACKGROUND :
                 {x:this.game.world.centerX, y:this.game.world.centerY};
         let bg = this.game.managers.story.backgroundSprites.create(pos.x,pos.y, name);
+        bg.updateTransform();
         bg.alpha = 0;
         bg.visible = false;
         bg.name = name;
