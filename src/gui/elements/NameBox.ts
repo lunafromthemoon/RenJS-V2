@@ -37,7 +37,7 @@ export default class NameBox extends Sprite {
     }
 
     async show(text,color) {
-        this.text.text = text;
+        this.text.setText(text, true);
         if (this.config.tintStyle == 'box'){
             this.tint = toHexColor(color);
         } else {
