@@ -42,6 +42,7 @@ export default class Effects implements RJSScreenEffectInterface {
             }
         }
         const timePerLine = params.timePerLine ? params.timePerLine : 1500;
+        credits.updateTransform();
         
         return new Promise(resolve => {
             this.tweenManager.tween(credits, {y: -(separation * params.text.length + 30)}, async ()=>{
