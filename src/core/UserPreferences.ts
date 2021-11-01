@@ -57,9 +57,11 @@ export default class UserPreferences {
 
     setPreferences(preferences){
         if (preferences) {
-            for (var preference in preferences) {
-                // set the raw value
-                this.preferences[preference].value = preferences[preference]
+            for (var preference in this.preferences) {
+                if (preferences[preference] !== undefined) {
+                    // set the raw value
+                    this.preferences[preference].value = preferences[preference];
+                }
             }
         }
     }

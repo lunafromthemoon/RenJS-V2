@@ -18,6 +18,7 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
                 this.game.storyConfig.positions.BACKGROUND :
                 {x:this.game.world.centerX, y:this.game.world.centerY};
         const bg: Sprite = this.game.managers.story.backgroundSprites.create(pos.x,pos.y, name);
+        bg.updateTransform();
         bg.alpha = 0;
         bg.visible = false;
         bg.name = name;

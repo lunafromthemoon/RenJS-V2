@@ -73,7 +73,7 @@ export default class ChoiceHandler extends Graphics {
         chBox.y += separation;
         chBox.setFrames(...getButtonFrames(chBox.animations.frameTotal))
         const text = new Label(this.game,this.config.text,chBox);
-        text.text = setTextStyles(choice.choiceText,text);
+        text.setText(setTextStyles(choice.choiceText,text), true);
         chBox.addChild(text);
         
         if (choice.previouslyChosen){
