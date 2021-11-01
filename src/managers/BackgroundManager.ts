@@ -1,20 +1,10 @@
-import {RJSSpriteManagerInterface} from './RJSManager';
-import {Group} from 'phaser-ce';
-import Transition from '../screen-effects/Transition';
+import { Sprite } from 'phaser-ce';
 import RJS from '../core/RJS';
+import { RJSSpriteManagerInterface } from './RJSManager';
 
-export interface BackgroundManagerInterface<T> extends RJSSpriteManagerInterface {
-    backgrounds: object;
-    current?: object;
-    createBackground(name): void;
-    show (name, transitionName): any;
-    hide (bg,transitionName): any;
-    isBackground (actor): boolean;
-}
-
-export default class BackgroundManager implements BackgroundManagerInterface<Group> {
-    backgrounds = {};
-    current = null;
+export default class BackgroundManager implements RJSSpriteManagerInterface {
+    backgrounds: { [key: string]: string } = {};
+    current?: Sprite;
 
     constructor(private game: RJS) {
         if (game.setup.backgrounds){
@@ -22,27 +12,26 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         }
     }
 
-    createBackground(name): void {
+    createBackground(name: string): Sprite {
         const str = this.backgrounds[name].split(' ');
-        const pos = this.game.storyConfig.positions.BACKGROUND ? 
+        const pos = this.game.storyConfig.positions.BACKGROUND ?
                 this.game.storyConfig.positions.BACKGROUND :
                 {x:this.game.world.centerX, y:this.game.world.centerY};
-        let bg = this.game.managers.story.backgroundSprites.create(pos.x,pos.y, name);
+        const bg: Sprite = this.game.managers.story.backgroundSprites.create(pos.x,pos.y, name);
         bg.updateTransform();
         bg.alpha = 0;
         bg.visible = false;
         bg.name = name;
         bg.anchor.set(0.5);
-        if (str.length != 1){
+        if (str.length !== 1){
             const framerate = str.length === 4 ? parseInt(str[3], 10) : 16;
-            bg.animated = true;
             bg.animations.add('run', null, framerate);
             bg.animations.play('run', null, true);
         }
         return bg
     }
 
-    set (name): void {
+    set (name: string): void {
         if (this.current){
             this.current.destroy();
         }
@@ -55,7 +44,7 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         this.current.visible = true;
     }
 
-    async show (name, transitionName): Promise<any> {
+    async show (name: string, transitionName: string): Promise<void> {
         const oldBg = this.current;
         this.current = name ? this.createBackground(name) : null;
         if (this.current){
@@ -65,11 +54,11 @@ export default class BackgroundManager implements BackgroundManagerInterface<Gro
         if (oldBg) oldBg.destroy();
     }
 
-    async hide (bg?, transitionName = 'FADEOUT'): Promise<any> {
-        return this.show(null,transitionName);
+    async hide (bg?: string, transitionName = 'FADEOUT'): Promise<void> {
+        if(this.current && (!bg || bg === this.current.name)) await this.show(null,transitionName);
     }
 
-    isBackground (actor): boolean {
+    isBackground (actor: string): boolean {
         return actor in this.backgrounds;
     }
 }
