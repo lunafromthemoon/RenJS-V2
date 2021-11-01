@@ -1,9 +1,15 @@
 import StoryAction from './StoryAction';
+import RJS from '../RJS';
 export default class StoryActionEffect extends StoryAction {
-    protected params: {
-        actor: string;
-        contAfterTrans: boolean;
+    protected game: RJS;
+    actionType: string;
+    protected properties: {
+        [key: string]: any;
     };
-    constructor(params: any, game: any);
+    actor: string;
+    contAfterTrans: boolean;
+    constructor(game: RJS, actionType: string, properties: {
+        [key: string]: any;
+    });
     execute(): void;
 }

@@ -1,12 +1,17 @@
 import StoryAction from './StoryAction';
-import { RJSSpriteManagerInterface } from '../../managers/RJSManager';
+import RJS from '../RJS';
 export default class StoryActionHide extends StoryAction {
-    protected params: {
-        actor: string;
-        manager: RJSSpriteManagerInterface;
-        transition: string;
-        contAfterTrans: boolean;
+    protected game: RJS;
+    actionType: string;
+    protected properties: {
+        [key: string]: any;
     };
-    constructor(params: any, game: any);
+    actor: string;
+    actorType: string;
+    transition: string;
+    contAfterTrans: boolean;
+    constructor(game: RJS, actionType: string, properties: {
+        [key: string]: any;
+    });
     execute(): void;
 }

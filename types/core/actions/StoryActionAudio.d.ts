@@ -1,15 +1,20 @@
 import StoryAction from './StoryAction';
+import RJS from '../RJS';
 export default class StoryActionAudio extends StoryAction {
-    private action;
-    protected params: {
-        actor: string;
-        looped: boolean;
-        asBGS: boolean;
-        transition: string;
-        actorType: any;
-        fromSeconds: number;
-        force: boolean;
+    protected game: RJS;
+    actionType: string;
+    protected properties: {
+        [key: string]: any;
     };
-    constructor(params: any, game: any, action: any);
+    actor: string;
+    actorType: string;
+    transition: string;
+    looped: boolean;
+    fromSeconds: number;
+    force: boolean;
+    channel: string;
+    constructor(game: RJS, actionType: string, properties: {
+        [key: string]: any;
+    });
     execute(): void;
 }

@@ -1,8 +1,14 @@
 import StoryAction from './StoryAction';
+import RJS from '../RJS';
 export default class StoryActionCall extends StoryAction {
-    protected params: {
-        actor: string;
+    protected game: RJS;
+    actionType: string;
+    protected properties: {
+        [key: string]: any;
     };
-    constructor(params: any, game: any);
+    actor: string;
+    constructor(game: RJS, actionType: string, properties: {
+        [key: string]: any;
+    });
     execute(): void;
 }

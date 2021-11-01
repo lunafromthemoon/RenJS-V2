@@ -17,7 +17,7 @@ export default class CGSManager implements CGSManagerInterface {
     set(current: any): Promise<void>;
     hideAll(transition?: string): Promise<any>;
     show(name: any, transitionName: any, props: any): Promise<any>;
-    animate(name: any, toAnimate: any, time: any): Promise<void>;
+    animate(name: any, toAnimate: any): Promise<void>;
     hide(name: any, transitionName: any): Promise<void>;
     isCGS(actor: any): boolean;
 }
