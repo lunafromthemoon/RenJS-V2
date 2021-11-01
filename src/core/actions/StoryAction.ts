@@ -38,7 +38,7 @@ export default class StoryAction implements StoryActionInterface {
 			return this.keyParams;
 		}
 		if (!this.params){
-			this.params = this.body.split(' ');	
+			this.params = this.body ? this.body.split(' ') : [];	
 		}
 		return this.params;		
 	}

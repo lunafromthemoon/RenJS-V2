@@ -35,8 +35,8 @@ testSound:
   - scene: start
 
 endgame:
-  - text: What kind of ending?
   - choice:
+    - text: What kind of ending?
     - End immediately:
       - endgame:
     - End after credits:

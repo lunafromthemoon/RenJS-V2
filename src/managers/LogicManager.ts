@@ -2,6 +2,7 @@ import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
 import StoryAction from '../core/actions/StoryAction';
+import StoryActionText from '../core/actions/StoryActionText';
 
 export interface LogicManagerInterface<T> extends RJSManagerInterface {
     choicesLog: object;
@@ -114,7 +115,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         const params = rawText.split('!if');
         if (params.length > 1){
             parsedChoice.available = this.evalExpression(params[1]);
-            parsedChoice.choiceText = params[0];
+            parsedChoice.choiceText = params[0].trim();
         }
         if (choice.interrupt){
             parsedChoice.interrupt = true;
@@ -170,13 +171,18 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     async checkTextAction(firstChoice): Promise<boolean>{
         const action:StoryAction=this.game.managers.story.parseAction({...firstChoice});
-        if (action.actionType == "say" || action.actionType == "text"){
+        if (action && (action.actionType == "say" || action.actionType == "text")){
+            const textAction = action as StoryActionText;
+            // set property so the text will not be hidden after it's shown
+            textAction.dontHide = true;
             return new Promise(resolve=>{
-                action.resolve = async (transition)=>{
+                // replace resolve function so the text action won't call resolveAction
+                textAction.resolve = async (transition)=>{
                     await transition
                     resolve(true);
                 }
-                action.execute()
+                // show text action
+                textAction.execute()
             })
         }
         return false;

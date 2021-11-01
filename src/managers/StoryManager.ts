@@ -295,7 +295,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         let actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
         const ActionClass = this.actionFactory[actionType];
         if (ActionClass){
-            const storyAction: StoryAction = new ActionClass(this.game,actionType,actionRaw);    
+            return new ActionClass(this.game,actionType,actionRaw);    
         }
         return null;
     }
