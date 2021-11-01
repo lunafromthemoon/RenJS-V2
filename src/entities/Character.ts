@@ -60,6 +60,7 @@ export default class Character implements CharacterInterface {
         look.scale.x = data.flipped ? -1 : 1;
         // character looks have anchor point at their feet
         look.anchor.set(0.5,1);
+        look.updateTransform();
         look.alpha = 0;
         this.currentLook = look;
         return look;
