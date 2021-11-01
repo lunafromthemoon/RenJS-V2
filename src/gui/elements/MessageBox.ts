@@ -60,8 +60,8 @@ export default class MessageBox extends Sprite{
         if (this.config.ctc){
             this.ctc = this.game.add.sprite(this.config.ctc.x,this.config.ctc.y,config.ctc.asset);
             if (this.config.ctc.animationStyle === 'spritesheet') {
-                this.ctc.animations.add('do').play()
-            } else if (this.config.ctc.animationStyle == 'tween') {
+                this.ctc.animations.add('do').play(4,true)
+            } else if (this.config.ctc.animationStyle != 'none') {
                 this.ctc.alpha = 0;
                 this.game.add.tween(this.ctc).to({ alpha: 1 }, 400, Phaser.Easing.Linear.None,true,0,-1,true);
             }
@@ -100,7 +100,7 @@ export default class MessageBox extends Sprite{
         let finalText = setTextStyles(text,this.text);
         let textSpeed:number = this.game.userPreferences.get('textSpeed');
         if (this.game.control.skipping || textSpeed < 10){
-            this.text.text = finalText;
+            this.text.setText(finalText, true);
             this.visible = true;
             this.alpha = 1;
             if (this.ctc){
@@ -108,7 +108,7 @@ export default class MessageBox extends Sprite{
             }
             return;
         }
-        this.text.text = '';
+        this.text.setText('', true);
         
         // add new line characters at the end of each line
         if (this.game.storyConfig.precomputeBreakLines){
@@ -140,7 +140,7 @@ export default class MessageBox extends Sprite{
                 // text finished showing, clear timeout
                 clearTimeout(this.textLoop);
                 // complete text in case of skipping
-                this.text.text = finalText;
+                this.text.setText(finalText, true);
                 // show ctc
                 if (this.ctc){
                     this.ctc.visible = true;
@@ -221,7 +221,7 @@ export default class MessageBox extends Sprite{
         if(!this.config.alwaysOn){
             await this.hide(transitionName)
         }
-        this.text.text = '';
+        this.text.setText('', true);
         if (this.ctc){
             this.ctc.visible = false;
         }

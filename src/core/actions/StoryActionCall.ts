@@ -5,7 +5,7 @@ export default class StoryActionCall extends StoryAction {
 
     actor: string
 
-    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
         super(game,actionType,properties)
         this.actor = this.parseActor();
     }

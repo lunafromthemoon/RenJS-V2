@@ -6,7 +6,7 @@ export default class StoryActionVar extends StoryAction {
 	// protected params: {actor: string, body: string}
     actor: string
 
-    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
         super(game,actionType,properties)
         this.actor = this.parseActor();
     }

@@ -9,7 +9,7 @@ export default class StoryActionHide extends StoryAction {
     transition: string
     contAfterTrans: boolean
 
-    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
     	super(game,actionType,properties)
         this.actor = this.parseActor();
         this.actorType = this.game.managers.story.getActorType(this.actor)
@@ -28,8 +28,8 @@ export default class StoryActionHide extends StoryAction {
             transitioning = this.game.managers.cgs.hideAll(this.transition)
         } else if (this.actor === 'ALL') {
             transitioning = Promise.all([
-            	this.game.managers.background.hide(this.transition), 
-            	this.game.managers.character.hideAll(this.transition), 
+            	this.game.managers.background.hide(undefined, this.transition),
+            	this.game.managers.character.hideAll(this.transition),
             	this.game.managers.cgs.hideAll(this.transition)
         	]);
         } else {

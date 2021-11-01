@@ -6,7 +6,7 @@ export default class StoryActionEffect extends StoryAction {
     actor: string
     contAfterTrans: boolean
 
-    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
         super(game,actionType,properties)
         this.actor = this.parseActor();
         this.contAfterTrans = this.parseParameter('CONTINUE')

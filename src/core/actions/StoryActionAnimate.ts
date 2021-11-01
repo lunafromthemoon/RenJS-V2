@@ -7,7 +7,7 @@ export default class StoryActionAnimate extends StoryAction {
     contAfterTrans: boolean
 	// protected params: {actor:string, transition:string, contAfterTrans:boolean, time:number}
 
-    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
     	super(game,actionType,properties)
         this.actor = this.parseActor();
         this.contAfterTrans = this.parseParameter('CONTINUE')

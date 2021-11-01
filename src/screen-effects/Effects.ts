@@ -21,8 +21,14 @@ export default class Effects implements RJSScreenEffectInterface {
         this.game.camera.shake(0.01, 200);
     }
 
-    async ROLLINGCREDITS(params): Promise<void> {
-        // params: text (list of strings), music (music id), timePerLine (int), endGame (boolean)
+    async ROLLINGCREDITS(params: {
+        /** lines to show in credits roll */
+        text: string[];
+        /** music id */
+        music?: string;
+        timePerLine?: number;
+        endGame?: boolean;
+    }): Promise<void> {
         this.game.control.unskippable = true;
         await this.game.managers.story.hide();
         if (params.music){
@@ -30,18 +36,19 @@ export default class Effects implements RJSScreenEffectInterface {
         }
         
         const style = this.game.gui.hud.cHandlers['default'].config.text.style;
-        const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, params.text[0], style);
+        const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, ' ', style);
         credits.anchor.set(0.5);
         const separation = credits.height + 10;
-        for (let i = 1; i < params.text.length; i++) {
+        for (let i = 0; i < params.text.length; i++) {
             if (params.text[i]) {
                 const nextLine = this.game.add.text(0, i * separation,'', style);
-                nextLine.text = setTextStyles(params.text[i],nextLine);
+                nextLine.setText(setTextStyles(params.text[i],nextLine), true);
                 nextLine.anchor.set(0.5);
                 credits.addChild(nextLine);
             }
         }
         const timePerLine = params.timePerLine ? params.timePerLine : 1500;
+        credits.updateTransform();
         
         return new Promise(resolve => {
             this.tweenManager.tween(credits, {y: -(separation * params.text.length + 30)}, async ()=>{

@@ -6,7 +6,7 @@ export default class StoryActionSay extends StoryActionText {
     actor:string
     look:string
 
-    constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
         super(game,actionType,properties)
         this.boxId = this.parseParameter('IN','string',true)
         this.actor = this.keyParams[0];

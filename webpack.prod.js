@@ -8,7 +8,7 @@ var version = PACKAGE.version;
 module.exports = merge(common, {
     mode: 'production',
     output: {
-        filename: `[name]-${version}.js`,
+        filename: `[name]-v${version}.js`,
         path: path.resolve(__dirname, 'dist'),
         library: 'RenJS',
         libraryTarget: "var",

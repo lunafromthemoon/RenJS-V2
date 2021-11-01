@@ -1,9 +1,8 @@
-import RJSManager from './RJSManager';
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSAssetLoader from '../core/RJSAssetLoader';
 import RJSManagerInterface from './RJSManager';
-import RJSSpriteManagerInterface from './RJSManager';
+import {RJSSpriteManagerInterface} from './RJSManager';
 import StoryAction from '../core/actions/StoryAction';
 
 import StoryActionShow from '../core/actions/StoryActionShow';
@@ -193,116 +192,124 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             case 'backgrounds': return this.game.managers.background
             case 'cgs': return this.game.managers.cgs
         }
+        return null;
     }
 
-    parseAction(action){
-        const actionParams = {
-            withTransition: ['show','hide','play','stop'],
-            withPosition: ['show'],
-            withContinue: ['show','hide'],
-            withBoxId: ['choice','interrupt','text','say'],
-        }
-        function getKey(act): any {
-            return Object.keys(act)[0];
-        }
+    // parseAction(action){
+    //     const actionParams = {
+    //         withTransition: ['show','hide','play','stop'],
+    //         withPosition: ['show'],
+    //         withContinue: ['show','hide'],
+    //         withBoxId: ['choice','interrupt','text','say'],
+    //     }
+    //     function getKey(act): any {
+    //         return Object.keys(act)[0];
+    //     }
 
-        const key = getKey(action);
-        const keyParams = key.split(' ');
-        let mainAction; let actor;
-        if (keyParams[1] === 'says') {
-            mainAction = 'say';
-            actor = keyParams[0];
-            action.look = (keyParams.length > 2) ? keyParams[2] : null;
-        } else {
-            mainAction = keyParams[0];
-            actor = keyParams[1];
-        }
-        action.mainAction = mainAction;
-        action.actor = actor;
-        action.actorType = this.getActorType(actor);
-        // parse WITH and AT
-        const params = action[key];
-        action.body = params;
-        if (actionParams.withBoxId.includes(mainAction)){
-            if (keyParams.indexOf('IN') !== -1){
-                action.boxId = keyParams[keyParams.indexOf('IN') +1];
-            } else {
-                action.boxId = 'default';
-            }
-        }
-        if (actionParams.withTransition.includes(mainAction)){
-            const str = params ? params.split(' ') : [];
-            if (str.indexOf('WITH') !== -1){
-                action.transition = str[str.indexOf('WITH') +1];
-            } else {
-                // default transition for the actor type
-                action.transition = this.game.storyConfig.transitions.defaults[action.actorType];
-            }
-        }
+    //     const key = getKey(action);
+    //     const keyParams = key.split(' ');
+    //     let mainAction; let actor;
+    //     if (keyParams[1] === 'says') {
+    //         mainAction = 'say';
+    //         actor = keyParams[0];
+    //         action.look = (keyParams.length > 2) ? keyParams[2] : null;
+    //     } else {
+    //         mainAction = keyParams[0];
+    //         actor = keyParams[1];
+    //     }
+    //     action.mainAction = mainAction;
+    //     action.actor = actor;
+    //     action.actorType = this.getActorType(actor);
+    //     // parse WITH and AT
+    //     const params = action[key];
+    //     action.body = params;
+    //     if (actionParams.withBoxId.includes(mainAction)){
+    //         if (keyParams.indexOf('IN') !== -1){
+    //             action.boxId = keyParams[keyParams.indexOf('IN') +1];
+    //         } else {
+    //             action.boxId = 'default';
+    //         }
+    //     }
+    //     if (actionParams.withTransition.includes(mainAction)){
+    //         const str = params ? params.split(' ') : [];
+    //         if (str.indexOf('WITH') !== -1){
+    //             action.transition = str[str.indexOf('WITH') +1];
+    //         } else {
+    //             // default transition for the actor type
+    //             action.transition = this.game.storyConfig.transitions.defaults[action.actorType];
+    //         }
+    //     }
 
-        if (mainAction == "play"){
-            const str = params ? params.split(' ') : [];
-            const loopedParamIdx = str.indexOf('LOOPED');
-            if (loopedParamIdx !== -1){
-                action.looped = true;
-                if (str[loopedParamIdx+1] == "FROM"){
-                    action.fromSeconds = parseFloat(str[loopedParamIdx+2])
-                }
-            } else {
-                action.looped = false;
-            }
-            action.force = str.includes('FORCE');
-            action.asBGS = str.includes('BGS');
-        }
+    //     if (mainAction == "play"){
+    //         const str = params ? params.split(' ') : [];
+    //         const loopedParamIdx = str.indexOf('LOOPED');
+    //         if (loopedParamIdx !== -1){
+    //             action.looped = true;
+    //             if (str[loopedParamIdx+1] == "FROM"){
+    //                 action.fromSeconds = parseFloat(str[loopedParamIdx+2])
+    //             }
+    //         } else {
+    //             action.looped = false;
+    //         }
+    //         action.force = str.includes('FORCE');
+    //         action.asBGS = str.includes('BGS');
+    //     }
 
-        if (mainAction == "show" && action.actorType == "cgs"){
-            const str = params ? params.split(' ') : [];
-            if (str.indexOf('BEHIND') !== -1){
-                action.layer = 'behindCharactersSprites';
-            } else {
-                action.layer = 'cgsSprites';
-            }
+    //     if (mainAction == "show" && action.actorType == "cgs"){
+    //         const str = params ? params.split(' ') : [];
+    //         if (str.indexOf('BEHIND') !== -1){
+    //             action.layer = 'behindCharactersSprites';
+    //         } else {
+    //             action.layer = 'cgsSprites';
+    //         }
+    //     }
+    //     if (params && actionParams.withPosition.includes(mainAction)){
+    //         const str = params ? params.split(' ') : [];
+    //         if (str.indexOf('AT') !== -1){
+    //             action.position = str[str.indexOf('AT')+1];
+    //             if (action.position in this.game.storyConfig.positions){
+    //                 action.position = this.game.storyConfig.positions[action.position];
+    //             } else {
+    //                 const coords = action.position.split(',');
+    //                 action.position = {x:parseInt(coords[0], 10),y:parseInt(coords[1], 10)};
+    //             }
+    //         }
+    //         if (str.indexOf('FLIP') !== -1){
+    //             action.flipped = 'flip';
+    //         }
+    //         if (str.length>0 && str[0] !== 'AT' && str[0] !== 'WITH'){
+    //             action.look = str[0];
+    //         }
+    //     }
+    //     action.contAfterTrans = false;
+    //     if (params && actionParams.withContinue.includes(mainAction)){
+    //         const str = params ? params.split(' ') : [];
+    //         action.contAfterTrans = str.indexOf('CONTINUE') !== -1
+    //     }
+    //     action.manager = this.getManagerByActorType(action.actorType);
+    //     return action;
+    // }
+
+    parseAction(actionRaw): StoryAction {
+        const keyParams = Object.keys(actionRaw)[0].split(' ');
+        let actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
+        const ActionClass = this.actionFactory[actionType];
+        if (ActionClass){
+            const storyAction: StoryAction = new ActionClass(this.game,actionType,actionRaw);    
         }
-        if (params && actionParams.withPosition.includes(mainAction)){
-            const str = params ? params.split(' ') : [];
-            if (str.indexOf('AT') !== -1){
-                action.position = str[str.indexOf('AT')+1];
-                if (action.position in this.game.storyConfig.positions){
-                    action.position = this.game.storyConfig.positions[action.position];
-                } else {
-                    const coords = action.position.split(',');
-                    action.position = {x:parseInt(coords[0], 10),y:parseInt(coords[1], 10)};
-                }
-            }
-            if (str.indexOf('FLIP') !== -1){
-                action.flipped = 'flip';
-            }
-            if (str.length>0 && str[0] !== 'AT' && str[0] !== 'WITH'){
-                action.look = str[0];
-            }
-        }
-        action.contAfterTrans = false;
-        if (params && actionParams.withContinue.includes(mainAction)){
-            const str = params ? params.split(' ') : [];
-            action.contAfterTrans = str.indexOf('CONTINUE') !== -1
-        }
-        action.manager = this.getManagerByActorType(action.actorType);
-        return action;
+        return null;
     }
 
     async interpretAction(actionRaw) {
         // const action = this.parseAction(actionRaw);
-        const keyParams = Object.keys(actionRaw)[0].split(' ');
-        let actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
+        const storyAction: StoryAction = this.parseAction(actionRaw)
         this.game.control.nextAction = null;
-        if (actionType === 'else'){
-            // nothing to do, already resolved in previous if action
+        if (!storyAction){
+            // nothing to do, unknown action or 'else'
             return this.game.resolveAction();
         }
-        const ActionClass = this.actionFactory[actionType];
-        const storyAction: StoryAction = new ActionClass(this.game,actionType,actionRaw);
         if (this.game.config.debugMode){
-            console.log("Executing action: "+actionType);
+            console.log("Executing action: "+storyAction.actionType);
             console.log(Object.getOwnPropertyNames(storyAction));
         }
         await this.game.checkPlugins('onAction',[storyAction]);

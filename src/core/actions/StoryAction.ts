@@ -13,7 +13,7 @@ export default class StoryAction implements StoryActionInterface {
 	protected keyParams: string[]
 
 
-	constructor(protected game: RJS, protected actionType: string, protected properties:{[key: string]:any}){
+	constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
 		this.key = Object.keys(properties)[0];
 		this.keyParams = this.key.split(' ');
         this.body = properties[this.key]

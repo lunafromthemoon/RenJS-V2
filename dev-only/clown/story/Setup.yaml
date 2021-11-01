@@ -1,0 +1,50 @@
+backgrounds:
+  redtent: assets/backgrounds/redtent.png
+  bar: assets/backgrounds/bar.png
+  bureau: assets/backgrounds/bureau.png
+  friendhouse: assets/backgrounds/friendhouse.png
+  graytent: assets/backgrounds/graytent.png
+  island: assets/backgrounds/island.png
+  manhole: assets/backgrounds/manhole.png
+  mini: assets/backgrounds/mini.png
+  poster: assets/backgrounds/poster.png
+  sewers: assets/backgrounds/sewers.png
+characters:
+  clown:
+    displayName: '???'
+    color: '#FFFFFF'
+    messageBox: sayBox
+    looks:
+      normal: assets/characters/your-guy.png
+    portraits:
+      normal: assets/characters/portrait.png
+  friend:
+    displayName: '???'
+    color: '#FFFFFF'
+    messageBox: topBox
+    looks:
+      normal: assets/characters/friend.png
+  pierrot:
+    displayName: '???'
+    color: '#FFFFFF'
+    messageBox: topBox
+    looks:
+      normal: assets/characters/pierrot.png
+# cgs:
+#   static_cg_id: assets/cgs/cg1.png
+#   animated_cg_id:
+#     spritesheet: assets/cgs/cg2.png frame_width frame_height
+#     animations:
+#       anim_id_1: start_frame end_frame framerate
+#       anim_id_2: start_frame end_frame framerate
+# music:
+#   music_id: assets/music/musicID.mp3
+# sfx: 
+#   sfx_id: assets/sfx/sfxID.ogg
+# extra:
+#   image:
+#     static_img: assets/extra/img_id1.png
+#   spritesheets:
+#     spritesheet_id: assets/extra/spr_id.png frame_width frame_height
+#   scripts:
+#     script_id: assets/extra/script.js
