@@ -1,3 +1,4 @@
+import FontFaceObserver from 'fontfaceobserver';
 import {preparePath} from './utils';
 import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from './utils';
 import RJSState from './RJSState';
@@ -38,6 +39,24 @@ class PreloadStory extends RJSState {
                 this.game.load[asset.type](asset.key, preparePath(asset.file, this.game));
             }
         }
+
+        // preload fonts
+        const families = this.game.gui.fonts;
+        const styles = ['normal', 'italic'];
+        const weights = ['normal', 'bold'];
+        for (const family of families) {
+            for (const style of styles) {
+                for (const weight of weights) {
+                    const key = `${family} ${weight} ${style}`;
+                    this.game.load.addToFileList('font', key, '');
+                    const { file } = this.game.load.getAsset('font', key);
+                    new FontFaceObserver(family, { weight, style }).load()
+                        .then(() => this.game.load.asyncComplete(file))
+                        .catch((err) => this.game.load.asyncComplete(file, err));
+                }
+            }
+        }
+
         if (this.game.setup.lazyloading){
             // when lazy loading, game assets will be loaded while playing the story
             return
