@@ -86,9 +86,17 @@ class Boot extends RJSState {
             console.error("Old GUI configuration is deprecated!!!!")
             console.error("Check the docs at http://renjs.net/docs-page.html")
         }
-        // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of game.gui.fonts){
-            game.add.text(20, -100, font, {font: '42px ' + font});
+
+        for (const font of game.gui.fonts) {
+            if (game.config.debugMode) {
+                console.log('Preloading the font ' + font + ' by adding hidden text'); // Else they wont be fully loaded and show FOUT
+            }
+            game.add.text(20, -100, font, { font: 'normal normal 42px ' + font });
+            game.add.text(20, -100, font, { font: 'normal bold 42px ' + font });
+            game.add.text(20, -100, font, { font: 'italic normal 42px ' + font });
+            game.add.text(20, -100, font, { font: 'italic bold 42px ' + font });
+            game.add.text(20, -100, font, { font: 'oblique normal 42px ' + font });
+            game.add.text(20, -100, font, { font: 'oblique bold 42px ' + font });
         }
         game.state.add('preloadStory', PreloadStory);
         game.state.start('preloadStory');
