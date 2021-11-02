@@ -1,4 +1,5 @@
 import jsyaml from 'js-yaml'
+import FontFaceObserver from 'fontfaceobserver';
 import {loadStyle, preparePath} from './utils';
 import RJSState from './RJSState';
 import {Sprite, Text} from 'phaser-ce';
@@ -54,7 +55,7 @@ class Boot extends RJSState {
         }
     }
 
-    create (game: RJS): void {
+    async create (game: RJS): Promise<void> {
         new RJSLoadingScreen(this.game);
         this.input.onDown.addOnce(()=> {
             if (this.sound.context.state === 'suspended') {
@@ -91,18 +92,22 @@ class Boot extends RJSState {
         const families = game.gui.fonts;
         const styles = ['normal', 'italic'];
         const weights = ['normal', 'bold'];
+        const observers = [];
         for (const family of families) {
             for (const style of styles) {
                 for (const weight of weights) {
-                    const font = `${style} ${weight} 1px ${family}`;
+                    const o = new FontFaceObserver(family, { weight, style });
                     if (game.config.debugMode) {
-                        console.log(`Preloading the font "${font}" by adding hidden text`);
+                        console.log('Preloading font', o);
                     }
-                    const t = new Text(game, 0, 0, ' ', { font });
-                    t.destroy();
+                    observers.push(o.load().catch((err) => {
+                        console.warn('Font not available', o, err);
+                    }));
                 }
             }
         }
+
+        await Promise.all(observers);
         game.state.add('preloadStory', PreloadStory);
         game.state.start('preloadStory');
     }
