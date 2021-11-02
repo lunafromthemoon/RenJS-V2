@@ -41,9 +41,9 @@ export default class MaskedSlider extends Group {
         this.game.gui.bindingActions[this.config.binding](this.config, this.currentValue);
     }
 
-    private pointer?: Pointer;
+    private pointer?: number;
     onStart(_: never, pointer: Pointer): void {
-        this.pointer = pointer;
+        this.pointer = pointer.pointerId || 0;
         this.setValue((pointer.x - this.x) / this.width);
         if (this.draggable) {
             this.game.input.addMoveCallback(this.onDrag, this);
@@ -51,11 +51,11 @@ export default class MaskedSlider extends Group {
         }
     }
     onDrag(pointer: Pointer): void {
-        if (pointer !== this.pointer) return;
+        if ((pointer.pointerId || 0) !== this.pointer) return;
         this.setValue((pointer.x - this.x) / this.width);
     }
     onEnd(_: never, event: PointerEvent): void {
-        if (event.pointerId !== this.pointer.pointerId) return;
+        if ((event.pointerId || 0) !== this.pointer) return;
         this.game.input.deleteMoveCallback(this.onDrag, this);
         this.game.input.onUp.remove(this.onEnd, this);
         this.pointer = undefined;
