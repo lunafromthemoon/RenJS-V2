@@ -89,7 +89,7 @@ class Boot extends RJSState {
 
         // preload the fonts by adding text, else they wont be fully loaded :\
         const families = game.gui.fonts;
-        const styles = ['normal', 'italic', 'oblique'];
+        const styles = ['normal', 'italic'];
         const weights = ['normal', 'bold'];
         for (const family of families) {
             for (const style of styles) {
