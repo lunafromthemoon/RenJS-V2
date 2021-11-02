@@ -55,7 +55,8 @@ class Boot extends RJSState {
     }
 
     create (game: RJS): void {
-        new RJSLoadingScreen(this.game);
+        const loadingScreen = new RJSLoadingScreen(this.game);
+        loadingScreen.setLoadingBar(this.game);
         this.input.onDown.addOnce(()=> {
             if (this.sound.context.state === 'suspended') {
                 this.sound.context.resume();
