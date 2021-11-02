@@ -3,17 +3,13 @@ import RJS from '../RJS';
 
 export default class StoryActionWait extends StoryAction {
 
-	protected params: {wait:string}
-
-    constructor(params, game) {
-    	super(params,game)
-    }
+	// protected params: {wait:string}
 
     execute(): void {
-    	if (this.params.wait === 'click'){
+    	if (this.body === 'click'){
             this.game.waitForClick();
         } else {
-            this.game.waitTimeout(parseInt(this.params.wait, 10));
+            this.game.waitTimeout(parseInt(this.body, 10));
         }
         // this action is resolved on its own
     }

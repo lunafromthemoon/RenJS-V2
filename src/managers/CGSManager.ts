@@ -93,7 +93,8 @@ export default class CGSManager implements CGSManagerInterface {
         return this.transition.get(transitionName)(previousSprite, this.cgs[name], position);
     }
 
-    async animate (name, toAnimate, time): Promise<void> {
+    async animate (name, toAnimate): Promise<void> {
+        const time = toAnimate.time;
         const tweenables: {
             alpha?: number;
             angle?: number;

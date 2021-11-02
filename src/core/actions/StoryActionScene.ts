@@ -3,14 +3,14 @@ import RJS from '../RJS';
 
 export default class StoryActionScene extends StoryAction {
 
-	protected params: {scene: string}
+    scene: string
 
-    constructor(params, game) {
-    	super(params,game)
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+        super(game,actionType,properties)
+        this.scene = this.game.managers.logic.parseVars(this.body)
     }
 
     execute(): void {
-    	const scene = this.game.managers.logic.parseVars(this.params.scene);
-        this.resolve(this.game.managers.story.startScene(scene));        
+        this.resolve(this.game.managers.story.startScene(this.scene));        
     }
 }

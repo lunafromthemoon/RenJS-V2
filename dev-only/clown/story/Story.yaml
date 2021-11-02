@@ -1,0 +1,33 @@
+start:
+  - text: You wake up.
+  - show redtent:
+  - hide redtent:
+  - show redtent:
+  - text: 
+  - text IN topBox: This is your new GUI, how does it look? asdf qwer asdf qwer sadf
+  - show friend:
+  - friend says normal: asdf qwer asdf 
+  # - show clown: AT PORTRAIT WITH FadePortrait
+  - clown says normal: qwerasdf 
+  - choice:
+    - Amazing:
+      - text: That's great! You can start writing your game!
+    - A bit wonky:
+      - text: Then you can go back to the RenJS GUI builder and edit it as many times as you need.
+  # - char_1 says normal: Hello for you too!
+  - scene: next_scene
+
+next_scene:
+  # - play music_2:
+  # - show background_anim: WITH FADE CONTINUE
+  - text: Thanks for playing!
+  - effect ROLLINGCREDITS:
+    endGame: true
+    timePerLine: 1500
+    text:
+      - RenJS V2 developed by
+      - lunafromthemoon
+      - In collaboration with
+      - RockDaFox
+      - null
+      - Powered by PhaserJS

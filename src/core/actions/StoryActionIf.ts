@@ -3,30 +3,27 @@ import RJS from '../RJS';
 
 export default class StoryActionEffect extends StoryAction {
 
-	protected params: {}
+    condition: string
+    branches: {ISTRUE: any, ISFALSE?: any}
 
-    constructor(params, game) {
-    	super(params,game)
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+        super(game,actionType,properties)
+        this.condition = this.key.substr(this.key.indexOf('('));
+        this.branches = {
+            ISTRUE: this.body
+        }
+        if (this.game.managers.story.currentScene.length > 0){
+            const next = this.game.managers.story.currentScene[0];
+            if (next && 'else' in next){
+                this.branches.ISFALSE = next.else;
+                this.game.managers.story.currentScene.shift();
+            }
+        }
     }
 
-    execute(): void {
-    	function getKey(act): any {
-            return Object.keys(act)[0];
-        }
-        const key = getKey(this.params)
-    	const condition = key.substr(key.indexOf('('));
-        const branches: {
-            ISTRUE: boolean;
-            ISFALSE?: boolean;
-        } = {
-            ISTRUE: this.params[key]
-        }
-        const next = this.game.managers.story.currentScene[0];
-        if (next && getKey(next) === 'else'){
-            branches.ISFALSE = next.else;
-            this.game.managers.story.currentScene.shift();
-        }
-        this.game.managers.logic.branch(condition, branches);
+
+    execute(): void {    	
+        this.game.managers.logic.branch(this.condition, this.branches);
     	this.resolve();
     }
 }

@@ -1,11 +1,16 @@
 import StoryAction from './StoryAction';
+import RJS from '../RJS';
 export default class StoryActionText extends StoryAction {
-    private isVisualChoice;
-    private isInterrupt;
-    protected params: {
-        body: any;
-        boxId: string;
+    protected game: RJS;
+    actionType: string;
+    protected properties: {
+        [key: string]: any;
     };
-    constructor(params: any, game: any, isVisualChoice: any, isInterrupt: any);
+    isVisualChoice: boolean;
+    isInterrupt: boolean;
+    handlerId: string;
+    constructor(game: RJS, actionType: string, properties: {
+        [key: string]: any;
+    });
     execute(): void;
 }

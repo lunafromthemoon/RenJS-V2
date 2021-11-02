@@ -77,6 +77,6 @@ export default class RJS extends Game {
     onTap(pointer: any, doubleTap?: any): void;
     initInput(): void;
     lockClick(): void;
-    resolveAction(): void;
+    resolveAction: () => void;
     onInterpretActions(): void;
 }

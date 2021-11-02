@@ -16,7 +16,8 @@ export default class TextManager implements TextManagerInterface {
         //
     }
 
-    async display(text,boxId='default',dontHide=false) {
+    async display(text,boxId,dontHide=false) {
+        if (!boxId) boxId = 'default'
         text = this.game.managers.logic.parseVars(text.toString())
         await this.game.gui.hud.showText(boxId,text);
         if (this.game.storyConfig.logText){

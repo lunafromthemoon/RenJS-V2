@@ -37,7 +37,8 @@ export default class NameBox extends Sprite {
     }
 
     async show(text,color) {
-        this.text.text = text;
+        this.text.setText(text, true);
+        this.text.updateTransform();
         if (this.config.tintStyle == 'box'){
             this.tint = toHexColor(color);
         } else {
@@ -55,7 +56,7 @@ export default class NameBox extends Sprite {
         let transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this,null);
         this.visible = false;
-        this.text.text = '';
+        this.text.setText('', true);
     }
 
     destroy(): void {

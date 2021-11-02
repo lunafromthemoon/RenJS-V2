@@ -6,7 +6,7 @@ import MessageBox from './elements/MessageBox'
 import NameBox from './elements/NameBox'
 import ChoiceHandler from './elements/ChoiceHandler'
 
-import {changeInputEnabled} from '../utils/gui'
+import { changeInputEnabled, hudSort } from '../utils/gui';
 
 export default class RJSHUD extends RJSMenu {
     mBoxes = {}
@@ -18,7 +18,7 @@ export default class RJSHUD extends RJSMenu {
     
 
     constructor(game: RJS, config) {
-        super(game, config);
+        super(game, config.slice().sort(hudSort));
         // add factories for hud specific elements
         this.elementFactory = Object.assign(this.elementFactory,{
             messageBox: this.createMessageBox.bind(this),

@@ -3,18 +3,22 @@ import RJS from '../RJS';
 
 export default class StoryActionEffect extends StoryAction {
 
-	protected params: {actor:string, contAfterTrans:boolean}
+    actor: string
+    contAfterTrans: boolean
 
-    constructor(params, game) {
-    	super(params,game)
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+        super(game,actionType,properties)
+        this.actor = this.parseActor();
+        this.contAfterTrans = this.parseParameter('CONTINUE')
     }
 
     execute(): void {
-    	if (this.game.screenEffects.effects[this.params.actor]){
-    		let transitioning: Promise<any> = this.game.screenEffects.effects[this.params.actor](this.params);
-            this.resolve(transitioning,this.params.contAfterTrans);
-    	} else if (this.game.pluginsRJS[this.params.actor]){
-    		this.game.pluginsRJS[this.params.actor].onCall(this.params);
+    	if (this.game.screenEffects.effects[this.actor]){
+    		let transitioning: Promise<any> = this.game.screenEffects.effects[this.actor](this.properties);
+            this.resolve(transitioning,this.contAfterTrans);
+    	} else if (this.game.pluginsRJS[this.actor]){
+            // deprecate this
+    		this.game.pluginsRJS[this.actor].onCall(this.params);
             // plugins resolve themselves
     	} else {
             this.resolve();

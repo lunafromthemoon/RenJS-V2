@@ -3,19 +3,21 @@ import RJS from '../RJS';
 
 export default class StoryActionText extends StoryAction {
 
-	protected params: {actor:string, mainAction: string, look: string, boxId?: string, body: string}
+	// protected params: {actor:string, look: string, boxId?: string, body: string}
+    protected boxId:string
+    // this variable will be set to true by the logic manager to keep the text while showing the choices
+    public dontHide: boolean = false
 
-    constructor(params, game) {
-    	super(params,game)
+    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+        super(game,actionType,properties)
+        this.boxId = this.parseParameter('IN','string',true)
     }
 
     execute(): void {
         let transitioning: Promise<any> = null;
-    	if (this.params.mainAction == 'say'){
-    		transitioning = this.game.managers.text.characterSays(this.params.actor, this.params.look, this.params.body,this.params.boxId);
-    	} else {
-    		transitioning = this.game.managers.text.display(this.params.body,this.params.boxId);
-    	}
+        // const boxId = this.boxId ? this.boxId : 'default'
+		transitioning = this.game.managers.text.display(this.body,this.boxId, this.dontHide);
         this.resolve(transitioning);
     }
 }
+

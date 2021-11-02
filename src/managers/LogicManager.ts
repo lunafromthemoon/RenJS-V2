@@ -1,6 +1,8 @@
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
+import StoryAction from '../core/actions/StoryAction';
+import StoryActionText from '../core/actions/StoryActionText';
 
 export interface LogicManagerInterface<T> extends RJSManagerInterface {
     choicesLog: object;
@@ -104,7 +106,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         let rawText = Object.keys(choice)[0];
         const parsedChoice:any = {
             index: index,
-            actions: choice[rawText],
+            actions: choice[rawText] || [],
             available: true,
             choiceText: this.parseVars(rawText),
             previouslyChosen: this.choiceInLog(index)
@@ -113,7 +115,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         const params = rawText.split('!if');
         if (params.length > 1){
             parsedChoice.available = this.evalExpression(params[1]);
-            parsedChoice.choiceText = params[0];
+            parsedChoice.choiceText = params[0].trim();
         }
         if (choice.interrupt){
             parsedChoice.interrupt = true;
@@ -167,15 +169,21 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return execId;
     }
 
-    async checkTextAction(firstChoice){
-        let action=this.game.managers.story.parseAction({...firstChoice});
-        if (action.mainAction == "say" || action.mainAction == "text"){
-            if (action.actor){
-                await this.game.managers.text.characterSays(action.actor, action.look, action.body, action.boxId,true);
-            } else {
-                await this.game.managers.text.display(action.body,action.boxId,true);
-            }
-            return true;
+    async checkTextAction(firstChoice): Promise<boolean>{
+        const action:StoryAction=this.game.managers.story.parseAction({...firstChoice});
+        if (action && (action.actionType == "say" || action.actionType == "text")){
+            const textAction = action as StoryActionText;
+            // set property so the text will not be hidden after it's shown
+            textAction.dontHide = true;
+            return new Promise(resolve=>{
+                // replace resolve function so the text action won't call resolveAction
+                textAction.resolve = async (transition)=>{
+                    await transition
+                    resolve(true);
+                }
+                // show text action
+                textAction.execute()
+            })
         }
         return false;
     }

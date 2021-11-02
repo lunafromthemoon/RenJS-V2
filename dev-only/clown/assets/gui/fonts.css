@@ -1,0 +1,15 @@
+
+
+      @font-face {
+
+          font-family: 'Munro';
+
+          src: url('generalMunro.ttf');
+
+          src: url('generalMunro.ttf').format('truetype');
+
+          font-weight: normal;
+
+          font-style: normal;
+
+      }

@@ -399,7 +399,7 @@ export default class RJS extends Game {
         }, this.control.clickCooldown);
     }
 
-    resolveAction(): void {
+    resolveAction = (): void => {
         this.control.waitForClick = false;
         if (this.config.debugMode){
             console.log("Resolving action.");

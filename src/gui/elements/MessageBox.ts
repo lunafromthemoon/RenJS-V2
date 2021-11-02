@@ -106,7 +106,7 @@ export default class MessageBox extends Sprite{
         let finalText = setTextStyles(text,this.text);
         let textSpeed:number = this.game.userPreferences.get('textSpeed');
         if (this.game.control.skipping || textSpeed < 10){
-            this.text.text = finalText;
+            this.text.setText(finalText, true);
             this.visible = true;
             this.alpha = 1;
             if (this.ctc){
@@ -114,7 +114,7 @@ export default class MessageBox extends Sprite{
             }
             return;
         }
-        this.text.text = '';
+        this.text.setText('', true);
         
         // add new line characters at the end of each line
         if (this.game.storyConfig.precomputeBreakLines){
@@ -146,7 +146,7 @@ export default class MessageBox extends Sprite{
                 // text finished showing, clear timeout
                 clearTimeout(this.textLoop);
                 // complete text in case of skipping
-                this.text.text = finalText;
+                this.text.setText(finalText, true);
                 // show ctc
                 if (this.ctc){
                     this.ctc.visible = true;
@@ -227,7 +227,7 @@ export default class MessageBox extends Sprite{
         if(!this.config.alwaysOn){
             await this.hide(transitionName)
         }
-        this.text.text = '';
+        this.text.setText('', true);
         if (this.ctc){
             this.ctc.visible = false;
         }
