@@ -1,8 +1,7 @@
 import jsyaml from 'js-yaml'
-import FontFaceObserver from 'fontfaceobserver';
 import {loadStyle, preparePath} from './utils';
 import RJSState from './RJSState';
-import {Sprite, Text} from 'phaser-ce';
+import {Sprite} from 'phaser-ce';
 import PreloadStory from './PreloadStory';
 import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
 import RJSGUIByNewBuilder from '../gui/RJSGUIByNewBuilder';
@@ -88,26 +87,6 @@ class Boot extends RJSState {
             console.error("Check the docs at http://renjs.net/docs-page.html")
         }
 
-        // preload the fonts by adding text, else they wont be fully loaded :\
-        const families = game.gui.fonts;
-        const styles = ['normal', 'italic'];
-        const weights = ['normal', 'bold'];
-        const observers = [];
-        for (const family of families) {
-            for (const style of styles) {
-                for (const weight of weights) {
-                    const o = new FontFaceObserver(family, { weight, style });
-                    if (game.config.debugMode) {
-                        console.log('Preloading font', o);
-                    }
-                    observers.push(o.load().catch((err) => {
-                        console.warn('Font not available', o, err);
-                    }));
-                }
-            }
-        }
-
-        await Promise.all(observers);
         game.state.add('preloadStory', PreloadStory);
         game.state.start('preloadStory');
     }
