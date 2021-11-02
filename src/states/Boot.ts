@@ -1,7 +1,7 @@
 import jsyaml from 'js-yaml'
 import {loadStyle, preparePath} from './utils';
 import RJSState from './RJSState';
-import {Sprite} from 'phaser-ce';
+import {Sprite, Text} from 'phaser-ce';
 import PreloadStory from './PreloadStory';
 import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
 import RJSGUIByNewBuilder from '../gui/RJSGUIByNewBuilder';
@@ -87,16 +87,21 @@ class Boot extends RJSState {
             console.error("Check the docs at http://renjs.net/docs-page.html")
         }
 
-        for (const font of game.gui.fonts) {
-            if (game.config.debugMode) {
-                console.log('Preloading the font ' + font + ' by adding hidden text'); // Else they wont be fully loaded and show FOUT
+        // preload the fonts by adding text, else they wont be fully loaded :\
+        const families = game.gui.fonts;
+        const styles = ['normal', 'italic', 'oblique'];
+        const weights = ['normal', 'bold'];
+        for (const family of families) {
+            for (const style of styles) {
+                for (const weight of weights) {
+                    const font = `${style} ${weight} 1px ${family}`;
+                    if (game.config.debugMode) {
+                        console.log(`Preloading the font "${font}" by adding hidden text`);
+                    }
+                    const t = new Text(game, 0, 0, ' ', { font });
+                    t.destroy();
+                }
             }
-            game.add.text(20, -100, font, { font: 'normal normal 42px ' + font });
-            game.add.text(20, -100, font, { font: 'normal bold 42px ' + font });
-            game.add.text(20, -100, font, { font: 'italic normal 42px ' + font });
-            game.add.text(20, -100, font, { font: 'italic bold 42px ' + font });
-            game.add.text(20, -100, font, { font: 'oblique normal 42px ' + font });
-            game.add.text(20, -100, font, { font: 'oblique bold 42px ' + font });
         }
         game.state.add('preloadStory', PreloadStory);
         game.state.start('preloadStory');
