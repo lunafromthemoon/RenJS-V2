@@ -54,7 +54,7 @@ class Boot extends RJSState {
         }
     }
 
-    async create (game: RJS): Promise<void> {
+    create (game: RJS): void {
         new RJSLoadingScreen(this.game);
         this.input.onDown.addOnce(()=> {
             if (this.sound.context.state === 'suspended') {
