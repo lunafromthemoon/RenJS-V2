@@ -38,12 +38,17 @@ export default class StoryActionShow extends StoryAction {
             this.properties.layer = layer;
         }
         // parse look if its a character
-        if (this.actorType == 'character'){
+        if (this.actorType == 'characters'){
             this.properties.look = this.params[0];
             if (this.game.managers.story.reservedWords.includes(this.properties.look)){
                 this.properties.look = null;
             }
+            if (!this.properties.look){
+                // default look
+                this.properties.look = 'normal';
+            }
         }
+
 
     }
 
