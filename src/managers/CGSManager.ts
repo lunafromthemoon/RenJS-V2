@@ -50,6 +50,7 @@ export default class CGSManager implements CGSManagerInterface {
             }
             this.cgs[name] = this.game.managers.story[props.layer].create(position.x, position.y, name);
             this.cgs[name].anchor.set(0.5);
+            this.cgs[name].updateTransform();
             this.cgs[name].alpha = 0;
             
             if (this.game.setup.cgs[name].animations) {
