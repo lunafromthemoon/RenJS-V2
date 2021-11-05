@@ -2,36 +2,40 @@
   "name": "renjs",
   "version": "2.2.1",
   "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
-  "main": "dist/renjs.js",
-  "files": [
-    "dist"
+  "author": "lunafromthemoon",
+  "contributors": [
+    "RockDaFox"
   ],
-  "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --hot --progress",
-    "build": "webpack --config webpack.prod.js && cp `ls -rt ./dist/* | tail -1` ./dist/renjs.js",
-    "lint": "eslint \"./src/**/*.{j,t}s\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build"
+  "license": "Creative Commons Attribution Share Alike 4.0 International",
+  "repository": "github:lunafromthemoon/RenJS",
+  "bugs": {
+    "url": "https://github.com/lunafromthemoon/RenJS/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lunafromthemoon/RenJS.git"
-  },
+  "homepage": "https://renjs.net",
   "keywords": [
     "engine",
     "visual",
     "novel",
     "phaser"
   ],
-  "author": "lunafromthemoon",
-  "contributors": [
-    "RockDaFox"
+  "files": [
+    "dist"
   ],
-  "license": "Creative Commons Attribution Share Alike 4.0 International",
-  "bugs": {
-    "url": "https://github.com/lunafromthemoon/RenJS/issues"
+  "main": "dist/renjs.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.dev.js --hot --progress",
+    "build": "webpack --config webpack.prod.js",
+    "lint": "eslint \"./src/**/*.{j,t}s\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepack": "npm run build"
   },
-  "homepage": "https://github.com/lunafromthemoon/RenJS#readme",
+  "dependencies": {
+    "fontfaceobserver": "^2.1.0",
+    "js-yaml": "^3.14.0",
+    "object-hash": "^2.0.3",
+    "phaser-ce": "^2.16.0"
+  },
   "devDependencies": {
     "@types/fontfaceobserver": "^2.1.0",
     "@types/js-yaml": "^3.12.5",
@@ -52,12 +56,5 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.1.1"
-  },
-  "dependencies": {
-    "fontfaceobserver": "^2.1.0",
-    "js-yaml": "^3.14.0",
-    "object-hash": "^2.0.3",
-    "phaser-ce": "^2.16.0"
-  },
-  "types": "./types/renjs.d.ts"
+  }
 }
