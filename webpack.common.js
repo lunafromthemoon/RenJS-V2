@@ -8,7 +8,7 @@ const p2 = path.join(phaserModule, 'build/custom/p2.js')
 module.exports = {
     target: "web",
     output: {
-        filename: '[name].js',
+        filename: 'renjs.js',
         library: 'RenJS',
         libraryTarget: "var",
         globalObject: "this"
