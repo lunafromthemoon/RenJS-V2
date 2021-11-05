@@ -10,7 +10,6 @@ module.exports = {
     target: "web",
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
         library: 'RenJS',
         libraryTarget: "var",
         globalObject: "this"
