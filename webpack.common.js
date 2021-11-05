@@ -1,5 +1,4 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const phaserModule = path.join(__dirname, '/node_modules/phaser-ce/')
 const phaser = path.join(phaserModule, 'build/custom/phaser-split.js')
@@ -30,8 +29,5 @@ module.exports = {
             'pixi': pixi,
             'p2': p2
         }
-    },
-    plugins: [
-        new CleanWebpackPlugin()
-    ]
+    }
 };
