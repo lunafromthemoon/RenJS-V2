@@ -1,0 +1,49 @@
+backgrounds:
+  store: assets/backgrounds/store.jpg
+  street_morning: assets/backgrounds/school_front_morning.jpg
+
+characters:
+  marco:
+    displayName: Marco
+    speechColour: "#123022"
+    looks:
+      normal: assets/characters/Char1NormalSchool.png
+      happy: assets/characters/Char1HappySchool.png
+      angry: assets/characters/Char1AngrySchool.png
+      worry: assets/characters/Char1WorrySchool.png
+  jair:
+    displayName: Jair
+    speechColour: "#6a2b2b"
+    looks:
+      normal: assets/characters/Char4NormalSchool.png
+      happy: assets/characters/Char4HappySchool.png
+      angry: assets/characters/Char4AngrySchool.png
+  liz:
+    displayName: Liz
+    speechColour: "#d5e6e7"
+    looks:
+      normal: assets/characters/Char2NormalSchool.png
+      happy: assets/characters/Char2HappySchool.png
+      angry: assets/characters/Char2AngrySchool.png
+
+music:
+  rainBGS: assets/audio/Rain.mp3
+sfx:
+  thunderSFX: assets/audio/thunder_strike_1.mp3
+  lashSFX: assets/audio/51755__erkanozan__whip-01.wav
+extra:
+  image:
+    title: assets/gui/titles.png
+    rain: assets/ambient/rain.png
+    thunder: assets/effects/Thunder_Effect.png
+    attack: assets/effects/Attack_1.png
+    chainattack1: assets/effects/Attack_2.png
+    chainattack2: assets/effects/Attack_3.png
+    chainattack3: assets/effects/Attack_4.png
+    multiattack: assets/effects/Attack_5.png
+  spritesheets:
+    snowflakes: assets/ambient/snowflakes.png 17 17
+    snowflakes_large: assets/ambient/snowflakes_large.png 64 64
+    sakura: assets/ambient/sakura-petals.png 17 26
+
+

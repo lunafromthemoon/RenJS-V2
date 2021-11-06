@@ -1,0 +1,30 @@
+backgrounds:
+  room: assets/backgrounds/room_day.jpg
+  room_night: assets/backgrounds/room_night.jpg
+  room_night_light: assets/backgrounds/room_night_light.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+
+music:
+  rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+  morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
+
+pointAndClick:
+  room:
+    rat: rat 50 300 ratScene
+    slime: slime 500 300 slimeSceneDay
+  room_night:
+    bat: bat 200 50 batScene
+
+extra:
+  spritesheets:
+    bat: assets/objects/bat.png 400 238
+    rat: assets/objects/rat.png 250 210
+    slime: assets/objects/slime.png 250 187

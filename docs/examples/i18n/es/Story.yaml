@@ -1,0 +1,42 @@
+start:
+  - play morningBGM:
+  - show room: WITH FADE CONTINUE
+  - show deuzi: happy AT CENTER WITH FADE
+  - deuzi says: ¡Hola, bienvenide a la (bold)Guía de inicio rápido!(end)
+  - wait: 300
+  - deuzi says normal: ¿Estás liste para crear tu propia novela visual?
+  - choice:
+    - "¡Si!":
+      - deuzi says happy: ¡Muy bien, adelante!
+    - "¡Todavía no!":
+      - deuzi says: Estaré aquí cuando quieras empezar.
+  - deuzi says normal: Si es tu primera vez aquí, no olvides jugar (bold)el Tutorial(end), donde mis amigos y yo te enseñaremos los elementos básicos de RenJS.
+  - deuzi says happy: Y si ya tienes algo de experiencia, ya puedes comenzar a escribir tu historia.
+  - scene: endGame
+
+endGame:
+  - deuzi says normal: Fin del Quickstart!
+  - hide ALL:
+  - effect ROLLINGCREDITS:
+    endGame: true
+    text:
+      - RenJS.V2 creado por
+      - lunafromthemoon
+      - null
+      - En colaboración con
+      - RockDaFox
+      - Sean S. LeBlanc
+      - null
+      - Con el poder de PhaserJS
+      - null
+      - Gracias por jugar
+      - La guía de inicio rápido
+      - null
+      - fondos y cgs por
+      - konett
+      - null
+      - personajes por
+      - Shida
+      - null
+      - música por
+      - Evan Schaeffer

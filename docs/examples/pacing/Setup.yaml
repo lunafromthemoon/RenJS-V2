@@ -1,0 +1,35 @@
+backgrounds:
+  store: assets/backgrounds/store.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    voice: voiceHigh
+    looks:
+      normal: assets/characters/Char3Normal.png
+      happy: assets/characters/Char3Happy.png
+      angry: assets/characters/Char3Angry.png
+  liz:
+    displayName: Liz
+    speechColour: "#d5e6e7"
+    voice: voiceMedium
+    looks:
+      normal: assets/characters/Char2Normal.png
+      happy: assets/characters/Char2Happy.png
+      angry: assets/characters/Char2Angry.png
+  jair:
+    displayName: Jair
+    speechColour: "#6a2b2b"
+    voice: voiceLow
+    looks:
+      normal: assets/characters/Char4Normal.png
+      happy: assets/characters/Char4Happy.png
+      angry: assets/characters/Char4Angry.png
+
+music:
+  storeBGM: assets/audio/Evan_Schaeffer_-_18_-_Big_Tree.mp3
+sfx:
+  voiceLow: assets/voices/lowvoice.wav
+  voiceHigh: assets/voices/highvoice.wav
+  voiceMedium: assets/voices/mediumvoice.wav
