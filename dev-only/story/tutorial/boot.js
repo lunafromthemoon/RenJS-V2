@@ -5,29 +5,28 @@ const globalConfig =  {
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
-    fade: true,
-    'background': 'assets/gui_pink/loaderasset1.png',
+    'fade':true,
+    'background': 'assets/gui/quickstartbg.png',
     'loadingBar': {
-      'asset': 'assets/gui_pink/loaderasset2.png',
-      "position": {
-        "x": 82,
-        "y": 460
+      'asset': 'assets/gui/loaderloading-bar.png',
+      'position': {
+        'x': 109,
+        'y': 458
       },
-      "size": {
-        "w": 636,
-        "h": 84
+      'size': {
+        'w': 578,
+        'h': 82
       }
     }
   },
   'logChoices': true,
   'fonts': 'assets/gui/fonts.css',
-  'guiConfig': 'story/GUI.yaml',
+  'guiConfig': 'story/NewGUI.yaml',
   'storyConfig': 'story/Config.yaml',
   storySetup: 'story/tutorial/Setup.yaml',
   'storyText': [
     'story/tutorial/Story.yaml'
-  ],
-  debugMode:true
+  ]
 }
 
 const RenJSGame = new RenJS.game(globalConfig)

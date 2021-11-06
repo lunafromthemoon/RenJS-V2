@@ -22,7 +22,7 @@ enterSchool:
   - show school_morning: WITH FADE CONTINUE
   - show deuzi: WITH FADE
   - deuzi says: Are you ready?
-  - effect SHOWTITLE: 
+  - call SHOWTITLE: 
     title: Lesson 1
     subtitle: The basics 
   - deuzi says: First things first, let's see what we need to start.
@@ -43,7 +43,6 @@ enterSchool:
     - I have it!:
       - deuzi says happy: Great! What a hardworking student!
     - Not yet:
-      - show deuzi: angry
       - deuzi says angry: What are you waiting for!?
       - deuzi says normal: Go do it, I'll wait...
       - choice:
@@ -142,7 +141,7 @@ storySetup:
   - jair says: I'm Jair, btw.
   - jair says: But you should know that, since my name is on display right above the text box.
   - jair says: I'm here to show you how to setup your story.
-  - effect SHOWTITLE: 
+  - call SHOWTITLE: 
     title: Lesson 2
     subtitle: Setting up the story
   - jair says: All the setup is contained in the Setup.yaml file.
@@ -327,7 +326,7 @@ writingTheStory:
   - liz says: Hi! I'm Liz and I'll be your writing mentor.
   - liz says: Here we'll see how to actually write the story.
   - liz says happy: Are you ready!?
-  - effect SHOWTITLE: 
+  - call SHOWTITLE: 
     title: Lesson 3
     subtitle: Writing Part 1
   - liz says normal: First thing you need to know about a story is that it's divided in scenes.
@@ -570,7 +569,7 @@ day2:
   - show liz: WITH FADE
   - liz says: Good morning!
   - liz says: Let's start right away.
-  - effect SHOWTITLE: 
+  - call SHOWTITLE: 
     title: Lesson 4
     subtitle: Writing Part 2
   - liz says: Today we're going to see a very important part of writing interactive fiction.
@@ -667,7 +666,7 @@ lessonStoryFlux:
   - marco says normal: All right, so, as I've gotten out of bed, washed my face and came here on the right day at the right time.
   - marco says: Now I can tell you.
   - marco says happy: Hi! My name is Marco, and I'll be teaching you about logic and variables.
-  - effect SHOWTITLE: 
+  - call SHOWTITLE: 
     title: Lesson 5
     subtitle: Story Flux
   - marco says normal: This is lesson 5 of the course, that means you should already know about choices.
@@ -794,7 +793,7 @@ lastClass:
   - deuzi says: One last lesson and you can start writing!
   - deuzi says happy: For this lesson, I'll be your teacher.
   - deuzi says: It'll be a lot of fun!
-  - effect SHOWTITLE: 
+  - call SHOWTITLE: 
     title: Lesson 6
     subtitle: GUI and Configuration
   - deuzi says normal: So, a GUI, or Graphical User Interface , constitutes most of the look and feel of your story.
