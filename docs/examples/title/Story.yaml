@@ -1,0 +1,20 @@
+start:
+  - show store: CONTINUE
+  - show marco: 
+  - marco says: Let's see, next we have...
+  - call SHOWTITLE:
+    title: Act III
+    subtitle: Fighting under the Rain
+  - marco says worry: What? That's not right.
+  - show jair: happy AT RIGHT
+  - jair says: That's right, get ready!
+  - marco says normal: Wait, I think there's a better way to solve this.
+  - show jair: normal WITH CUT
+  - call SHOWTITLE:
+    title: Act IV
+    subtitle: No More Rain nor Fights
+  - marco says happy: Much better.
+  - jair says angry: What? That makes no sense. I'm outta here.
+  - hide jair:
+  - marco says: Bye bye!
+  - endgame:

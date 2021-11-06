@@ -1,0 +1,23 @@
+backgrounds:
+  store: assets/backgrounds/store.jpg
+
+characters:
+  marco:
+    displayName: Marco
+    speechColour: "#123022"
+    looks:
+      normal: assets/characters/Char1NormalSchool.png
+      happy: assets/characters/Char1HappySchool.png
+      angry: assets/characters/Char1AngrySchool.png
+      worry: assets/characters/Char1WorrySchool.png
+  jair:
+    displayName: Jair
+    speechColour: "#6a2b2b"
+    looks:
+      normal: assets/characters/Char4NormalSchool.png
+      happy: assets/characters/Char4HappySchool.png
+      angry: assets/characters/Char4AngrySchool.png
+
+extra:
+  image:
+    title: assets/lessons/titles.png

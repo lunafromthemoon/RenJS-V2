@@ -1,0 +1,59 @@
+start:
+  - show store:
+  - show marco: 
+  - marco says: It looks like there's going to be a storm.
+  - effect FLASHIMAGE:
+    screenShake: true
+    sfx: thunderSFX
+    image: thunder
+  - marco says happy: Here it is!
+  - ambient RAIN:
+  - text: It will get worse in 3...
+  - text: 2...
+  - text: 1...
+  - text: Now
+  - ambient CLEAR:
+  - ambient HEAVYRAIN:
+  - marco says: The storm is getting worse, I should go back.
+  - text: Rain will stop in 3...
+  - text: 2...
+  - text: 1...
+  - text: Now
+  - ambient CLEAR:
+  - marco says: That's much better
+  - ambient SNOW:
+  - marco says worry: Oh no
+  - show jair: angry AT RIGHT
+  - jair says: Not so fast! Let's battle!
+  - marco says: You leave me no choice.
+  - marco says angry: Take this!
+  - effect ATTACK:
+  - hide jair:
+  - ambient CLEAR:
+  - marco says: It's time to go home.
+  - hide ALL:
+  - show street_morning:
+  - show liz: 
+  - ambient SAKURA:
+  - liz says happy: What a beautiful morning.
+  - liz says: There are cherry blossoms everywhere!
+  - ambient CLEAR:
+  - hide ALL:
+  - effect ROLLINGCREDITS:
+    endGame: true
+    text:
+      - asdf
+      - qwer
+      - null
+      - asdf
+      - qwer
+      - null
+      - null
+      - asdf
+      - qwer
+      - null
+      - characters by
+      - Shida
+      - null
+      - music by
+      - Evan Schaeffer

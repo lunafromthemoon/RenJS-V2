@@ -1,0 +1,70 @@
+start:
+  - play storeBGM:
+  - show store: CONTINUE
+  - show liz: normalC AT 500,600 CONTINUE
+  - show deuzi: normalC AT 300,600 CONTINUE
+  - show jair: normalC AT LEFT CONTINUE FLIP
+  - show marco: normalC CONTINUE AT RIGHT
+  - choice:
+    - marco says: So, who's your first pick?
+    - Liz:
+      - var partner1: Liz
+      - liz says happyC: See you later then!
+      - hide liz:
+    - Deuzilene:
+      - var partner1: Deuzilene
+    - Jair:
+      - var partner1: Jair
+      - jair says angryC: Uh? Are you sure about that? We'll see then.
+      - hide jair:
+  - if ({partner1} == "Deuzilene"):
+    - deuzi says happyC: I knew it!
+    - hide deuzi:
+  - else:
+    - deuzi says angryC: What? How could you!
+    - show deuzi: normalC WITH CUT
+  - marco says: Ok, now choose a second one, just in case.
+  - scene: secondPartner
+
+secondPartner:
+  - choice:
+    - Liz !if ({partner1}!="Liz"):
+      - var partner2: Liz
+      - liz says happyC: See you later then!
+      - hide liz:
+    - Deuzilene !if ({partner1}!="Deuzilene"):
+      - var partner2: Deuzilene
+      - deuzi says angryC: About time!
+      - hide deuzi:
+    - Jair !if ({partner1}!="Jair"):
+      - var partner2: Jair
+      - jair says angryC: Uh? Are you sure about that? We'll see then.
+      - hide jair:
+    - Marco !if (!{choseMarco}):
+      - marco says: What? You can't choose me!
+      - var choseMarco: true
+      - marco says: So, who's it going to be?
+      - scene: secondPartner
+  - marco says: Ok, all set, we should be going...
+  - hide CHARS:
+  - marco says: Wait!!!
+  - show marco: happyC AT CENTER
+  - marco says: I almost forgot, I was told you haven't got a phone yet, so you can have one of mine. Choose one.
+  - visualchoice:
+    - phone1 AT 620,300:
+      - var phone: phone1
+    - phone2 AT 180,300:
+      - var phone: phone2
+  - marco says normalC: Ok, to summarize, your partners are {partner1} and {partner2}.
+  - marco says: I'll give you a call to your new phone.
+  - if ({phone}=="phone1"):
+    - show phone1: AT 620,300
+    - play ringtoneSFX:
+    - text: Tururu Ruru Ruru Ruruuuu
+  - else:
+    - show phone2: AT 620,300
+    - play ringtoneSFX2:
+    - text: Pi Pi Ri Pi Ripi Pi Ri
+  - marco says: Now go, your partners are waiting.
+  - hide ALL:
+  - endgame:

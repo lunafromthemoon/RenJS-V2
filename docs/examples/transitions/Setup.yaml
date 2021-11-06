@@ -1,0 +1,31 @@
+
+backgrounds:
+  store: assets/backgrounds/store.jpg
+  room_night: assets/backgrounds/room_night.jpg
+  room_night_light: assets/backgrounds/room_night_light.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+  liz:
+    displayName: Liz
+    speechColour: "#d5e6e7"
+    looks:
+      normal: assets/characters/Char2NormalSchool.png
+      normalC: assets/characters/Char2Normal.png
+  jair:
+    displayName: Jair
+    speechColour: "#6a2b2b"
+    looks:
+      normal: assets/characters/Char4NormalSchool.png
+cgs:
+  phone1: assets/objects/phone1.png
+  phone2: assets/objects/phone2.png
+
+# music:
+#   rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+#   morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
+

@@ -4,7 +4,8 @@
   "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
   "author": "lunafromthemoon",
   "contributors": [
-    "RockDaFox"
+    "RockDaFox",
+    "Sean S. LeBlanc"
   ],
   "license": "Creative Commons Attribution Share Alike 4.0 International",
   "repository": "github:lunafromthemoon/RenJS",

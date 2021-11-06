@@ -1,0 +1,62 @@
+start:
+  - show room_night: CONTINUE
+  - show deuzi: normal AT CENTER WITH FADE
+  - deuzi says: Let me introduce you to...
+  - show horse: AT 180,320
+  - deuzi says happy: The horse of spring!
+  - text: Non looped animation, normal way.
+  - animate horse:
+    spritesheet: head
+  - deuzi says normal: The animations can be player normally or backwards.
+  - animate horse:
+    spritesheet: head BACKWARDS
+  - deuzi says: Animation can also be looped.
+  - text: Looped animation with timer.
+  - animate horse:
+    spritesheet: run LOOPED
+    time: 1500
+  - deuzi says: When the animation stops, the image will freeze in whatever frame it gets to.
+  - deuzi says: If you want to reset it to the normal view, call animation stop.
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says: While the horse runs looped, other stuff can happen too, if you skip the time parameter.
+  - text: Looped animation without timer.
+  - animate horse:
+    spritesheet: run LOOPED
+  - text: Stop looped animation.
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says: And animation modes can be combined.
+  - text: Animate spritesheet and tween position.
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 650
+      y: 320
+    time: 2000
+  - animate horse:
+    spritesheet: STOP
+  - text: Flip horse and make it run and disappear.
+  - show horse: FLIP WITH CUT
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 180
+      y: 320
+    alpha: 0
+    time: 1500
+  - hide horse: WITH CUT
+  - deuzi says: Cgs can now also be placed behind characters.
+  - show horse: AT 180,320 BEHIND
+  - deuzi says: Check how the horse runs behind me.
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 650
+      y: 320
+    time: 2000
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says happy: And that's all about the animations!
+  - hide ALL: WITH FADE
+  - endgame:

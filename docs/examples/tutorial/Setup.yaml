@@ -1,0 +1,195 @@
+backgrounds:
+  bus_station: assets/backgrounds/bus_station_afternoon.jpg
+  room: assets/backgrounds/room_day.jpg
+  room_night: assets/backgrounds/room_night.jpg
+  room_night_light: assets/backgrounds/room_night_light.jpg
+  school_morning: assets/backgrounds/school_corridor.jpg
+  school_afternoon: assets/backgrounds/school_corridor_afternoon.jpg
+  street_morning: assets/backgrounds/school_front_morning.jpg
+  street_afternoon: assets/backgrounds/school_front_afternoon.jpg
+  store: assets/backgrounds/store.jpg
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+      normalC: assets/characters/Char3Normal.png
+      happyC: assets/characters/Char3Happy.png
+      angryC: assets/characters/Char3Angry.png
+  liz:
+    displayName: Liz
+    speechColour: "#d5e6e7"
+    looks:
+      normal: assets/characters/Char2NormalSchool.png
+      happy: assets/characters/Char2HappySchool.png
+      angry: assets/characters/Char2AngrySchool.png
+      normalC: assets/characters/Char2Normal.png
+      happyC: assets/characters/Char2Happy.png
+      angryC: assets/characters/Char2Angry.png
+  marco:
+    displayName: Marco
+    speechColour: "#123022"
+    looks:
+      normal: assets/characters/Char1NormalSchool.png
+      happy: assets/characters/Char1HappySchool.png
+      angry: assets/characters/Char1AngrySchool.png
+      worry: assets/characters/Char1WorrySchool.png
+      normalC: assets/characters/Char1Normal.png
+      happyC: assets/characters/Char1Happy.png
+      angryC: assets/characters/Char1Angry.png
+  jair:
+    displayName: Jair
+    speechColour: "#6a2b2b"
+    looks:
+      normal: assets/characters/Char4NormalSchool.png
+      happy: assets/characters/Char4HappySchool.png
+      angry: assets/characters/Char4AngrySchool.png
+      normalC: assets/characters/Char4Normal.png
+      happyC: assets/characters/Char4Happy.png
+      angryC: assets/characters/Char4Angry.png
+cgs:
+  phone1: assets/objects/phone1.png
+  phone2: assets/objects/phone2.png
+  folders: assets/lessons/folders.png
+  setupbg: assets/lessons/lessonsetupbg.png
+  setupch: assets/lessons/lessonsetupch.png
+  setupcgs: assets/lessons/lessonsetupcgs.png
+  setupaudio: assets/lessons/lessonsetupaudio.png
+  lessonSceneStart: assets/lessons/lessonscenestart.png
+  lessonSceneHide: assets/lessons/lessonscenehide.png
+  setupExtraAssets: assets/lessons/lessonsetupextra.png
+  ambientAndEffects: assets/lessons/lessonambientandeffect.png
+  lessonRenJSConfig: assets/lessons/lessonrenjsconfig.png
+  lessonScene: assets/lessons/lessonscene.png
+  lessonChoice: assets/lessons/lessonchoice.png
+  lessonVisualChoice: assets/lessons/lessonvisualchoice.png
+  lessonVarsNumeric: assets/lessons/lessonvarsnumeric.png
+  lessonVarsBoolean: assets/lessons/lessonvarsboolean.png
+  lessonVarsBooleanCont: assets/lessons/lessonvarsbooleancont.png
+  lessonVarsString: assets/lessons/lessonvarsstring.png
+  lessonIf: assets/lessons/lessonif.png
+  lessonIfCont: assets/lessons/lessonifcont.png
+  lessonConfigPosition: assets/lessons/lessonconfigposition.png
+  lessonPositionExample: assets/lessons/lessonconfigposition2.png
+  lessonConfigTransition: assets/lessons/lessonconfigtransition.png
+  lessonConfigTime: assets/lessons/lessonconfigtimes.png
+music:
+  rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+  morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
+  storeBGM: assets/audio/Evan_Schaeffer_-_18_-_Big_Tree.mp3
+  cicadas: assets/audio/Cicada.mp3
+  rainBGS: assets/audio/Rain.mp3
+sfx:
+  ringtoneSFX: assets/audio/nokia6210-24-elise.mp3
+  ringtoneSFX2: assets/audio/alcatel-top_secret.mp3
+  thunderSFX: assets/audio/thunder_strike_1.mp3
+extra:
+  image:
+    title: assets/lessons/titles.png
+    rain: assets/ambient/rain.png
+    thunder: assets/effects/Thunder_Effect.png
+  spritesheets:
+    sakura: assets/ambient/sakura-petals.png 17 26
+    snowflakes: assets/ambient/snowflakes.png 17 17
+    snowflakes_large: assets/ambient/snowflakes_large.png 64 64
+  # scripts:
+  #   marble: assets/ambient/Marble.js
+  #   lightbeam: assets/ambient/LightBeam.js
+
+lazyloading: 
+  findAssets: false
+  loadingScreen: true
+  backgroundLoading: true
+  episodes: 
+    - [start, enterSchool]
+    - [storySetup, writingTheStory]
+    - [interval, storeAtNight,backToTheRoom]
+    - [day2, lessonStoryFlux,lastClass,graduation]
+  assetsPerScene:
+    start:
+      morningBGM: music
+      street_morning: backgrounds
+      deuzi: characters
+    enterSchool:
+      title: image
+      school_morning: backgrounds
+      deuzi: characters
+      folders: cgs
+      lessonRenJSConfig: cgs
+    storySetup:
+      title: image
+      jair: characters
+      setupbg: cgs
+      school_afternoon: backgrounds
+      deuzi: characters
+      setupch: cgs
+      setupcgs: cgs
+      phone1: cgs
+      phone2: cgs
+      setupaudio: cgs
+      ringtoneSFX: sfx
+    writingTheStory:
+      liz: characters
+      lessonSceneStart: cgs
+      lessonSceneHide: cgs
+    interval:
+      cicadas: music
+      room_night: backgrounds
+      room_night_light: backgrounds
+      deuzi: characters
+    storeAtNight:
+      rain: image
+      rainBGS: music
+      thunder: image
+      thunderSFX: sfx
+      storeBGM: music
+      store: backgrounds
+      liz: characters
+      deuzi: characters
+      jair: characters
+      marco: characters
+      ambientAndEffects: cgs
+      setupExtraAssets: cgs
+    backToTheRoom:
+      cicadas: music
+      room_night: backgrounds
+      room_night_light: backgrounds
+    day2:
+      ringtoneSFX: sfx
+      ringtoneSFX2: sfx
+      title: image
+      morningBGM: music
+      school_morning: backgrounds
+      deuzi: characters
+      liz: characters
+      lessonChoice: cgs
+      lessonScene: cgs
+      lessonVisualChoice: cgs
+      marco: characters
+    lessonStoryFlux:
+      marco: characters
+      lessonVarsNumeric: cgs
+      lessonVarsBoolean: cgs
+      lessonVarsBooleanCont: cgs
+      lessonVarsString: cgs
+      lessonIf: cgs
+      lessonIfCont: cgs
+    lastClass:
+      school_afternoon: backgrounds
+      deuzi: characters
+      lessonConfigPosition: cgs
+      lessonPositionExample: cgs
+      lessonConfigTransition: cgs
+      lessonConfigTime: cgs
+    graduation:
+      street_afternoon: backgrounds
+      deuzi: characters
+      liz: characters
+      jair: characters
+      marco: characters
+    invitationScene:
+      phone2: cgs
+      ringtoneSFX: sfx
