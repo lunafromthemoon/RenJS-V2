@@ -1,0 +1,15 @@
+
+
+      @font-face {
+
+          font-family: 'fontsaudimat-mono';
+
+          src: url('/assets/gui/fontsfontsaudimat-mono.ttf');
+
+          src: url('/assets/gui/fontsfontsaudimat-mono.ttf').format('truetype');
+
+          font-weight: normal;
+
+          font-style: normal;
+
+      }
