@@ -29,7 +29,7 @@
     "build": "webpack --config webpack.prod.js",
     "build:docs": "./scripts/build-docs.sh",
     "lint": "eslint \"./src/**/*.{j,t}s\"",
-    "prepack": "npm run build"
+    "prepack": "npm run build && npm run build:docs"
   },
   "release": {
     "plugins": [
