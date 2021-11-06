@@ -8,7 +8,10 @@
     "Sean S. LeBlanc"
   ],
   "license": "Creative Commons Attribution Share Alike 4.0 International",
-  "repository": "github:lunafromthemoon/RenJS",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lunafromthemoon/RenJS-V2.git"
+  },
   "bugs": {
     "url": "https://github.com/lunafromthemoon/RenJS/issues"
   },
