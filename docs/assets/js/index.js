@@ -1,13 +1,13 @@
 window.copyLink = function copy() {
-  var copyText = document.querySelector("#cdn-link");
-  copyText.value = "https://cdn.jsdelivr.net/gh/lunafromthemoon/RenJS-V2@latest/dist/renjs.min.js";
+  var copyText = document.querySelector("#site-link");
+  copyText.value = "https://renjs.net/downloads/releases/renjs.js";
   copyText.select();
   document.execCommand("copy");
 }
 
 window.copyTag = function copy() {
-  var copyText = document.querySelector("#cdn-link");
-  copyText.value = '<script src="https://cdn.jsdelivr.net/gh/lunafromthemoon/RenJS-V2@latest/dist/renjs.min.js"></script>';
+  var copyText = document.querySelector("#site-link");
+  copyText.value = '<script src="https://renjs.net/downloads/releases/renjs.js"></script>';
   copyText.select();
   document.execCommand("copy");
 }

@@ -1,5 +1,4 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const phaserModule = path.join(__dirname, '/node_modules/phaser-ce/')
 const phaser = path.join(phaserModule, 'build/custom/phaser-split.js')
@@ -8,12 +7,8 @@ const p2 = path.join(phaserModule, 'build/custom/p2.js')
 
 module.exports = {
     target: "web",
-    entry: {
-        renjs: path.join(__dirname, 'src/renjs.ts'),
-    },
     output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: 'renjs.js',
         library: 'RenJS',
         libraryTarget: "var",
         globalObject: "this"
@@ -34,8 +29,5 @@ module.exports = {
             'pixi': pixi,
             'p2': p2
         }
-    },
-    plugins: [
-        new CleanWebpackPlugin()
-    ]
+    }
 };

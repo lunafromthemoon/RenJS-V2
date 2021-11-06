@@ -1,17 +1,10 @@
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
-const path = require('path');
-
-var PACKAGE = require('./package.json');
-var version = PACKAGE.version;
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
-    output: {
-        filename: `[name]-v${version}.js`,
-        path: path.resolve(__dirname, 'dist'),
-        library: 'RenJS',
-        libraryTarget: "var",
-        globalObject: "this"
-    }
+    plugins: [
+        new CleanWebpackPlugin()
+    ]
 })

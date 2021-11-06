@@ -1,3 +1,5 @@
+.demo
+
 public
 .idea
 node_modules
@@ -6,5 +8,3 @@ dev-only/story/img
 dev-only/img.html
 dev-only/sadcock.html
 dev-only/story/sadcock
-dist/*
-!dist/renjs.js
