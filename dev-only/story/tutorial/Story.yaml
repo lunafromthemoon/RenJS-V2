@@ -1,5 +1,5 @@
 start:
-  - play morningBGM: LOOPED
+  - play morningBGM:
   - show street_morning: WITH FADE CONTINUE
   - show deuzi: normal AT CENTER WITH FADE
   - wait: 300
@@ -29,7 +29,7 @@ enterSchool:
   - deuzi says: RenJS doesn't come or is tied to any particular IDE (integrated development environment).
   - deuzi says: That is, a program to read and edit the files of the game, like your story script.
   - deuzi says: It doesn't have to be anything big or expensive. It can be any low level text processor you already have installed.
-  - deuzi says happy: "But me, I like to use Brackets, a free and open source text editor, that comes with support for web development."
+  - deuzi says happy: But me, I like to use Brackets, a free and open source text editor, that comes with support for web development.
   - deuzi says: You can find a link to download the Brackets editor below.
   - deuzi says normal: Another thing you will need is RenJS itself.
   - deuzi says: RenJS is the library that will manage the flow, assets and interactivity of your game.
@@ -43,7 +43,7 @@ enterSchool:
     - I have it!:
       - deuzi says happy: Great! What a hardworking student!
     - Not yet:
-      - show deuzi: angry WITH CUT
+      - show deuzi: angry
       - deuzi says angry: What are you waiting for!?
       - deuzi says normal: Go do it, I'll wait...
       - choice:
@@ -88,19 +88,19 @@ enterSchool:
   - deuzi says: But you can make games in any resolution you like, and if you do, you will need to change it right there with the 'w' and 'h' parameters.
   - deuzi says: The second important thing you might need to modify in this file is where to find the story itself.
   - deuzi says: The parameters 'guiConfig', 'storySetup', 'storyConfig' and 'storyText' are just for that.
-  - deuzi says: "All of these point to a YAML file inside the 'story' directory, and they refer to the files that make up your story."
+  - deuzi says: All of these point to a YAML file inside the 'story' directory, and they refer to the files that make up your story.
   - deuzi says: These files can be named whatever you want, but you would need to modify the file path and name here.
   - deuzi says: But the most important thing here is that 'storyText' doesn't just point to a file, but a list of files.
   - deuzi says: That means that you can have as many story text files as you want. In this way, you can organize your story as you like.
   - deuzi says: And all you need to do when you add a new file, is to come and add it to the configuration object in the boot.js file.
-  - deuzi says: "There are a few other parameters there that you might want to modify if you really know what you're doing. But if you leave them as they are, it should be fine."
+  - deuzi says: There are a few other parameters there that you might want to modify if you really know what you're doing. But if you leave them as they are, it should be fine.
   - hide lessonRenJSConfig: 
   - deuzi says: Let's see the next directory. Plugins contains new scripts that you might want to use during your game. 
   - deuzi says: For example, you can code your own special effects, mini games or whatever you want, and they can be added seamlessly to the game with plugins.
   - deuzi says: If you're making a simple game, you shouldn't worry about any of this though.
   - deuzi says: The files that concern you as a writer are inside the story and assets directory.
   - deuzi says: The assets directory contains the images and sounds that make up the game.
-  - deuzi says: "Among these images you will find the backgrounds and characters of the story, but also the Graphical User Interface (GUI) assets."
+  - deuzi says: Among these images you will find the backgrounds and characters of the story, but also the Graphical User Interface (GUI) assets.
   - deuzi says: Going back to the main directories, the last one is called story.
   - deuzi says: If you take a look, you will find four files with the extension yaml.
   - deuzi says: These YAML files are what you will use to make your game.
@@ -147,13 +147,14 @@ storySetup:
     subtitle: Setting up the story
   - jair says: All the setup is contained in the Setup.yaml file.
   - jair says: What this means is...
-  - jair says: All your characters, music, sfx and everything else you're planning to use on the story needs to be declared on this file.
+  - jair says: All your characters, music, sfx and everything else you're planning to use on the story,
+  - jair says: needs to be declared on this file.
   - jair says: That means you need to know everything before you even start to write the story.
   - jair says: What kind of writer doesn't though...
   - wait: 300
-  - jair says happy: Just joking!
-  - jair says: You won't always know what things you need for a story.
-  - jair says: So every time you add some new asset, remember to also add it to the setup file.
+  - jair says : Just joking!
+  - jair says happy: You won't always know what things you need for a story.
+  - jair says: So every time you add something, remember to also add it to the setup file.
   - jair says normal: As Deuzi already said, we'll be using the Quickstart as a base.
   - jair says: But this game comes with the bare minimum.
   - jair says: One background and one character, Deuzilene herself.
@@ -344,7 +345,7 @@ writingTheStory:
   - liz says: First thing we do is play music.
   - liz says: Notice the dash symbol. That dash indicates that this is a single action.
   - liz says: Every action starts with a dash, and has two main parts separated by a colon, the definition and the parameters.
-  - liz says: An action can omit the parameters part, in which case, you simply leave the right side of the action empty.
+  - liz says: An action can omit the parameters part, in which case, you simple leave the right side of the action empty.
   - liz says happy: Still, the colon is important. This first action, 'play', is an example of that.
   - liz says normal: This action will play the music with tag 'morningBGM', no other information is needed.
   - liz says: As you should have seen already with Jair, the file associated with this tag has to be declared in the setup file.
@@ -422,7 +423,7 @@ writingTheStory:
   - scene: interval
 
 interval:
-  - play cicadas: WITH FADE LOOPED
+  - play cicadas: WITH FADE
   - show room_night:
   - show room_night_light: WITH FUSION
   - show deuzi: normalC WITH FADE
@@ -444,14 +445,12 @@ interval:
   - deuzi says: Have you been there already?
   - deuzi says: You can't miss it.
   - deuzi says: So, ready to go?
-  - choice:
-    - Yeah:
-      - deuzi says happyC: Let's go!
+  - deuzi says happyC: Let's go!
   - hide ALL: WITH FADE
   - scene: storeAtNight
 
 storeAtNight:
-  - play storeBGM: LOOPED
+  - play storeBGM:
   - show store: 
   - show liz: happyC WITH FADE
   - liz says: Deuzi!!! Over here!
@@ -515,8 +514,9 @@ storeAtNight:
   - effect SHAKE:
   - liz says: "'SHAKE', a screen shake!"
   - liz says: The thunder from before was also an effect, called FLASHIMAGE.
-  - liz says: "'FLASHIMAGE' will flash an image very quickly, accompanied by a sound effect and a screen shake too, if you want."
-  - liz says: Another handy effect is ROLLINGCREDITS, that takes a list of text lines as parameter and shows them as rolling credits from a film
+  - liz says: "'FLASHIMAGE', will flash an image very quickly, accompanied by a sound effect and a screen shake too, if you want."
+  - liz says: Another handy effect is ROLLINGCREDITS, that takes a list of text lines as parameter.
+  - liz says: And shows them as rolling credits from a film.
   - liz says happyC: You will see them in action at the end of the game!
   - liz says normalC: With just these available options you can already do a lot, but you can also add new effects and ambients as Plugins.
   - liz says: One last thing about this subject.
@@ -541,13 +541,15 @@ storeAtNight:
   - marco says normalC: Hi, new kid!
   - liz says: Do you think you can find your way back to the dorms by yourself?
   - choice:
+    - Yes, no problem:
+      - liz says: Ok, then I guess I'll see you tomorrow, don't be late!
     - Sure:
       - liz says: Ok, then I guess I'll see you tomorrow, don't be late!
   - hide ALL:
   - scene: backToTheRoom
 
 backToTheRoom:
-  - play cicadas: WITH FADE LOOPED
+  - play cicadas: WITH FADE
   - show room_night:
   - show room_night_light: WITH FUSION  
   - text: Your day was very tiring, but you're closer to be a visual novel writer. Tomorrow is going to be another long day, you better rest.
@@ -557,7 +559,7 @@ backToTheRoom:
   - scene: day2
 
 day2:
-  - play morningBGM: LOOPED
+  - play morningBGM:
   - show school_morning: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: Welcome back!
@@ -585,9 +587,10 @@ day2:
   - liz says normal: "Let's see an example:"
   - show lessonChoice:
   - liz says: This part of the story is really recent.
-  - liz says: I asked you something and you had to choose between two different options.
+  - liz says: I asked you something.
+  - liz says: And you could have chosen between two different options.
   - liz says: That is achieved with the action 'choice'.
-  - liz says: This action takes a list of choices, indented by two spaces, and starting each with a dash.
+  - liz says: This action then takes a list of choices, indented by two spaces, and starting each with a dash.
   - liz says: Your choices here were 'Yes, Deuzi asks a lot of questions' and 'I don't think so'.
   - liz says: Inside each option, indented too by two spaces from the choice text, there's a new list.
   - liz says: Those are the actions to execute if that option is chosen.
@@ -608,7 +611,8 @@ day2:
   - liz says: And if she doesn't attend the call or chooses not to go, the scene will continue until the end and change to 'dormsScene'.
   - hide lessonScene:
   - liz says happy: Remember you can always say no to invitations, don't fall for peer pressure.
-  - liz says normal: "There's another way of making a choice: Visual choices."
+  - liz says normal: There's another way of making a choice.
+  - liz says: Visual choices.
   - liz says: With visual choices instead of using a text line, each option is an image you have to click.
   - liz says: Let's see it in action.
   - visualchoice:
@@ -829,7 +833,7 @@ lastClass:
   - deuzi says: Let's see what this file can contains.
   - deuzi says: "As with the other yaml files, the options are each a line or hierarchy with key:value, and indentation is important."
   - show deuzi: AT RIGHT WITH MOVE CONTINUE
-  - show lessonConfigPosition:
+  - show lessonConfigPosition: AT 200,300
   - deuzi says: The first tag, and maybe most important, is the positions.
   - deuzi says: These are the special positions you will have available while writing the game.
   - deuzi says: They depend on the dimensions of the game, since they are expressed in pixels.
@@ -839,7 +843,6 @@ lastClass:
   - deuzi says: So you can see, the CENTER position x is the middle of the screen, but the y is at the bottom. 
   - deuzi says: This will position the characters with their feet on the ground, in the middle of the screen.
   - deuzi says: 'The other position are what you expect:'
-  - hide lessonConfigPosition:
   - show lessonPositionExample:
   - show deuzi: AT CENTER WITH MOVE
   - deuzi says: This is the CENTER position, and there's also an OUTLEFT, that is, outside of the screen on the left side.
@@ -851,6 +854,7 @@ lastClass:
   - deuzi says: Make a character enter or leave the screen gracefully.
   - hide lessonPositionExample:
   - deuzi says: And as I said before, if you want to simply add another special position specific to your game, here is where you can add it.
+  - hide lessonConfigPosition:
   - deuzi says: Next option is 'transitions'.
   - show lessonConfigTransition: AT 300,300
   - deuzi says: You already know a bit about transitions, it's the way to show or hide characters, backgrounds or cgs.
@@ -866,7 +870,7 @@ lastClass:
   - deuzi says normal: Finally, there are some other options to check.
   - show lessonConfigTime: AT 300,300
   - deuzi says: The option 'fadetime' means how much the FADE transitions will take, in milliseconds. 
-  - deuzi says: You can modify this value if you want faster or slower FADE and FUSION transitions.
+  - deuzi says: You can modify this value if you want faster of slower FADE and FUSION transitions.
   - deuzi says: The skip and auto times set the waiting time for each action in their respective modes.
   - deuzi says: For example, on auto play, when text is shown, with a 'text' or 'say' action, the game will wait for a moment before continuing.
   - deuzi says: Skip mode is basically the same as auto play, but really really fast and skipping transitions.
@@ -903,6 +907,7 @@ graduation:
       - null
       - In collaboration with
       - RockDaFox
+      - Sean S. LeBlanc
       - null
       - Inspired by Ren'Py
       - Powered by PhaserJS

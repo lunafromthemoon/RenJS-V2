@@ -11,7 +11,7 @@ backgrounds:
 characters:
   deuzi:
     displayName: Deuzilene
-    speechColour: "#f5a6a9"
+    speechColour: "#ca90cf"
     looks:
       normal: assets/characters/Char3NormalSchool.png
       happy: assets/characters/Char3HappySchool.png

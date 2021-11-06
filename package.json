@@ -33,6 +33,7 @@
     "prepack": "npm run build && npm run build:docs"
   },
   "release": {
+    "branches": [ "main" ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
