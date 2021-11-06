@@ -9,13 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.1.0
+      - run: npm run build:demo
       - uses: josephbmanley/butler-publish-itchio-action@v1.0.2
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: web
           ITCH_GAME: renjs
           ITCH_USER: lunafromthemoon
-          PACKAGE: docs/tutorial
+          PACKAGE: .demo
           VERSION: ${{ steps.package-version.outputs.current-version}}
