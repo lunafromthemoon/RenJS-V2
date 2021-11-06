@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.1.1...v2.1.2) (2021-11-06)
+
+
+### Bug Fixes
+
+* update tutorial ([128289d](https://github.com/lunafromthemoon/RenJS-V2/commit/128289d411d1a0517d421a0cc689935a806b06a1))
+
 ## 2.2.1
 
 * Choices can now have empty options. When the option is empty, the game will simply continue after the choice.

@@ -1,6 +1,6 @@
 {
   "name": "renjs",
-  "version": "2.2.1",
+  "version": "2.1.2",
   "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
   "author": "lunafromthemoon",
   "contributors": [
@@ -36,7 +36,9 @@
     "prepack": "npm run build && npm run build:docs"
   },
   "release": {
-    "branches": [ "main" ],
+    "branches": [
+      "main"
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
