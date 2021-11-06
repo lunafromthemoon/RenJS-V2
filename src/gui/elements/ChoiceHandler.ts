@@ -45,6 +45,10 @@ export default class ChoiceHandler extends Graphics {
                 const box = this.createChoiceBox(choice,this.config.x,this.config.y,index,choices.length,resolve);
                 this.boxes.push(box)
             });
+            const visible = this.visible;
+            this.visible = true;
+            this.updateTransform();
+            this.visible = visible;
             let transition = this.game.screenEffects.transition.get(this.config.transition);
             // wait some miliseconds before showing the boxes so the text is properly set
             setTimeout(()=>{
