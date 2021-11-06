@@ -33,7 +33,7 @@
     "build:docs": "./scripts/build-docs.sh",
     "build:demo": "./scripts/build-demo.sh",
     "lint": "eslint \"./src/**/*.{j,t}s\"",
-    "prepack": "npm run build && npm run build:docs"
+    "postversion": "npm run build && npm run build:docs"
   },
   "release": {
     "branches": [
