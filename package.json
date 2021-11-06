@@ -27,7 +27,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --hot --progress",
     "build": "webpack --config webpack.prod.js",
-    "build:tutorial": "cp dist/renjs.js docs/tutorial/renjs.js && cp dev-only/tutorial.html docs/tutorial/index.html && cp -r dev-only/story docs/tutorial/story && cp -r dev-only/assets docs/tutorial/assets",
+    "build:docs": "./scripts/build-docs.sh",
     "lint": "eslint \"./src/**/*.{j,t}s\"",
     "prepack": "npm run build"
   },
