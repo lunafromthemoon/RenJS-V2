@@ -133,11 +133,12 @@ export default class RJSHUD extends RJSMenu {
             await this.hideVisualChoices();
             resolve(index);
         },this,0,0,0,0);
+        visualChoice.anchor.set(0.5);
+        visualChoice.updateTransform();
         this.visualChoices.addChild(visualChoice);
         if (choice.previouslyChosen){
             visualChoice.tint = toHexColor(defaultChoicesConfig.chosenColor);
         }
-        visualChoice.anchor.set(0.5);
     }
 
     async hideVisualChoices(transitionName?) {

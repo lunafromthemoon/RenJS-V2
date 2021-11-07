@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>RenJS Examples - CGs Animation</title>
+	    <!-- Meta -->
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+
+    	<meta name="title" content="RenJS">
+	    <meta name="description" content="A Visual Novel creator made for writers!">
+	    <meta name="author" content="lunafromthemoon">    
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+
+	    <!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://renjs.fr/">
+		<meta property="og:title" content="RenJS">
+		<meta property="og:description" content="A Visual Novel creator made for writers!">
+		<meta property="og:image" content="assets/images/thumbnail.png">
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://renjs.fr/">
+		<meta property="twitter:title" content="RenJS">
+		<meta property="twitter:description" content="A Visual Novel creator made for writers!">
+		<meta property="twitter:image" content="assets/images/thumbnail.png">
+		
+	    <!-- Google Font -->
+	    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+	    
+	    <!-- FontAwesome JS-->
+	    <script defer src="../assets/fontawesome/js/all.min.js"></script>
+	     <link rel="stylesheet" href="../assets/css/prism.css" />
+
+	    <!-- Theme CSS -->  
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/tabs.css">
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/theme.css">
+	    
+
+
+		
+	</head>
+
+
+	<body style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;margin-right: 0px;">
+		<header class="header fixed-top">	    
+	        <div class="branding docs-branding">
+	            <div class="container-fluid position-relative py-2">
+	                <div class="docs-logo-wrapper">
+		                <div class="site-logo"><a class="navbar-brand" href="../index.html"><img class="logo-icon mr-2" src="../assets/images/renjs-logo.svg" alt="logo"></a></div>    
+	                </div><!--//docs-logo-wrapper-->
+		            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+						<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+							<li class="list-inline-item"><a href="https://github.com/lunafromthemoon/RenJS-V2"><i class="fab fa-github fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="https://twitter.com/lunafromthem00n"><i class="fab fa-twitter fa-fw"></i></a></li>
+			                <li class="list-inline-item"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></li>
+			                <li class="list-inline-item"><a href="https://lunafromthemoon.itch.io/renjs"><i class="fab fa-itch-io"></i></a></li>
+			            </ul><!--//social-list-->
+			            <a href="../index.html#downloads" class="btn btn-primary d-none d-lg-flex">Download</a>
+		            </div><!--//docs-top-utilities-->
+	            </div><!--//container-->
+	        </div><!--//branding-->
+	    </header><!--//header-->
+		
+		<section id="downloads" class="cta-section py-5 theme-bg-dark position-relative">
+			<div class="text-center">
+	   			<img src="../assets/images/renjs-title-white.svg" class="m-3 w-25">
+	   			<h1 class="title text-center text-white mb-5">CGs Animations</h1>
+	   		</div>
+			<div id="renjs-canvas"></div>
+		    <div class="container">
+			   <div class="docs-overview py-5">
+		    		
+		    		  <section class="accordion">
+					    <section class="accordion-tabs">
+					      <button class="accordion-tab accordion-active" data-actab-group="0" data-actab-id="0"><i class="fas fa-pen-alt"></i> Story.yaml</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="1"><i class="fas fa-toolbox"></i> Setup.yaml</button>
+					      <!-- <button class="accordion-tab" data-actab-group="0" data-actab-id="2">Config.YAML</button> -->
+					      <!-- <button class="accordion-tab" data-actab-group="0" data-actab-id="3">boot.js</button> -->
+					      <!-- <button class="accordion-tab" data-actab-group="0" data-actab-id="4">Tab 5</button> -->
+					    </section>
+					    <section class="accordion-content line-numbers">
+					      <article class="accordion-item accordion-active" data-actab-group="0" data-actab-id="0">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-yaml">
+start:
+  - show room_night: CONTINUE
+  - show deuzi: normal AT CENTER WITH FADE
+  - deuzi says: Let me introduce you to...
+  - show horse: AT 180,320
+  - deuzi says happy: The horse of spring!
+  - text: Non looped animation, normal way.
+  - animate horse:
+    spritesheet: head
+  - deuzi says normal: The animations can be player normally or backwards.
+  - animate horse:
+    spritesheet: head BACKWARDS
+  - deuzi says: Animation can also be looped.
+  - text: Looped animation with timer.
+  - animate horse:
+    spritesheet: run LOOPED
+    time: 1500
+  - deuzi says: When the animation stops, the image will freeze in whatever frame it gets to.
+  - deuzi says: If you want to reset it to the normal view, call animation stop.
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says: While the horse runs looped, other stuff can happen too, if you skip the time parameter.
+  - text: Looped animation without timer.
+  - animate horse:
+    spritesheet: run LOOPED
+  - text: Stop looped animation.
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says: And animation modes can be combined.
+  - text: Animate spritesheet and tween position.
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 650
+      y: 320
+    time: 2000
+  - animate horse:
+    spritesheet: STOP
+  - text: Flip horse and make it run and disappear.
+  - show horse: FLIP WITH CUT
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 180
+      y: 320
+    alpha: 0
+    time: 1500
+  - hide horse: WITH CUT
+  - deuzi says: Cgs can now also be placed behind characters.
+  - show horse: AT 180,320 BEHIND
+  - deuzi says: Check how the horse runs behind me.
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 650
+      y: 320
+    time: 2000
+  - animate horse:
+    spritesheet: STOP
+  - deuzi says happy: And that's all about the animations!
+  - hide ALL: WITH FADE
+  - endgame:
+									</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="1">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-yaml">
+backgrounds:
+  room_night: assets/backgrounds/room_night.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+
+cgs:
+  horse:
+    spritesheet: assets/objects/horse.png 192 144
+    animations:
+      head: 1 4 20
+      run: 5 11 20
+								</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="2">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-js">
+class HelloWorld extends RenJS.Plugin {
+
+	onCall(params) {
+		console.log('Hello World Plugin');
+		console.log(params.firstWord + ' ' +params.secondWord);
+		this.game.resolveAction();
+	}
+}
+
+RenJSGame.addPlugin('helloWorld',HelloWorld)
+								</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="3">
+					        <h4 class="accordion-item__label"></h4>
+					        <div class="accordion-item__container">
+					          <p>psum dolor sit amet, consectetur adipisicing elit. Voluptates, deserunt minima? Ut facere minus, ipsa dolore</p>
+					        </div>
+					      </article>
+					      <!-- <article class="accordion-item" data-actab-group="0" data-actab-id="4">
+					        <h4 class="accordion-item__label"></h4>
+					        <div class="accordion-item__container">
+					          <p>aborum similique facere quae. Quo cupiditate ad iste qui aliquam quibusdam quod, ut doloremque ipsa quas soluta, sapiente possimus, tempora rerum ab nesciunt vitae molestiae dolor earum illum repudiandae! Voluptas sed, soluta facere nisi perferendis cupiditate! Dicta et praesentium non ab, quod commodi, illo saepe accusantium tempora autem eos nemo. Animi, pariatur placeat laudantium dolorib!</p>
+					        </div>
+					      </article> -->
+					    </section>
+					  </section>
+		    	</div>
+		    </div>
+		    <p class="text-center mt-3">
+                <a class="btn btn-cta-light" href="../examples-gallery.html"><i class="fas fa-arrow-left"></i> Return to the Gallery</a>
+                <a class="btn btn-cta-light" href="https://github.com/lunafromthemoon/RenJS/tree/gh-pages/examples" target="_blank"><i class="fab fa-github fa-fw"></i> Download from Github</a>
+            </p>  
+		</section>
+		<footer class="footer">
+      <div class="footer-bottom text-center py-3">
+            <p>Ren<strong>JS</strong> created by <strong><i class="fas fa-rocket"></i></strong> <a href="https://twitter.com/lunafromthem00n">lunafromthemoon</a> <strong><i class="fas fa-moon"></i></strong></p>
+      </div>
+    </footer>
+	</body>
+	<script src="../assets/js/prism.js"></script> 
+	<script type="text/javascript" src="../assets/js/tabs.js"></script>
+	<script src="/downloads/releases/renjs.js"></script>
+	<script src="animate/boot.js"></script>
+
+</html>

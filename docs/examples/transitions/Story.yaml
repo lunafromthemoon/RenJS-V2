@@ -1,0 +1,35 @@
+start:
+  - text: Show background with FADE
+  - show store: WITH FADE
+  - text: Show character with CUT
+  - show deuzi: normal AT CENTER WITH CUT
+  - text: Move character with MOVE
+  - show deuzi: AT LEFT WITH MOVE
+  - text: Change background with FADE
+  - show room_night: WITH FADE
+  - text: Character moves in from the right, with MOVE
+  - show liz: AT OUTRIGHT WITH CUT
+  - show liz: AT RIGHT WITH MOVE
+  - text: Show CG with FADETOBLACK
+  - show phone1: AT 400,200 WITH FADETOBLACK
+  - text: Hide character with FADE
+  - hide deuzi: WITH FADE
+  - text: Change character look with FADE
+  - show liz: normalC WITH FADE
+  - text: show character with FADE
+  - show jair: AT LEFT WITH FADE FLIP
+  - text: hide characters WITH FADE
+  - hide CHARS: WITH FADE
+  - text: Show character with FADETOWHITE
+  - show jair: AT RIGHT WITH FADETOWHITE
+  - text: hide Character and CG at the same time
+  - hide jair: WITH FADE CONTINUE
+  - hide phone1: WITH FADE
+  - text: Change background with FUSION
+  - show room_night_light: WITH FUSION
+  - text: Show character and CG at the same time with Plugin transition
+  - show deuzi: AT RIGHT WITH FADE CONTINUE
+  - show phone2: AT 400,200 WITH FADETOPINK
+  - text: Hide all and return to menu
+  - hide ALL: WITH FADE
+  - endgame:

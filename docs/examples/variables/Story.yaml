@@ -1,0 +1,65 @@
+start:
+  - show school:
+  - text: Choose a number.
+  - choice:
+    - 1:
+      - var firstNumber: 1
+    - 3:
+      - var firstNumber: 3
+    - 7:
+      - var firstNumber: 7
+  - text: You chose {firstNumber}.
+  - text: Add 1 to the number.
+  - var firstNumber: "{firstNumber} + 1"
+  - text: The result is {firstNumber}.
+  - text: Choose another number.
+  - choice:
+    - 2:
+      - var secondNumber: 2
+    - 5:
+      - var secondNumber: 5
+    - 13:
+      - var secondNumber: 13
+  - if ({firstNumber}>{secondNumber}):
+    - text: "The first number ({firstNumber}) is bigger than the second one ({secondNumber})."
+  - else:
+    - text: "The second number ({firstNumber}) is bigger than the first one ({secondNumber})."
+  - var multi: "{firstNumber}*{secondNumber}"
+  - text: "{firstNumber} times {secondNumber} is {multi}."
+  - scene: choseAnimals
+
+choseAnimals:
+  - text: Do you like cats?
+  - choice:
+    - Yes:
+      - var likesCats: true
+    - No:
+      - var likesCats: false
+  - text: Do you like dogs?
+  - choice:
+    - Yes:
+      - var likesDogs: true
+    - No:
+      - var likesDogs: false
+  - text: Let's see...
+  - var likesAnimals: "{likesCats} || {likesDogs}"
+  - var likesAllAnimals: "{likesCats} && {likesDogs}"
+  - if ({likesAllAnimals}):
+    - text: It seems you like all animals.
+  - else:
+    - if ({likesCats} || {likesDogs}):
+      - text: You like either cats or dogs, but not both.
+    - else:
+      - text: You don't like cats nor dogs.
+      - text: Do you like any other animal?
+      - choice:
+        - Rabbits:
+          - var preferedAnimal: "rabbits"
+        - Seals:
+          - var preferedAnimal: "seals"
+        - Horses:
+          - var preferedAnimal: "horses"
+      - text: So, you like {preferedAnimal}...
+      - if ({preferedAnimal}=="seals"):
+        - text: Seals are the best.
+  - endgame:

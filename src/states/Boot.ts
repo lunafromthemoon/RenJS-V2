@@ -55,7 +55,8 @@ class Boot extends RJSState {
     }
 
     create (game: RJS): void {
-        new RJSLoadingScreen(this.game);
+        const loadingScreen = new RJSLoadingScreen(this.game);
+        loadingScreen.setLoadingBar(this.game);
         this.input.onDown.addOnce(()=> {
             if (this.sound.context.state === 'suspended') {
                 this.sound.context.resume();
@@ -86,10 +87,7 @@ class Boot extends RJSState {
             console.error("Old GUI configuration is deprecated!!!!")
             console.error("Check the docs at http://renjs.net/docs-page.html")
         }
-        // preload the fonts by adding text, else they wont be fully loaded :\
-        for (const font of game.gui.fonts){
-            game.add.text(20, -100, font, {font: '42px ' + font});
-        }
+
         game.state.add('preloadStory', PreloadStory);
         game.state.start('preloadStory');
     }

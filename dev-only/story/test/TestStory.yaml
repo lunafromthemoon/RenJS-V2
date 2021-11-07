@@ -61,7 +61,7 @@ endgame:
 
 testAnim:
   - show room_night: WITH FADE2 CONTINUE
-  - show deuzi: normal AT CENTER WITH FADE
+  - show deuzi: AT CENTER WITH FADE
   - deuzi says: Let me introduce you to...
   - show horse: AT 180,350
   - deuzi says happy: The horse of spring!
@@ -134,6 +134,7 @@ testimages:
     param1: 'hello'
     param2: 'world'
   - show deuzi: AT LEFT WITH MOVE
+  - show deuzi: normal WITH CUT
   - text: jair appears
   - show jair: AT OUTRIGHT WITH CUT
   - show jair: AT RIGHT WITH MOVE

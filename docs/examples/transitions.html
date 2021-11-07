@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>RenJS Examples - Transitions</title>
+	    <!-- Meta -->
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	        	<meta name="title" content="RenJS">
+	    <meta name="description" content="A Visual Novel creator made for writers!">
+	    <meta name="author" content="lunafromthemoon">    
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+
+	    <!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://renjs.fr/">
+		<meta property="og:title" content="RenJS">
+		<meta property="og:description" content="A Visual Novel creator made for writers!">
+		<meta property="og:image" content="assets/images/thumbnail.png">
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://renjs.fr/">
+		<meta property="twitter:title" content="RenJS">
+		<meta property="twitter:description" content="A Visual Novel creator made for writers!">
+		<meta property="twitter:image" content="assets/images/thumbnail.png"> 
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+	    
+	    <!-- Google Font -->
+	    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+	    
+	    <!-- FontAwesome JS-->
+	    <script defer src="../assets/fontawesome/js/all.min.js"></script>
+	     <link rel="stylesheet" href="../assets/css/prism.css" />
+
+	    <!-- Theme CSS -->  
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/tabs.css">
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/theme.css">
+	    
+
+
+		
+	</head>
+
+
+	<body style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;margin-right: 0px;">
+		<header class="header fixed-top">	    
+	        <div class="branding docs-branding">
+	            <div class="container-fluid position-relative py-2">
+	                <div class="docs-logo-wrapper">
+		                <div class="site-logo"><a class="navbar-brand" href="../index.html"><img class="logo-icon mr-2" src="../assets/images/renjs-logo.svg" alt="logo"></a></div>    
+	                </div><!--//docs-logo-wrapper-->
+		            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+						<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+							<li class="list-inline-item"><a href="https://github.com/lunafromthemoon/RenJS-V2"><i class="fab fa-github fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="https://twitter.com/lunafromthem00n"><i class="fab fa-twitter fa-fw"></i></a></li>
+			                <li class="list-inline-item"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></li>
+			                <li class="list-inline-item"><a href="https://lunafromthemoon.itch.io/renjs"><i class="fab fa-itch-io"></i></a></li>
+			            </ul><!--//social-list-->
+			            <a href="../index.html#downloads" class="btn btn-primary d-none d-lg-flex">Download</a>
+		            </div><!--//docs-top-utilities-->
+	            </div><!--//container-->
+	        </div><!--//branding-->
+	    </header><!--//header-->
+		
+		<section id="downloads" class="cta-section py-5 theme-bg-dark position-relative">
+			<div class="text-center">
+	   			<img src="../assets/images/renjs-title-white.svg" class="m-3 w-25">
+	   			<h1 class="title text-center text-white mb-5">Transitions</h1>
+	   		</div>
+			<div id="renjs-canvas"></div>
+		    <div class="container">
+			   <div class="docs-overview py-5">
+		    		
+	    		  <section class="accordion">
+					    <section class="accordion-tabs">
+					      <button class="accordion-tab accordion-active" data-actab-group="0" data-actab-id="0"><i class="fas fa-pen-alt"></i> Story.yaml</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="1"><i class="fas fa-toolbox"></i> Setup.yaml</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="2"><i class="fas fa-cog"></i> FadeToPink.js</button>
+					    </section>
+					    <section class="accordion-content line-numbers">
+					      <article class="accordion-item accordion-active" data-actab-group="0" data-actab-id="0">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-yaml">
+start:
+  - text: Show background with FADE
+  - show store: WITH FADE
+  - text: Show character with CUT
+  - show deuzi: normal AT CENTER WITH CUT
+  - text: Move character with MOVE
+  - show deuzi: AT LEFT WITH MOVE
+  - text: Change background with FADE
+  - show room_night: WITH FADE
+  - text: Character moves in from the right, with MOVE
+  - show liz: AT OUTRIGHT WITH CUT
+  - show liz: AT RIGHT WITH MOVE
+  - text: Show CG with FADETOBLACK
+  - show phone1: AT 400,200 WITH FADETOBLACK
+  - text: Hide character with FADE
+  - hide deuzi: WITH FADE
+  - text: Change character look with FADE
+  - show liz: normalC WITH FADE
+  - text: show character with FADE
+  - show jair: AT LEFT WITH FADE FLIP
+  - text: hide characters WITH FADE
+  - hide CHARS: WITH FADE
+  - text: Show character with FADETOWHITE
+  - show jair: AT RIGHT WITH FADETOWHITE
+  - text: hide Character and CG at the same time
+  - hide jair: WITH FADE CONTINUE
+  - hide phone1: WITH FADE
+  - text: Change background with FUSION
+  - show room_night_light: WITH FUSION
+  - text: Show character and CG at the same time with Plugin transition
+  - show deuzi: AT RIGHT WITH FADE CONTINUE
+  - show phone2: AT 400,200 WITH FADETOPINK
+  - text: Hide all and return to menu
+  - hide ALL: WITH FADE
+  - endgame:
+									</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="1">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-yaml">
+backgrounds:
+  store: assets/backgrounds/store.jpg
+  room_night: assets/backgrounds/room_night.jpg
+  room_night_light: assets/backgrounds/room_night_light.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+  liz:
+    displayName: Liz
+    speechColour: "#d5e6e7"
+    looks:
+      normal: assets/characters/Char2NormalSchool.png
+      normalC: assets/characters/Char2Normal.png
+  jair:
+    displayName: Jair
+    speechColour: "#6a2b2b"
+    looks:
+      normal: assets/characters/Char4NormalSchool.png
+cgs:
+  phone1: assets/objects/phone1.png
+  phone2: assets/objects/phone2.png
+								</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="2">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-js">
+class Fade2Pink extends RenJS.Plugin {
+
+    // Transitions don't need to call resolveAction, but return a Promise
+
+	onCall(from, to, position, scaleX) {
+        return this.game.screenEffects.transition.FADETOCOLOUR(from, to, 0xF3969A, position, scaleX);
+	}
+}
+
+RenJSGame.addPlugin('FADETOPINK',Fade2Pink)
+								</code></pre>
+							</div>
+					      </article>
+					    </section>
+					  </section>
+		    	</div>
+		    </div>
+		    <p class="text-center mt-3">
+                <a class="btn btn-cta-light" href="../examples-gallery.html"><i class="fas fa-arrow-left"></i> Return to the Gallery</a>
+                <a class="btn btn-cta-light" href="https://github.com/lunafromthemoon/RenJS/tree/gh-pages/examples" target="_blank"><i class="fab fa-github fa-fw"></i> Download from Github</a>
+            </p>  
+		</section>
+		<footer class="footer">
+      <div class="footer-bottom text-center py-3">
+            <p>Ren<strong>JS</strong> created by <strong><i class="fas fa-rocket"></i></strong> <a href="https://twitter.com/lunafromthem00n">lunafromthemoon</a> <strong><i class="fas fa-moon"></i></strong></p>
+      </div>
+    </footer>
+	</body>
+	<script src="../assets/js/prism.js"></script> 
+	<script type="text/javascript" src="../assets/js/tabs.js"></script>
+	<script src="/downloads/releases/renjs.js"></script>
+	<script src="transitions/boot.js"></script>
+	<script src="plugins/FadeToPink.js"></script>
+
+</html>

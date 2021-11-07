@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>RenJS</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="RenJS">
+    <meta name="description" content="A Visual Novel creator made for writers!">
+    <meta name="author" content="lunafromthemoon">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+
+    <!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://renjs.fr/">
+	<meta property="og:title" content="RenJS">
+	<meta property="og:description" content="A Visual Novel creator made for writers!">
+	<meta property="og:image" content="assets/images/thumbnail.png">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://renjs.fr/">
+	<meta property="twitter:title" content="RenJS">
+	<meta property="twitter:description" content="A Visual Novel creator made for writers!">
+	<meta property="twitter:image" content="assets/images/thumbnail.png">
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome JS-->
+    <script defer src="assets/fontawesome/js/all.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/splide-sea-green.min.css">
+
+    <link rel="stylesheet" href="assets/css/prism.css" />
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/theme.css">
+    <link id="theme-style" rel="stylesheet" href="assets/css/tabs.css">
+</head> 
+
+<body>    
+    <header class="header fixed-top">	    
+        <div class="branding docs-branding">
+            <div class="container-fluid position-relative py-2">
+                <div class="docs-logo-wrapper">
+	                <div class="site-logo"><a class="navbar-brand" href="index.html"><img class="logo-icon mr-2" src="assets/images/renjs-logo.svg" alt="logo"></a></div>    
+                </div><!--//docs-logo-wrapper-->
+	            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+					<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+						<li class="list-inline-item"><a href="https://github.com/lunafromthemoon/RenJS-V2"><i class="fab fa-github fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="https://twitter.com/lunafromthem00n"><i class="fab fa-twitter fa-fw"></i></a></li>
+		                <li class="list-inline-item"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></li>
+		                <li class="list-inline-item"><a href="https://lunafromthemoon.itch.io/renjs"><i class="fab fa-itch-io"></i></a></li>
+		            </ul><!--//social-list-->
+		            <a href="/docs-page.html" class="btn btn-cta-secondary mr-1 d-none d-lg-flex">Documentation</a>
+		            <a href="#downloads" class="btn btn-cta-secondary d-none d-lg-flex">Download</a>
+	            </div><!--//docs-top-utilities-->
+            </div><!--//container-->
+        </div><!--//branding-->
+    </header><!--//header-->
+    
+   
+
+    <section id="about" class="about section">
+    	<div class="splide mb-5" id="about-gallery">
+				<div class="splide__track">
+					<ul class="splide__list">
+						<li class="splide__slide">
+							<div class="text-center promo">
+				        		<img class="title m-5" src="assets/images/renjs-title.svg">
+					            <p class="intro">A Visual Novel creator <span class="text-blue">made for writers!</span></p>
+					        	
+							</div>
+							<div class="splide" id="games-gallery">
+								<div class="splide__track">
+									<ul class="splide__list">
+										<li class="splide__slide p-splide__child">
+											<a href="assets/images/games/tutorial.png" data-toggle="lightbox" data-footer='<a href="examples/tutorial.html">The Tutorial Game</a>'>
+								                <img src="assets/images/games/tutorial.png" class="gallery-img img-fluid shadow rounded">
+								            </a>
+										</li>
+										<li class="splide__slide">
+											<a href="assets/images/games/maupin.png" data-toggle="lightbox" data-footer='<a href="https://rumpel.itch.io/la-maupin">La Maupin to the Rescue!</a>'>
+					                			<img src="assets/images/games/maupin.png" class="gallery-img img-fluid shadow rounded">
+					            			</a>
+										</li>
+
+										<li class="splide__slide"><a href="assets/images/games/sad.png" data-toggle="lightbox" data-footer='<a href="https://orbistertius.itch.io/the-fall-and-rise-of-sadcock-upon-avon">The Fall and Rise of Sadcock-upon-Avon</a>'>
+							                <img src="assets/images/games/sad.png" class="gallery-img img-fluid shadow rounded">
+							            </a></li>
+
+
+										<li class="splide__slide">
+											<a href="assets/images/games/flesh.png" data-toggle="lightbox" data-footer='<a href="https://coleo_kin.itch.io/fleshcircuit">Flesh/Circuit</a>'>
+					                			<img src="assets/images/games/flesh.png" class="gallery-img img-fluid shadow rounded">
+					            			</a>
+										</li>
+										
+										<li class="splide__slide"><a href="assets/images/games/spike.png" data-toggle="lightbox" data-footer='<a href="https://lunafromthemoon.itch.io/spiked-heart">Spiked Heart</a>'>
+					                <img src="assets/images/games/spike.png" class="gallery-img img-fluid shadow rounded">
+					            </a></li>
+										<li class="splide__slide"><a href="assets/images/games/imaginaria.png" data-toggle="lightbox" data-footer="Imaginaria">
+					                <img src="assets/images/games/imaginaria.png" class="gallery-img img-fluid shadow rounded">
+					            </a></li>
+										<li class="splide__slide"><a href="assets/images/games/hb.png" data-toggle="lightbox" data-footer='<a href="https://rumpel.itch.io/heartbeats">Heartbeats</a>'>
+					                <img src="assets/images/games/hb.png" class="gallery-img img-fluid shadow rounded">
+					            </a></li>
+
+					            
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li class="splide__slide">
+							<div class="text-center promo">
+				        		<h1 class="sub-title"><i class="fas fa-pen-alt"></i> <strong>Designed for Writers</strong></h1>
+					            <p class="sub-text">Create your games by writing a script akin to a screenplay, without the need to do any programming.</p>
+					            <img class="img-fluid img-gallery" src="assets/images/codeexample.png">
+				        	</div>
+							
+						</li>
+						<li class="splide__slide">
+							<div class="text-center promo">
+				        		<h1 class="sub-title"><i class="fas fa-palette"></i> <strong>Easy to Customise</strong></h1>
+					            <p class="sub-text">The <strong>RenJS GUI Builder</strong> tool allows you to visually create impressive and unique GUIs, in a few simple steps.</p>
+					            <img class="img-fluid img-gallery" src="assets/images/guibuilder.png">
+				        	</div>
+						</li>
+						
+						<li class="splide__slide">
+							<div class="text-center promo">
+				        		<h1 class="sub-title"><i class="fas fa-code"></i> <strong>Easy to Extend</strong></h1>
+					            <p class="sub-text">Add new game mechanics like hidden object, RPG features, and much more, with the <strong>Plugin System</strong>.</p>
+					            <img class="img-fluid img-gallery" src="assets/images/plugin-example.png">
+				        	</div>
+						</li>
+						<li class="splide__slide">
+							<div class="text-center promo">
+				        		<h1 class="sub-title"><i class="fas fa-mobile-alt"></i> <strong>Multiplatform</strong></h1>
+					            <p class="sub-text">Export and package your games as Desktop and Mobile apps, with all the power from <strong>Electron</strong> and <strong>Cordova</strong>!</p>
+					            <img class="img-fluid img-gallery" src="assets/images/multiplatform-mockup.png">
+				        	</div>
+						</li>
+						<li class="splide__slide">
+							<div class="text-center promo">
+				        		<h1 class="sub-title"><i class="fas fa-box"></i> <strong>Easy to Pack and Ship</strong></h1>
+					            <p class="sub-text">You can package and distribute your games as Linux and Windows applications in a few simple steps with the <strong>RenJS Desktop Packager</strong>.</p>
+					            <img class="img-fluid img-gallery" src="assets/images/desktop-packager.png">
+				        	</div>
+						</li>
+						<li class="splide__slide">
+							<div class="text-center promo">
+				        		<h1 class="sub-title"><i class="fas fa-rocket"></i> <strong>Phaser</strong></h1>
+					            <p class="sub-text">RenJS is powered by <strong>PhaserJS</strong>, a powerful 2D video game engine for HTML5. Thanks to it, a whole suite of tools to create special effects and most complex behaviours is readily available.</p>
+					            <img class="img-fluid img-gallery" src="https://phaser.io/images/img.png">
+				        	</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+        
+    </section><!--//about-->
+
+    <section id="downloads" class="cta-section py-5 theme-bg-dark position-relative">
+	    <div class="theme-bg-shapes-right"></div>
+	    <div class="theme-bg-shapes-left"></div>
+	    <div class="container">
+		   <div class="docs-overview py-5">
+	    		<h1 class="title text-center text-white mb-5">Get Started!</h1>
+			    <div class="row justify-content-center">
+				    <div class="col-12 col-lg-4 py-3">
+					    <div class="card shadow-sm">
+						    <div class="card-body d-flex flex-column">
+							    <h5 class="card-title mb-3">
+								    <span class="theme-icon-holder card-icon-holder mr-2">
+								        <i class="fas fa-chalkboard-teacher"></i>
+							        </span><!--//card-icon-holder-->
+							        <span class="card-title-text">The Tutorial</span>
+							    </h5>
+							    <div class="card-text">
+								    If this is your first time here and want to see what RenJS is all about, The Tutorial game will show you all about it. Play it to have a first look at how a RenJS game looks like, and learn the basics of the script language at the same time.
+								    
+							    </div>
+							    <p class="text-center mt-4">
+			                        <a class="btn btn-cta-primary" href="examples/tutorial.html" target="_blank">Play online</a>
+			                    </p>
+						    </div><!--//card-body-->
+					    </div><!--//card-->
+				    </div><!--//col-->
+				    <!-- <div class="col-12 col-lg-4 py-3">
+					    <div class="card shadow-sm">
+						    <div class="card-body d-flex flex-column">
+							    <h5 class="card-title mb-3">
+								    <span class="theme-icon-holder card-icon-holder mr-2">
+								        <i class="fas fa-compress-arrows-alt"></i>
+							        </span>
+							        <span class="card-title-text">The Quickstart</span>
+							    </h5>
+							    <div class="card-text">
+								    The Quickstart is a minimal game all set up for you to start writing. If you're new and want to explore and try RenJS, this is the first step (after playing the Tutorial!).
+							    	
+							    </div>
+							    <p class="text-center mt-auto">
+			                        <a class="btn btn-cta-primary" href="downloads/RenJSQuickstart_V2.zip" target="_blank">Download</a>
+			                    </p>
+						    </div>
+					    </div>
+				    </div> -->
+				    
+				    <div class="col-12 col-lg-4 py-3">
+					    <div class="card shadow-sm">
+						    <div class="card-body d-flex flex-column">
+							    <h5 class="card-title mb-3">
+								    <span class="theme-icon-holder card-icon-holder mr-2">
+								       <i class="far fa-images"></i>
+							        </span><!--//card-icon-holder-->
+							        <span class="card-title-text">Examples Gallery</span>
+							    </h5>
+							    <div class="card-text">
+								    Learn by doing with this collection of examples that go from the basics of <strong>RenJS actions</strong> to adding new functions with the <strong>Plugin System</strong>. Play the examples online, check their code or download the examples package to execute locally.   
+								</div>
+								<p class="text-center mt-auto">
+			                        <a class="btn btn-cta-primary" href="examples-gallery.html">Check the gallery</a>
+			                    </p> 
+						    </div><!--//card-body-->
+					    </div><!--//card-->
+				    </div><!--//col-->
+				    <div class="col-12 col-lg-4 py-3">
+					    <div class="card shadow-sm">
+						    <div class="card-body d-flex flex-column">
+							    <h5 class="card-title mb-3">
+								    <span class="theme-icon-holder card-icon-holder mr-2">
+								        <i class="fab fa-readme"></i>
+							        </span><!--//card-icon-holder-->
+							        <span class="card-title-text">The Docs</span>
+							    </h5>
+							    <div class="card-text">
+								    All you want to know and more about how RenJS works. Find here how to setup the game from scratch, what each part of the configuration means and a detailed explanation of each and every <strong>Story Action</strong>.
+								</div>
+								<p class="text-center mt-auto">
+			                        <a class="btn btn-cta-primary" href="docs-page.html">Check the docs</a>
+			                    </p> 
+						    </div><!--//card-body-->
+					    </div><!--//card-->
+				    </div><!--//col-->
+				    <div class="col-12 col-lg-4 py-3">
+					    <div class="card shadow-sm">
+						    <div class="card-body d-flex flex-column">
+							    <h5 class="card-title mb-3">
+								    <span class="theme-icon-holder card-icon-holder mr-2">
+								        <i class="fas fa-box fa-fw"></i>
+							        </span><!--//card-icon-holder-->
+							        <span class="card-title-text">Latest RenJS Library</span>
+							    </h5>
+							    <div class="card-text mb-3">
+								    If you already have RenJS up and running and want to keep up to date, download the latest version, or import it directly from the site.
+								</div>
+								<div class="input-group mt-auto">
+				                  <input type="text" id="site-link" class="form-control" aria-label="site-link" aria-describedby="basic-addon2" readonly="" value="https://renjs.net/downloads/releases/renjs.js">
+				                  <div class="input-group-append">
+				                    <button onclick="copyLink()" class="btn btn-outline-primary btn-addon" type="button" data-toggle="tooltip" data-placement="top" title="Copy URL"><i class="fas fa-link"></i></button>
+				                    <button onclick="copyTag()" class="btn btn-outline-primary btn-addon" type="button" data-toggle="tooltip" data-placement="top" title="Copy Script Tag"><i class="fas fa-code"></i></i></button>
+				                  </div>
+				                </div>
+								<p class="text-center mt-3">
+			                        <a class="btn btn-cta-primary" href="/downloads/releases/renjs.js" target="_blank">Download</a>
+			                        <a class="btn btn-cta-primary" href="https://github.com/lunafromthemoon/RenJS-V2/releases" target="_blank">Older Versions</a>
+			                    </p>
+						    </div><!--//card-body-->
+					    </div><!--//card-->
+				    </div><!--//col-->
+				    <div class="col-12 col-lg-4 py-3">
+					    <div class="card shadow-sm">
+						    <div class="card-body d-flex flex-column">
+							    <h5 class="card-title mb-3">
+								    <span class="theme-icon-holder card-icon-holder mr-2">
+								        <i class="fas fa-palette"></i>
+							        </span><!--//card-icon-holder-->
+							        <span class="card-title-text">RenJS GUI Builder</span>
+							    </h5>
+							    <div class="card-text mb-3">
+								    The GUI Builder is a desktop app to create Graphical User Interfaces for RenJS visually, by dragging and dropping the components.		
+								</div>
+								<div class="form-group mt-auto">
+		                            <select class="custom-select" id="gui-builder-version" style="border-color: #F3969A;">
+		                              <option value="linux32">Linux ia32</option>
+		                              <option value="linux64">Linux x64</option>
+		                              <option value="win64">Windows x64</option>
+		                              <option value="win32">Windows ia32</option>
+		                              <!-- <option value="mac">Mac</option> -->
+		                            </select>
+		                        </div>	  
+		                        <p class="text-center mt-3">
+			                        <a class="btn btn-cta-primary" id="download-gui-builder" href="" target="_blank">Download</a>
+			                    </p>  
+						    </div><!--//card-body-->
+					    </div><!--//card-->
+				    </div><!--//col-->
+				    <div class="col-12 col-lg-4 py-3">
+					    <div class="card shadow-sm">
+						    <div class="card-body d-flex flex-column">
+							    <h5 class="card-title mb-3">
+								    <span class="theme-icon-holder card-icon-holder mr-2">
+								        <i class="fas fa-window-restore"></i>
+							        </span><!--//card-icon-holder-->
+							        <span class="card-title-text">RenJS Desktop Packager</span>
+							    </h5>
+							    <div class="card-text mb-3">
+								    With this app you can package your <strong>RenJS</strong> (and any other single-page HTML5 games) as a Desktop application for <strong>Windows and Linux</strong>.</p>	
+								</div>
+								<div class="form-group mt-auto">
+		                            <select class="custom-select" id="desktop-packager-version" style="border-color: #F3969A;">
+		                              <option value="linux32">Linux x64</option>
+		                              <option value="linux64">Linux ia32</option>
+		                              <option value="win64">Windows x64</option>
+		                              <option value="win32">Windows ia32</option>
+		                              <!-- <option value="mac">Mac</option> -->
+		                            </select>
+		                        </div>	  
+		                        <p class="text-center mt-3">
+			                        <a class="btn btn-cta-primary" id="download-desktop-packager" href="" target="_blank">Download</a>
+			                        <a class="btn btn-cta-primary"  href="docs-page.html#electron-section" target="_blank">Docs</a>
+			                    </p>  
+						    </div><!--//card-body-->
+					    </div><!--//card-->
+				    </div><!--//col-->
+				    
+				    
+			    </div><!--//row-->
+		    </div><!--//container-->
+	    </div>
+    </section><!--//cta-section-->
+
+        <!-- ******DOCS****** --> 
+    <section id="docs" class="promo section py-5">
+        <div class="container">
+            <div class="docs-inner">
+            	<h1 class="text-center text-blue mb-4">Change Log</h1>            
+	            <div class="block mb-4">
+	                <h3 class="sub-text text-center">What's new, what's old and what's to come!</h3>
+	                <p><strong class="text-pink">RenJS</strong> is constantly changing. To keep track of all new features and bugfixes, this little Change Log will keep a list of all the differences between versions, that you can also download from here.</p>
+	            </div><!--//block-->
+	            <section class="accordion">
+	            	<section class="accordion-tabs">
+	            		<button class="accordion-tab accordion-active" data-actab-group="0" data-actab-id="0"><i class="fas fa-paw"></i> RenJS Library</button>
+	            		<button class="accordion-tab" data-actab-group="0" data-actab-id="1"><i class="fas fa-palette"></i> GUI Builder</button>
+	            		<button class="accordion-tab" data-actab-group="0" data-actab-id="2"><i class="fas fa-window-restore"></i> Desktop Packager</button>
+	            	</section>
+	            	<section class="accordion-content line-numbers">
+	            		<article class="accordion-item accordion-active" data-actab-group="0" data-actab-id="0">
+	            			<h4 class="accordion-item__label"></h4>
+	            			<div class="accordion-item__container">
+	            				<div><a class="btn btn-lg btn-cta-light mb-3 mr-2 rounded-pill" href="/downloads/releases/renjs-v2.2.1.js">2.2.1</a>   Built on 03/11/2021</div>
+	            				<div class="ml-5">
+	            					<h5 class="text-pink">Added</h5>
+	            					<ul>
+	            						<li>Choices can now have empty options. When the option is empty, the game will simply continue after the choice.</li>
+		            				</ul>
+		            				<h5 class="text-pink">Changed</h5>
+		            				<ul>		            					
+		            					<li>Fixed crash when doing wait for click</li>
+		            					<li>Fixed crash when hiding a background that didn't exist</li>
+		            					<li>Fixed text in namebox/choices showing weird for a few frames</li>
+		            					<li>Fixed image flicker bug</li>
+		            					<li>Fixed spritesheet animated ctc not working</li>
+		            					<li>Actions now know how to parse and execute themselves.</li>
+		            				</ul>		            				
+	            				</div>
+	            				
+	            				<hr>
+	            				<div><a class="btn btn-lg btn-cta-light mb-3 mr-2 rounded-pill" href="/downloads/releases/renjs-v2.1.1.js">2.1.1</a>   Built on 14/09/2021</div>
+	            				<div class="ml-5">
+	            					<h5 class="text-pink">Added</h5>
+	            					<ul>
+	            						<li>RenJS version string: <strong>RenJSGame.renjsversion</strong></li>
+		            				</ul>
+		            				<h5 class="text-pink">Changed</h5>
+		            				<ul>
+		            					<li>Character manager and Character entity completely revamped</li>
+		            				</ul>
+		            				<h5 class="text-pink">Deprecated</h5>
+		            				<ul>
+		            					<li>Character setup property <strong>speechColour</strong> will soon be removed, use <strong>color</strong> instead.</li>
+		            				</ul>
+	            				</div>
+	            				
+	            				<hr>
+	            				<div><a class="btn btn-lg btn-cta-light mb-3 mr-2 rounded-pill" href="/downloads/releases/renjs-v2.1.0.js">2.1.0</a>   Built on 14/09/2021</div>
+	            				<div class="ml-5">
+		            				<h5 class="text-pink">Added</h5>
+		            				<ul>
+		            					<li>New manual GUI.yaml format</li>
+		            					<li>New plugin handle <strong>onAction</strong></li>
+		            					<li>Debug mode</li>
+		            					<li>Automatic breaklines</li>
+		            					<li>Hide all CGS on screen</li>
+		            				</ul>
+		            				<h5 class="text-pink">Removed</h5>
+		            				<ul>
+		            					<li>Original manual GUI.yaml format</li>
+		            				</ul>
+		            			</div>
+	            				<hr>
+	            				<div><a class="btn btn-lg btn-cta-light mb-3 mr-2 rounded-pill" href="/downloads/releases/renjs-v2.0.0.js">2.0.0</a>   Built on 07/08/2021</div>
+	            				<div class="ml-5">
+	            					<p>Very old version, before the new gui integration. This version supports very old original GUI format and older GUI Builder format.</p>
+	            				</div>			
+	            			</div>
+	            		</article>
+	            		<article class="accordion-item" data-actab-group="0" data-actab-id="1">
+	            			<h4 class="accordion-item__label"></h4>
+	            			<div class="accordion-item__container">
+	            				<div class="title text-center cta-container cta-container-pink">
+						            <div class="speech-bubble">                    
+						                <p class="intro text-white">Coming soon!</p>
+						                <div class="icon-holder  text-center text-white"><i class="fas fa-paw"></i></div>
+						            </div>
+						        </div>
+	            			</div>
+	            		</article>
+	            		<article class="accordion-item" data-actab-group="0" data-actab-id="2">
+	            			<h4 class="accordion-item__label"></h4>
+	            			<div class="accordion-item__container">
+	            				<div class="title text-center cta-container cta-container-pink">
+						            <div class="speech-bubble">                    
+						                <p class="intro text-white">Coming soon!</p>
+						                <div class="icon-holder  text-center text-white"><i class="fas fa-paw"></i></div>
+						            </div>
+						        </div>
+	            			</div>
+	            		</article>
+	            	</section>
+	            </section>
+	        </div>
+	    </div>
+    </section><!--//features-->        
+    
+    <footer class="footer">
+	    <div class="footer-bottom text-center py-3">
+            <p>Ren<strong>JS</strong> created by <strong><i class="fas fa-rocket"></i></strong> <a href="https://twitter.com/lunafromthem00n">lunafromthemoon</a> <strong><i class="fas fa-moon"></i></strong></p>
+	    </div>
+    </footer>
+       
+    <!-- Javascript -->          
+    <script src="assets/js/prism.js"></script> 
+	<script type="text/javascript" src="assets/js/tabs.js"></script>
+    <script src="assets/plugins/jquery-3.4.1.min.js"></script>
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    <script src="assets/js/splide.min.js"></script>
+    <script src="assets/plugins/lightbox/dist/ekko-lightbox.min.js"></script> 
+    <script src="assets/js/index.js"></script>  
+
+</body>
+</html> 
+

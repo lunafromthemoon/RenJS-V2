@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>RenJS - API</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="RenJS">
+    <meta name="description" content="A Visual Novel creator made for writers!">
+    <meta name="author" content="lunafromthemoon">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+
+    <!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://renjs.fr/">
+	<meta property="og:title" content="RenJS">
+	<meta property="og:description" content="A Visual Novel creator made for writers!">
+	<meta property="og:image" content="assets/images/thumbnail.png">
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="https://renjs.fr/">
+	<meta property="twitter:title" content="RenJS">
+	<meta property="twitter:description" content="A Visual Novel creator made for writers!">
+	<meta property="twitter:image" content="assets/images/thumbnail.png">
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome JS-->
+    <script defer src="assets/fontawesome/js/all.min.js"></script>
+    <link rel="stylesheet" href="assets/css/prism.css" />
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/theme.css">
+
+</head> 
+
+<body class="docs-page  line-numbers">    
+    <header class="header fixed-top">	    
+        <div class="branding docs-branding">
+            <div class="container-fluid position-relative py-2">
+                <div class="docs-logo-wrapper">
+					<button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible mr-2 d-xl-none" type="button">
+	                    <span></span>
+	                    <span></span>
+	                    <span></span>
+	                </button>
+	                <div class="site-logo"><a class="navbar-brand" href="index.html"><img class="logo-icon mr-2" src="assets/images/renjs-logo.svg" alt="logo"></a></div>    
+                </div><!--//docs-logo-wrapper-->
+	            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+	                <!-- <div class="top-search-box d-none d-lg-flex">
+		                <form class="search-form">
+				            <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+				            <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+				        </form>
+	                </div>
+	 -->
+					<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+						<li class="list-inline-item"><a href="https://github.com/lunafromthemoon/RenJS-V2"><i class="fab fa-github fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="https://twitter.com/lunafromthem00n"><i class="fab fa-twitter fa-fw"></i></a></li>
+		                <li class="list-inline-item"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></li>
+		                <li class="list-inline-item"><a href="https://lunafromthemoon.itch.io/renjs"><i class="fab fa-itch-io"></i></a></li>
+		            </ul><!--//social-list-->
+		            <a href="/downloads" class="btn btn-primary d-none d-lg-flex">Download</a>
+	            </div><!--//docs-top-utilities-->
+            </div><!--//container-->
+        </div><!--//branding-->
+    </header><!--//header-->
+    
+    <div class="docs-wrapper">
+	    <div id="docs-sidebar" class="docs-sidebar">
+		    <div class="top-search-box d-lg-none p-3">
+                <form class="search-form">
+		            <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+		            <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+		        </form>
+            </div>
+		    <nav id="docs-nav" class="docs-nav navbar">
+			    <ul class="section-items list-unstyled nav flex-column pb-3">
+				    <li class="nav-item section-title"><a class="nav-link scrollto active" href="#intro-section"><span class="theme-icon-holder mr-2"><i class="fas fa-map-signs"></i></span>Introduction</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#tutorial-section">Tutorial</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#quickstart-section">Quickstart</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#elements-section">RenJS Glossary</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#files-section"><span class="theme-icon-holder mr-2"><i class="fas fa-folder-open"></i></span>Files Structure</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#index-file-section">Index File</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#boot-file-section">Boot File</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#setup-section"><span class="theme-icon-holder mr-2"><i class="fas fa-toolbox"></i></span>Setup</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#bg-setup-section">Backgrounds</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#ch-setup-section">Characters</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#cgs-setup-section">CGs</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#audio-setup-section">Audio</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#extra-setup-section">Extra resources</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#configuration-section"><span class="theme-icon-holder mr-2"><i class="fas fa-sliders-h"></i></span>Configuration</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#config-positions">Special Positions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#config-transitions">Default Transitions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#config-timers">Timers</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#config-logs">Logs</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#config-punctuation">Punctuation Wait</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#config-lazy-loading">Lazy Loading</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#gui-section"><span class="theme-icon-holder mr-2"><i class="fas fa-palette"></i></span>GUI</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#gui-menus">Menus</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#gui-hud">HUD</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#gui-fonts">Fonts</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#gui-config-file">Manual Configuration</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#gui-builder">RenJS GUI Builder</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#gui-conversion-guide">Format Conversion Guide</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#actions-section"><span class="theme-icon-holder mr-2"><i class="far fa-comment-dots"></i></span>Actions Guide</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#actions-syntax">Syntax Cheatsheet</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#show-hide-actions">Show and Hide</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#animate-action">Animate</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#say-text-actions">Say and Text</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#play-stop-actions">Play and Stop</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#choice-interrupt-actions">Choice and Interrupt</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#var-action">Variables</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#if-action">If</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#scene-action">Scene and End Game</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#wait-action">Wait</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#call-action">Call</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#ambient-effect-actions">Ambients and Effects</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#transitions-section"><span class="theme-icon-holder mr-2"><i class="fas fa-magic"></i></span>Transitions</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#i18n-section"><span class="theme-icon-holder mr-2"><i class="fas fa-hand-spock"></i></span>Internationalization</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#language-screen-section">Language Selection Screen</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#language-config-section">Resources Configuration</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#plugins-section"><span class="theme-icon-holder mr-2"><i class="fas fa-puzzle-piece"></i></span>Plugins</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#plugins-structure-section">Plugin Structure</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#transition-plugin-section">Plugin as Transition</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#renjs-internals">RenJS Internals</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#mobile-desktop-section"><span class="theme-icon-holder mr-2"><i class="fas fa-tablet-alt"></i></span>Mobile and Desktop</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#electron-section">Desktop</a></li>
+				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#cordova-section">Cordova</a></li> -->
+				    
+			    </ul>
+
+		    </nav><!--//docs-nav-->
+	    </div><!--//docs-sidebar-->
+	    <div class="docs-content">
+		    <div class="container">
+			    <article class="docs-article" id="intro-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2019-06-01</span></h1>
+					    <section class="docs-intro">
+						    <p>If you’re reading this, you’re probably thinking about making a visual novel. That is, a videogame of the genre <b>Visual Novel</b>, subgenre of <b>Interactive Fiction</b>. It's important to define what this means, because it will give you a framework in which you can develop the game more easily.</p>
+						    <p>For example, visual novels often tell a rich story aided by static visuals. There are many more rules and conventions of visual novels that you should familiarize yourself before starting to write such a game. Of course, you can bend, break and subverse these guidelines, but knowing them will help you write better games.</p>  
+						    <p>To make a visual novel with RenJS it doesn’t matter if you’ve never made a videogame before, or if you don't know any programming. As said above, one of the most important aspects of the genre is the story. RenJS lets you focus on it, by providing a way to use movie-script like text files and easily configurable visuals, to create the game you envision.</p>
+						    <p>RenJS, broadly speaking, is a tool to help you make visual novels. You’ve probably heard about other game engines, like Unity or Game Maker. Those tools provide a whole environment for developing many kinds of games. RenJS is a bit different.</p>
+						    <p>To build the games, you only need to create text files for story and visual configuration. There’s no <i>program</i> you have to install or open to make your game. RenJS is just a library that you import into an html file, that knows how to read a story and show it in a web browser. 
+						    </p>
+						    <p>To write the story and make up your visuals, you can use any tools you like and know already. Some great open source and free tools to use can be:</p>
+						    <ul>
+						    	<li><a href="http://brackets.io/">Brackets</a>: for text processing.</li>
+						    	<li><a href="https://inkscape.org/">Inkscape</a>: for vectorial graphics (great to make GUI!).</li>
+						    	<li><a href="https://www.gimp.org/">GIMP</a>: for Image edition.</li>
+						    	<li><a href="https://www.audacityteam.org/">Audacity</a>: for Sound and Audio design.</li>
+						    </ul>
+						    <h5>Here's a sneak peek of the story script, from the <a class="theme-link" href="/Quickstart"  target="_blank">Quickstart</a> project.</h5>
+							<div class="docs-code-block">
+								<pre><code class="language-yaml">
+	start:
+	  - play morningBGM:
+	  - show room: WITH FADE CONTINUE
+	  - show deuzi: happy AT CENTER WITH FADE
+	  - deuzi says: "Hello, welcome to (bold)the Quickstart!(end)"
+	  - wait: 300
+	  - deuzi says normal: "Are you ready to create great visual novels?"
+	  - choice:
+	    - "Yes!":
+	      - deuzi says happy: "That's great! Go ahead!"
+	    - "Not yet!":
+	      - deuzi says: "Well, I'll be here when you're ready!"
+	  - deuzi says normal: "If you're new, don't forget to play (bold)the Tutorial(end) game, where me and my friends will show you around the basic features of RenJS."
+	  - deuzi says happy: "And if you already have some experience, you can go ahead and start writing!"
+	  - scene: endGame
+								</code></pre>
+								<!-- <script src="https://gitlab.com/lunafromthemoon/RenJSTutorial/-/snippets/2039029.js"></script> -->
+							</div><!--//docs-code-block-->
+							<p>All of the <strong>story</strong> files are in a standard format called YAML, a human-readable data-serialization language. A key aspect of this language is that indentation is very important, as it marks the start and end of the different sections.</p>
+							<p>Indentation is the amount of spaces at the start of the line, before any text. You can choose between two or four whitespaces, or a tab character, but you can't mix between them once you decided on one.</p>
+							<p>In the script example above you can see the indentation at play. The first word, marking the name of the scene starts at zero level of indentation, and all the actions inside it are at level one. The <strong>choice</strong> action has a list of options inside (that will be displayed to the player to make a decision), and each is indented one extra level.Furthermore, each possible option in the action has inside a list of actions that will be played if the player chooses that path, and each of these actions are indented one more level.</p>
+						</section><!--//docs-intro-->
+						
+				    </header>
+				    <section class="docs-section" id="tutorial-section">
+						<h2 class="section-heading">The Tutorial</h2>
+						<p>If this is your very first encounter with RenJS, you should play the Tutorial. This tutorial is a game made with RenJS itself, that showcases the most important features of RenJS. </p>
+						<a href="examples/tutorial.html" target="_blank" class="btn btn-primary">Play the Tutorial</a>
+					</section>
+					<section class="docs-section" id="quickstart-section">
+						<h2 class="section-heading">The Quickstart</h2>
+						<p>If you want to go straight to writing, the Quickstart is a minimal game with a few resources already set and configured, for you to try and test.</p>
+						<a href="downloads/RenJSQuickstart_V2.zip" target="_blank" class="btn btn-primary">Download the Quickstart</a>
+					</section>
+					<section class="docs-section" id="elements-section">
+						<h2 class="section-heading">RenJS Glosary</h2>
+						<p>To create a visual novel with RenJS, we're going to use many different elements to compose both the game and the story itself. When reading this documentation, you will find references to all of these concepts, so it's better to get familiar with them first.</p>
+						<h3>Game elements</h3>
+						<p>To make the game structure more easy to design, there are four main elements that compose it. These are:</p>
+						<ul>
+						    <li><strong class="mr-1">Story</strong></li>
+						    <li><strong class="mr-1">Setup</strong></li>
+						    <li><strong class="mr-1">GUI</strong></li>
+						    <li><strong class="mr-1">Configuration</strong></li>
+						</ul>
+						<p>Each of these elements correspond normally to a file with the same name. If you check the Quickstart example, you will find them inside the <strong>story</strong> directory. The <strong>story</strong> is roughly speaking, the text of your story. A succession of actions such as displaying text and showing images. But before telling a story, you need to declare all of the story elements that compose it, such as locations, characters, etc. The <strong>setup</strong> is where you do this. The <strong>GUI</strong>, or <strong>Graphical User Interface</strong> is to define all the elemnts of the game that are not strictly part of the story, like menus and the Head Up Display. Finally, the <strong>configuration</strong> lets you set some important parameters for the story to look just as you want.</p>
+						<h3>Story Elements</h3>
+						<p>A story in a Visual Novel is told mostly through text and dialogue, just as any other story, but with the additional feature of visual support, hence the name. The text elements can be of two kinds, normal messages that will display inside a <strong>message box</strong>, and dialogue, that will also display the name of the character speaking inside another box, called the <strong>name box</strong>.</p>
+						<p>To help with structuring, the <strong>visual elements</strong> can belong to a specific category, each with their own way of appearing in the screen and properties. If you've played other Visual Novels, you're probably familiar with most or all of these elements already:</p>
+						<ul>
+						    <li><strong class="mr-1">Backgrounds:</strong> A background is an image that normally stretches to occupy the whole screen, and will be shown behind all other elements.</li>
+						    <li><strong class="mr-1">CGs:</strong> CG stands for Computer Graphics, and it's a name given to any static image shown in the screen. These images can be placed anywhere on the screen and can be animated as a spritesheet and programatically (i.e. moving them, changing the alpha and scale). </li>
+						    <li><strong class="mr-1">Characters:</strong> The characters in a Visual Novel differ from a normal CG, because each one can have many images associated with it. Each of these images is called a <strong>look</strong>, and it normally represent a state of that character, such as emotional expressions, different outfits or body poses. Characters are not only a Visual element, since they can be made to talk.</li>
+						</ul>
+						<p>The visual elements are related to the part of the story being told, so they will often appear, dissappear and change their position in the screen. The way in which they will show or hide is called a <strong>transition</strong>. Some examples of <strong>transitions</strong>are:</p>
+						<ul id="transition-list">
+						    <li><strong class="mr-1">CUT:</strong> Simply show or hide a visual element immediately.</li>
+						    <li><strong class="mr-1">FADE:</strong> Fade in or out a visual element by slowly making them transparent or solid. If changin from one image to another, the first one will disappear completely before the new one will start appearing.</li>
+						    <li><strong class="mr-1">FUSION:</strong> Similar to FADE, the new image will transition from transparent to solid on top of the old one, but without waiting for the old one to disappear. </li>
+						    <li><strong class="mr-1">FADETOBLACK and FADETOWHITE:</strong> A black or white overlay will cover the screen, then the image will be set behind it, and finally the overlay will disappear. The transition for the overlay will be a FADE transition. </li>
+						    <li><strong class="mr-1">MOVE:</strong> This transition is usen when you want to change the position of one visual element in the screen, and animate the movement. </li>
+						</ul>
+						<p>Besides visual elements, music and sound is very important for setting the atmosphere of the story. In RenJS there are three types of <strong>audio elements</strong>:</p>
+						<ul>
+						    <li><strong class="mr-1">BGM (Background music)</strong></li>
+						    <li><strong class="mr-1">SFX (special effect)</strong></li>
+						    <li><strong class="mr-1">BGS (Background sound)</strong></li>
+						</ul>
+						<p>Another big part of a Visual Novel is interactivity, by giving the player a list of options that they can choose from. In RenJS, there are two ways of doing that. <strong>Choices</strong> and <strong>interrupts</strong>. They both present the player with a list of options to choose from, that will make the story branch itself. The difference is that the <strong>choices</strong> will stop the game until the player interacts with them, while the <strong>interrupts</strong> will show in the screen, but the story will continue, and the player can choose or not to interact with them.</p>
+						<p>It is also possible to keep track of the player choices and use them to branch the story at any later point too. For example, a decision taken during the begining of the story could affect its ending. This brings the concept of <strong>variables</strong>, a way to store and read information, and <strong>logic operations</strong> that can compare these variables to make the story take different paths.</p>
+						<h3>Story structure</h3>
+						<p>Now that we know what elements can be inside a story, we can see how to organize them inside it. The story script is separated in <strong>scenes</strong>. Each <strong>scene</strong> contains a list of <strong>actions</strong>, and each action is related to any of the previously mentioned story elements. This is a list of the main <strong>actions</strong> that can be used in the story script:</p>
+						<ul>
+						    <li><strong class="mr-1">Say and Text:</strong> Display text, word for word, in a <strong>message box</strong>, and wait for the player to click to continue with the story. A say action will also show the name of the character inside a <strong>name box</strong>.</li>
+						    <li><strong class="mr-1">Show and Hide:</strong> Show or hide a visual element with a <strong>transition</strong>. Optionally, it can take a <strong>position</strong> where to show it, and in the case of the characters, which <strong>look</strong> to show. </li>
+						    <li><strong class="mr-1">Animate:</strong> Only valid for <strong>CGs</strong>, it can animate programatically properties like position, alpha and rotation, or start a spritesheet animation, or a combination of both.</li>
+						    <li><strong class="mr-1">Play and stop:</strong> Play and stop music and SFX.</li>
+						    <li><strong class="mr-1">Choice and interrupt:</strong> Display a list of options for the player to choose from. Each option will have a list of actions to execute if it's chosen.</li>
+						    <li><strong class="mr-1">Variables:</strong> This action allows for storing information with key value. Variables can be read with its key, for logic and arithmetical operations and to display them in text, by using curly braces.</li>
+						    <li><strong class="mr-1">If and Else:</strong> This action contains a condition and list of actions that will be executed if the condition is true. It can optionally be followed by an <strong>else</strong> action containing a list of actions to execute if the condition is false.</li>
+						    <li><strong class="mr-1">Scene:</strong> Start another scene. You would normally use this action at the end of the current scene, for advancing the story, but it can be called at any point, for example, inside a choice or an if, to branch the story.</li>
+						    <li><strong class="mr-1">Wait time or click:</strong> Simply wait for a moment before continuing with the story, or force the player to click to continue.</li>
+						    <li><strong class="mr-1">Effects and ambients:</strong> Special effects, both visual and auditory. The different between them is that effects are a one off thing (e.g. a thunder flashing in the screen with its corresponding SFX and screen shake), while the ambients perdure over time until you remove them (e.g. a rain effect with particles falling and a rain BGS).</li>
+						    <li><strong class="mr-1">Call:</strong> RenJS allows you to add whatever custom action you might need in your story alongside the ones listed above. The call action will execute a javascript function in a <strong>plugin</strong>, and it will also send any parameters that you want. Inside this function you can use any of the game elements used by RenJS, for example, the visual elements currently showing, and all the variables created by the story. And since RenJS is based on PhaserJS, all of its API is available to add new graphical elements, and even create minigames.</li>
+						</ul>
+					</section>
+					
+					
+			    </article>
+			    
+			    <article class="docs-article" id="files-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Files Structure</h1>
+					    <section class="docs-intro">
+						    <p>RenJS games falls into the multiplatform HTML5/Web category. This means they will run as a web page in a browser. The multiplatform part comes from the fact that most devices nowadays can run an internet browser, like any computer and most mobile phones and tablets.</p>
+						    <p>The game, then, is made up of a webpage, the RenJS library, and all the story assets, such as the story text and configuration and the images and audio files.</p>
+						    <p>The <a href="/Quickstart">Quickstart</a> is a minimal game that comes with all of the necesary files, organized so that it will be easier for you to start writing. Let's use this project as an example to explore the required files.</p>
+						    <div class="text-center">
+							    <figure class="figure docs-figure py-3 text-center">
+								    <img class="figure-img img-fluid shadow rounded" src="assets/images/folders.png" alt="">
+								    <figcaption class="figure-caption mt-3">What you should find inside the Quickstart directory.</figcaption>
+								</figure>
+							</div>
+
+						</section><!--//docs-intro-->
+				    </header>
+				    <section class="docs-section" id="index-file-section">
+						<h2 class="section-heading">Index File</h2>
+						<p>The index file is located at the root of the directory, and it's the starting execution point of the game. When this file is loaded in the browser, it will load the RenJS library (renjs.js) and boot.js file, that will give it some instructions on how to create the game. Both of these files are located in a directory called RenJS.</p>
+						<div class="docs-code-block">
+							<script src="https://gitlab.com/lunafromthemoon/RenJSTutorial/-/snippets/2039428.js"></script>
+						</div>
+						<p>You can see that not much else is happening in this file. In this case, the game will create a new canvas object and add it to the document's body. If you want to use a specific canvas element, you can create it and then specify its id in the Boot file.</p>
+					</section><!--//section-->
+				    <section class="docs-section" id="boot-file-section">
+						<h2 class="section-heading">Boot File</h2>
+						<p>The boot file contains very elementary information for the game to start correctly, even before the story itself is loaded. For example, to create the game, it will need to know the screen resolution, and how to set up a very basic loading page.</p>
+						<div class="docs-code-block">
+							<script src="https://gitlab.com/lunafromthemoon/RenJSTutorial/-/snippets/2039432.js"></script>
+						</div>
+						<p>This file is in the javascript language. You don't need to know any programming, but it's important to look at the RenJSConfig object and check what parameters have to be changed to conform to your game. Let's explore each of the options that we can define here:</p>
+						<ul>
+						    <li><strong class="mr-1">Name:</strong> The name of your game.</li>
+						    <li><strong class="mr-1">H and W:</strong> The height and width of the game canvas.</li>
+						    <li><strong class="mr-1">Background Color:</strong> By changing the background color you ensure all <strong>FADETOBLACK</strong> transitions, including those between the menus and game, will be to this background color, instead of pure black.</li>
+						    <li><strong class="mr-1">Parent:</strong> You can start the game inside a particular html5 element, identified as the parent with this option. You need to add the element with the particular id to the <strong>index.html</strong> file.</li>
+						    <li><strong class="mr-1">Renderer and Scale Mode:</strong> These two parameters are related to the <a href="https://phaser.io/docs/2.6.2/Phaser.Game.html">Phaser</a> game creation.</li>
+						    <li><strong class="mr-1">Debug Mode:</strong> The debug mode lets you see a log of each action as its executed, and how it was parsed in the browser console (open with F12). This is useful in general when you're developping, and it allows you to find bugs in the story text very easily.</li>
+						    <li><strong class="mr-1">Loading Screen:</strong> The loading screen for the game, that will be shown while downloading the resources and setting up the game. It can have a <i>background</i> and a <i>loading bar</i> that will fill up, from left to right, as the game is loaded. The loading bar is a spritesheet with one (full bar) or two frames (empty and full bar), and it will be placed at the x and y pixel location indicated in this configuration. </li>
+						    <li><strong class="mr-1">Fonts:</strong> To be able to use different webfonts in the game, they have to be loaded as css. This parameter points to this file in the assets directory. </li>
+						    <li><strong class="mr-1">GUI Config, Story Config and Story Setup:</strong> Where to find these key story files.</li>
+						    <li><strong class="mr-1">Story Text:</strong> This parameter is a list of files that will contain the scenes of the story. In this case, and for short games, you can have everything in a single file. But as the story grows, keeping the story separated in different files is a great way to organize your writing.</li>
+						</ul>
+					</section><!--//section-->
+				
+			    </article><!--//docs-article-->
+			    
+			    <article class="docs-article" id="setup-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Story Setup</h1>
+					    <section class="docs-intro">
+						    <p>The story setup contains all the references to the visual and audio story elements, contained in one YAML file. During the story, you will not be referencing images and audio files directly, but a key associated with them into this setup file. In this way, you can create your story using placeholder assets, that you can later change.</p>
+						    <p>In this file you can also setup lazy loading for the game, in case you want to use this feature.</p>
+						</section><!--//docs-intro-->
+				    </header>
+				     <section class="docs-section" id="bg-setup-section">
+						<h2 class="section-heading">Backgrounds</h2>
+						<p>The backgrounds are usually static images, so the only parameter you need to add, besides the key name, is the file location (normally inside the assets directory). The key names have to be unique and can't have white spaces or dashes, but underscores are allowed.</p>
+						<pre><code class="language-yaml">
+	backgrounds:
+	  room: assets/backgrounds/room_day.jpg
+	  room_night: assets/backgrounds/room_night.jpg
+	  room_night_light: assets/backgrounds/room_night_light.jpg
+						</code></pre>
+						<p>After the <strong>backgrounds</strong> tag, three backgrounds are declared with key name and file.</p>
+					</section><!--//section-->
+					
+					<section class="docs-section" id="ch-setup-section">
+						<h2 class="section-heading">Characters</h2>
+						<p>The characters are declared under the <strong>characters</strong> tag, with an unique key name and a few parameters:</p>
+						<ul>
+						    <li><strong class="mr-1">Display Name:</strong> The display name is the name that will be shown in the name box when the character speaks. If this property is omited, the key name will be used as the display name, but contrary to the key name, the display name can have whitespaces and special characters such as accents and dashes.</li>
+						    <li><strong class="mr-1">Speech Colour:</strong> A color associated with this character, that will be used for the text color when displaying the name.</li>
+						    <li><strong class="mr-1">Voice:</strong> A short sfx that will be played when the character is speaking. This audio file has to be declared under the <strong>sfx</strong> section, and referenced here by <strong>tag name</strong>.</li>
+						    <li><strong class="mr-1">Looks:</strong> A list of images representing a state of the character. As with all key names, the look identifiers have to be unique for the character (but re used for a different character), and can't have whitespaces or dashes.</li>
+						</ul>
+						<pre><code class="language-yaml">
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    voice: voiceHigh
+    looks:
+      normal_school: assets/characters/Char3NormalSchool.png
+      happy_school: assets/characters/Char3HappySchool.png
+      angry_school: assets/characters/Char3AngrySchool.png
+      normal_casual: assets/characters/Char3Normal.png
+      happy_casual: assets/characters/Char3Happy.png
+      angry_casual: assets/characters/Char3Angry.png
+  liz:
+    displayName: Liz
+    speechColour: "#d5e6e7"
+    voice: voiceMedium
+    looks:
+      normal_school: assets/characters/Char2NormalSchool.png
+      happy_school: assets/characters/Char2HappySchool.png
+      angry_school: assets/characters/Char2AngrySchool.png
+      normal_casual: assets/characters/Char2Normal.png
+      happy_casual: assets/characters/Char2Happy.png
+      angry_casual: assets/characters/Char2Angry.png
+						</code></pre>
+						<p>In the code above, two characters are declared, each with six different looks.</p>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/charexample.png" alt="">
+							    <figcaption class="figure-caption mt-3">The different looks of the character deuzi.</figcaption>
+							</figure>
+						</div>
+					</section><!--//section-->
+					
+					<section class="docs-section" id="cgs-setup-section">
+						<h2 class="section-heading">CGs</h2>
+						<p>The CGs (Computer Graphics) are images that can be displayed and animated. CGs can be a static image or a spritesheet. A spritesheet is a single image that contains all the frames of one or more animations.</p>
+						<p>As with the other elements, the <strong>cgs</strong> tag starts the section where the cgs are declared, each with unique key name. If the cgs is static, only the file information is needed. If it's a spritesheet, it needs not only the file, but also the frame size inside the image, and a list of all the animations that it contains. 
+						</p>
+						<p>The animations are declared with a key name, and are defined by their start and end frames, and the framerate. The frames inside a spritesheet are numbered starting with zero, and counting all the frames that fit inside the image, by going from the top left corner to the bottom right one.</p>
+						<pre><code class="language-yaml">
+	cgs:
+	  phone1: assets/objects/phone1.png
+	  phone2: assets/objects/phone2.png
+	  horse:
+	    spritesheet: assets/objects/horse.png 192 144
+	    animations:
+	      head: 1 4 20
+	      run: 5 11 20
+						</code></pre>
+						<p>In this example, there are two static cgs called phone1 and phone2, and one spritesheet cgs called horse.</p>
+						<p>The spritesheet contains frames of 192x144 pixels, and two animations:</p>
+						<ul>
+						    <li><strong class="mr-1">head:</strong>With the frames 1 to 4, and a framerate of 20 fps.</li>
+						    <li><strong class="mr-1">run:</strong>With the frames 5 to 11, and a framerate of 20 fps.</li>
+						</ul>
+						<p>The first frame, with number zero, represents the normal state of the cgs.</p>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/horse.png" alt="">
+							    <figcaption class="figure-caption mt-3">The spritesheet with the animations color coded. First frame, or normal view, in orange; head animation in pink and run animation in blue.</figcaption>
+							</figure>
+						</div>
+					</section><!--//section-->
+				     <section class="docs-section" id="audio-setup-section">
+						<h2 class="section-heading">Audio</h2>
+						<p>The audio for the game can be declared under two different tags, <strong>music</strong> and <strong>sfx</strong>. The only information needed for these elements is key name and file, and the file should be in a web friendly audio format, such as mp3 or ogg. The difference between music and sfx is how they will be treated when playing them: Music will be looped by default, and sfx only played once.</p>
+						<pre><code class="language-yaml">
+	music:
+	  morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
+	  storeBGM: assets/audio/Evan_Schaeffer_-_18_-_Big_Tree.mp3
+	sfx:
+	  ringtonePinkPhone: assets/audio/nokia6210-24-elise.mp3
+	  ringtoneGreenPhone: assets/audio/alcatel-top_secret.mp3
+						</code></pre>
+						<p>Here we declare two background music elements, and two sound effects corresponding to ringtones.</p>
+					</section><!--//section-->
+				    <section class="docs-section" id="extra-setup-section">
+						<h2 class="section-heading">Extra assets</h2>
+						<p>Any other asset (images, audio, spritesheets, etc) you need for your game, that don't enter in the previous categories can be declared here. Why would you need extra resources? One of the usual cases is to use paired with the <strong>ambient</strong> and <strong>effect</strong> actions. For example, the RAIN ambient needs a water drop image to use for the particles, and a looping background sound. Another action that normally needs extra assets is the <strong>call</strong> action, that allows you to execute plain javascript code. If you were to show images or play sounds, you can declare them here and when the code will be executed they assets will be preloaded.</p>
+						<p>Since the extra assets can be of many types, this section is further indexed by the types of assets you're declaring:</p>
+						<ul>
+						    <li><strong class="mr-1">image:</strong> Declare static images under this tag, with key name and file.</li>
+						    <li><strong class="mr-1">audio:</strong> For audio files of any kind.</li>
+						    <li><strong class="mr-1">spritesheets:</strong> Besides the key and the file name, the spritesheet needs two numbers that for the height and width of each of the frames it contains.</li>
+						    <li><strong class="mr-1">scripts:</strong> You can load javascript files that will be added to the page, instead of including them into the index file.</li>
+						</ul>
+						<pre><code class="language-yaml">
+  extra:
+    image:
+      rain: assets/ambient/rain.png
+      thunder: assets/effects/Thunder_Effect.png
+    audio:
+      rainBGS: assets/audio/Rain.mp3
+      thunderSFX: assets/audio/thunder_strike_1.mp3
+    spritesheets:
+      explosion: assets/effects/explosion.png 450 274
+    scripts:
+      lightbeam: assets/ambient/LightBeam.js
+						</code></pre>
+						<p>After the <strong>extra</strong> tag, we load a few assets of each category.</p>
+					</section><!--//section-->
+			    </article><!--//docs-article-->
+			    
+			    <article class="docs-article" id="configuration-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Configuration</h1>
+					    <section class="docs-intro">
+						    <p>The <strong>Story Configuration</strong> lets you set up many parameters and special values to use in the story. All of these values are inside a single YAML file (normally Config.yaml), that has to be pointed at from the <strong>boot file</strong>, just like the <strong>Setup file</strong>.</p>
+						</section><!--//docs-intro-->
+				    </header>
+				     <section class="docs-section" id="config-positions">
+						<h2 class="section-heading">Special Positions</h2>
+						<p>When showing characters, you can use the keyword <strong>AT</strong> to specify where in the screen they will appear. The character looks, that is the images that represent them, are anchored from its bottom center, so the pixel coordinates in the screen have to be chosen to coincide with this point. Normally, images are anchored from its top left corner, but since we'll want most characters to align from their feet, this change of anchor makes things easier.</p>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/positionexample.jpg" alt="">
+							    <figcaption class="figure-caption mt-3">The special positions in the Quickstart and Tutorial, marked with a pink line. The characters anchor point is marked in blue, Deuzi is in CENTER, Jair in OUTRIGHT.</figcaption>
+							</figure>
+						</div>
+						<p>Since the characters will be shown roughly in the same positions througout the game, it's possible to define a list of special positions that can be referenced by name, after the keyword <strong>AT</strong> in a show action. This is done in the <strong> configuration file</strong>, under the <strong>positions</strong> tag.</p>
+						<p>You can define as many special positions as you want. If you have a <strong>DEFAULT</strong> position, it will be used when the position is not specified.</p>
+						<pre><code class="language-yaml">
+positions:
+  DEFAULT: 
+    x: 400
+    y: 600
+  OUTLEFT: #Outside of the screen, left side
+    x: -133
+    y: 600 #The y should be at the bottom of the screen
+  LEFT: 
+    x: 133
+    y: 600
+  CENTER: 
+    x: 400
+    y: 600
+  RIGHT: 
+    x: 666
+    y: 600
+  OUTRIGHT: #Outside of the screen, right side
+    x: 933
+    y: 600
+						</code></pre>
+						<p>In the Quickstart example, there are five different positions, and the <strong>DEFAULT</strong> is the same as the CENTER. The screen resolution for this game is 800x600 pixels, and since we want the character's feet to be at the very bottom of the screen, the <strong>y coordinate</strong> is 600 for all the options. The positions <strong>OUTLEFT</strong> and <strong>OUTRIGHT</strong> are outside the screen, when showing characters in these positions, they will not really appear, but they're useful for simulating a character entering from the sides of the screen.</p>
+					</section><!--//section-->
+					
+					<section class="docs-section" id="config-transitions">
+						<h2 class="section-heading">Default Transitions</h2>
+						<p>A <strong>transition</strong> is the way in which a image will be shown, hidden or exchanged for another one. The most usual transitions are CUT, that will simply show or hide the image at once, and FADE, that will make appear or dissappear slowly by changing the transparency of the image, but there are a few others. Check the whole list of transitions <a class="scrollto" href="#transitions-section">here</a>.</p>
+						<p>When using the actions <strong>show</strong> or <strong>hide</strong>, you can specify a <strong>transition</strong> to use, by using the keyword <strong>WITH</strong>. If the transition is not specified, the default transition defined in this section, under the <strong>defaults</strong> tag, will be used. </p>
+						<p>When characters talk, by using the <strong>say</strong> action, they can also change their look. In this case, the transition can't be specified in the action itself, and it will always use the one defined here under the <strong>say</strong> tag.</p>
+						<p>It's also possible to set here what transitions to use for showing/hiding choices, both text and visual choices, and the game menus.</p>
+						<p>Another important option to define about the transitions is if the player can skip them. When the option <strong>skippable</strong> is set to true, if the player clicks in the middle of a transition, the transition will jump to the end. This was the default behaviour in the first version of RenJS, but now you can opt out of it.</p>
+						<pre><code class="language-yaml">
+transitions:
+  defaults: # Default transition when showing/hiding
+    characters: FADE
+    backgrounds: FADE
+    cgs: FADE
+    music: FADE
+  say: CUT #How to change character expression in say action
+  # Transition to use when showing/hiding choices
+  visualChoices: FADE
+  textChoices: CUT
+  menus: FADE
+  # Transitions can be skipped by the player by tapping
+  skippable: false
+						</code></pre>
+						<p>In this example, the default transitions for all visual elements will be FADE, but when using the <strong>say</strong> action, the character looks will change immediately with a <strong>CUT</strong> transition. The visual choices and the menus will be faded into the screen, but the text choices (along with their boxes) will be shown with CUT.</p>
+					</section><!--//section-->
+					
+					<section class="docs-section" id="config-timers">
+							<h2 class="section-heading">Timers</h2>
+						<p>The timers section lets you tweak the waiting time for:.</p>
+						<ul>
+						    <li><strong class="mr-1">Fade time:</strong> How much it will take, in miliseconds, to complete the FADE transition. If fading in and out at the same time (changing one image for the other) the total time will not change, but each part will take about half the defined time.</li>
+						    <li><strong class="mr-1">Auto time:</strong> In automatic mode, the game will advance on its own. The story actions that require the attention of the player, like <strong>text</strong> and <strong>say</strong> will remain in place for a while, so that they can be read. How much time it will wait is defined here, in miliseconds. If you want the auto mode to go faster, this number should be lower.</li>
+						    <li><strong class="mr-1">Skip time:</strong> Skip mode is roughly the same as auto mode, but very fast.</li>
+						    <li><strong class="mr-1">Timeout:</strong> When doing a <strong>wait</strong> action, if the time is not specified, this value will be used.</li>
+						</ul>
+						<pre><code class="language-yaml">
+	# Fade transition time, in miliseconds
+	fadetime : 750
+	# Time in each action that waits (e.g. text and say) when skipping
+	skiptime: 50
+	# Time in each action that waits (e.g. text and say) when auto playing
+	autotime: 150
+	# Default waiting time for timeouts if not specified
+	timeout: 5000
+						</code></pre>
+
+					</section><!--//section-->
+					<section class="docs-section" id="config-logs">
+						<h2 class="section-heading">Logs</h2>
+						<p>Two features can be used optionally by setting these two properties:</p>
+						<ul>
+						    <li><strong class="mr-1">Log choices:</strong> This features keeps track of all the player decisions when facing a <strong>choice</strong> action. When replaying the game, the choice boxes of the previously taken paths will be tinted, and more easily identifiable. If you don't want to use this feature in your game, set the property <strong>logChoices</strong> to false.</li>
+						    <li><strong class="mr-1">Log text:</strong> This feature keeps track of all the <strong>say</strong> and <strong>text</strong> the player has seen, no matter the different paths they could have taken, and allows them to read them again. The text will be shown again in the message box, and the game will be paused until reaching the most recent action. For this feature to work, the HUD needs to have the buttons for navigating the log (show previous log message, show next log message, go to last log message).</li>
+						</ul>
+						<pre><code class="language-yaml">
+	# If logChoices is true, previously chosen choices will be shown in a different color
+	logChoices: true
+	# If logText is true, all executed say and text actions will be kept in a log that can be checked
+	logText: true
+						</code></pre>
+					</section><!--//section-->
+					<section class="docs-section" id="config-punctuation">
+						<h2 class="section-heading">Punctuation Wait</h2>
+						<p>The message box shows the message text by adding characters one by one. The time between each character is uniform, and defined by the <strong>speedText user preference</strong>. For dramatic effect, sometimes we want to wait extra time when certain characters are encountered, usually punctuation marks such as dots, commas, ellipsis, etc.</p>
+						<ul>
+						    <li><strong class="mr-1">Punctuation Marks:</strong> A list of all the punctuation marks that will have an extra wait time.</li>
+						    <li><strong class="mr-1">Punctuation Wait:</strong> How much, relative to the normal text speed, will be waited until the next character appears after a punctuation mark. For example, a <strong>punctuationWait</strong> equal to five means that when a <strong>punctuation mark</strong> is added to the message box, it will wait 5x times what it waits to add a new character.</li>
+						</ul>
+						<p>When the message box has a sound effect associated with it (or a character voice), you can change how the sfx will be played. The <strong>Characters per sfx</strong> defines how many characters will be placed in the message box before playing the sfx. Normally, if your sfx is very short, you'll want to play it every time a character is added. For longer sfx, you can set this number higher to skip a few characters between sounds. The first character of a word (after punctuation marks or whitespaces) will always sound. You can set this property with the value <strong>auto</strong> to calculate automatically this value related to the sfx lenght and the text speed. If you want to play the sfx only once when the message box appears, you can set this property as <strong>-1</strong>.</p>
+						<pre><code class="language-yaml">
+punctuationMarks: [".",",","!","?","-"]
+# when a punctuation mark is shown, X extra puntuation wait times will be spent after adding the next character
+# the total amount of wait will be this value multiplied the text speed
+punctuationWait: 5
+# how the message box sfx will sound
+charPerSfx: 1
+						</code></pre>
+					</section><!--//section-->
+					<section class="docs-section" id="config-lazy-loading">
+						<h2 class="section-heading">Lazy Loading</h2>
+						<p>Normally, when you want to play a RenJS Visual Novel, the first step is to load the entire game into the webpage. When loading the assets (setup in this same Setup.yaml file), the player will see a loading screen that can include a bar showing the progress. For short and small games, this is not a problem, since the game will be loaded fairly quickly. But for long games with lots of assets in higher quality, the waiting time could become a problem.</p>
+						<p>The main idea of lazy loading is that the player can start playing the game before the whole game is really loaded. The assets will be loaded in batches, sorted by priority according to what the player needs to see next. In big games, where the player is expected to play in different session, the game will not need to load the totality of the assets, and the player will never see any difference.</p>
+						<p>In esence, what this module does is to delay the loading of the assets until the moment they are needed, grouping them by scene. Just as before, the player will see a loading screen while the assets are loaded. But this doesn't mean there will be a loading screen at the start of each scene. The assets have to be loaded just once, and they will be available for all subsequent scenes that need to use it. If all the assets used in a scene were loaded previously, then no loading screen is needed and the scene can start immediately.</p>
+						<p>The assets can be further grouped into episodes. That is, an episode is a group of scenes, that will all be loaded together at the same time. So when a scene from an episode starts, the assets from that scene, and from all the scenes in that episode will be loaded. This will effectively skip any loading phase for any other scene in the same episode.</p>
+						<p>To add lazy loading to your game you will need to setup a few things. The main information needed is which assets will be used in each scene. This can be obtained directly from the story, but analyzing the whole script to do this extraction is costly. Furthermore, some assets, like the ones set in the extra section of the file, may be harder to find, since they could be used internally by Ambients, Effects or Plugins, without being explicitly written in the story. For these reasons, the first configuration under the lazy loading tag will be <strong>assetsPerScene</strong>, that will have, per each scene in the game, a list of the assets it needs. To make things easy, when the option <a>findAssets</a> is set to true, the story script will be analysed in its entirety when loading the game, and the assets per scene list (minus the extra assets) will be printed in the console, ready to be copied and pasted into this setup. <strong>Extra assets should be added manually into the scenes that use them.</strong></p>
+						<p>Another configurable parameter is <strong>backgroundLoading</strong>. To further minimize waiting time, this option starts loading further episodes in the background. This means that the player will see a loading screen for the first episode, and while playing it, the assets for the next one will start loading. When the player gets to the next episode, there is a possibility most or all of the assets for it will be already loaded. The benefit of this option will depend on the nature of the game you're writing. If the game is mostly linear, at least in the use of its assets, then this feature will save lots of waiting time. But if the game can take wildly different paths (again, in terms of assets) then predicting what asset will be used next won't be as easy, and the benefits of background loading will be minimal.</p>
+	
+						<pre><code class="language-yaml">
+lazyloading: 
+  findAssets: false
+  loadingScreen: true
+  backgroundLoading: true
+  episodes: 
+    - [start, enterSchool]
+    - [storySetup, writingTheStory]
+    - [interval, storeAtNight,backToTheRoom]
+    - [day2, lessonStoryFlux,lastClass,graduation]
+  assetsPerScene:
+    start:
+      morningBGM: music
+      street_morning: backgrounds
+      deuzi: characters
+    enterSchool:
+      title: image
+      school_morning: backgrounds
+      deuzi: characters
+      folders: cgs
+      lessonRenJSConfig: cgs
+						</code></pre>
+					</section><!--//section-->
+			    </article><!--//docs-article-->
+
+			    <article class="docs-article" id="gui-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">GUI</h1>
+					    <section class="docs-intro">
+						    <p>The <strong>GUI</strong>, or <strong>Graphic User Interface</strong>, is everything that is not strictly part of the story, like the <strong>menus</strong> and the <strong>HUD</strong>. The GUI is just as important for the story, since it sets the mood for the player even before she starts the game. There are many <a href="http://blog.cyanide-tea.net/2014/07/22/design-101-gui-design/">resources</a> about how to choose the best interface for your game. There’s also a rich community of visual novel developers who create and distribute their own art and designs, sometimes as free creative commons assets.</p>
+						    <p>To setup the <strong>GUI</strong> you need a configuration YAML file (identified as the <strong>guiConfig</strong> in the boot file). In this file, you will describe each part of the GUI. For example, a menu is usually composed of a background and a few buttons. In the file, you would have to write where to find the background image, same for the buttons, adding also where they should be located and what they do when clicked.</p>
+						    <p>This configuration file can be done in two ways: you can write it manually, or using the RenJS GUIBuilder tool, that lets you create the file visually by dragging and dropping the components. </p>
+							<p>But before diving into the design, let's define exactly how is a GUI composed: Which components do we need, which menus are mandatory, etc.</p>
+						</section><!--//docs-intro-->
+				    </header>
+				     <section class="docs-section" id="gui-menus">
+						<h2 class="section-heading">Menus</h2>
+						<p>A <strong>menu</strong> is a set of options presented to the player, to help them start the game, find information, change settings, or save and load the current game.</p>
+						<p>In RenJS, there's only one mandatory menu, the <strong>Main Menu</strong>. This menu is the first screen the players will see after the game is loaded, and it should allow them to (at least) start a new game. You can have as many other menus as you want, such as a <strong>Settings Menu</strong> or a <strong>Save and Load Menu</strong>.</p>
+						<p>Each menu is described as a list of elements, such as: </p>
+						<ul>
+							<li><strong>Buttons</strong>: The buttons have an event asociated to their interaction. This event can be, for example, starting a new game, changing the menu, loading a game, etc.</li>
+							<li><strong>Images and Animations</strong>: Static or moving decorations that you can place anywhere on the menu.</li>
+							<li><strong>Labels</strong>: Written text that you can place anywhere on the menu.</li>
+							<li><strong>Background Music</strong>: An audio file that will play when the menu is opened.</li>
+							<li><strong>Sliders</strong>: A component to set a numeric value to a property, for example, the music volume. Normally, you'll use this component on the <strong>Settings Menu</strong>.</li>
+							<li><strong>Save/Load Slot</strong>: A thumbnail showing a screenshot of the saved game in that slot. A default image will be shown when the slot is empty.Normally, you'll use this component on the <strong>Save and Load Menu</strong>.</li>
+						</ul>
+						<!-- <h3>Main Menu</h3>
+						<p>This menu is the first thing the player will see after the game is loaded. From here, the player should be able to start the game, and could also access the <strong>Settings Menu</strong> and/or the <strong>Save and Load Menu</strong>. If you don't want to use a Save and Load Menu, but want to have a simpler scheme with one only save slot, you could add here a <i>continue</i> button that will load the last saved game.</p> -->
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/main.png" alt="">
+							    <figcaption class="figure-caption mt-3">The main menu for the Tutorial and Quickstart games.</figcaption>
+							</figure>
+						</div>
+						<!-- <h3>Settings Menu</h3>
+						<p>This menu should allow the player to change the game settings. A <strong>return button</strong> will also close this menu return to either the Main Menu or the game (if called from the HUD). There are currently four properties available for the player to change:</p>
+						<ul>
+							<li><strong>Music Volume</strong>: The volume of the background music.</li>
+							<li><strong>SFX Volume</strong>: The volume of the sound effects.</li>
+							<li><strong>Text Speed</strong>: How fast the text appears in the message box in HUD, during game.</li>
+							<li><strong>Auto Speed</strong>: In autoplay, the game will not wait for the player to click after text is displayed, but will continue after a brief pause. The Auto Speed will determine how long this wait is.</li>
+						</ul>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/menusave.png" alt="">
+							    <figcaption class="figure-caption mt-3">The settings menu for the Tutorial and Quickstart games.</figcaption>
+							</figure>
+						</div>
+						<h3>Save and Load Menu</h3>
+						<p>This menu should allow the player to save and load games in different slots. Each slot is represented by three components, the Save/Load Slot (a thumnail of the saved game), a Save Button and Load Button. As with the <strong>Settings Menu</strong>, it's usefull for this menu to have a <strong>return button</strong>.</p>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/menusettings.png" alt="">
+							    <figcaption class="figure-caption mt-3">The save/load menu for the Tutorial and Quickstart games.</figcaption>
+							</figure>
+						</div> -->
+					</section><!--//section-->
+					
+					<section class="docs-section" id="gui-hud">
+						<h2 class="section-heading">HUD</h2>
+						<p>The <strong>HUD (heads-up display)</strong>, is the method by which information is visually relayed to the player as part of a game's user interface; that is, everything you see in the screen while playing the game, that is not strictly part of the stort itself. This includes the message box where the story text and dialogues will be displayed, the name box, where the talking character name will be displayed, buttons for using the Skip/Auto features or accessing the menus, any many more.</p>
+						<p>In addition to all of the elements available to the menus, the HUD has a few more:</p>
+						<ul>
+							<li><strong>Message Box</strong>: A box, usually ocuppying the bottom of the screen, where the story text will be displayed.</li>
+							<li><strong>Name Box</strong>: When the text displaying in the Message Box is part of a dialogue, the an extra box will be shown containing the name of the character talking.</li>
+							<li><strong>Click to Continue (CTC)</strong>: To give the players all the time they need to read the contents of the Message Box, the game will not continue until they click anywhere on the screen. The Click to Continue is simply an animated image that will indicate to the players that the game is waiting for them to click to continue.</li>
+							<li><strong>Choice Box</strong>: The <strong>choice action</strong> allows the players to make decisions during the game by choosing between different options. These options will be presented each in their own box, that the player can click as a button.</li>											
+						</ul>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/hud.png" alt="">
+							    <figcaption class="figure-caption mt-3">The HUD for the Tutorial and Quickstart games, featuring Message Box, Name Box, CTC, Choice and Interrupt Boxes and four buttons: Open Settings Menu, Open Save Menu, Skip and Auto.</figcaption>
+							</figure>
+						</div>
+					</section><!--//section-->
+					<section class="docs-section" id="gui-fonts">
+						<h2 class="section-heading">Fonts</h2>
+						<p>As we mentioned before a few times already, a RenJS game is actually a webpage. In webpages, when you want to use special fonts and styles, you need css files. CSS, or Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.</p>
+						<p>The fonts you use for written text in the game are also part of the aesthetic of the game, so you'll want to choose them carefully. For example, you might want to use a cursive or gothic font for an historical or fantasy game. You can find a multitude of free fonts to use <a href="https://www.fontsquirrel.com/">around the internet</a>, usually in the <strong>ttf (TrueType Font) format</strong>. These files will have to be included in the game, and the way to include them is through the <strong>css font file</strong>.</p>
+						<p>The <strong>css font file</strong> will list all the fonts you will use in the game, and where to find the corresponding <strong>ttf font files</strong>. Finally, this file has to be included into RenJS, by way of pointing at it from the <a href="boot-file-section">boot file</a>, <strong>fonts</strong> property.</p>
+						<p>Let's see an example of a <strong>css font file</strong>. The <strong>font-family</strong> will be the name you will use to refer to that font in the GUI configuration file, and the <strong>src</strong> is a path on where to find the <strong>ttf font file</strong>. The path should be relative to the <strong>css font file</strong>, so if the css file and ttf file are in the same directory, the <strong>src</strong> should be only the name of the ttf file.</p>
+						<pre><code class="language-css">
+
+
+	@font-face {
+	  font-family: 'audimat-mono';
+	  src: url('assets/gui/audimat-mono.ttf');
+	  src: url('assets/gui/audimat-mono.ttf').format('truetype');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'old-standard';
+	  src: url('assets/gui/OldStandard-Regular.ttf');
+	  src: url('assets/gui/OldStandard-Regular.ttf') format('truetype');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'playfair';
+	  src: url('assets/gui/PlayfairDisplaySC-Regular.ttf');
+	  src: url('assets/gui/PlayfairDisplaySC-Regular.ttf') format('truetype');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+						</code></pre>
+						<p>If you're using the <strong>RenJS GUI Builder</strong> tool this file will be created automatically.</p>
+					</section><!--//section-->
+					<section class="docs-section" id="gui-config-file">
+						<h2 class="section-heading">The GUI File</h2>
+						<div class="callout-block callout-block-warning">
+                            <div class="content">
+                                <h4 class="callout-title">
+	                                <span class="callout-icon-holder mr-1">
+		                                <i class="fas fa-bullhorn"></i>
+		                            </span><!--//icon-holder-->
+	                                Warning
+	                            </h4>
+                                <p>The old GUI configuration file is no longer supported! Make sure your GUI yaml file has the structure as described in this section.</p>
+                            </div><!--//content-->
+                        </div><!--//callout-block-->
+                        <p>One of the ways to configurate the GUI is by manually writing the configuration file (GUI.yaml). This file is written in a way that is easy to understand and, therefore, easy to write.</p>
+						<p>The GUI file (identified in the <a href="boot-file-section">boot file</a> as <strong>guiConfig</strong>) has three main sections:</p>
+						<ul>
+							<li><strong>Assets</strong>: The list of assets used to build the gui, with key and file name.</li>
+							<li><strong>Configuration</strong>: The way the assets will be used in each menu and the HUD.</li>
+						</ul>
+						<p>Additionally, there are two more properties, such as:</p>
+						<ul>
+							<li><strong>Assets Path</strong>: All the asset files should be relative to this path.</li>
+							<li><strong>GUI Version</strong>: Used to identify which version of the GUI the YAML file refers to. This documentation corresponds to version "2.0".</li>
+						</ul>
+						<pre><code class="language-yaml">
+assets:
+	# assets list
+config:
+	hud:
+		# hud configuration
+	menus:
+		main:
+			# main menu configuration
+		menu2:
+			# other menu configuration
+# path to assets
+assetsPath: assets/gui/ 
+# gui version
+GUIVersion: "2.0"
+						</code></pre>
+						<br>
+						<h3>Assets</h3>
+						<p>A list of all the assets, ordered by their types: images, spritesheets (for the buttons), audio, etc. Most assets have only a <strong>tag</strong> (withouth whitespaces or special characters) and <strong>path</strong>, but the spritesheets take two extra parameters for <strong>width</strong> and <strong>height</strong> of each of its frames.</p>
+						<p>The fonts are a simple list, that should refer to the fonts configured in the <strong>css fonts file</strong>.</p>
+						<p>You can call each of this assets whatever you like, but it’s a good practice to use descriptive names for each one.</p>
+						<pre><code class="language-yaml">
+assets:
+  fonts:
+    - font1
+    - font2
+  images:
+    image1: path/to/image1
+    image2: path/to/image2
+  spritesheets:
+    sprt1: path/to/sprt1 width height
+    sprt2: path/to/sprt2 width height
+  audio:
+  	music1: path/to/music1
+  	sfx1: path/to/sfx1
+						</code></pre>
+						<br>
+						<h3>Configuration</h3>
+						<p>The config section of the GUI file, separated between <strong>hud</strong> and <strong>menus</strong> is where the magic happens. Each of the menus/hud configured here is a list of GUI elements describing how the GUI will look exactly. The elements (buttons, images, etc) will be loaded in order of appearance, meaning that the order of this list determines de z-order of the elements. For example, if you want to place an image behind a button, the image should appeart first in the list.</p>
+						<p>The <strong>gui</strong> and the <strong>menus</strong> configuration have the same format, but the <strong>hud</strong> has a few special elements used during the game, such as the <strong>message box</strong>, <strong>name box</strong> and <strong>choice box</strong>.</p>
+						<p>The following code sample shows the format a menu configuration should have. The properties for each element depend on the <strong>element type</strong>. The elements can optionally have an id, that will make them indexed inside the corresponding menu. What this means is that you'll be able to find it more easily programatically from a <strong>plugin</strong>.</p>
+						<pre><code class="language-yaml">
+config:
+	menus:
+		# menu tag
+		menu1:
+			# first element
+			- type: ['image'|'button'|'label'|'slider'|'saveSlot']
+			  [id: 'elementId']
+			  elementProperty1: value1
+			  elementProperty2: value2
+			  ...
+			# second element
+			- type: ['image'|'button'|'label'|'slider'|'saveSlot']
+			  elementProperty1: value1
+			  elementProperty2: value2  
+						</code></pre>
+						<p>Let's see how to configure each of the elements, starting with the general elements allowed by both menus and hud.</p>
+						<br>
+						<h3>General Elements</h3>
+						<h4>Images</h4>
+						<pre><code class="language-yaml">
+	- type: 'image'
+	  # optional image id
+	  id: 'imageId'
+      # tag of asset as used in the assets list
+      # if asset is spritesheet, the animation will be run in a loop
+	  asset: 'assetTag'
+	  # location from top left corner
+	  x: 0
+	  y: 0
+						</code></pre>
+						<h4>Buttons</h4>
+						<pre><code class="language-yaml">
+	- type: 'button'
+	  # optional button id
+	  id: 'buttonId'
+      # tag of asset as used in the assets list
+      # asset can have up to 4 frames -> over,out,down,up
+	  asset: 'assetTag'
+	  # location from top left corner
+	  x: 0
+	  y: 0
+	  # optional sound effect to play when button is pressed
+	  sfx: 'soundAssetTag'
+	  # what the button will do when pressed
+	  binding: ['start'|'load'|'save'|'openMenu'|'return'|'auto'|'skip'|'mute'|'otherAction']
+	  # optionally, a button can be a "pushButton" with 'on' and 'off' state
+	  # the asset of these buttons should have twice the amount of frames for when the button is pushed
+	  pushButton: [true|false]
+	  pushed: [true|false]
+						</code></pre>
+						<p>The <strong>binding</strong> of a button refers to the action that will be executed when the button is pressed. There are a few actions readily available to use, but you can add any other action from a <a href="#plugins-section">Plugin</a>.</p>
+						<p>Lets see what the availabe button bindings do, and what extra parameters they need.</p>
+						<ul>
+							<li><strong>start</strong>: Starts the game from the beginning, by starting the scene tagged as 'start'.</li>
+							<li><strong>load</strong>: Starts the game from a saved game. The button needs a 'slot' property for loading the game. If no slot is specified, it will try to load from slot 0. If no data is found in the slot, it will start a new game.</li>
+							<li><strong>save</strong>: Saves the current game. The button needs a 'slot' property for loading the game. If no slot is specified, it will try to load from slot 0.</li>
+							<li><strong>openMenu</strong>: Changes from one menu (or the HUD) to another one. The button needs a 'menu' property to know which menu to open.</li>
+							<li><strong>return</strong>: Return to the previous menu (or the HUD).</li>
+							<li><strong>auto</strong>: Starts auto play mode. In this mode, the game will not wait for the player to click to continue after a text action. Can be a pushButton.</li>
+							<li><strong>skip</strong>: Starts skip mode. This mode is like autoplay, but really really fast, and skipping transitions. Can be a pushButton.</li>
+							<li><strong>mute</strong>: Mutes or unmutes the audio. Can be a pushButton.</li>
+						</ul>
+						<p>The asset of a button should be a spritesheet with 1 to 4 frames. Each frame will represent a different state of a button, and this will be determined automatically according to the amount of frames.</p>
+						<ul>
+							<li><strong>1 frame</strong>: The button will look always the same.</li>
+							<li><strong>2 frames</strong>: Normal/Hover and Pressed</li>
+							<li><strong>3 frames</strong>: Normal/Hover/Pressed</li>
+							<li><strong>4 frames</strong>: Normal/Hover/Pressed/Released</li>
+						</ul>
+						<p>In the case of a push button, you should have twice the amount of frames. The states will be the same, but adding the same states for when the button is pushed. For example, if the button normally has two frames, the push button should have four.</p>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/buttonframes.png" alt="">
+							    <figcaption class="figure-caption mt-3">Button frames examples.</figcaption>
+							</figure>
+						</div>
+						<h4>Labels</h4>
+						<pre><code class="language-yaml">
+	- type: 'label'
+	  # optional label id
+	  id: 'labelId'
+	  # location from top left corner
+	  x: 0
+	  y: 0
+	  # text of the label
+	  text: "Label 1"
+	  # distance between the lines of the text (in multiline text) => 0: normal spacing, <0 tighter lines, >0 farther away lines
+	  lineSpacing: 0
+	  style:
+	  	font: "audimat-mono"
+	  	fontSize: "32px"
+	  	fill: "#00FF00"	  	
+						</code></pre>
+						<p id="text-style">The text style in this element, and in any other element that uses text, can have any property allowed for <a href="https://phaser.io/docs/2.6.2/Phaser.Text.html">Phaser Text</a> objects. Some of the most important properties are:</p>
+						<ul>
+							<li><strong>font</strong>: The name of the font as configured in the <strong>fonts css file</strong> (and fonts list in this same file). It can also include style and size. E.g. 'bold 20pt Arial'.</li>
+							<li><strong>fontStyle</strong>: The style of the font (it will override the style in font, if present): <strong>normal</strong>, <strong>italic</strong> or <strong>oblique</strong>.</li>
+							<li><strong>fontWeight</strong>: The weight of the font (it will override the weight in font, if present): <strong>normal</strong> or <strong>bold</strong>.</li>
+							<li><strong>fontSize</strong>: The size of the font (it will override the size in font, if present), in pixels.</li>
+							<li><strong>fill</strong>: The color of the text as a hex color.</li>
+						</ul>
+						<p>Text alignment has to be setup differently for single line and multiline texts. In multiline text you need to set:</p>
+						<ul>
+							<li><strong>wordWrap</strong>: Set as true for multiline text.</li>
+							<li><strong>wordWrapWidth</strong>: If text is wrapped, what's the width in pixels to wrap it.</li>
+							<li><strong>align</strong>: Horizontal alignment for multiline text. It can be: <strong>left</strong>, <strong>center</strong> or <strong>right</strong>.</li>
+						</ul>
+						<p>In single line texts, the alignment is important relative to some other element. For example, the character names inside the name box. In these cases, where the text has a parent (not labels), you can set the alignment with these properties:</p>
+						<ul>
+							<li><strong>boundsAlignH</strong>: Horizontal alignment of the text within the parent. Can be: 'left', 'center' or 'right'.</li>
+							<li><strong>boundsAlignV</strong>: Vertical alignment of the text within the parent. Can be: 'top', 'middle' or 'bottom'.</li>
+						</ul>
+						<h4>Sliders</h4>
+						<pre><code class="language-yaml">
+	- type: 'slider'
+	  # optional slider id
+	  id: 'sliderId'
+      # tag of asset as used in the assets list
+      # asset should have two frames => empty,full
+	  asset: 'assetTag'
+	  # location from top left corner
+	  x: 0
+	  y: 0
+	  # optional sound effect to play when clicking on slider
+	  sfx: 'soundAssetTag'
+	  # what the slider will do when value is changed
+	  binding: ['changeUserPreference'|'otherAction']
+						</code></pre>
+						<p>The <strong>binding</strong> of a slider refers to the action that will be executed when the slider is clicked on. This will change the value of the slider. The only pre defined action you can use with sliders is <strong>changeUserPreference</strong> that needs an extra property called <strong>userPreference</strong> to know wich value to change, such as:</p>
+						<ul>
+							<li><strong>textSpeed</strong>: How fast the message box animation will run.</li>
+							<li><strong>autoSpeed</strong>: In auto mode, after a text action, the game will pause for a moment so the player has time to read. This value affects the lenght of this pause.</li>
+							<li><strong>bgmv</strong>: Background music volume.</li>
+							<li><strong>sfxv</strong>: Sound effects volume.</li>
+						</ul>
+						<h4>SaveSlot</h4>
+						<pre><code class="language-yaml">
+	- type: 'saveSlot'
+	  # optional saveslot id
+	  id: 'saveslot'
+      # tag of asset as used in the assets list
+      # asset will be used as "empty slot" background
+	  asset: 'assetTag'
+	  # location from top left corner
+	  x: 0
+	  y: 0
+	  # slot number related to this element
+	  slot: 0
+	  # screenshot of the saved game in this slot
+	  thumbnail:
+	  	# offset from the top left corner of the element
+	  	x: 0
+	  	y: 0
+	  	# size of the thumbnail, in pixels
+	  	widht: 40
+	  	height: 40
+						</code></pre>
+						<br>
+						<h3>HUD Specific Elements</h3>
+						<h4>Message Box</h4>
+						<pre><code class="language-yaml">
+	- type: 'messageBox'
+	  # id is mandatory, at least one message box in the HUD should be id='default'
+	  id: 'default'
+      # tag of asset as used in the assets list
+	  asset: 'assetTag'
+	  # location from top left corner
+	  x: 0
+	  y: 0
+	  # sound effect associated with this message box
+	  # related to charPerSfx configuration property
+	  sfx: 'soundAssetTag'
+	  # transition to show this message box, if not present the default message box transition will be used
+	  transition: "CUT"
+	  # if the message box should remain in the screen all the time (text will clear after actions, but box won't be hidden)
+	  alwaysOn: false
+	  # configuration for the text, should normally be wrapped
+	  text:
+	  	# position related to the top left corner of the box
+	  	x: 12
+	  	y: 12
+	  	lineSpacing: 0
+	  	style:
+	  		font: audimat-mono
+	  		fontSize: 32px
+	  		fill: #FFFFFF
+	  		align: left
+	        wordWrap: true
+	        wordWrapWidth: 550
+	  # click to continue configuration
+	  ctc:
+	  	# position related to the top left corner of the box
+	  	x: 500
+	  	y: 100
+	  	# ctc image can be a normal image or a spritesheet to animate
+	  	asset: ctcAsset
+	  	# sfx to play when the text in the message box is completed and ctc is shown
+	  	sfx: ctcSoundAsset	  	
+	  	# The ctc can be animated: as a spritesheet or tweening the animation
+	  	animationStyle: spritesheet|tween|static
+						</code></pre>
+						<p>Check other text style properties <a href="#text-style">here</a>.</p>
+						<h4>Name Box</h4>
+						<pre><code class="language-yaml">
+	- type: 'nameBox'
+	  # id is mandatory, if you're not using specific name boxes for characters, you should have one with id='default'
+	  id: 'default'
+	  # tag of asset as used in the assets list
+	  asset: 'assetTag'
+	  # location from top left corner
+	  x: 0
+	  y: 0
+	  # transition to show this name box, if not present the default name box transition will be used
+	  transition: "CUT"
+	  # when showing text in the namebox, it comes associated with a character color too
+	  # this color can be used to change the text color or tint the whole box
+	  tintStyle: text|box
+	  # configuration for the text, will normally be single line and aligned inside the box
+	  text:
+	  	# position related to the top left corner of the box
+	  	x: 0
+	  	y: 0
+	  	style:
+	  		font: audimat-mono
+	  		fontSize: 32px
+	  		# center inside the box
+	  		boundsAlignH: center
+          	boundsAlignV: middle
+						</code></pre>
+						<h4>Choice Box</h4>
+						<pre><code class="language-yaml">
+	- type: 'choices'
+	  # id is mandatory, you should have at least one with id='default'
+	  id: 'default'
+	  # tag of asset as used in the assets list, should have the same format as a button asset
+	  asset: 'assetTag'
+	  # base location of the choices, related to choices alignment
+	  x: 400
+	  y: 300
+	  # there will be a number of choices shown at the same time,
+	  # each will be shown in its own box, one on top of another
+	  # the alignment determines how to position the boxes related to the base location
+	  alignment: centered|bottomUp|topDown
+	  # separation between the choice boxes, in pixels
+	  separation: 10	  
+	  # transition to show the choices, if not present the default choices transition will be used
+	  transition: "CUT"
+	  # the chosenColor property will be used to tint the choices previously taken in game
+	  chosenColor: #FF0000
+	  # sfx to play when a choice is pressed
+  	  sfx: soundAsset	  	
+	  # configuration for the text, could be either single or multi line
+	  text:
+	  	# position related to the top left corner of the box
+	  	x: 0
+	  	y: 0
+	  	style:
+	  		font: audimat-mono
+	  		fontSize: 32px
+	  		fill: #FFFFFF
+	  		# center inside the box
+	  		boundsAlignH: center
+          	boundsAlignV: middle
+						</code></pre>
+						
+					</section><!--//section-->
+					<section class="docs-section" id="gui-builder">
+						<h2 class="section-heading">RenJS GUI Builder</h2>
+						<p>RenJS GUI Builder is a tool to automate the creation of the GUI configuration file. This tool allows you to create the GUI by adding components visually, moving them around easily and adjusting every little detail until you have exactly the GUI you want. When everything is ready, you can <i>build</i> it, and this will create a template for your game where you'll only have to add the parts of your story.</p>
+						<div class="callout-block callout-block-warning">
+                            <div class="content">
+                                <h4 class="callout-title">
+	                                <span class="callout-icon-holder mr-1">
+		                                <i class="fas fa-bullhorn"></i>
+		                            </span><!--//icon-holder-->
+	                                Warning
+	                            </h4>
+                                <p>RenJS GUI Builder documentation coming soon!</p>
+                            </div><!--//content-->
+                        </div><!--//callout-block-->
+					</section><!--//section-->
+					<section class="docs-section" id="gui-conversion-guide">
+						<h2 class="section-heading">GUI Conversion Guide</h2>
+						<p>If your GUI file is in the old GUIBuilder format and you would like to profit from the new features of the new format, you'll have to convert it. You can do this manually, by checking out the new format and making the appropiate changes, or you can do it automatically by following this guide.</p>
+						<p>Since version <strong>2.1.0</strong> of RenJS, the old GUI configuration files are internally converted to the new format already, and you can take advantage of this conversion to update your GUI file.</p>
+						<p>The next steps will guide you through the automatic conversion:</p>
+						<ol>
+							<li><strong>Update RenJS</strong>: Make sure the RenJS version you're loading into your game is 2.1.0 or higher. Remember you load this file directly in the index.html file.</li>
+							<li><strong>Set debug mode on</strong>: In the <a href="#boot-file-section">boot.js</a> file, make sure you have the <strong>debugMode</strong> property set as true.</li>
+							<div class="text-center">
+							    <figure class="figure docs-figure py-3 text-center">
+								    <img class="figure-img img-fluid shadow rounded" src="assets/images/conversionguide/debugmode.png" alt="">
+								    <figcaption class="figure-caption mt-3">Debug mode on, in boot.js file.</figcaption>
+								</figure>
+							</div>
+							<li><strong>Run the game</strong>: Run the game locally as usual in a browser.</li>
+							<li><strong>Open the console</strong>: Most web browsers come with a console to debug javascript. The debug mode in RenJS displays control messages that will be shown into this browser console. You can usually open the console by pressing F12 when in the broswer.</li>
+							<div class="text-center">
+							    <figure class="figure docs-figure py-3 text-center">
+								    <img class="figure-img img-fluid shadow rounded" src="assets/images/conversionguide/openconsole.png" alt="">
+								    <figcaption class="figure-caption mt-3">Open the browswer console by pressing F12.</figcaption>
+								</figure>
+							</div>
+							<li><strong>Copy the new GUI configuration</strong>: When the game has loaded, and it's showing the Main Menu, you can find in the console a message from the debugger showing the new configuration of the GUI. Select this message and copy it in its entirety.</li>
+							<div class="text-center">
+							    <figure class="figure docs-figure py-3 text-center">
+								    <img class="figure-img img-fluid shadow rounded" src="assets/images/conversionguide/copyconfig.png" alt="">
+								    <figcaption class="figure-caption mt-3">Copy the whole message that shows the configuration (you can select everything, or directly copy the message).</figcaption>
+								</figure>
+							</div>
+							<li><strong>Paste the new GUI configuration over the old one</strong>: Open the GUI.yaml file and find the <strong>config</strong> property. You need to paste your new configuration over this element. Make sure you're not replacing neither the <strong>fonts</strong> list or the <strong>assets</strong> configuration.</li>
+							<div class="text-center">
+							    <figure class="figure docs-figure py-3 text-center">
+								    <img class="figure-img img-fluid shadow rounded" src="assets/images/conversionguide/pasteconfig.png" alt="">
+								    <figcaption class="figure-caption mt-3">Remove all contents from config property in GUI.yaml, and replace it with copied message.</figcaption>
+								</figure>
+							</div>
+							<li><strong>Add GUI versioning</strong>: In the console, in addition to the new GUI configuration, another message will indicate a property to add to the GUI file, namely, <strong>GUIVersion</strong>, along with the value to set. Add this property to the GUI.yaml file. You can additionally the <strong>madeWithRenJSBuilder</strong> property, that is not used anymore.</li>
+							<div class="text-center">
+							    <figure class="figure docs-figure py-3 text-center">
+								    <img class="figure-img img-fluid shadow rounded" src="assets/images/conversionguide/guiversioning.png" alt="">
+								    <figcaption class="figure-caption mt-3">Add the GUI version number at the end of the GUI.yaml file.</figcaption>
+								</figure>
+							</div>
+							<li><strong>Save new GUI.yaml file</strong>: Make sure you save all changes made to the GUI.yaml file.</li>
+							<li><strong>Set debug mode off</strong>: Go back to the <strong>boot.js</strong> file and set <strong>debugMode</strong> as false, or remove the property entirely.</li>
+							<li><strong>Run the game with the new GUI format</strong>: Your game should now be running with the new GUI format, that you can modify manually to profit from the new features, such as multiple message/name boxes and Z ordering.</li>
+						</ol>
+					</section><!--//section-->
+			    </article><!--//docs-article-->
+			    <article class="docs-article" id="actions-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Story Actions</h1>
+					    <section class="docs-intro">
+						    <p>With RenJS, you make your game by writing a <strong>script</strong>. This <strong>script</strong> is structured as a group of interconected <strong>scenes</strong>, and each <strong>scene</strong> contains a list of <strong>actions</strong> that will be executed one after the other.</p>
+						    <p>The <strong>actions</strong> are the way to tell the story. In the visual novel genre, a story is normally told by showing images, such as backgrounds and characters, and displaying text, and this is what you can do with each <strong>action</strong>.</p>
+						    <p>There are many types of <strong>actions</strong> and each one has its own syntax, but usually they follow this pattern:</p>
+						    <pre><code class="language-yaml">
+	- action actor: extra parameters
+							</code></pre>
+							<p>The <strong>action</strong> will be the name of the action, the <strong>actor</strong> the object over whom it will apply, and the extra parameters can be anything. For example, the actions <strong>show, hide and play</strong> all follow this format exactly. There are some exceptions, like the action <strong>text</strong>, that doesn’t require an actor, or <strong>say</strong>, that is inverted as “actor says” to be written more naturally.</p>
+							<p>Other important aspects of the syntax are the dash, the colon and the indentation. The scripts are written in a format called YAML that is then translated to format a bit more computer friendly called json. For this translations to go smoothly, these three key points need to be respected. The <strong>indentation</strong> should be the same for all the actions in the list. Each action has to start with a <strong>dash followed a whitespace</strong>, to indicate it's an element of a list. And the <strong>colon</strong> separates both sides of the action. Even when the action doesn't have any extra parameters, the colon has to be present.</p>
+							<p></p>
+						</section><!--//docs-intro-->
+				    </header>
+				     <section class="docs-section" id="actions-syntax">
+						<h2 class="section-heading">Syntax Cheatsheet</h2>
+						<a href="#show-hide-actions">Show and Hide</a>
+						<pre><code class="language-yaml">
+	- show [background]: WITH [transition]
+	- show [character]: [character_look] WITH [transition] AT [position]
+	- show [cgs]: WITH [transition] AT [position]
+	# hide anything
+	- hide [background|character|cgs]: WITH [transition]
+						</code></pre>
+						<strong>Say and text</strong>
+						<pre><code class="language-yaml">
+	- [character] says: Text
+	- text: Text
+
+	# Use text styles: bold italic and color
+	- text: (bold)This text is bold(end), (italic)and this is italic(end).
+	- text: This word is (color:#f593e6)colored(end)!
+						</code></pre>
+						<strong>Play and stop</strong>
+						<pre><code class="language-yaml">
+	- play [music|sfx]: WITH [FADE|CUT]
+	- stop bgm: WITH [FADE|CUT]
+						</code></pre>
+						<strong>Choice and interrupt</strong>
+						<pre><code class="language-yaml">
+ 	- choice:
+	    - Option 1 text:
+	      	- ACTIONS FOR OPTION1
+	    - Option 2 text:
+	      	- ACTIONS FOR OPTION2
+	    - Option 3 text !if(condition):
+	      	- ACTIONS FOR OPTION3
+  	- interrupt NUMBER:
+	    - Interrupt 1 text:
+	      	- ACTIONS FOR INTERRUPT1
+	    - Interrupt 2 text:
+	      	- ACTIONS FOR INTERRUPT2
+						</code></pre>
+						<strong>Variables</strong>
+						<pre><code class="language-yaml">
+	# define a variable and assign a value 
+	- var [variable_name]: [TEXT|NUMBER|BOOLEAN]
+
+	# show variable in a text
+  	- text: foo {variable_name} bar
+
+  	# counter variable
+  	- var counter: 0
+	- var counter: {counter} + 1
+						</code></pre>
+						<strong>If</strong>
+						<pre><code class="language-yaml">
+	- if (CONDITION):
+		- ACTIONS FOR CONDITION TRUE
+	- else:
+		- ACTIONS FOR CONDITION FALSE
+						</code></pre>
+
+						<strong>Scene</strong>
+						<pre><code class="language-yaml">
+SCENE1:
+	- ACTIONS FOR SCENE 1
+	# call another scene
+	- scene: SCENE2
+
+SCENE2:
+	- ACTIONS FOR SCENE 2
+
+						</code></pre>
+						<strong>Wait for time or click</strong>
+						<pre><code class="language-yaml">
+    - wait: [miliseconds|click]
+						</code></pre>
+					</section><!--//section-->
+					
+					<section class="docs-section" id="show-hide-actions">
+						<h2 class="section-heading">Show and hide</h2>
+						<p>The <strong>show</strong> action allows you to display images in the screen, while the <strong>hide</strong> action removes them.</p>
+						<p>RenJS has three different types of images that you can use: <strong>backgrounds, characters</strong> and <strong>cgs</strong>. This elements have to be declared in the <a href="setup-section">Setup file</a> before they can be used.</p>
+						<h3>Show Backgrounds</h3>
+						<p>A background is an image that normally stretches to occupy the whole screen, and will be shown behind all other elements. Since only one background can be displayed at a time, if there is already a background on screen, the previous one will be hidden automatically.</p>
+						<p>With the keyword <strong>WITH</strong> you can choose the <a href="#transitions-section">transition</a> to use when showing or hiding the background.</p>
+						<pre><code class="language-yaml">
+	# show background with id school_morning
+	- show school_morning: WITH FADE
+	# change one background for another
+	- show school_afternoon: WITH FUSION
+						</code></pre>
+						<h3>Show Characters</h3>
+						<p>The characters in a Visual Novel are represented by many images, each one called a <strong>look</strong>, meaning a state of that character, such as emotional expressions, different outfits or body poses. Showing a character, therefore, means showing one of its looks. If the look id parameter is omited, the default look to show will be called <strong>normal</strong>.<p>
+						<p>With the keyword <strong>AT</strong> you can define where in the screen the character image will appear. The position can be a coordinate, two numbers separated by a comma (no whitespaces), or a <a href="#config-positions">special location</a>, and will be relative to the center bottom of the images, more or less where the character's feet should be. If the position parameter is omited, the default position will be the <strong>DEFAULT</strong> position defined in the <strong>Config file</strong>.</p>
+						<p>Just like with backgrounds, a <strong>transition</strong> can be specified to define the way to show them.</p>
+						<pre><code class="language-yaml">
+	# show character with id deuzi, look id happy, centered in the screen
+	- show deuzi: happy AT CENTER WITH FADE
+	# show character entering from the side of the screen
+	- show liz: AT OUTRIGHT WITH CUT
+	- show liz: AT RIGHT WITH MOVE
+	# show character at a specific coordinate in the screen
+	- show liz: sad AT 500,600
+						</code></pre>
+						<h3>Show a CGs</h3>
+						<p>CG stands for Computer Graphics, and it's a name given to any image that is not a background or a character. These images are anchored in their center, which means, the position used in the show action will align with this center point.<p>
+						<p>By default, the <strong>cgs</strong> will be shown in a layer on top of characters and behind the GUI, but they can also be forced to be shown behind the characters (always on top of the backgrounds).</p>
+						<p>In addition to the transition and the position parameters, it's possible to change the scale (zoom) and angle of the image. If you want to move or animate a CG, use the <a href="animate-action">animate action</a>.</p>
+
+						<p>Just like with backgrounds and characters, a <strong>transition</strong> can be specified to define the way to show them.</p>
+
+						<pre><code class="language-yaml">
+	# show CG with id phone1 at a specific coordinate in the screen
+	- show phone1: WITH FADE AT 200,200
+	# show CG scaled and rotated
+	- show phone2: WITH FADE AT 400,300
+	  zoom: 0.5
+	  angle: 180
+	# show CG behind the character layer
+	- show horse: AT 180,350 BEHIND
+						</code></pre>
+						<h3>Hide images</h3>
+						<p>You can hide any type of element with the action <strong>hide</strong> and its id.<p>
+						<p>If you want to hide all of the characters at the same time, you can use the special id <strong>CHARS</strong>, and if you want to hide everything, characters, backgrounds and cgs, there's the special id <strong>ALL</strong>.</p>
+						<p>Just like with the show action, a <strong>transition</strong> can be specified to define the way to hide them.</p>
+						<pre><code class="language-yaml">
+	# hide a character
+	- hide deuzi: WITH FADE
+	# hide all characters
+	- hide CHARS:
+	# hide all
+	- hide ALL: WITH CUT
+						</code></pre>
+						<h3>Show, hide and continue</h3>
+						<p>Sometimes you want to show (or hide) many elements at the same time. For example, show a background and a character at the same time, show or hide two characters, or show one character when another one is being hidden.<p>
+						<p>All of this can be achieved with the keyword <strong>CONTINUE</strong>. By default when showing or hiding elements, you will use a transition that takes a little bit of time, the most common one being FADE. When you Fade In or Out an image, the game will wait until the transition is over to execute the next action.<p>
+						<p>What the <strong>CONTINUE</strong> keyword does is make it so the game will execute the next action immediately after, without waiting for the transition to be over. This will effectively create the illusion that both actions are executed at the same time.</p>
+						<pre><code class="language-yaml">
+	# show a background and character at the same time
+	- show school_morning: WITH FADE CONTINUE
+	- show deuzi: WITH FADE
+	# hide one character and show another at the same time
+	- hide deuzi: WITH FADE CONTINUE
+	- show liz: WITH FADE
+	# show three characters at the same time
+	- show deuzi: AT CENTER WITH FADE CONTINUE
+	- show liz: AT RIGHT WITH FADE CONTINUE
+	- show jair: AT LEFT WITH FADE
+						</code></pre>
+					</section><!--//section-->
+										<section class="docs-section" id="animate-action">
+						<h2 class="section-heading">Animate</h2>
+						<p>The <strong>animate</strong> action allows you to animate cgs. The animation can be a tween of the sprite properties, a spritesheet animation or a combination of the two approaches.</p>
+						<h3>Tweening</h3>
+						<p>Tweening means to change the properties of an element in time, linearly, from the original values to the new values. For example, we can tween the transparency of an image to make it transparent, by tweening its alpha property to zero. The <strong>time</strong> it takes to tween should be specified in miliseconds.</p>
+						<p>You can tween one or more of these properties:</p>
+						<ul>
+						    <li><strong class="mr-1">Alpha:</strong> The transparency of the image. It goes from 0 (completely transparent) to 1 (completely solid).</li>
+						    <li><strong class="mr-1">Zoom:</strong> The scale of the image, as a proportion of the original size. For example, 1 is the same as the original, 0.5 is half of it, and 2 is twice it’s original size.</li>
+						    <li><strong class="mr-1">Position:</strong> Where is the image located in the screen, as a coordinate given as x y. The x and y numbers are relative to the top left corner of the canvas, and they can be outside of it too.</li>
+						    <li><strong class="mr-1">Angle:</strong> The rotation of the image, in degrees, from 0 to 360.</li>
+						</ul>
+						<pre><code class="language-yaml">
+   - animate cgs_id:
+      time: number
+      [alpha: number]
+      [zoom: number]
+      [position: coordinate]
+      [angle: number]
+						</code></pre>
+						<p>In the next example we first show the <strong>cgs</strong> called phone1 and then we tween the position and alpha in 1000 miliseconds (1 second). The effect this will give is the phone moving from one side of the screen to the other while disappearing.</p>
+						<pre><code class="language-yaml">
+  - show phone1: AT 100,100
+  - animate phone1:
+    time: 1000
+    position:
+    	x: 500
+    	y: 100
+    alpha: 0
+						</code></pre>
+						<h3>Spritesheet Animation</h3>
+						<p>Spritesheet animation is more like traditional animation: you have different frames for an image, and change them every few miliseconds to give the ilusion of movement. For this type of animation you need to load the cgs as a spritesheet in the <a href="#cgs-setup-section">setup</a>.</p>
+						<p>A spritesheet animation can run <strong>once</strong> or <strong>looped</strong>, and in case of the latter, it can have a time limit or not. If the animation is looped and it doesn't have a time limit, the game will continue to the next action immediately, and you will have to stop the animation explicitly from the script.</p>
+						<p>Let's see how to use each mode with examples, by animating the horse spritesheet already used in the setup.</p>
+						<p>In this first example we simply show the horse and we animate the <strong>head</strong> animation. After the animation is get to the last frame, the action is finished, and the cgs image will stay as the last frame of the head animation. Then we do another action, and finally we repeat the animation, but backwards.</p>
+						<pre><code class="language-yaml">
+  - show horse: AT 180,350
+  - animate horse:
+    spritesheet: head
+  - text: The animations can be player normally or backwards!
+  - animate horse:
+    spritesheet: head BACKWARDS
+						</code></pre>
+						<p>In the next example we animate the <strong>run</strong> animation, looped, by 1 second. After this time, the animation stops and the game continues to the next action. When the animation stops, the image will freeze in whatever frame it gets to. Finally, to reset it to the normal view, we call the animation stop.</p>
+						<pre><code class="language-yaml">
+  - animate horse:
+    spritesheet: run LOOPED
+    time: 1000
+  - animate horse:
+    spritesheet: stop
+						</code></pre>
+						<p>The next example does something similar, but starts the animation without a timer. Another action is then executed (a say action) and finally the animation is stopped.</p>
+						<pre><code class="language-yaml">
+  - animate horse:
+    spritesheet: run LOOPED
+  - deuzi says: The horse will stop after this dialogue.
+  - animate horse:
+    spritesheet: stop
+						</code></pre>
+						<p>In the last example, we will combine the run animation with tweening the position, making it so the horse will run across the screen.</p>
+						<pre><code class="language-yaml">
+  - animate horse:
+    spritesheet: run LOOPED
+    position:
+      x: 650
+      y: 350
+    time: 2000
+						</code></pre>
+						
+					</section><!--//section-->
+					<section class="docs-section" id="say-text-actions">
+						<h2 class="section-heading">Say and Text</h2>
+						<p>The actions <strong>say</strong> and <strong>text</strong> let you display a message inside the text box. The difference between them is that the say action will also display the name of the character inside the name box, in the colour of the propery <strong>speechText</strong> defined for that character in the setup. The text will be shown with a transition, letter by letter, until the message is complete. This transition can be skipped by the player by tapping anywhere.</p>
+						<p>After the message is shown whole, the click to continue image will be shown (if present in the GUI) and the game will wait until the player clicks to continue with the next action.</p>
+						<p>The <strong>say</strong> action can also include a <strong>look</strong> parameter, to quickly change the look of the character before the message is displayed.</p>
+						<pre><code class="language-yaml">
+	# display a message with text
+	- text: You see someone approaching.
+	- show liz: WITH FADE
+	# display a message with say
+	- liz says: Hey! What are you doing here?
+	# display a message with say, changing the look
+	- liz says angry: We were all looking for you! 
+						</code></pre>
+					</section><!--//section-->
+					<section class="docs-section" id="play-stop-actions">
+						<h2 class="section-heading">Play and Stop</h2>
+						<p>These actions allow you to <strong>play</strong> and <strong>stop</strong> sounds. Sounds can be of two types, background music and sound effects. Each one should be defined in the right section in the <a href="audio-setup-section">setup</a>.</p>
+						<p>You can play only one background music, or <strong>bgm</strong> at a time. If you do a <strong>play bgm</strong> action and another <strong>bgm</strong> is already playing, the first one will be stopped before starting the new one.</p>
+						<p>Background music can be played looped whole with the <strong>LOOPED</strong> parameter. You can also loop a bgm from a specific time with the <strong>LOOPED FROM time</strong> parameter. In this case, the music will start as usual, and when it reaches the end, it will restart but from the specified time (in seconds).</p>
+						<p>When executing a play action, if the <strong>bgm</strong> already playing and the new <strong>bgm</strong> are the same, nothing will happen, unless you add the <strong>FORCE</strong> parameter, in which case, it will restart the sound.</p>
+						<p>Sound effects, or <strong>sfx</strong> will only play once, and you can play as many as you want on top of each other.</p>
+						<p>To stop the <strong>bgm</strong> you don't need the id of the music currently playing, but simply use the <strong>bgm</strong> tag.</p>
+						<p>You can use the transitions <strong>CUT</strong> and <strong>FADE</strong> for both play and stop.</p>
+						<pre><code class="language-yaml">
+	# play a bgm once with fade in
+	- play morningBGM: WITH FADE
+	# play a sfx with tag ringtoneSFX
+	- play ringtoneSFX:
+	# change the music to schoolBGM looping the whole bgm
+	- play schoolBGM: LOOPED
+	# stop the background music
+	- stop bgm:
+	# play another bgm looping from the 2.5 seconds mark
+	- play storeBGM: LOOPED FROM 2.5
+	...
+	## restart later the storeBGM bgm from the start, with parameter FORCE
+	- play storeBGM: LOOPED FROM 2.5 FORCE
+						</code></pre>
+					</section><!--//section-->
+
+					<section class="docs-section" id="choice-interrupt-actions">
+						<h2 class="section-heading">Choice and Interrupt</h2>
+						<p>The <strong>choice</strong> action is one of the most important actions you can use, since it's the main way for the player to interact with the game.</p>
+						<p>This action will show a list of options to the player for them to choose, and each of these options will have a list of actions to execute only if the player chose them. This list of actions can be anything you do in a normal scene, including another choice, or a change of scene.</p> 
+						<p>Normally, after executing the chosen option actions, the game will continue with the actions directly after the choice, but if a change of scene is triggered, any action after that one will be discarded.</p>
+						<p>In the next example three options will be displayed. If the player chooses the first option (with text "Yes!"), the scene will change after the dialogue, and the actions after the choice will be discarded. If the player choses any other option, the game will continue with the actions after the choice, as normal.</p>
+						<pre><code class="language-yaml">
+    - choice:
+      - Yes!:
+        - deuzi says happy: That's great, let's go!
+        - scene: leaveWithDeuzi
+      - No!:
+        - deuzi says: Ok, but I'm leaving!
+        - hide deuzi:
+      - Uh, I'm not sure?:
+        - deuzi says: Well, think about it while I get my coat.
+        - hide deuzi:
+    - text: Deuzilene disappears in the crowd and you find yourself alone.
+    - scene: stayInParty
+						</code></pre>
+						<h3>Interrupt</h3>
+						<p>An <strong>interrupt</strong> is like a <strong>choice</strong> action, but while the choice waits for the player to make a decision, the interrupt will display the option, but will not stop the game. If the player decides to <i>interrupt</i>, then the actions of the interrupt will be executed, before continuing.</p>
+						<p>The interrupt can include a number of actions to wait before disappearing (thus disallowing the player the interruption), but if the scene changes, any interrupt still showing will automatically disappear.</p>
+						<p>In the next example, the interrupt will be shown only for the next 6 actions.</p>
+						<pre><code class="language-yaml">
+  - deuzi says: I know you're new in town, so I thought I could show you around a bit.
+  - deuzi says: What do you think?
+  - interrupt 6:
+    - Isn't it a bit awkward???:
+      - deuzi says angryC: What do you mean?  Because I'm your teacher?  
+      - deuzi says happyC: We're almost the same age!
+      - deuzi says normalC: You might be teaching some years from now too. 
+      - deuzi says angryC: Then you'll see how awkward it is to be called professor and be treated like and old person.
+      - deuzi says normalC: Anyway, as I was saying...
+  - deuzi says: You probably know it already, but this is a small town.
+  - deuzi says: There's not much to see, really.
+						</code></pre>
+						<h3>Visual Choices</h3>
+						<p>The options of a <strong>choice</strong> can be images instead of text, in which case you will use the tag <strong>visualchoice</strong>, and each option should be the image id (it can be setup as a CG or as extra) and where it will be shown.</p>
+						<pre><code class="language-yaml">
+  - liz says: Choose a phone!
+  - visualchoice:
+    - phone1 AT 620,300:
+      - play ringtoneSFX:
+      - text: Tururu Ruru Ruru Ruruuuu
+      - liz says: You chose the pink phone.
+    - phone2 AT 180,300:
+      - play ringtoneSFX2:
+      - text: Pi Pi Ri Pi Ripi Pi Ri
+      - liz says: You chose the light blue phone.
+						</code></pre>
+						<h3>Show Message along with Choices</h3>
+						<p>If you want to show a message along with the choices you can use the first line inside the <strong>choice action</strong> for this purpose.</p>
+						<pre><code class="language-yaml">
+  - show deuzi: happy
+  - choice:
+    - deuzi says: Choose a partner!
+    - Deuzilene:
+      - text: You chose Deuzilene!
+    - Liz:
+      - text: You chose Liz!
+ 					</code></pre>
+ 						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/choicewithtext.png" alt="">
+							    <figcaption class="figure-caption mt-3">Say action along with choices.</figcaption>
+							</figure>
+						</div>
+						<h3>Conditional Options</h3>
+						<p>Sometimes you need to show an option only if a condition is met. In these cases, the <strong>conditional option</strong> can be used for either choices, visual choices or interrupts. If the condition is not satisfied, that option will not be shown.</p>
+						<p>To make an option conditional you need to add an <strong>if</strong> like structure, followed by a condition, exactly like the ones used in the <a href="#if-action">if action</a>.</p>
+						<p>In the following example, the last option will only show if the variable <i>readBook</i> is set to <i>true</i>.</p>
+						<pre><code class="language-yaml">
+  - choice:
+    - Choose Deuzilene:
+      - marco says: Good choice
+      - var partner: "deuzi"
+    - Choose Jair:
+      - marco says: You really like a challenge, right?
+      - var partner: "jair"
+    - Choose no one !if ({readBook}):
+      - show marco: surprise
+      - marco says: No one has ever completed this task alone before!
+      - var partner: "no one"
+      - show marco: normal
+  	- marco: So you've chosen {partner}, are you happy with it?
+ 					</code></pre>
+					</section><!--//section-->
+					<section class="docs-section" id="var-action">
+						<h2 class="section-heading">Variables</h2>
+						<p>The <strong>var</strong> action allows you to store values during the story. These values then can be displayed in text or dialogues and can be used to compare and form conditions. The values will also be saved and restored when the player saves and loads games.</p>
+						<p>If you try to use a variable before it's defined in the story, the value will be undefined, and in the case of booleans, it will be false. What the <strong>var</strong> action does is declare and assign a value to a variable identified with a specific name.
+						<p>This kind of behaviour is often called an assignment. An assignment is said to have two parts, left and right, separated by a colon. The left part has information about the variable being set, and in our case, also includes the name of the action. The right part contains the value that will be assigned to that variable, and it can be of three types: <storng>Strings</storng> (Text), <strong>Numbers</strong> or <strong>Booleans</strong> (Value true or false).</p>
+						<h3>String Variables</h3>
+						<p>String variables are text, and as such, they can be displayed in <strong>text</strong> and <strong>say</strong> actions. To get the value of a variable as text, you use the variable name surrounded by curly braces, i.e. {var_id}. You can also do this same thing when assigning String values to variables.</p>
+						<pre><code class="language-yaml">
+	# Create String variable with id name
+    - var name: Spike
+    # Create Number variable with id score
+    - var score: 10
+    # Create String variable with id report, using previous variables in the value
+    - var report: "Hi {name}, you have {score} points!"
+    # Show the contents of the variables
+    - text: {report}
+    - spike says: "What? Only {score} points? I though I was doing so well."
+ 					</code></pre>
+ 						<h3>Numeric Variables</h3>
+						<p>A numeric variable will be assigned a number. This can be a constant number, but it can also be an arithmetic operation that resolves into a numeric value: like addition, subtraction, etc.</p>
+						<p>To write an operation you need to use special symbols, like:</p>
+						<ul>
+							<li><strong>+ (Plus)</strong>: Addition</li>
+							<li><strong>- (Dash)</strong>: Subtraction</li>
+							<li><strong>* (Asterisk)</strong>: Multiplication</li>
+							<li><strong>/ (Slash)</strong>: Division</li>
+						</ul>
+						<p>The operations also can use <strong>parenthesis ()</strong> to change the solving order of the operation. As with normal arithmetic operations, multiplication and division have precedence over addition and subtraction.</p>
+						<p>When writing operations, they should usually be between inverted commas. This is because the parser will sometimes freakout if it finds strange symbols. To ensure it reads the whole line as one text to analyse, better to be safe and surround it by inverted commas.</p>
+						<pre><code class="language-yaml">
+# create some variables with constant values
+- var score: 0
+- var extraPoints: 3
+# modify the value of the score variable, by adding 10
+- var score: "{score} + 10"
+# create some more variables and do complex operations
+- var bonus: "{extraPoints} - 1"
+- var totalScore: "({score} + {extraPoints}) * {bonus}"
+# display the value of the variable totalScore
+- text: The total score is {totalScore}.
+ 					</code></pre>
+ 						<h3>Boolean Variables</h3>
+						<p>Boolean variables can store one of two values, a true or a false. But, as with numeric variables, they can be assigned operations that resolve into a boolean value.</p>
+						<p>The symbols used for these operations are:</p>
+						<ul>
+							<li><strong>&& (AND)</strong>: The operation will be true if both values between the AND are true.</li>
+							<li><strong>|| (OR)</strong>: The operation will be true if either value between the OR is true.</li>
+							<li><strong>! (NOT)</strong>: The operation will be true if the value next to the NOT is false.</li>
+						</ul>
+						<pre><code class="language-yaml">
+# assign boolean values directly
+- var lightOn: true
+- var lampOn: true
+# do some operations
+- var lightOff: "!{lightOn}"
+- var allLightsOn: "{lightOn} && {lampOn}"
+- var canRead: "{lightOn} || {lampOn}"
+ 						</code></pre>
+						<p>In the previous example the variables allLightsOn will be true only if both lightsOn and lampOn variables are true, but the canRead variable only need one of them to be true.</p>
+						<p>Another way of getting a boolean value is by comparing numbers and numeric variables. In this case, the symbols used for these operations are:</p>
+						<ul>
+							<li><strong>> (Greater than)</strong>: The operation will be true if the left value is greater than the right value.</li>
+							<li><strong>>= (Greater than or equal to)</strong>: The operation will be true if the left value is greater than or equal to the right value.</li>
+							<li><strong>== (Equal)</strong>: The operation will be true if both values are equal.</li>
+							<li><strong><= (Less than or equal to)</strong>: The operation will be true if the left value is less than or equal to the right value.</li>
+							<li><strong>< (Less than)</strong>: The operation will be true if the left value is less than the right value.</li>
+						</ul>
+						<p>As with the previous operations, parenthesis () are allowed.</p>
+						<pre><code class="language-yaml">
+- highScore: "{score} > 10"
+- perfectScore: "{score} == {maxScore}"
+- lowScore: "{score} <= {maxScore} / 2"
+ 						</code></pre>
+ 						<p>In the previous example we use the numeric variables <i>score</i> and <i>maxScore</i> to decide the values of the boolean variables defined. The <i>highScore</i> variable will be true only if the <i>score</i> variable is greater then 10.</p>
+ 						<p>String variables can also be compared in this way using the equal operator.</p>
+						<pre><code class="language-yaml">
+- choseDeuzi: "{partner} == 'deuzi'"
+ 						</code></pre>
+					</section><!--//section-->
+					<section class="docs-section" id="if-action">
+						<h2 class="section-heading">If and Else</h2>
+						<p>The <strong>if</strong> action allows you to branch your story. It contains a <strong>condition</strong> and a list of actions that will be executed only <i>if</i> the <strong>condition</strong> is true.</p>
+						<p>Optionally, it can also have a list of actions to execute if the condition is false, this is called an <strong>else</strong> action and it can only appear after an <strong>if</strong>. The lists of actions can contain whatever action available, including other ifs. After executing this list, the story will continue with the actions after the <strong>if</strong> (or else, if present).</p>
+						<p>The condition can be any boolean variable or operation, as seen in the <a href="#var-action">var action</a>.</p>
+						<pre><code class="language-yaml">
+  # if action with an operation
+  - if ({partner} == "deuzi"):
+    - show deuzi: happy
+    - deuzi says: I knew it would be me!
+  # else action
+  - else:
+    - text: Deuzilene looks disappointed but tries to hide it.
+    # nested if, without elses
+    - if ({goingSolo}):
+    	- deuzi says: Let's see if you can beat my score.
+  # unconditional actions after the if-else
+  - text: You and your partner leave together.
+						</code></pre>
+					</section><!--//section-->
+					<section class="docs-section" id="scene-action">
+						<h2 class="section-heading">Scene and End Game</h2>
+						<p>The <strong>scene</strong> action is used to change from one scene to the other. Every scene in the story has a name and a list of actions that conform it. If no scene is called before or at the end of a scene, the game will simply stop.</p>
+						<p>You can name the scenes whatever you want, but the names can't have spaces or dashes (but you can use underscores and camelCase). Remember also that you need to have a starting scene called <strong>start</strong>.</p>
+						<pre><code class="language-yaml">
+# first scene
+start:
+  - show marco: WITH FADE
+  - marco says: Good morning students, are you ready to choose your partner?
+  - choice:
+    - Yes:
+      - scene: choosePartner
+    - No:
+      - marco says: What's the problem?
+      #other actions
+
+# second scene
+choosePartner: 
+  - marco says: We should go to the teachers room
+  - show teachersRoom:
+  # other actions
+						</code></pre>
+						<p>If you want to end the game and  return to the main menu you have to call the <strong>endgame</strong> action. Another way to end the game is through the  strong>effect ROLLINGCREDITS</strong>. This <strong>effect</strong> takes a parameter called endGame, that, when set to true, will automatically end the game and return to the main menu after the effect is over.</p>
+						<pre><code class="language-yaml">
+  - text: What kind of ending?
+  - choice:
+    - End immediately:
+      # end the game right now and return to main menu
+      - endgame:
+    - End after credits:
+      # end the game after the rolling credits
+      - effect ROLLINGCREDITS:
+        endGame: true
+        text:
+          - This example made by
+          - lunafromthemoon
+						</code></pre>
+					</section><!--//section-->
+					<section class="docs-section" id="wait-action">
+						<h2 class="section-heading">Wait</h2>
+						<p>The <strong>wait</strong> action allows you to force the player to wait for some time (in miliseconds) or until they click anywhere on the screen.</p>
+						<pre><code class="language-yaml">
+	- deuzi says: Ok, tell me when you're ready!
+	- wait: click
+	- deuzi says: I'm still not ready!
+	- wait: 1000
+	- deuzi says: Ok, let's go then!
+						</code></pre>
+					</section>
+					<section class="docs-section" id="call-action">
+						<h2 class="section-heading">Call</h2>
+						<p>The <strong>call</strong> action allows you to execute javascript functions from a <a href="#plugins-section">Plugin</a>. You can send to this function as many parameters as you want.</p>
+						<pre><code class="language-yaml">
+  # this plugin will simply print the two words sent as parameters
+  - call helloWorld:
+    firstWord: 'hello'
+    secondWord: 'world'
+  # this plugin will add the given number of animated starts randomly in the screen
+  - call addStars: 5
+
+						</code></pre>
+					</section>
+					<section class="docs-section" id="ambient-effect-actions">
+						<h2 class="section-heading">Ambients and Effects</h2>
+						<p>These actions allow you to show visual and sound effects. The difference between them is that <strong>effect</strong> is a nuclear action that ends after its execution, while <strong>ambient</strong>  effects perdure over time. For example, an effect can be a thunder, while an ambient can be rain.</p>
+						<p>RenJS comes with a few ambients and effects, and you can tailor them a bit to better suit the aesthetic of your game. All the assets used for these screen effects, either images, spritesheets, music and even code should be loaded in the extra section of the setup file.</p>
+						<p>You can add more screen effects, you can do so in the form of <a href="plugins-section">Plugins</a>.</p>
+						<h3>Ambients</h3>
+						<p>The <strong>ambient</strong> action starts an ambient by name. Calling the special ambient <strong>CLEAR</strong> instead will stop any ambient still on. The available ambients are:</p>
+						<ul>
+							<li><strong>RAIN</strong>: Starts a particle emitter and background sound for a rain mood. You need two extra assets: <strong>rain</strong> (spritesheet) and <strong>rainBGS</strong> (looping audio)</li>
+							<li><strong>SAKURA</strong>: Starts two particle emitters to look like cherry blossoms falling slowly, carried by a faint breeze. You need one extra asset called <strong>sakura</strong> (spritesheet).</li>
+							<li><strong>SNOW</strong>: Starts three particles emitters for a snowy mood. You will need two extra assets: <strong>snowflakes</strong> (spritesheet) and <strong>snowflakes_large</strong> (spritesheet).</li>
+							<li><strong>CLEAR</strong>: Destroys the particle emitters and background sound.</li>
+						</ul>
+						<pre><code class="language-yaml">
+  # start ambient RAIN
+  - ambient RAIN:
+  - jair says: It started raining, when will it stop?
+  # stop ambient
+  - ambient CLEAR:
+  - jair says: Well, that was fast.
+						</code></pre>
+						<h3>Effects</h3>
+						<p>The <strong>effect</strong> action executes a screen effect by name. The available effects are:</p>
+						<ul>
+							<li><strong>SHAKE</strong>: A screen shake.</li>
+							<li><strong>FLASHIMAGE</strong>: It will flash an image for a moment, optionally accompanied by a sound effect and a screenshake. Parameters:
+								<ul>
+									<li><strong>image</strong>: The tag of the image to show. This image has to be declared in the setup, usually in the <a href="extra-setup-section">extra section</a>.</li>
+									<li><strong>screenShake</strong> (optional): Boolean value. If true, there will be a screenshake.</li>
+									<li><strong>sfx</strong> (optional): The tag of the sound effect to play.</li>
+								</ul>
+							</li>
+							<li><strong>ROLLINGCREDITS</strong>: Fades to black and starts scrolling a list of text like the rolling credits of a film. Parameters:
+								<ul>
+									<li><strong>text</strong>: The list of text to show. If you want to leave some spaces between the lines, you can fill it with <i>null</i> lines.</li>
+									<li><strong>music</strong> (optional): Music to start with the effect.</li>
+									<li><strong>timePerLine</strong> (optional): How fast you want the scrolling, per each line, in miliseconds. Default value is 700ms.</li>
+									<li><strong>endGame</strong> (optional): Boolean value. If true, the story will end when the scrolling is over and the game will return to the main menu. Default value is false.</li>
+								</ul>
+						</ul>
+						<pre><code class="language-yaml">
+	# screenshake
+	- effect SCREENSHAKE:
+	- marco says: It looks like there's going to be a storm.
+	# show thunder
+	- effect FLASHIMAGE:
+		screenShake: true
+		sfx: thunderSFX
+		image: thunder
+	- marco says: That's it, time to go home.
+	# show credits and end game
+	- effect ROLLINGCREDITS:
+		endGame: true
+		text:
+			- Example made by
+			- lunafromthemoon
+			# empty line next
+			- Made with 
+			- RenJS
+						</code></pre>
+					</section>
+			    </article><!--//docs-article-->
+			    
+			    <article class="docs-article" id="transitions-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Transitions</h1>
+					    <section class="docs-intro">
+						    <p>A <strong>transition</strong> is the way in which a image will be shown, hidden or exchanged for another one. Changing the position of an image, or flipping it, follows the same process with a <strong>show</strong> action, therefore it can happen that an image will be changed by that same image. There are a few transitions ready to use, but you can make your own transitions as <i>Plugins</i> and use them transparently.</p>
+						    <p>The available transitions are:</p>
+						    <ul>
+						    	<li><strong>CUT</strong>: The image will simply appear or disappear at once. When exchanging images, for example, one character look to another, the effect will be immediate.</li>
+						    	<li><strong>FADE</strong>: This transition will interpolate the alpha (transparency) of the image in time. To show an image it will go from alpha 0 to alpha 1, in a FADE IN; to hide it, it will do the contrary, going from alpha 1 to alpha 0 in a FADE OUT. To change on image for another, it will first do a complete FADE OUT and then a FADE IN.</li>
+						    	<li><strong>FUSION</strong>: If used to show or hide an image, FUSION will behave exactly like FADE; but when changing images, FUSION will place the new image on top of the old one, with alpha 0, and do a FADE IN. This will look aproximately like one image is fusing with the other one. This transition will work best with images that have the exact same outline, for example, backgrounds, or characters that don't change their look shape.</li>
+						    	<li><strong>FADETOBLACK, FADETOWHITE, FADETOBG</strong>: In this transition the whole screen will be covered by a color in a FADEIN, then the changes to the images will be performed, and then a FADEOUT of the overlay will reveal the changes. In FADETOBG, the color is the background color defined in the <a href="boot-file-section">boot configuration</a> of the game. </li>
+						    	<li><strong>MOVE</strong>: This transition, normally used for characters, will interpolate the current position of the image to the new one. For example, to show a character entering the screen from the right first you would show it in the position OUTRIGHT (outside of the screen, to the right side), and then show it at another position, using the MOVE transition. </li>
+						    </ul>
+						</section><!--//docs-intro-->
+				    </header>
+			    </article><!--//docs-article-->
+			    
+			    
+				<article class="docs-article" id="i18n-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Multilanguage Games</h1>
+					    <section class="docs-intro">
+						    <p><strong>RenJS</strong> provides an Internationalization (I18N) module, that allows you to distribute your game with many languages all in one. </p>
+						    <p>When translating games there's one approach often used, where each dialogue and text in the game has an identification key that is replaced by the correct phrase in runtime. This way of doing I18N brings its share of problems. For example, it makes the script a lot less legible. But the biggest issue is that it limits the translations themselved, since each text would have to be in the same order and about the same length, a rule that is very inconvenient to follow.</p>
+						    <p>For these reasons, the way I18N works in <strong>RenJS</strong> is by having different resources for each language. These resources can be anything, such as images and sounds, but also the script of the story itself.</p>
+						    <p>In this way, each resource in the game will be labeled with each language tag, or as neutral. When starting a game, the player will have to choose the language, and the corresponding resources will be loaded.</p>
+						    <p>You can use this feature for any case in which you might want to have different resources for the same game. One other usual use case could be using different resources for a <i>NSFW</i> game with a censured version.</p>
+						</section><!--//docs-intro-->
+				    </header>
+				    <section class="docs-section" id="language-screen-section">
+						<h2 class="section-heading">Language Selection Screen</h2>
+						<p>One of the first things to do when adding multilanguage support is setting up the <strong>Language Selection Screen</strong>. This screen will be the first thing a player sees, even before loading the rest of the game, which means it has to be configured in the <strong>boot.js</strong> file.</p>
+						<p>Let's see a simple language selection screen for the Quickstart game.</p>
+						<pre><code class="language-js">
+const globalConfig =  {
+  ...
+  i18n: {
+    background: 'assets/gui/i18nscreen.png',
+    langs: {
+      "en": {
+        'asset': 'assets/gui/i18n/en.png',
+        'position': {
+          'x': 200,
+          'y': 458
+        },
+        'size': {
+          'w': 163,
+          'h': 83
+        }
+      },
+      "es":{
+        'asset': 'assets/gui/i18n/es.png',
+        'position': {
+          'x': 450,
+          'y': 458
+        },
+        'size': {
+          'w': 163,
+          'h': 83
+        }
+      }}
+  }
+  ...
+}
+
+const RenJSGame = new RenJS.game(globalConfig)
+RenJSGame.launch()
+						</code></pre>
+						<p>The <strong>Language Selection Screen</strong> is setup under the <strong>i18n</strong> tag, and it's somewhat similar to the <strong>Loading Screen</strong> configuration. It has a <strong>background</strong>, that simply points to a background, and then a list of languages under the <strong>lang</strong> tag.</p>
+						<p>Each language is configured under a <strong>Tag</strong>, that is the key name of the language. In this example we have two languages: English with tag <strong>en</strong> and Spanish with tag <strong>es</strong>. These tags have to be unique for each language, but they can be whatever you want. The configuration itself is for a button that when pressed, will start loading the game in that language.</p>
+						<ul>
+							<li><strong>Asset</strong>: The spritesheet representing the language button. It should have two or three frames for: Normal View, Hover View and Pressed View.</li>
+							<li><strong>Size</strong>: The height and width of each frame in the button spritesheet.</li>
+							<li><strong>Position</strong>: The position where the button will be displayed.</li>
+						</ul>
+					</section>
+				    <section class="docs-section" id="language-config-section">
+						<h2 class="section-heading">Resources Configuration</h2>
+						<p>Once you have your <strong>Language Selection Screen</strong> setup, we need to be able to pick the different resources for each language tag. For this you will place the segregated resources in diferent directories, named after these tags. For example, if you normally have a directory called <i>story</i> where you put the file <strong>Story.yaml</strong>, now you could have inside it two more directories, <i>en</i> and <i>es</i>, each one with the correct story file inside.</p>
+						<p>The second step is pointing at the right files from the <strong>boot.js</strong>/<strong>GUI.yaml</strong>/<strong>Setup.yaml</strong> files, by using the special tag <strong>LANG</strong>. This tag will be converted into the chosen language tag in runtime, making it point to the right resources.</p>
+						<pre><code class="language-js">
+const globalConfig =  {
+  ...
+  'loadingScreen': {
+    'background': 'assets/gui/quickstartbg.png',
+    'loadingBar': {
+      'asset': 'assets/gui/LANG/loaderloading-bar.png',
+      'position': {
+        'x': 109,
+        'y': 458
+      },
+      'size': {
+        'w': 578,
+        'h': 82
+      }
+    }
+  },
+  ...
+  'fonts': 'assets/gui/fonts.css',
+  'guiConfig': 'story/LANG/GUI.yaml',
+  'storyConfig': 'story/Config.yaml',
+  storySetup: 'story/Setup.yaml',
+  'storyText': [
+    'story/LANG/Story.yaml'
+  ],
+  ...
+}
+
+const RenJSGame = new RenJS.game(globalConfig)
+RenJSGame.launch()
+						</code></pre>
+						<p>In this example, we can see some of the resources are separated into languages, but some others are not. The <strong>Loading Screen</strong> has the same background, but the <strong>Loading Bar</strong> asset will be different depending on the language.</p>
+						<p>Same thing for the yaml files, some of them are <i>neutral</i>, such as <strong>Setup.yaml</strong>, but others like the story itself and the GUI are picked for the language.</p>
+						<p>Observing this example we can see also that we will have two places where the resources will be segregated: One in the <i>story</i> directory, and one in the <i>assets</i> directory.</p>
+						<p>You can check the <a href="/examples/i18n.html">Internationalization</a> example and see it in action!</p>
+					</section>
+			    </article><!--//docs-article-->
+
+		        <article class="docs-article" id="plugins-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Plugins</h1>
+					    <section class="docs-intro">
+						    <p>With RenJS you can create a classic Visual Novel just by writting your script (and a few configuration files), no need to know any programming. But what if you need some extra feature? For example, you could want to add a hidden-object minigame, a very complex HUD, or a gallery of scenes or achievements.</p>
+						    <p>To do this, to extend RenJS, we have the <strong>Plugins</strong>. Plugins are pieces of <strong>javascript code</strong> that you can call from inside the game. With the <strong>Plugins</strong> you can do anything you want, from simply doing some calculations to extending RenJS and using it as a base to create a game of a completely different genre.</p>
+						    <p>To create and add a <strong>Plugin</strong> to a RenJS game, you'll have to create a javascript object extending the <strong>RenJS.Plugin</strong> class. This plugin object will have a property called <i>game</i> (called with <i>this.game</i>) that will refer to the RenJS game, that is in itself, a <strong>PhaserJS</strong> game. With this property you will have access to any of the contents of your game (e.g. the current background displayed), but also to the whole suite of tools that Phaser provides.</p>
+						    <p>In short, anything you can do with javascript, and in particular, anything you can do with <a href="https://phaser.io/examples/v2">PhaserJS</a> is possible to do from within a RenJS game.</p>
+    						<pre><code class="language-js">
+	class HelloWorld extends RenJS.Plugin {
+
+		onCall(params) {
+			console.log('Hello World Plugin');
+			console.log(params.firstWord + ' ' +params.secondWord);
+			this.game.resolveAction();
+		}
+	}
+
+	RenJSGame.addPlugin('helloWorld',HelloWorld)
+							</code></pre>
+							<p>In this minimalistic example, the plugin is created, extending the <strong>RenJS.Plugin</strong> class, with just one function. The funtion onCall will be called from the story script, when using the <a href="#call-action">call action</a>. This example does nothing but printing on the console the parameters sent, and finally, it calls the <i>this.game.resolveAction()</i> function to let the game know it can continue with the next action in the script.</p>	
+						</section><!--//docs-intro-->
+				    </header>
+				     <section class="docs-section" id="plugins-structure-section">
+						<h2 class="section-heading">Plugin Structure</h2>
+						<p>As seen in already, the function <strong>onCall</strong>, allows you to call a function from the story script. But there are many other ways to use the <strong>Plugins</strong> besides this specific use case. The <strong>RenJS.Plugin Class</strong> provides handles for each phase of the game where you might need to add your own functions, that you need to simply overwrite.</p>
+						<p>Let's see in more detail the structure of a Plugin, and what handles can be overwritten.</p>
+						<pre><code class="language-js">
+	export default class Plugin implements PluginInterface {
+
+		protected game: RJS;
+		protected name: string
+
+		constructor(name, game){
+			this.game = game;
+			this.name = name
+		}
+		// plugin handles
+		onInit(): void {}
+
+		onStart(): void {}
+
+		onAction(action): void {}
+
+		onCall(params): void {}
+
+		onLoad(slot,data): void {}
+
+		onSave(slot,data): void {}
+
+		onTeardown(): void {}
+	}
+						</code></pre>
+						<p>This is the class definition of the <strong>RenJS Plugins</strong>. As you can see, the constructor receives a name and the <strong>game</strong> object, that will be later available to use from any of the handles. Then handles themselves are empty and do nothing unless you redefine them.</p>
+						<h3>On Init</h3>
+						<p>The <strong>onInit()</strong> handle will be called when the game is loaded, but not yet started. The only phase previous to this one is preloading of the game and initialization of the game itself. So, the game will be fully loaded, the GUI will be created (but no menus are shown yet), and the story text, setup and configuration will all be available for you to use.</p>
+						<p>This handle is perfect for adding new features to the GUI, since no part of the GUI, except the loading screen, is shown yet. For example, you could add new menus like a gallery, a glosary, etc.</p>
+						<h3>On Start</h3>
+						<p>This handle will be executed at the start of a new game, just before the first action of the script is executed. Use it to set up things you need to do in a per game run basis. For example, if you want to change some things in a New Game + run.</p>
+						<h3>On Action</h3>
+						<p>This handle will be executed before executing a new action. The parameter received is the parsed Action object, with all its parameters.</p>
+						<h3>On Call</h3>
+						<p>The <strong>onCall</strong> handle will be called from the story script, by way of the <a href="#call-action">call action</a>. You can send to this handle as many parameters as you want (and in any format), and there is no limit to what you can do inside it. The only mandatory thing is that, at some point, there has to be a call to the <i>this.game.resolveAction()</i> function.</p>
+						<p>The functions you call during the story can be, as previously said, basically anything. RenJS can't make any asumptions on when the action is over to continue executing the next action, since these functions can be either syncronous (when the function is over, the action is over) or asyncronous (the function is over, but the action is still pending). For example, if you want to use an external API called as a REST service, you'll normally need to wait for the asyncronous response.</p>
+						<p>Let's see an example of the same Hello World plugin we saw before, but this time we will make it asyncronous.</p>
+						<pre><code class="language-js">
+	class HelloWorld extends RenJS.Plugin {
+
+		onCall(params) {
+			console.log('Hello World Plugin');
+			console.log(params.firstWord + ' ' +params.secondWord);
+			setTimeout(() => {
+				console.log("Goodbye World");
+				this.game.resolveAction();
+			}, 1500);
+		}
+	}
+
+	RenJSGame.addPlugin('helloWorld',HelloWorld)
+						</code></pre>
+						<p>In this case, when each line of the function is done executing, the function is technically over, but the action still waits for the timeout callback to finish, and let the game know it can continue with the next action in the script.</p>
+						<h3>On Save and On Load</h3>
+						<p>These two handles are called, as you might imagine, when saving and loading the game. RenJS saves games in slots (identification number), locally into the player's browser. The <strong>onSave</strong> handle is called just before the game is saved, and <strong>onLoad</strong> is called when the data is retrieved, but just before setting the game up.</p>
+						<p>You could use these handles to save and load data to and from an external API, and so have your players data online, making it available in different devices. You might also want to use them to add other information to the saved game, for example, a timestamp.</p>
+						<pre><code class="language-js">
+	class CloudSaving extends RenJS.Plugin {
+
+		onSave(slot,data) {
+			// data is an object with all the information of the current game
+			// this data will be saved locally in the browser, in localstorage
+			// slot is a number used to id the game
+
+			// save in the cloud as a string with the given slot
+			let serializedData = JSON.stringify(data)
+			cloudAPI.set(`MyRenJSGame_slot_${slot}`,serializedData)
+		}
+
+		onLoad(slot,data){
+			// data is an object loaded from localstorage
+			// if no data is found locally the object will be empty
+			// you can add/replace any property you want to the data parameter
+
+			// load data from the cloud with the given slot
+			let serializedData = cloudAPI.get(`MyRenJSGame_slot_${slot}`)
+			
+			if (serializedData) {
+				// parse as JSON
+				let loadedData = JSON.parse(serializedData)
+				// add loaded data to the data parameter sent
+				Object.assign(data, loadedData)
+			}
+		}
+	}
+
+	RenJSGame.addPlugin('CloudSaving',CloudSaving)
+						</code></pre>
+						<h3>On Teardown</h3>
+						<p>This handle will only be called when the player goes from the story to the main menu, usually, after finishing the game. If the player simply closes the game, it will not be executed. Use to clean up any big memory objects you might be using during the story, but avoid saving data or doing anything else that is of big importance for the story.</p>
+					</section><!--//section-->
+					
+					<section class="docs-section" id="transition-plugin-section">
+						<h2 class="section-heading">Adding Transitions</h2>
+						<p>Another way to use the <strong>Plugins</strong> is to add new <a href="transitions-section">transitions</a> to the game. A transition is simply a function that will receive two sprites: <strong>from</strong> and <strong>to</strong>, and a few other parameters. The goal of this function is to transition between these two sprites, so that <strong>from</strong> will end up hidden at the end of the transition and <strong>to</strong> will be shown. The extra parameters are position and scale, that have to be set in <strong>to</strong>.</p>
+						<p>Since sometimes you'll want to show or hide elements without showing another, it's normal that one of the parameters <strong>from</strong> or <strong>to</strong> will be missing, so you have to check that in the function before doing anything else.</p>
+						<p>Since transitions can take a bit of time to go from one state to the other, these functions return a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Javascript Promise</a>, to let the game know when the transition is over.</p>
+						<p>Finally, you need to add this transition to the transitions manager inside RenJS, that you can access from <i>this.game.screenEffects.transition</i>. In this way, you'll be able to use it as any of the usual transitions.</p>
+						<p>Let's see an easy example on how to add a new <strong>Transition</strong>. This example will transition from one sprite to another one by first hiding the old sprite, then waiting for one second, and finally shoing the new sprite. It is probably not really useful in a story, but it's a good way to see what does what.</p>
+						<pre><code class="language-js">
+	class MoveAfterOneSecond extends RenJS.Plugin {
+
+		// We add the transition on the onInit handler, to make sure it'll be available all the time
+		onInit(){
+			// We add the transition to the transition manager, with the name 'MoveAfterOneSecond'
+			this.game.screenEffects.transition['MoveAfterOneSecond'] = (from, to, position, scaleX) => {
+				// We need to return a promise so the game will know when the transition finished
+				return new Promise(resolve => {
+		            // set new properties 
+		            to.x = position.x;
+		            to.y = position.y;
+		            to.scale.x = scaleX;
+		            //hide old sprite
+		            from.alpha = 0;
+		            //wait for one second
+		            setTimeout(() => {
+		            	// show new sprite
+						to.alpha = 1;
+						// finish transition
+						resolve();
+					}, 1500);
+		        }); 
+			}
+		}	    
+	}
+
+	RenJSGame.addPlugin('MOVEONESECOND',MoveAfterOneSecond)
+						</code></pre>						
+						<p>Let's see in more detail what the parameters are:</p>
+						<ul>
+							<li><strong>From</strong>: A <a href="https://phaser.io/docs/2.6.2/Phaser.Sprite.html">Phaser Sprite</a> representing the RenJS element (a background, character look or cgs) to hide. When showing an element for the first time, this property will be <i>null</i>.</li>
+							<li><strong>To</strong>: A <a href="https://phaser.io/docs/2.6.2/Phaser.Sprite.html">Phaser Sprite</a> representing the RenJS element (a background, character look or cgs) to show. When hiding elements, this property will be <i>null</i>.</li>
+							<li><strong>Position</strong>: An object with properties <strong>x</strong> and <strong>y</strong> where the <strong>To</strong> element should appear.</li>
+							<li><strong>ScaleX</strong>: A number with the scale in the x axis for the <strong>To</strong> element. This number is usually either 1 or -1, and represents the sprite as <strong>flipped</strong> or not.</li>
+						</ul>
+						<p>Make sure to check if the <strong>from</strong> and <strong>to</strong> elements are not null before using them, and also that at the end of the transition, the <strong>from</strong> element is hidden (alpha=0) and that the <strong>to</strong> element is showing (alpha=1).</p>
+						<p>You can use this transition with the name used to index it in the Transition Manager as you would any other transition. For example:</p>
+						<pre><code class="language-yaml">
+start:
+	# Show deuzi at once
+	show deuzi: WITH CUT AT LEFT
+	# Move deuzi to the other side of the screen after one second
+	show deuzi: WITH MoveAfterOneSecond AT RIGHT
+						</code></pre>	
+					</section><!--//section-->
+					
+					<section class="docs-section" id="renjs-internals">
+						<h2 class="section-heading">RenJS Internals</h2>
+						<p>We said that when creating a Plugin, the <i>this.game</i> property will contain a reference to the RenJS game, and that you can take advantage of this to do whatever you want with it. But this means little if you don't know what's inside a RenJS game itself.</p>
+						<p>While you shouldn't care too much about how RenJS does things, knowing where to find some key elements will make the programming of your Plugins much easier.</p>
+						<h3>The Managers</h3>
+						<p>The different parts of the story are all taken care by different managers, and you can access them with the property <i>this.game.managers</i>. Knowing what each manager does and what information they keep is key to understand how RenJS works. Let's see what managers there are:</p>
+						<ul>
+							<li><strong>Background</strong>: Access this manager through <i>this.managers.background</i>. This manager takes care of the backgrounds of the story.
+							<ul>
+								<li><strong>Current Background</strong>: Access the current background (Phaser Sprite) with  <i>this.managers.background.current</i>.</li>
+							</ul></li>
+							<li><strong>Character</strong>: Access this manager through <i>this.managers.character</i>. This manager takes care of the characters of the story.
+							<ul>
+								<li><strong>Characters Metadata</strong>: A map of all the characters metadata, such as <strong>displayName</strong> and <strong>speechColour</strong>. Access it with <i>this.managers.character.characters[character_tag]</i>. If the character is currently showing on screen, the <strong>currentLook</strong> property will be the corresponding Phaser Sprite.</li>
+								<li><strong>Current Characters Showing</strong>: A map of all the characters currently on screen, with <strong>look</strong>, <strong>position</strong> and <strong>scaleX</strong>. Access it with <i>this.managers.character.showing[character_tag]</i>.</li>
+							</ul></li>
+							<li><strong>CGs</strong>: Access this manager through <i>this.managers.cgs</i>. This manager takes care of the cgs of the story.
+							<ul>
+								<li><strong>Current CGs</strong>: The information of the currently on screen cgs is contained in two maps. With <i>this.managers.cgs.current[cgs_tag]</i> you can access all the metadata from the cgs, such as <strong>position</strong>, <strong>zoom</strong>, <strong>angle</strong>, <strong>layer</strong> (it determines whether they're shown in front or behind the characters) and <strong>flipped</strong>. The Phaser Sprites, meanwhile, are contained in the map <i>this.managers.cgs.cgs[cgs_tag]</i>.</li>
+							</ul></li>
+							<li><strong>Audio</strong>: Access this manager through <i>this.managers.audio</i>. This manager takes care of all the audio of the story.
+							<ul>
+								<li><strong>Current Music and Sound</strong>: You can obtain the <strong>Phaser.Sound</strong> objects for <strong>bgm</strong>(background music) and <strong>bgs</strong> (background sound) with <i>this.managers.audio.current</i>.</li>
+							</ul></li>
+							<li><strong>Logic</strong>: Access this manager through <i>this.managers.logic</i>. This manager takes care of the permanent variables set with the <a href="#var-action">Var Action</a>, and branching the story by way of choices and ifs.
+							<ul>
+								<li><strong>Variables</strong>: You can obtain the map of all the variables that have been set throughout the game with <i>this.managers.logic.vars</i>. You can read, modify and even completely change this map to whatever you want.</li>
+								<li><strong>Choices Log</strong>: The property <i>this.managers.logic.choicesLog</i> contains a log of all the choices the player has taken in the current run of the game, with an identifier for the choice (in the actions stack), the index of the option and the text itself.</li>
+							</ul></li>
+						</ul>
+						<h3>Transitions</h3>
+						<p>You already know that <strong>Transitions</strong> are the effect we use to show, hide or interchange sprites (backgrounds, character looks, CGs). You can reuse these transitions in your plugins, not only to create more types of transitions, but also in other cases where you might need to show or hide sprites.</p>
+						<p>You can find all of the transitions, by tag name, inside the object <i>this.game.screenEffects.transition</i>. All transitions return a Promise to let you know when they finished transitioning.</p>
+						<ul>
+							<li><strong>FADEIN(to, position?, scaleX?)</strong>: Use this to show any sprite fading in. </li>
+							<li><strong>FADEOUT(from)</strong>: Use this to hide any sprite fading in. </li>
+							<li><strong>FADETOCOLOUR(from, to, colour, position?, scaleX?)</strong>: This transition is used internally when doing FADETOBLACK, FADETOWHITE and FADETOBG, and you can use it to fade the screen to any color you want. </li>
+						</ul>
+						<h3>The GUI</h3>
+						<p>The <a href="#gui-section">GUI Configuration</a> lets you describe how the GUI will be created, but you might want to add your own parts to it programatically, and for that you need to know where to find the actual Phaser objects representing the GUI.</p>
+						<p>While the GUI is quite complex, each of the big subdivisions (each menu and the HUD) is all contained into their own object, with all the sprites inside their own <a href="https://phaser.io/docs/2.6.2/Phaser.Group.html">Phaser.Group</a>.</p>
+						<p>Some of the things you can find inside the GUI object are:</p>
+						<ul>
+							<li><strong>GUI Configuration</strong>: The original configuration, as a json file, is available in <i>this.game.gui.config</i>.</li>
+							<li><strong>Menus</strong>: The Phaser Groups holding each of the menus can be found in <i>this.game.gui.menus[menu_name]</i>. If you want to add graphical elements to the menus, you have to add them to these groups.</li>
+							<li><strong>HUD</strong>: The Phaser Group holding the HUD can be found in <i>this.game.gui.hud</i>.</li>
+							<li><strong>Choices</strong>: The Phaser Group for the choices can be found in <i>this.game.gui.hud</i>. This group will be empty most of the time, since the Choice Boxes will be created on the fly when executing a <strong>Choice Action</strong>.</li>
+						</ul>
+						<h3>Setup and Configuration Files</h3>
+						<p>You might want to access the setup and configuration files of the game. While these files have some structure they should follow, you can also add as many elements as you want. This can be very handy when creating Plugins with lots of setup. You could have this information hardcoded into the Plugin (e.g. as a json object), but it can be easier to use the YAML files and have everything tidy in the setup file.</p>
+						<ul>
+							<li><strong>Story Setup</strong>: The story setup (Setup.YAML file) will be in <i>this.game.setup</i>.</li>
+							<li><strong>Story Config</strong>: The story configuration (Config.YAML file) will be in <i>this.game.storyConfig</i>.</li>
+							<li><strong>Game Config</strong>: The game configuration (object sent to the game in boot.js) will be in <i>this.game.config</i>.</li>
+						</ul>
+						<h3>Phaser JS</h3>
+						<p>And finally, as RenJS is based on PhaserJS, the <i>this.game</i> property is also a reference to a Phaser Game, and you can use it to create sprites, groups, phyiscs, particle systems, and much more. Don't forget to check out their <a href="https://phaser.io/examples/v2">examples page</a> and their <a href="https://phaser.io/docs/2.6.2/index">API documentation</a>.</p>
+					</section><!--//section-->
+			    </article><!--//docs-article-->
+			    
+			    
+			    <article class="docs-article" id="mobile-desktop-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Mobile & Desktop</h1>
+					    <section class="docs-intro">
+						    <p>As seen in previous sections, RenJS allows you to create HTML5 games, that is, games that run in a web browser. This means that any platform with a running web browser should be able to run your game. Linux, Mac, Windows and even mobile devices like smartphones and tablets can currently do this, so by creating your game with RenJS, it's effectively multiplatform.</p>
+						    <p>But what if you don't want the game to be fully online? Distributing the source code and executing an html file locally works, but the player would have to setup a local server to be able to play it. To avoid all of that, there's a better alternative. You can package your game as an executable for each platform.</p>
+						    <p>There are many alternatives out there to achieve this, but the most popular are:</p>
+						    <ul>
+						    	<li><a href="https://www.electronjs.org/">Electron</a>: Targets Linux, Windows and MacOS.</li>
+						    	<li><a href="https://cordova.apache.org/">Cordova</a>: Targets Android, iOS and Windows Phones. Only exports to iOS from a Mac.</li>
+						    </ul>
+						</section>
+				    </header>
+				     <section class="docs-section" id="electron-section">
+						<h2 class="section-heading">Desktop</h2>
+						<p>One way to port the game to a desktop application easily is by using Electron. Electron is a framework for creating native applications with web technologies like JavaScript, HTML, and CSS.</p>
+						<p>Electron works by creating a window browser for the target platform (<strong>Linux</strong>, <strong>Windows</strong> and <strong>MacOS</strong>) and loading a web page in it. This page will be the one used to show the game. In essence, the game code will be exactly the same, we only add Electron as a wrapper over it.</p>
+						<p>The first step to package your game is making sure everything in your game is loading locally. If you're loading any external resource, make sure to download it and link it properly. In particular, make sure the <strong>renjs.js</strong> file linked in the <strong>index.html</strong> is loaded locally and not from the <strong>CDN</strong>.</p>
+						<p>Once your game is ready for packaging, there are two easy ways to continue:</p>
+						<ul>
+							<li><strong>RenJS Desktop Packager</strong>: A desktop app for packaging your games for Linux and Windows in a few simple steps.</li>
+							<li><strong>Electron Packager</strong>: A CLI tool to package your games for Linux, Windows and Mac, and tailor it to your needs. </li>
+						</ul>
+						<h3>RenJS Desktop Packager</h3>
+						<p>
+							This portable app allows you to package games without the need to install anything or doing anything weird. Just select your game directory, choose and icon and add a few more specifications and that's it. It only supports Windows and Linux (for now!), and doesn't let you configure any more properties than the ones already mentioned, but it's the easiest method if you're not very computer savvy.
+						</p>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/desktop-packager.png" alt="">
+							    <figcaption class="figure-caption mt-3">The RenJS Desktop Packager App.</figcaption>
+							</figure>
+						</div>
+						<p>On the upper side of the App you can setup the <strong>Workspace</strong> directory. This directory will be where the packaged apps you create will be stored, and, as such, you need to have writing rights for this directory. You can change the workspace with the <italic>Change</italic> button, and open it in your default file explorer with <italic>Explore</italic>.</p>
+						<p>The frame under the Workspace configuration is where to fill in your game information:</p>
+						<ul>
+							<li><strong>Name</strong>: The name of your game, to be used in the Application Executable file.</li>
+							<li><strong>Game Directory</strong>: The directory that contains your game. The directory should contain at least one file called <strong>index.html</strong> that will be loaded inside the window.</li>
+							<li><strong>Window Size</strong>: The size (in pixels) of the window that will contain the game. If the size is bigger than the game, the game will usually be centered (depending on the index.html configuration). If the size is smaller than the game, scrolling bars will appear so the game can be seen in its entirety. Normally, you'll want the window size to be the same as the game size.</li>
+							<li><strong>Start in fullscreen</strong>: If the game should start in fullscreen. Fullscreen can be toggled with F11.</li>
+							<li><strong>Resizable window</strong>: If the window can be resized by the user or not.</li>
+							<li><strong>Icon image</strong>: Select a png image to be used as the icon in the windows/linux app bars, and in the .exe file. If no icon is selected, the default RenJS icon will be used.</li>
+							<li><strong>Platforms</strong>: The platforms to target in the packaging. Normally, Windows (x64) and Linux (x64). You can also select 32 bits versions of both platforms, if you want to target older computers.</li>
+						</ul>
+						<p>When you have everything setup, you can package the game by pressing the button at the bottom. After some processing the packages will be ready and you can open the workspace directory to find them. Try and open all the packages to make sure they work properly before distributing them.</p>
+						<h3>Electron Packager</h3>
+						<p>This CLI tool packages Electron apps into desktop applications for Windows, Linux and Mac. The first thing to do then is to convert your game into an Electron app, that is, wrapping the game with a few more files Electron needs to create the window where the game will run. To make things easier, you can grab the <a href="https://gitlab.com/lunafromthemoon/RenJSQuickstartElectron">RenJSQuickstart With Electron</a> project. This project does exactly what you want to do, but with the RenJS Quickstart game.</p>
+						<p>Almost all you need to do for your game to run under this project is:</p>
+						<ol>
+							<li><strong>Replace the Quickstart files</strong>: replace the contents of the <strong>RenJSGame</strong> directory with your game.</li>
+							<li><strong>Adjust Window Size</strong>: The window size of the application will adjust to your game, so you need to set up the same values from the RenJSConfig object in <strong>boot.js</strong> in the Electron wrapper. More specifically, you need to change the lines 9 and 10 in the <strong>main.js</strong> file of the Electron project with the width and height of your project.</li>
+							<li><strong>Change the icon</strong>: If you want you can change the <strong>icon.png</strong> file for another image that will be used as an icon for the application, to show in the task bars. For window you will need to add an icon.ico file, and for Mac .icns file.</li>
+						</ol>
+						<p>Once the project is ready, you need to test and package. For doing this, you will need to install a few tools: <a href="https://www.npmjs.com/get-npm">npm</a> and <a href="https://www.npmjs.com/package/electron-packager">Electron Packager</a>, as CLI tools</p>
+						<p>Then you're almost ready. First, test that your game is working properly as a desktop app. Open a terminal and write:</p>
+						<pre><code class="language-bash">
+# install the project dependencies
+npm install
+# test your game
+npm start
+						</code></pre>
+						<p>The last command should open the game in a window just as you want it to. If it works as expected, then you're ready to package it. You need to do this for any platform that you want to target. The Quickstart project comes with a few handy scripts to package the game to the most common platforms:</p>
+						<pre><code class="language-bash">
+# For linux
+npm run package-linux
+# For mac
+npm run package-mac
+# For windows
+npm run package-win-64
+npm run package-win-32
+						</code></pre>
+						<p>After the script is run, you'll find the packaged app in the <strong>release-builds</strong> directory. You'll notice these apps are considerably larger than your game, usually. This is because the package includes a whole web browser that will be used to execute the game in, so that there's never problems with compatibility or any need to install anything else.</p>
+						<p>Make sure you can execute the packaged apps, by opening the executable files (.exe in windows, scripts in linux), and you'll be ready to distribute it!</p>
+					</section>
+
+					<section class="docs-section" id="cordova-section">
+						<h2 class="section-heading">Mobile</h2>
+						<p>Comming soon!</p>
+					</section>
+ 
+			    </article>
+
+	    		<div class="title text-center cta-container cta-container-pink">
+		            <div class="speech-bubble">                    
+		                <p class="intro text-white">Can't find what you're looking for? Join us in Discord and tell us what's missing!</p>
+		                <div class="icon-holder  text-center text-white"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></div>
+		            </div>
+		        	<a class="btn btn-cta-primary" href="https://discord.gg/uSMpYFnHZN">Join Us!</a>
+		        </div><!--//cta-container-->
+			    
+			    <footer class="footer">
+				    <div class="footer-bottom text-center py-3">
+			            <p>Ren<strong>JS</strong> created by <strong><i class="fas fa-rocket"></i></strong> <a href="https://twitter.com/lunafromthem00n">lunafromthemoon</a> <strong><i class="fas fa-moon"></i></strong></p>
+				    </div>
+			    </footer>
+		    </div> 
+	    </div>
+    </div><!--//docs-wrapper-->
+    
+   
+       
+    <!-- Javascript -->          
+    <script src="assets/plugins/jquery-3.4.1.min.js"></script>
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    <script src="assets/js/prism.js"></script> 
+    <!-- Page Specific JS -->
+    <script src="assets/plugins/jquery.scrollTo.min.js"></script>
+    <script src="assets/plugins/lightbox/dist/ekko-lightbox.min.js"></script> 
+    <script src="assets/js/docs.js"></script> 
+
+</body>
+</html> 
+

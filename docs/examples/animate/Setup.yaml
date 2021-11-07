@@ -1,0 +1,24 @@
+
+backgrounds:
+  room_night: assets/backgrounds/room_night.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+
+cgs:
+  horse:
+    spritesheet: assets/objects/horse.png 192 144
+    animations:
+      head: 1 4 20
+      run: 5 11 20
+
+# music:
+#   rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+#   morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
+

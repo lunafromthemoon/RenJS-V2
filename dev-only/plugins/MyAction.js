@@ -8,10 +8,10 @@ class HelloWorld extends RenJS.Plugin {
 		}, 1500);
 	}
 
-	onAction(action) {
-		console.log("Hello")
-		console.log(action)
-	}
+	// onAction(action) {
+	// 	console.log("Hello")
+	// 	console.log(action)
+	// }
 }
 
 RenJSGame.addPlugin('helloWorld',HelloWorld)
