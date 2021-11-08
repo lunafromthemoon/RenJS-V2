@@ -1,0 +1,42 @@
+
+backgrounds:
+  room: assets/backgrounds/room_day.jpg
+  room_night: assets/backgrounds/room_night.jpg
+  room_night_light: assets/backgrounds/room_night_light.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    color: "#ca90cf"
+    nameBox: pink
+    messageBox: pink
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+
+  liz:
+    displayName: Liz
+    color: "#d5e6e7"
+    looks:
+      normal: assets/characters/Char2NormalSchool.png
+      happy: assets/characters/Char2HappySchool.png
+      angry: assets/characters/Char2AngrySchool.png
+
+cgs:
+  phone1: assets/objects/phone1.png
+  phone2: assets/objects/phone2.png
+
+music:
+  rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
+  morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
+sfx:
+  ringtoneSFX: assets/audio/nokia6210-24-elise.mp3
+  ringtoneSFX2: assets/audio/alcatel-top_secret.mp3
+
+extra:
+  spritesheets:
+    rain: assets/ambient/rain.png 17 17
+    sakura: assets/ambient/sakura-petals.png 17 26
+    snowflakes: assets/ambient/snowflakes.png 17 17
+    snowflakes_large: assets/ambient/snowflakes_large.png 64 64

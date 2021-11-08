@@ -320,16 +320,25 @@
 						<p>The characters are declared under the <strong>characters</strong> tag, with an unique key name and a few parameters:</p>
 						<ul>
 						    <li><strong class="mr-1">Display Name:</strong> The display name is the name that will be shown in the name box when the character speaks. If this property is omited, the key name will be used as the display name, but contrary to the key name, the display name can have whitespaces and special characters such as accents and dashes.</li>
-						    <li><strong class="mr-1">Speech Colour:</strong> A color associated with this character, that will be used for the text color when displaying the name.</li>
+						    <li><strong class="mr-1">Color:</strong> A color associated with this character, that will be used for the text color when displaying the name.</li>
 						    <li><strong class="mr-1">Voice:</strong> A short sfx that will be played when the character is speaking. This audio file has to be declared under the <strong>sfx</strong> section, and referenced here by <strong>tag name</strong>.</li>
-						    <li><strong class="mr-1">Looks:</strong> A list of images representing a state of the character. As with all key names, the look identifiers have to be unique for the character (but re used for a different character), and can't have whitespaces or dashes.</li>
+						    <li><strong class="mr-1">Name Box:</strong> The id of the name box to use to display this character's name, other than 'default'.</li>
+						    <li><strong class="mr-1">Message Box:</strong> The id of the message box to use to display the text when this character is talking, other than 'default'.</li>
+						    <li><strong class="mr-1">Looks:</strong> A character can be shown in many different ways, in particular, to show different emotions, body poses or costumes. The looks property is a list of images that should include all the ways your character can look throughout the game. Each look has a key name and an image file path. As with all key names, the look identifiers have to be unique for the character (but can be re used for a different character, i.e. two characters can have the look 'happy'), and can't have whitespaces or dashes.</li>
+						    <li><strong class="mr-1">Portraits (also known as side images):</strong>  The portraits property is similar to the looks, but these images will be shown when the character is speaking, normally inside the message box (the message box needs to be configured for this). When a character has portraits configured, the say actions that include a 'look' key, will be used to choose what portrait to use.</li>
 						</ul>
 						<pre><code class="language-yaml">
 characters:
   deuzi:
     displayName: Deuzilene
-    speechColour: "#ca90cf"
+    color: "#FFFFFF"
     voice: voiceHigh
+    nameBox: pinkBox
+    messageBox: messageWithPortrait
+    portraits:
+      normal: assets/characters/portraits/deuzi.png
+      happy: assets/characters/portraits/deuzihappy.png
+      angry: assets/characters/portraits/deuziangry.png
     looks:
       normal_school: assets/characters/Char3NormalSchool.png
       happy_school: assets/characters/Char3HappySchool.png
@@ -339,8 +348,9 @@ characters:
       angry_casual: assets/characters/Char3Angry.png
   liz:
     displayName: Liz
-    speechColour: "#d5e6e7"
+    color: "#d5e6e7"
     voice: voiceMedium
+    nameBox: blueBox
     looks:
       normal_school: assets/characters/Char2NormalSchool.png
       happy_school: assets/characters/Char2HappySchool.png
@@ -349,7 +359,7 @@ characters:
       happy_casual: assets/characters/Char2Happy.png
       angry_casual: assets/characters/Char2Angry.png
 						</code></pre>
-						<p>In the code above, two characters are declared, each with six different looks.</p>
+						<p>In the code above, two characters are declared, each with six different looks. The character 'deuzi' has three portraits to use along with the dialogue, and it's configured to use a special text box that includes a portrait.</p>
 						<div class="text-center">
 						    <figure class="figure docs-figure py-3 text-center">
 							    <img class="figure-img img-fluid shadow rounded" src="assets/images/charexample.png" alt="">
@@ -1973,7 +1983,7 @@ start:
 							</ul></li>
 							<li><strong>Character</strong>: Access this manager through <i>this.managers.character</i>. This manager takes care of the characters of the story.
 							<ul>
-								<li><strong>Characters Metadata</strong>: A map of all the characters metadata, such as <strong>displayName</strong> and <strong>speechColour</strong>. Access it with <i>this.managers.character.characters[character_tag]</i>. If the character is currently showing on screen, the <strong>currentLook</strong> property will be the corresponding Phaser Sprite.</li>
+								<li><strong>Characters Metadata</strong>: A map of all the characters metadata, such as <strong>displayName</strong> and <strong>color</strong>. Access it with <i>this.managers.character.characters[character_tag]</i>. If the character is currently showing on screen, the <strong>currentLook</strong> property will be the corresponding Phaser Sprite.</li>
 								<li><strong>Current Characters Showing</strong>: A map of all the characters currently on screen, with <strong>look</strong>, <strong>position</strong> and <strong>scaleX</strong>. Access it with <i>this.managers.character.showing[character_tag]</i>.</li>
 							</ul></li>
 							<li><strong>CGs</strong>: Access this manager through <i>this.managers.cgs</i>. This manager takes care of the cgs of the story.
