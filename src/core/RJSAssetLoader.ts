@@ -18,12 +18,25 @@ export default class RJSAssetLoader {
             for (var scene in this.game.story) {
                 
                 const actions = this.game.story[scene];
-                for (var i = 0; i < actions.length; i++) {
-                    const action = this.game.managers.story.parseAction(actions[i]);
-                    if (action.mainAction=="show" || action.mainAction=="play"){
+                var action = actions.shift()
+                while (action){
+                    const actionKey = Object.keys(action)[0];
+                    if (actionKey.includes('show') || actionKey.includes('play')){
+                        const parsedAction = this.game.managers.story.parseAction(action);
                         if (!this.assetsPerScene[scene]) this.assetsPerScene[scene]={};
-                        this.assetsPerScene[scene][action.actor]=action.actorType;
+                        this.assetsPerScene[scene][parsedAction.actor]=parsedAction.actorType;
                     }
+                    if (actionKey.includes('if') || actionKey.includes('else')){
+                        // check nested actions
+                        actions.unshift(...action[actionKey])
+                    }
+                    if (actionKey.includes('choice') || actionKey.includes('interrupt')){
+                        for (const nestedAction of action[actionKey]){
+                            const nestedActionKey = Object.keys(nestedAction)[0];
+                            actions.unshift(...nestedAction[nestedActionKey])
+                        }
+                    }
+                    action = actions.shift()
                 }
             }
             const assetsText = jsyaml.dump(this.assetsPerScene)
