@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.1...v2.2.2) (2021-11-08)
+
+
+### Bug Fixes
+
+* lazyloading bug with new self parsing actions ([721bef9](https://github.com/lunafromthemoon/RenJS-V2/commit/721bef9338bf32cfa35d6b0e3c355456038b6598))
+
 ## [2.2.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.0...v2.2.1) (2021-11-06)
 
 
