@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.2...v2.2.3) (2021-11-09)
+
+
+### Bug Fixes
+
+* Safely check actor type in actions, ignore asset loader when no assets ([559ba51](https://github.com/lunafromthemoon/RenJS-V2/commit/559ba5107019088e3e123c32cdde488f44ca852c))
+
 ## [2.2.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.1...v2.2.2) (2021-11-08)
 
 
