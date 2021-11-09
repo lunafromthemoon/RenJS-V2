@@ -182,8 +182,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             this.actorsIndex[actor] = 'sfx';
             return 'sfx';
         }
-        this.actorsIndex[actor] = 'cgs';
-        return 'cgs';
+        if (this.game.managers.cgs.isCGS(actor)){
+            this.actorsIndex[actor] = 'cgs';
+            return 'cgs';
+        }
+        return null;
     }
 
     getManagerByActorType (type: string): RJSSpriteManagerInterface {

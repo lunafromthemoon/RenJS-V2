@@ -154,11 +154,11 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     isMusic(actor): boolean {
-        return actor in this.game.setup.music
+        return this.game.setup.music && actor in this.game.setup.music
     }
 
     isSfx(actor): boolean {
-        return actor in this.game.setup.sfx
+        return this.game.setup.sfx && actor in this.game.setup.sfx
     }
 
     mute(mute:boolean): void {

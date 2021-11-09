@@ -192,6 +192,6 @@ export default class CGSManager implements CGSManagerInterface {
     }
 
     isCGS (actor): boolean {
-        return actor in this.cgs;
+        return this.game.setup.cgs && actor in this.game.setup.cgs;
     }
 }

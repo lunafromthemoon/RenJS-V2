@@ -17,7 +17,7 @@ export default class RJSAssetLoader {
             // get each scene asset
             for (var scene in this.game.story) {
                 
-                const actions = this.game.story[scene];
+                const actions = [...this.game.story[scene]];
                 var action = actions.shift()
                 while (action){
                     const actionKey = Object.keys(action)[0];
@@ -113,6 +113,7 @@ export default class RJSAssetLoader {
     }
 
     async loadAssets(assets: {},background?){
+        if (!assets) return;
         for (var asset in this.loadedAssets) {
             // remove assets already loaded
             delete assets[asset]
@@ -181,7 +182,7 @@ export default class RJSAssetLoader {
                 if (this.game.config.debugMode){
                     console.log("All assets loaded.");
                 }
-                resolve();
+                resolve(true);
             }, this);
             this.loading = true;
             if (this.loadingScreen){
