@@ -90,7 +90,7 @@ export default class CGSManager implements CGSManagerInterface {
         if (props.angle) {
             this.cgs[name].angle = props.angle;
         }
-        this.current[name] = {name, position, zoom: props.zoom, angle: props.angle, layer:props.layer, flipped: flipped};
+        this.current[name] = {name, position, zoom: props.zoom, angle: props.angle, layer:props.layer, flipped};
         return this.transition.get(transitionName)(previousSprite, this.cgs[name], position);
     }
 

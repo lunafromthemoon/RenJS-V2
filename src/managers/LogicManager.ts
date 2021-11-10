@@ -105,7 +105,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     parseChoice(index,choice): any {
         const rawText = Object.keys(choice)[0];
         const parsedChoice: any = {
-            index: index,
+            index,
             actions: choice[rawText] || [],
             available: true,
             choiceText: this.parseVars(rawText),

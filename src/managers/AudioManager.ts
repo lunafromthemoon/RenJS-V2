@@ -52,10 +52,10 @@ export default class AudioManager implements AudioManagerInterface {
         // add new music
         const music = this.game.add.audio(key);
         this.active[type] = {
-            key: key,
-            looped: looped,
-            fromSeconds: fromSeconds,
-            transition: transition
+            key,
+            looped,
+            fromSeconds,
+            transition
         }
         this.current[type] = music;
         let marker = ''
@@ -76,7 +76,7 @@ export default class AudioManager implements AudioManagerInterface {
 
         if (transition == 'FADE'){
             music.volume = 0;
-            this.game.add.tween(music).to({volume: volume},1500,null,true);
+            this.game.add.tween(music).to({volume},1500,null,true);
         } else {
             music.volume = volume;
         }

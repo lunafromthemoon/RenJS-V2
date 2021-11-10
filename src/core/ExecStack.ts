@@ -44,12 +44,12 @@ export default class ExecStack {
 
     replace(scope: string){
         // replace the whole stack, scope will be a new scene
-        this.execStack = [{c:-1,scope:scope}]
+        this.execStack = [{c:-1,scope}]
     }
 
     stack(scope,total,index = -1, origin = -1){
         // stack a new scope, normally a branch but could be another scene
-        this.execStack.unshift({c:-1, total: total, scope: scope, index: index, origin: origin});
+        this.execStack.unshift({c:-1, total, scope, index, origin});
     }
 
     advance(): void{
