@@ -11,7 +11,7 @@ import { changeInputEnabled, hudSort } from '../utils/gui';
 export default class RJSHUD extends RJSMenu {
     mBoxes = {}
     nBoxes = {}
-    cHandlers = {}
+    cHandlers: { [key: string]: ChoiceHandler } = {}
 
     skipClickArea: Phaser.Rectangle[] = []
     visualChoices: Graphics

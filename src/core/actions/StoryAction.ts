@@ -6,6 +6,7 @@ export interface StoryActionInterface {
 }
 
 export default class StoryAction implements StoryActionInterface {
+	dontHide?: boolean;
 
 	protected key: string
 	protected body: any

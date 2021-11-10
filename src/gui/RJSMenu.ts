@@ -15,7 +15,7 @@ export default class RJSMenu extends Group {
     elementFactory: {}
     saveSlots = {}
     // if element has id, index it for quick reference
-    indexedElements: {} = {}
+    indexedElements: { [key: string]: any } = {}
     backgroundMusic: string = null;
 
     constructor(game: RJS, public config) {
