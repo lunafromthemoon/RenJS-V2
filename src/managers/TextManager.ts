@@ -7,7 +7,7 @@ export interface TextManagerInterface extends RJSManagerInterface {}
 export default class TextManager implements TextManagerInterface {
 
     private game: RJS
-    textLog: Array<any> = []
+    textLog: any[] = []
 
     constructor(game: RJS) {
         this.game = game

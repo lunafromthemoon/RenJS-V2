@@ -51,7 +51,7 @@ export default class RJS extends Game {
     userPreferences: UserPreferences
     storyConfig: StoryConfig
 
-    textLog: Array<any> = []
+    textLog: any[] = []
 
     interruptAction: any = null
 
