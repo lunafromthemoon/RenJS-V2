@@ -1,3 +1,11 @@
+## [2.2.4](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.3...v2.2.4) (2021-11-10)
+
+
+### Bug Fixes
+
+* `RJSGUI.menus` being incorrectly initialized due to typescript error ([87cf63c](https://github.com/lunafromthemoon/RenJS-V2/commit/87cf63c20258fc5ac46f3c017196ef2cdc9aa6e4))
+* fix missing radix when parsing thumbnail properties ([7f3c29c](https://github.com/lunafromthemoon/RenJS-V2/commit/7f3c29cbc041062738bda0f92a3f2316f7414a7b))
+
 ## [2.2.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.2...v2.2.3) (2021-11-09)
 
 

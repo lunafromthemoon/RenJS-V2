@@ -16,7 +16,7 @@ export default class RJSGUI implements RJSGUIInterface {
     assets: GUIAsset[];
     fonts: string[];
     menus: {
-        string: typeof RJSMenu;
+        [key: string]: RJSMenu;
     };
     hud: RJSHUD;
     currentMenu: any;
@@ -24,7 +24,7 @@ export default class RJSGUI implements RJSGUIInterface {
     constructor(game: RJS);
     initAssets(gui: any): void;
     init(): Promise<void>;
-    getCurrent(): any;
+    getCurrent(): RJSMenu;
     showMenu(menu: any): Promise<void>;
     hideMenu(menu: any, mute: any, callback?: any): Promise<void>;
     changeMenu(menu: any): Promise<void>;
