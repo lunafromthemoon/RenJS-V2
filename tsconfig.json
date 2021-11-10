@@ -6,6 +6,7 @@
     "outDir": "dist/types",
     "declaration": true,
 //    "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": [
       "ES2019",

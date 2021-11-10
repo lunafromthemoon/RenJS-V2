@@ -19,8 +19,8 @@ import {RJSGameConfig,StoryConfig} from './RJSGameConfig';
 import UserPreferences from './UserPreferences';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
+import PACKAGE from '../../package.json';
 
-const PACKAGE = require('../../package.json');
 const version = PACKAGE.version;
 
 
