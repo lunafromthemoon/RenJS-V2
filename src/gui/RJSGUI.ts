@@ -22,7 +22,7 @@ export default class RJSGUI implements RJSGUIInterface {
     assets: GUIAsset[] = []
     fonts: string[] = []
     // gui graphical elements
-    menus = {string:RJSMenu};
+    menus: { [key: string]: RJSMenu } = {};
     hud: RJSHUD = null;
 
     // menu navigation
