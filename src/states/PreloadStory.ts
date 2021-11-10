@@ -78,14 +78,14 @@ class PreloadStory extends RJSState {
         // preload background music
         if ('music' in this.game.setup) {
             for (const music in this.game.setup.music) {
-               preloadAudio(music,"music",this.game);
+               preloadAudio(music,'music',this.game);
             }
         }
 
         // preload sfx
         if ('sfx' in this.game.setup) {
             for (const sfx in this.game.setup.sfx) {
-               preloadAudio(sfx,"sfx",this.game);
+               preloadAudio(sfx,'sfx',this.game);
             }
         }
 

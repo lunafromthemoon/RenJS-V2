@@ -65,8 +65,8 @@ export default class AudioManager implements AudioManagerInterface {
             // looped = false;
             music.addMarker(marker,0,fromSeconds,null,false);
             music.onMarkerComplete.addOnce(()=>{
-                music.addMarker("looped",fromSeconds,music.totalDuration-fromSeconds,null,true);
-                music.play("looped");
+                music.addMarker('looped',fromSeconds,music.totalDuration-fromSeconds,null,true);
+                music.play('looped');
                 music.volume = volume;
             })
         }

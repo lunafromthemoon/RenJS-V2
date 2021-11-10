@@ -40,8 +40,8 @@ export default class RJSAssetLoader {
                 }
             }
             const assetsText = jsyaml.dump(this.assetsPerScene)
-            console.log("COPY THIS TEXT INTO THE LAZY LOADING SETUP");
-            console.log("assetsPerScene:");
+            console.log('COPY THIS TEXT INTO THE LAZY LOADING SETUP');
+            console.log('assetsPerScene:');
             console.log(assetsText);
         } else {
             this.assetsPerScene = this.game.setup.lazyloading.assetsPerScene;
@@ -73,7 +73,7 @@ export default class RJSAssetLoader {
     loadEpisodeInBackground(episodeIdx){
         if(episodeIdx<=this.episodes.length-1){
             if (this.game.config.debugMode){
-                console.log("Loading episode "+episodeIdx+" in background");
+                console.log('Loading episode '+episodeIdx+' in background');
             }
 
             this.backgroundLoading = this.loadEpisode(episodeIdx,false,true);
@@ -84,7 +84,7 @@ export default class RJSAssetLoader {
     async loadEpisode(episodeIdx, loadNextAfter, background?){
         if (this.loadedEpisodes[episodeIdx]){
             if (this.game.config.debugMode){
-                console.log("Episode "+episodeIdx+" already loaded.");
+                console.log('Episode '+episodeIdx+' already loaded.');
             }
             // this episode was already loaded, but we try to load the next one anyway
             if (loadNextAfter){
@@ -93,7 +93,7 @@ export default class RJSAssetLoader {
             return;
         }
         if (this.game.config.debugMode){
-            console.log("Loading episode "+episodeIdx);
+            console.log('Loading episode '+episodeIdx);
         }
         this.loadedEpisodes[episodeIdx]=true;
         let toLoad = {};
@@ -119,7 +119,7 @@ export default class RJSAssetLoader {
             delete assets[asset]
         }
         if (this.game.config.debugMode){
-            console.log("Loading assets:");
+            console.log('Loading assets:');
             console.log(assets)
         }
         if (Object.keys(assets).length==0){
@@ -140,22 +140,22 @@ export default class RJSAssetLoader {
         for (var asset in assets) {
             const assetType = assets[asset];
             switch (assetType) {
-                case "backgrounds":
+                case 'backgrounds':
                     preloadBackground(asset,this.game);
                     break;
-                case "cgs":
+                case 'cgs':
                     preloadCGS(asset,this.game);
                     break;
-                case "characters":
+                case 'characters':
                     preloadCharacter(asset,this.game);
                     break;
-                case "music":
+                case 'music':
                     audioList.push(asset);
-                    preloadAudio(asset,"music",this.game);
+                    preloadAudio(asset,'music',this.game);
                     break;
-                case "sfx":
+                case 'sfx':
                     audioList.push(asset);
-                    preloadAudio(asset,"sfx",this.game);
+                    preloadAudio(asset,'sfx',this.game);
                     break;
                 default:
                     preloadExtra(asset,assetType,this.game);
@@ -180,7 +180,7 @@ export default class RJSAssetLoader {
                     this.backgroundLoading=null;
                 }
                 if (this.game.config.debugMode){
-                    console.log("All assets loaded.");
+                    console.log('All assets loaded.');
                 }
                 resolve(true);
             }, this);

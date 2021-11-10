@@ -94,7 +94,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
                 const varName = v.substring(1,v.length-1);
                 let value = this.vars[varName]
                 if (useQM && typeof value == 'string'){
-                    value = '\"'+value+'\"';
+                    value = '"'+value+'"';
                 }
                 text = text.replace(v,value);
             }
@@ -131,7 +131,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         // update choice log
         this.updateChoiceLog(chosenOption.index);
         if (this.game.storyConfig.logText){
-            this.game.managers.text.textLog.push({text:chosenOption.choiceText,title:"choice"});
+            this.game.managers.text.textLog.push({text:chosenOption.choiceText,title:'choice'});
         }
         // add new action to scene
         const actions = chosenOption.actions;
@@ -148,7 +148,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             this.game.control.execStack.stack('choice',actions.length,chosenOption.index);
         }
         if (this.game.config.debugMode){
-            console.log("Choice taken "+ index+ " : "+chosenOption.choiceText);
+            console.log('Choice taken '+ index+ ' : '+chosenOption.choiceText);
         }
         await this.clearChoices();
         if (!this.interrupting){
@@ -171,7 +171,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     async checkTextAction(firstChoice): Promise<boolean>{
         const action: StoryAction=this.game.managers.story.parseAction({...firstChoice});
-        if (action && (action.actionType == "say" || action.actionType == "text")){
+        if (action && (action.actionType == 'say' || action.actionType == 'text')){
             const textAction = action as StoryActionText;
             // set property so the text will not be hidden after it's shown
             textAction.dontHide = true;

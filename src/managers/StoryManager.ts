@@ -138,12 +138,12 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     // removes everything from screen immediately
     clearScene(): void{
         this.game.control.execStack.clear();
-        this.game.gui.hud.clear("CUT");
+        this.game.gui.hud.clear('CUT');
         this.game.control.waitForClick = false;
-        this.game.managers.character.hideAll("CUT");
+        this.game.managers.character.hideAll('CUT');
         this.game.managers.audio.stopAll()
-        this.game.managers.cgs.hideAll("CUT");
-        this.game.managers.background.hide(null,"CUT");
+        this.game.managers.cgs.hideAll('CUT');
+        this.game.managers.background.hide(null,'CUT');
         this.game.screenEffects.ambient.CLEAR();
         this.currentScene = [];
     }
@@ -217,7 +217,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             return this.game.resolveAction();
         }
         if (this.game.config.debugMode){
-            console.log("Executing action: "+storyAction.actionType);
+            console.log('Executing action: '+storyAction.actionType);
             console.log(Object.getOwnPropertyNames(storyAction));
         }
         await this.game.checkPlugins('onAction',[storyAction]);

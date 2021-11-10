@@ -16,7 +16,7 @@ export default class Label extends Text {
     }
 
     constructor(game: RJS, config, parent?) {
-        super(game, config.x, config.y,"",config.style);
+        super(game, config.x, config.y,'',config.style);
         this.config = config;
         if (config.lineSpacing){
             this.lineSpacing = config.lineSpacing;

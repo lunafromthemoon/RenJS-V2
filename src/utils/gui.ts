@@ -34,32 +34,32 @@ export function setTextStyles(text: string,text_obj: Text): string {
     if (match){
       const s = {
         start: text.search(re),
-        style: match[1].includes("color") ? "color" : match[1],
+        style: match[1].includes('color') ? 'color' : match[1],
         end: -1,
         color: null
       }
-      if (s.style == "color"){
+      if (s.style == 'color'){
         s.color = match[2];
       }
-      text = text.replace(re,"")
-      const endIdx = text.indexOf("(end)");
+      text = text.replace(re,'')
+      const endIdx = text.indexOf('(end)');
       if (endIdx!=-1){
-        text = text.replace("(end)","")
+        text = text.replace('(end)','')
         s.end = endIdx;
         styles.push(s)
       }
     } else break;
   }
   styles.forEach(s=>{
-    if (s.style=="italic"){
-      text_obj.addFontStyle("italic", s.start);
-      text_obj.addFontStyle("normal", s.end);
+    if (s.style=='italic'){
+      text_obj.addFontStyle('italic', s.start);
+      text_obj.addFontStyle('normal', s.end);
     }
-    if (s.style=="bold"){
-      text_obj.addFontWeight("bold", s.start);
-      text_obj.addFontWeight("normal", s.end);
+    if (s.style=='bold'){
+      text_obj.addFontWeight('bold', s.start);
+      text_obj.addFontWeight('normal', s.end);
     }
-    if (s.style=="color"){
+    if (s.style=='color'){
       text_obj.addColor(s.color, s.start)
       text_obj.addColor(text_obj.fill, s.end)
     }

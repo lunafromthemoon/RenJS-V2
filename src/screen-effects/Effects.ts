@@ -58,7 +58,7 @@ export default class Effects implements RJSScreenEffectInterface {
                 }
                 this.game.control.unskippable = false;
                 if (!params.endGame) {
-                    console.log("showing hud again")
+                    console.log('showing hud again')
                     await this.game.managers.story.show();
                 } else {
                     this.game.endGame();

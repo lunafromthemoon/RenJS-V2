@@ -18,11 +18,11 @@ export interface CharacterInterface {
 
 export default class Character implements CharacterInterface {
     config = {
-        displayName: "",
-        color: "#FFFFFF",
-        voice: "none",
-        nameBox: "default",
-        messageBox: "default"
+        displayName: '',
+        color: '#FFFFFF',
+        voice: 'none',
+        nameBox: 'default',
+        messageBox: 'default'
     }
 
     currentLook = null;
@@ -41,7 +41,7 @@ export default class Character implements CharacterInterface {
 
     createLook(props: {look?: string,position?: {x: number,y: number},flipped?: any} = {}): Sprite {
         const data = this.currentLook ? this.getLookData() : {
-            look: "normal",
+            look: 'normal',
             position: this.game.storyConfig.positions.DEFAULT,
             flipped: false
         }
@@ -50,7 +50,7 @@ export default class Character implements CharacterInterface {
 
         const look: Sprite = this.game.managers.story.characterSprites.create(data.position.x, data.position.y, imgKey);
         look.name = data.look;
-        if (props.flipped == "flip"){
+        if (props.flipped == 'flip'){
             if (this.currentLook){
                 data.flipped = !(this.currentLook.scale.x == -1);
             } else {

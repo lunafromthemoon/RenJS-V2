@@ -192,7 +192,7 @@ export default class RJS extends Game {
 
     takeXShot (): void {
         if (!this.xShots) this.xShots = [];
-        this.xShots.push(this.canvas.toDataURL("image/jpeg"));
+        this.xShots.push(this.canvas.toDataURL('image/jpeg'));
     }
 
     async unpause (){
@@ -278,7 +278,7 @@ export default class RJS extends Game {
             localStorage.setItem('RenJSThumbnail' + this.config.name + slot,thumbnail);
         }
         if (this.config.debugMode){
-            console.log("Saved data in slot "+slot);
+            console.log('Saved data in slot '+slot);
             console.log(data);
         }
     }
@@ -313,7 +313,7 @@ export default class RJS extends Game {
         this.gameStarted = true;
         await this.managers.story.show();
         if (this.config.debugMode){
-            console.log("Loaded data from slot "+slot);
+            console.log('Loaded data from slot '+slot);
             console.log(dataParsed);
         }
         this.unpause();
@@ -330,7 +330,7 @@ export default class RJS extends Game {
             setTimeout(this.control.nextAction.bind(this), timeout);
         } else {
             if (this.config.debugMode){
-                console.log("Waiting for click");
+                console.log('Waiting for click');
             }
             this.control.waitForClick = true;
         }
@@ -373,7 +373,7 @@ export default class RJS extends Game {
         // continue with next action and lock the click for some miliseconds
         if (this.control.waitForClick && !this.control.clickLocked){
             if (this.config.debugMode){
-                console.log("Clicked, continue with next action.");
+                console.log('Clicked, continue with next action.');
             }
             this.control.waitForClick = false;
             this.lockClick();
@@ -402,7 +402,7 @@ export default class RJS extends Game {
     resolveAction = (): void => {
         this.control.waitForClick = false;
         if (this.config.debugMode){
-            console.log("Resolving action.");
+            console.log('Resolving action.');
         }
         if (!this.control.paused){
             this.managers.story.interpret()

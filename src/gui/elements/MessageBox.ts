@@ -118,7 +118,7 @@ export default class MessageBox extends Sprite{
             this.text.wordWrapWidth = this.config.text.style.wordWrapWidth*2;
             finalText = '';
             for (const line of lines){
-                finalText+=line.replace(/.$/,"\n");
+                finalText+=line.replace(/.$/,'\n');
             }
         }
 
@@ -187,7 +187,7 @@ export default class MessageBox extends Sprite{
                 }
                 // play sfx
                 if (sfx){
-                    if (characters[charIdx] == " " || this.punctuationMarks.includes(characters[charIdx]) || sfxCharCount==charPerSfx){
+                    if (characters[charIdx] == ' ' || this.punctuationMarks.includes(characters[charIdx]) || sfxCharCount==charPerSfx){
                         // reset count, but don't play
                         sfxCharCount=-1;
                     } else if (sfxCharCount==0){

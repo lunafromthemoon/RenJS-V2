@@ -105,7 +105,7 @@ export default class RJSMenu extends Group {
         // menu transitions are unskippable
         this.game.control.unskippable = true;
         if (this.backgroundMusic){
-            this.game.managers.audio.play(this.backgroundMusic,"bgm",true);
+            this.game.managers.audio.play(this.backgroundMusic,'bgm',true);
         }
         const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         await transition(null, this);

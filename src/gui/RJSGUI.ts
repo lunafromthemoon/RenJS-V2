@@ -46,7 +46,7 @@ export default class RJSGUI implements RJSGUIInterface {
         // decode audios used in the menu
         const audioList = [];
         for (var i = 0; i < this.assets.length; i++) {
-            if (this.assets[i].type=="audio"){
+            if (this.assets[i].type=='audio'){
                 audioList.push(this.assets[i].key);
             }
         }
@@ -143,7 +143,7 @@ export default class RJSGUI implements RJSGUIInterface {
             // slider bindings
             changeUserPreference: (element,value) => {
                 this.game.userPreferences.set(element.userPreference,value);
-                if (element.userPreference == "bgmv"){
+                if (element.userPreference == 'bgmv'){
                     // change music volume immediately
                     this.game.managers.audio.changeVolume(this.game.userPreferences.get(element.userPreference));
                 }
