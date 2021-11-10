@@ -35,7 +35,7 @@ export default class Effects implements RJSScreenEffectInterface {
             this.audioManager.play(params.music, 'bgm', true, null, 'FADE');
         }
 
-        const style = this.game.gui.hud.cHandlers['default'].config.text.style;
+        const style = this.game.gui.hud.cHandlers.default.config.text.style;
         const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, ' ', style);
         credits.anchor.set(0.5);
         const separation = credits.height + 10;

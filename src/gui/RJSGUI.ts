@@ -54,7 +54,7 @@ export default class RJSGUI implements RJSGUIInterface {
         this.hud = new RJSHUD(this.game,this.config.hud);
         this.hud.init();
         // add also as menu to switch between menus and hud easily
-        this.menus['hud'] = this.hud;
+        this.menus.hud = this.hud;
         for (const menuName in this.config.menus){
             this.menus[menuName] = new RJSMenu(this.game,this.config.menus[menuName]);
             this.menus[menuName].init();

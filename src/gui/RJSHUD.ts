@@ -56,11 +56,11 @@ export default class RJSHUD extends RJSMenu {
     // these control setttings can be unset when tapping anywhere on the screen
     // this function will be called when this happens, so it can reset the push buttons
     unsetSkipButtons(){
-        if (this.indexedElements['skipButton']){
-            this.indexedElements['skipButton'].setPushed(false);
+        if (this.indexedElements.skipButton){
+            this.indexedElements.skipButton.setPushed(false);
         }
-        if (this.indexedElements['autoButton']){
-            this.indexedElements['autoButton'].setPushed(false);
+        if (this.indexedElements.autoButton){
+            this.indexedElements.autoButton.setPushed(false);
         }
     }
 
@@ -108,7 +108,7 @@ export default class RJSHUD extends RJSMenu {
     }
 
     createVisualChoice(choice, index, resolve) {
-        const defaultChoicesConfig = this.cHandlers['default'].config;
+        const defaultChoicesConfig = this.cHandlers.default.config;
         // visual choice text -> spriteId AT x,y|positionId SFX sfxId
         const str = choice.choiceText.split(' ');
         const spriteId = str[0];
