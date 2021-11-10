@@ -31,7 +31,9 @@ export default class StoryAction implements StoryActionInterface {
 	}
 
 	// execute action during story
-	execute(): void {}
+	execute(): void {
+		// base action does nothing
+	}
 
 	parseParams(keyParams){
 		if (keyParams){
