@@ -57,7 +57,7 @@ export default class UserPreferences {
 
     setPreferences(preferences){
         if (preferences) {
-            for (var preference in this.preferences) {
+            for (const preference in this.preferences) {
                 if (preferences[preference] !== undefined) {
                     // set the raw value
                     this.preferences[preference].value = preferences[preference];
@@ -85,7 +85,7 @@ export default class UserPreferences {
 
     savePreferences(){
         // save raw values
-        var prefs = JSON.stringify(this.preferences);
+        const prefs = JSON.stringify(this.preferences);
         localStorage.setItem('RenJSUserPreferences' + this.game.config.name,prefs);
     }
 }

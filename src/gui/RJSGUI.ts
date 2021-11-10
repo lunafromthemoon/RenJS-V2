@@ -45,7 +45,7 @@ export default class RJSGUI implements RJSGUIInterface {
     async init() {
         // decode audios used in the menu
         const audioList = [];
-        for (var i = 0; i < this.assets.length; i++) {
+        for (let i = 0; i < this.assets.length; i++) {
             if (this.assets[i].type=='audio'){
                 audioList.push(this.assets[i].key);
             }

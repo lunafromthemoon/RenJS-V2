@@ -15,10 +15,10 @@ export default class RJSAssetLoader {
     constructor(private game) {
         if (this.game.setup.lazyloading.findAssets){
             // get each scene asset
-            for (var scene in this.game.story) {
+            for (const scene in this.game.story) {
 
                 const actions = [...this.game.story[scene]];
-                var action = actions.shift()
+                let action = actions.shift()
                 while (action){
                     const actionKey = Object.keys(action)[0];
                     if (actionKey.includes('show') || actionKey.includes('play')){
@@ -52,7 +52,7 @@ export default class RJSAssetLoader {
     }
 
     getEpisode(sceneName: string){
-        for (var i = 0; i < this.episodes.length; i++) {
+        for (let i = 0; i < this.episodes.length; i++) {
             if (this.episodes[i].includes(sceneName)){
                 return i;
             }
@@ -98,7 +98,7 @@ export default class RJSAssetLoader {
         this.loadedEpisodes[episodeIdx]=true;
         let toLoad = {};
 
-        for (var i = 0; i < this.episodes[episodeIdx].length; i++) {
+        for (let i = 0; i < this.episodes[episodeIdx].length; i++) {
             // add assets for each scene in the episode
             toLoad = {...toLoad, ...this.assetsPerScene[this.episodes[episodeIdx][i]]};
         }
@@ -114,7 +114,7 @@ export default class RJSAssetLoader {
 
     async loadAssets(assets: {},background?){
         if (!assets) return;
-        for (var asset in this.loadedAssets) {
+        for (const asset in this.loadedAssets) {
             // remove assets already loaded
             delete assets[asset]
         }
@@ -137,7 +137,7 @@ export default class RJSAssetLoader {
 
         const audioList = [];
         // load assets on the fly
-        for (var asset in assets) {
+        for (const asset in assets) {
             const assetType = assets[asset];
             switch (assetType) {
                 case 'backgrounds':

@@ -14,7 +14,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
         // each element has type and any other parameter it needs
 
         this.config.menus = {}
-        var menus = ['main','settings','hud','saveload']
+        const menus = ['main','settings','hud','saveload']
         for (const menu of menus){
             if (!gui.config[menu]) continue;
             const menuConfig = [];
@@ -91,10 +91,10 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             // list components
             // image -> {x:number,y:number,asset:string}
             // animations are just images now
-            var imageTypes = ['animations','images']
+            const imageTypes = ['animations','images']
             for (const listType of imageTypes){
                 if (gui.config[menu][listType]){
-                    for (var i = 0; i < gui.config[menu][listType].length; i++) {
+                    for (let i = 0; i < gui.config[menu][listType].length; i++) {
                       const element = gui.config[menu][listType][i];
                       menuConfig.push({type:'image',x:element.x,y:element.y,asset:element.id});
                     }
@@ -104,7 +104,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // saveslot -> {x: number,y: number,asset: string,slot: number,thumbnail: {x: number,y: number,width: number,height: number}}
             if (gui.config[menu]['save-slots']){
-                for (var i = 0; i < gui.config[menu]['save-slots'].length; i++) {
+                for (let i = 0; i < gui.config[menu]['save-slots'].length; i++) {
                   const element = gui.config[menu]['save-slots'][i];
                   const saveSlot = {
                       type:'saveSlot',
@@ -126,7 +126,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // label -> {x:number,y:number,text:string,lineSpacing:number,style:any}
             if (gui.config[menu].labels){
-                for (var i = 0; i < gui.config[menu].labels.length; i++) {
+                for (let i = 0; i < gui.config[menu].labels.length; i++) {
                   const element = gui.config[menu].labels[i];
                   const label = {
                       type:'label',
@@ -141,7 +141,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             }
             // slider -> {x: number,y: number,asset: string,binding: string,sfx: string, mask?:string}
             if (gui.config[menu].sliders){
-                for (var i = 0; i < gui.config[menu].sliders.length; i++) {
+                for (let i = 0; i < gui.config[menu].sliders.length; i++) {
                   const element = gui.config[menu].sliders[i];
                   const slider = {
                       type:'slider',
@@ -160,7 +160,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // button -> {x:number,y:number,asset:string,sfx:string,binding:string,pushButton?:boolean,pushed?:boolean}
             if (gui.config[menu].buttons){
-                for (var i = 0; i < gui.config[menu].buttons.length; i++) {
+                for (let i = 0; i < gui.config[menu].buttons.length; i++) {
                   const element = gui.config[menu].buttons[i];
                   const button: any = {
                       type:'button',

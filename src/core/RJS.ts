@@ -20,8 +20,8 @@ import UserPreferences from './UserPreferences';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
 
-var PACKAGE = require('../../package.json');
-var version = PACKAGE.version;
+const PACKAGE = require('../../package.json');
+const version = PACKAGE.version;
 
 
 export default class RJS extends Game {
