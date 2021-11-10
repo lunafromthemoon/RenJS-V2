@@ -82,13 +82,13 @@ export default class ExecStack {
                     case 'interrupt':
                         // the nested scope will not be the last counter, but in the stack origin
                         nestedScope = allActions[stack.origin];
-                        const int_op = Object.keys(nestedScope.interrupt[stack.index])[0]
-                        allActions = nestedScope.interrupt[stack.index][int_op];
+                        const intOp = Object.keys(nestedScope.interrupt[stack.index])[0]
+                        allActions = nestedScope.interrupt[stack.index][intOp];
                         break;
                     case 'choice':
                         // find sub scope corresponding to index
-                        const ch_op = Object.keys(nestedScope.choice[stack.index])[0]
-                        allActions = nestedScope.choice[stack.index][ch_op];
+                        const chOp = Object.keys(nestedScope.choice[stack.index])[0]
+                        allActions = nestedScope.choice[stack.index][chOp];
                         break;
                     case 'if':
                         // if and else are their own only scope

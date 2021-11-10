@@ -23,10 +23,10 @@ export function changeInputEnabled(displayObj,enabled){
 }
 
 // sets text styles tags in a phaser text object (but NOT the text itself)
-// returns final text without tags, that has to be set to text object as text_obj.text
-export function setTextStyles(text: string,text_obj: Text): string {
-  text_obj.clearFontValues();
-  text_obj.clearColors()
+// returns final text without tags, that has to be set to text object as textObj.text
+export function setTextStyles(text: string,textObj: Text): string {
+  textObj.clearFontValues();
+  textObj.clearColors()
   const styles = []
   while(true){
     const re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
@@ -52,16 +52,16 @@ export function setTextStyles(text: string,text_obj: Text): string {
   }
   styles.forEach(s=>{
     if (s.style=='italic'){
-      text_obj.addFontStyle('italic', s.start);
-      text_obj.addFontStyle('normal', s.end);
+      textObj.addFontStyle('italic', s.start);
+      textObj.addFontStyle('normal', s.end);
     }
     if (s.style=='bold'){
-      text_obj.addFontWeight('bold', s.start);
-      text_obj.addFontWeight('normal', s.end);
+      textObj.addFontWeight('bold', s.start);
+      textObj.addFontWeight('normal', s.end);
     }
     if (s.style=='color'){
-      text_obj.addColor(s.color, s.start)
-      text_obj.addColor(text_obj.fill, s.end)
+      textObj.addColor(s.color, s.start)
+      textObj.addColor(textObj.fill, s.end)
     }
   })
   return text;

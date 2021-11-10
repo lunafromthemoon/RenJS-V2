@@ -76,13 +76,13 @@ export default class CGSManager implements CGSManagerInterface {
         }
         let flipped = false;
         if (props.flipped !== undefined){
-            const currently_flipped = this.cgs[name].scale.x < 0;
+            const currentlyFlipped = this.cgs[name].scale.x < 0;
             if (props.flipped === 'flip'){
                 this.cgs[name].scale.x *= -1;
-                flipped = !currently_flipped
+                flipped = !currentlyFlipped
             } else {
                 flipped = props.flipped;
-                if (flipped != currently_flipped){
+                if (flipped != currentlyFlipped){
                     this.cgs[name].scale.x *= -1;
                 }
             }
