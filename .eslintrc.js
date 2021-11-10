@@ -155,6 +155,12 @@ module.exports = {
             }
         ],
         "use-isnan": "error",
-        "valid-typeof": "off"
+        "valid-typeof": "off",
+
+        // TODO: remove these overrides when legacy cases have been fixed
+        "eqeqeq":"warn",
+        "@typescript-eslint/prefer-for-of":"warn",
+        // TODO: either remove when legacy case has been fixed, or disable entirely if not desired
+        "max-classes-per-file":"warn",
     }
 };
