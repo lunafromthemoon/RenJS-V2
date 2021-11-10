@@ -10,7 +10,7 @@ export default class MessageBox extends Sprite{
 
     textLoop: number
     punctuationMarks: string[] = []
-    punctuationWait: number = 5
+    punctuationWait = 5
     // sound effects
     defaultSfx?: Sound
 

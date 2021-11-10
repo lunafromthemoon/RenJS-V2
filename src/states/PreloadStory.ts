@@ -6,7 +6,7 @@ import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 
 class PreloadStory extends RJSState {
     loadingScreen: RJSLoadingScreen
-    readyToStart: boolean = false;
+    readyToStart = false;
 
     constructor() {
         super();

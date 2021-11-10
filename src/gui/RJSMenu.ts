@@ -113,7 +113,7 @@ export default class RJSMenu extends Group {
         this.game.control.unskippable = false;
     }
 
-    async hide(mute: boolean = true){
+    async hide(mute = true){
         if (!this.visible) return;
         if (mute && this.backgroundMusic){
             this.game.managers.audio.stop('bgm');

@@ -1,7 +1,7 @@
 import RJS from '../core/RJS';
 import {Sprite,Text} from 'phaser-ce';
 
-export function getButtonFrames(total: number, pushed: boolean = false){
+export function getButtonFrames(total: number, pushed = false){
   // button frames -> over|out|down|up
   const buttonFrames = {
       1: {normal: [0,0,0,0],pushed:[1,1,1,1]},

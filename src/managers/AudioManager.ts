@@ -82,7 +82,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    stop(type: string, transition: string = 'FADE'): void {
+    stop(type: string, transition = 'FADE'): void {
         if (!this.current[type]){
             return;
         }

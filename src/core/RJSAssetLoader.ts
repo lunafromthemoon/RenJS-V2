@@ -8,7 +8,7 @@ export default class RJSAssetLoader {
     episodes: any[] = []
     loadedAssets: {} = {}
     loadedEpisodes: {} = {}
-    loading: boolean = false;
+    loading = false;
     loadingScreen: RJSLoadingScreen;
     backgroundLoading: Promise<any>;
 

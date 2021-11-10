@@ -47,7 +47,7 @@ export default class StoryAction implements StoryActionInterface {
 		return this.keyParams[1]
 	}
 
-	parseParameter(reservedWord: string, argType: string = 'boolean', inKeyParams: boolean = false){
+	parseParameter(reservedWord: string, argType = 'boolean', inKeyParams = false){
 		const params = this.parseParams(inKeyParams);
 		const idx = params.indexOf(reservedWord);
 		if (argType=='boolean'){
