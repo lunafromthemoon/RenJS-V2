@@ -19,7 +19,7 @@ export default class StoryAction implements StoryActionInterface {
         this.body = properties[this.key]
 
 
-		//each action should parse their specific params after this
+		// each action should parse their specific params after this
 	}
 
 	resolve(transitioning?: Promise<any>, cont?:boolean): void {

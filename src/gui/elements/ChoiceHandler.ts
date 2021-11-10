@@ -11,7 +11,7 @@ export default class ChoiceHandler extends Graphics {
         asset: string,
         x: number,
         y: number,
-        alignment: string, //centered|bottomUp|topDown
+        alignment: string, // centered|bottomUp|topDown
         separation: number,
         chosenColor: string,
         transition?: string,

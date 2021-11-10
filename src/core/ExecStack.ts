@@ -1,11 +1,11 @@
 import objectHash from 'object-hash';
 
 interface ExecItem {
-    c: number; //action counter
-    total?: number; //total actions
-    scope?: string; //base name of action, scene, if, choice etc
-    index?: number; //in choices, index of chosen scope
-    origin?: number; //if inside interruption, which is the interrupting action
+    c: number; // action counter
+    total?: number; // total actions
+    scope?: string; // base name of action, scene, if, choice etc
+    index?: number; // in choices, index of chosen scope
+    origin?: number; // if inside interruption, which is the interrupting action
     // interrupting?: any;
 }
 
@@ -91,7 +91,7 @@ export default class ExecStack {
                         allActions = nestedScope.choice[stack.index][ch_op];
                         break;
                     case 'if':
-                        //if and else are their own only scope
+                        // if and else are their own only scope
                         const action = Object.keys(nestedScope)[0];
                         allActions = nestedScope[action];
 
