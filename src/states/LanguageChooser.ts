@@ -14,7 +14,7 @@ export default class LanguageChooser extends RJSState {
         if (this.game.config.i18n.background){
             this.game.load.image("langChooserBg", this.game.config.i18n.background);
         }
-        
+
         for (let lang in this.game.config.i18n.langs){
             const cfg:any = this.game.config.i18n.langs[lang]
             this.game.load.spritesheet("languageTag"+lang, cfg.asset, cfg.size.w, cfg.size.h);

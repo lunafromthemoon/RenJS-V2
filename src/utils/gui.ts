@@ -14,16 +14,16 @@ export function getButtonFrames(total:number, pushed:boolean = false){
 
 export function changeInputEnabled(displayObj,enabled){
   if (displayObj.input){
-    displayObj.input.enabled = enabled;  
+    displayObj.input.enabled = enabled;
   }
   for (const child of displayObj.children){
     changeInputEnabled(child,enabled);
   }
-  
+
 }
 
 // sets text styles tags in a phaser text object (but NOT the text itself)
-// returns final text without tags, that has to be set to text object as text_obj.text 
+// returns final text without tags, that has to be set to text object as text_obj.text
 export function setTextStyles(text:string,text_obj:Text): string {
   text_obj.clearFontValues();
   text_obj.clearColors()

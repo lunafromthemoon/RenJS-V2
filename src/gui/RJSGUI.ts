@@ -61,7 +61,7 @@ export default class RJSGUI implements RJSGUIInterface {
         }
     }
 
-  
+
     // ----------------------------------------------------------------
     // GUI user interaction, buttons and sliders
     // ----------------------------------------------------------------
@@ -87,7 +87,7 @@ export default class RJSGUI implements RJSGUIInterface {
         if (callback){
             callback()
         }
-    }  
+    }
 
     async changeMenu(menu) {
         const previous = this.currentMenu;
@@ -244,7 +244,7 @@ export default class RJSGUI implements RJSGUIInterface {
     //             // change name color
     //             this.nameBox.text.fill = colour;
     //         }
-            
+
     //         this.nameBox.visible = title!=undefined;
 
     //     }
@@ -254,7 +254,7 @@ export default class RJSGUI implements RJSGUIInterface {
     //     } else if (!sfx && this.messageBox.sfx){
     //         sfx = this.messageBox.sfx;
     //     }
-        
+
     //     let textSpeed = this.sliderLimits.textSpeed[1] - this.game.userPreferences.textSpeed
     //     if (this.game.control.skipping || textSpeed < 10){
     //         this.messageBox.message.text = text;
@@ -277,7 +277,7 @@ export default class RJSGUI implements RJSGUIInterface {
     //     let waitingFor = 0;
     //     // how many characters to add per sfx played
     //     let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
-        
+
     //     if (sfx && charPerSfx=='auto'){
     //         charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
     //     }
@@ -305,7 +305,7 @@ export default class RJSGUI implements RJSGUIInterface {
 
     //         if (this.punctuationMarks.includes(words[count])){
     //             waitingFor = this.punctuationWait;
-                
+
     //         }
     //         count++;
     //         if (count >= words.length){
@@ -328,11 +328,11 @@ export default class RJSGUI implements RJSGUIInterface {
     //         // separate choices from interrupts
     //         choiceConfig = interruptConfig
     //     }
-    //     const x = (choiceConfig.isBoxCentered) ? 
-    //         this.game.world.centerX - choiceConfig.width/2 : 
+    //     const x = (choiceConfig.isBoxCentered) ?
+    //         this.game.world.centerX - choiceConfig.width/2 :
     //         choiceConfig.x;
-    //     const y = (choiceConfig.isBoxCentered) ? 
-    //         this.game.world.centerY - (choiceConfig.height*choices.length + parseInt(choiceConfig.separation, 10)*(choices.length-1))/2 : 
+    //     const y = (choiceConfig.isBoxCentered) ?
+    //         this.game.world.centerY - (choiceConfig.height*choices.length + parseInt(choiceConfig.separation, 10)*(choices.length-1))/2 :
     //         choiceConfig.y;
 
     //     choices.forEach((choice,index) => {
@@ -353,7 +353,7 @@ export default class RJSGUI implements RJSGUIInterface {
     //             this.choices.removeAll(true);
     //             this.game.managers.logic.choose(index,choice.choiceText,execId);
     //         })
-            
+
     //     },this,1,0,2,0,this.choices);
     //     if (chBox.animations.frameTotal === 2 || chBox.animations.frameTotal === 4){
     //         chBox.setFrames(1,0,1,0)
@@ -413,5 +413,5 @@ export default class RJSGUI implements RJSGUIInterface {
     //     sprite.addChild(text);
     //     sprite.text = text;
     // }
-    
+
 }

@@ -11,6 +11,6 @@ export default class StoryActionScene extends StoryAction {
     }
 
     execute(): void {
-        this.resolve(this.game.managers.story.startScene(this.scene));        
+        this.resolve(this.game.managers.story.startScene(this.scene));
     }
 }

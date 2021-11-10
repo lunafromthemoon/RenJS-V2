@@ -17,7 +17,7 @@ interface RJSControlInterface {
     // action?: any;
 
     // resolve?: () => Promise<any>;
-    
+
     // doBeforeResolve?: () => void;
 }
 
@@ -43,7 +43,7 @@ export default class RJSControl implements RJSControlInterface {
     nextAction = null
 
     // doBeforeResolve = null
-    
+
     // resolve = null
 
     // wholeAction: any;

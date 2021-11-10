@@ -103,7 +103,7 @@ export default class AudioManager implements AudioManagerInterface {
             audio.destroy();
         }
     }
-  
+
     playSFX(key,volume?): void {
         if (this.unavailableAudio.includes(key)) {
           console.warn(
@@ -142,7 +142,7 @@ export default class AudioManager implements AudioManagerInterface {
     async decodeAudio(audioList:string[]):Promise<any> {
         const availableAudios = audioList.filter(audio => this.game.cache.checkSoundKey(audio));
         this.unavailableAudio = audioList.filter(audio => !this.game.cache.checkSoundKey(audio));
-        
+
         if (availableAudios.length == 0) return;
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(availableAudios, () => {
@@ -150,7 +150,7 @@ export default class AudioManager implements AudioManagerInterface {
               resolve(true);
             });
         })
-        
+
     }
 
     isMusic(actor): boolean {

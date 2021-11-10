@@ -8,7 +8,7 @@ export interface TweenManagerInterface extends RJSManagerInterface {
     chain (tweens: any[], unskippable: boolean, time?: number);
     skip(): any;
     current: RJSTween[];
-    
+
 
 }
 

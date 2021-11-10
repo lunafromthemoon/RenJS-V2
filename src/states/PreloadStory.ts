@@ -116,7 +116,7 @@ class PreloadStory extends RJSState {
         } else {
             this.readyToStart = true;
         }
-        
+
     }
 
     initGame(){

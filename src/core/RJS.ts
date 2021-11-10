@@ -48,7 +48,7 @@ export default class RJS extends Game {
     }
 
     config: RJSGameConfig
-    userPreferences: UserPreferences 
+    userPreferences: UserPreferences
     storyConfig: StoryConfig
 
     textLog: Array<any> = []
@@ -125,14 +125,14 @@ export default class RJS extends Game {
                 this.config.userScale(scale,parentBounds);
             },this)
         }
-        
+
         this.scale.refresh();
         this.screenReady = true;
     }
 
     async initStory () {
         this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
-        
+
         this.managers = {
             tween: new TweenManager(this),
             story: new StoryManager(this),
@@ -152,7 +152,7 @@ export default class RJS extends Game {
         this.managers.character.transition = this.screenEffects.transition;
         this.managers.cgs.transition = this.screenEffects.transition;
 
-        
+
         // init game and start main menu
         this.managers.story.setupStory()
         await this.gui.init();
@@ -160,7 +160,7 @@ export default class RJS extends Game {
         this.initInput();
 
         await this.checkPlugins('onInit');
-        
+
         if (!this.setup.lazyloading){
             // decode audio for all game
             if (!this.setup.music) this.setup.music = {};
@@ -172,7 +172,7 @@ export default class RJS extends Game {
                 this.managers.story.assetLoader.loadEpisodeInBackground(0);
             }
         }
-        
+
     }
 
     async checkPlugins(signal:string,params?:any[]){
@@ -267,7 +267,7 @@ export default class RJS extends Game {
             vars: this.managers.logic.vars
             // should include any interrupts showing
         }
-        
+
         await this.checkPlugins('onSave',[slot,data]);
         const dataSerialized = JSON.stringify(data);
         localStorage.setItem('RenJSDATA' + this.config.name + slot,dataSerialized);
@@ -379,7 +379,7 @@ export default class RJS extends Game {
             this.lockClick();
             this.control.nextAction();
         }
-        
+
     }
 
     initInput(): void {
@@ -389,7 +389,7 @@ export default class RJS extends Game {
         //  Stop the following keys from propagating up to the browser
         this.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
         // spacebar == ontap, continue with the game
-        this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(this.onTap, this); 
+        this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(this.onTap, this);
     }
 
     lockClick(): void {

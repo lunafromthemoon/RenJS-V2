@@ -13,7 +13,7 @@ export class UserPreference {
 }
 
 export class RangedUserPreference extends UserPreference{
-    
+
     constructor(value:number, public min:number, public max: number, private inverted:boolean = false){
         super(value)
     }
@@ -36,7 +36,7 @@ export default class UserPreferences {
         sfxv: RangedUserPreference,
         muted: UserPreference
     }
-    
+
 
     constructor(private game: RJS,defaultPreferences){
         this.preferences = {
@@ -46,7 +46,7 @@ export default class UserPreferences {
             sfxv: new RangedUserPreference(0.5,0,1),
             muted: new UserPreference(false)
         }
-        
+
         const data = localStorage.getItem('RenJSUserPreferences' + game.config.name);
         if (data) {
             this.setPreferences(JSON.parse(data));

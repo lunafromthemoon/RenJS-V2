@@ -12,10 +12,10 @@ export default class RJSHUD extends RJSMenu {
     mBoxes = {}
     nBoxes = {}
     cHandlers = {}
-    
+
     skipClickArea: Phaser.Rectangle[] = []
     visualChoices: Graphics
-    
+
 
     constructor(game: RJS, config) {
         super(game, config.slice().sort(hudSort));

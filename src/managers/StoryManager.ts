@@ -151,7 +151,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     async startScene(name: string) {
         await this.game.gui.hud.clear();
         if (this.game.setup.lazyloading){
-            // load scene or episode assets (not loaded yet) 
+            // load scene or episode assets (not loaded yet)
             await this.assetLoader.loadScene(name);
         }
         this.game.control.execStack.replace(name);
@@ -203,7 +203,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         let actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
         const ActionClass = this.actionFactory[actionType];
         if (ActionClass){
-            return new ActionClass(this.game,actionType,actionRaw);    
+            return new ActionClass(this.game,actionType,actionRaw);
         }
         return null;
     }

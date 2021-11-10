@@ -16,7 +16,7 @@ export default class RJSAssetLoader {
         if (this.game.setup.lazyloading.findAssets){
             // get each scene asset
             for (var scene in this.game.story) {
-                
+
                 const actions = [...this.game.story[scene]];
                 var action = actions.shift()
                 while (action){
@@ -48,7 +48,7 @@ export default class RJSAssetLoader {
             this.episodes = this.game.setup.lazyloading.episodes;
             if (!this.episodes) this.episodes = [];
         }
-        
+
     }
 
     getEpisode(sceneName: string){
@@ -65,7 +65,7 @@ export default class RJSAssetLoader {
         const episodeIdx = this.getEpisode(sceneName);
         if (episodeIdx!=-1) {
             return this.loadEpisode(episodeIdx,this.game.setup.lazyloading.backgroundLoading);
-        } 
+        }
         let toLoad = this.assetsPerScene[sceneName];
         return this.loadAssets(toLoad);
     }
@@ -75,10 +75,10 @@ export default class RJSAssetLoader {
             if (this.game.config.debugMode){
                 console.log("Loading episode "+episodeIdx+" in background");
             }
-            
+
             this.backgroundLoading = this.loadEpisode(episodeIdx,false,true);
         }
-        
+
     }
 
     async loadEpisode(episodeIdx, loadNextAfter, background?){
@@ -97,7 +97,7 @@ export default class RJSAssetLoader {
         }
         this.loadedEpisodes[episodeIdx]=true;
         let toLoad = {};
-        
+
         for (var i = 0; i < this.episodes[episodeIdx].length; i++) {
             // add assets for each scene in the episode
             toLoad = {...toLoad, ...this.assetsPerScene[this.episodes[episodeIdx][i]]};
@@ -161,7 +161,7 @@ export default class RJSAssetLoader {
                     preloadExtra(asset,assetType,this.game);
             }
         }
-        
+
         return new Promise(resolve=>{
             this.game.load.onLoadComplete.addOnce(async () => {
             // teardown loading screen

@@ -23,6 +23,6 @@ export default class StoryActionEffect extends StoryAction {
     	} else {
             this.resolve();
         }
-    	
+
     }
 }

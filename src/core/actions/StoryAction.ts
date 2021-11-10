@@ -18,7 +18,7 @@ export default class StoryAction implements StoryActionInterface {
 		this.keyParams = this.key.split(' ');
         this.body = properties[this.key]
 
-		
+
 		//each action should parse their specific params after this
 	}
 
@@ -38,9 +38,9 @@ export default class StoryAction implements StoryActionInterface {
 			return this.keyParams;
 		}
 		if (!this.params){
-			this.params = this.body ? this.body.split(' ') : [];	
+			this.params = this.body ? this.body.split(' ') : [];
 		}
-		return this.params;		
+		return this.params;
 	}
 
 	parseActor(){

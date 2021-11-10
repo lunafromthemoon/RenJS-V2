@@ -22,7 +22,7 @@ export default class StoryActionEffect extends StoryAction {
     }
 
 
-    execute(): void {    	
+    execute(): void {
         this.game.managers.logic.branch(this.condition, this.branches);
     	this.resolve();
     }

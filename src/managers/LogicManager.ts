@@ -142,7 +142,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
         // update stack
         if (this.interrupting){
-            // resolving an interrupt, add actions and update stack 
+            // resolving an interrupt, add actions and update stack
             this.game.control.execStack.stack('interrupt',actions.length,chosenOption.index,chosenOption.origin);
         } else {
             this.game.control.execStack.stack('choice',actions.length,chosenOption.index);

@@ -55,9 +55,9 @@ export default class ChoiceHandler extends Graphics {
                 this.visible = true;
                 transition(null,this);
             },20)
-             
+
         })
-        
+
     }
 
     createChoiceBox(choice, x,y, index,totalChoices,resolve) {
@@ -79,7 +79,7 @@ export default class ChoiceHandler extends Graphics {
         const text = new Label(this.game,this.config.text,chBox);
         text.setText(setTextStyles(choice.choiceText,text), true);
         chBox.addChild(text);
-        
+
         if (choice.previouslyChosen){
             chBox.tint = toHexColor(this.config.chosenColor);
         }

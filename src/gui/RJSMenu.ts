@@ -25,7 +25,7 @@ export default class RJSMenu extends Group {
         this.id = config.id;
 
         this.elementFactory = {
-            image: this.createImage.bind(this),            
+            image: this.createImage.bind(this),
             button: this.createButton.bind(this),
             label: this.createLabel.bind(this),
             slider: this.createSlider.bind(this),

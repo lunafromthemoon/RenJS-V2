@@ -52,7 +52,7 @@ export default class CGSManager implements CGSManagerInterface {
             this.cgs[name].anchor.set(0.5);
             this.cgs[name].updateTransform();
             this.cgs[name].alpha = 0;
-            
+
             if (this.game.setup.cgs[name].animations) {
                 for (const key in this.game.setup.cgs[name].animations) {
                     const str = this.game.setup.cgs[name].animations[key].split(' ');
@@ -65,7 +65,7 @@ export default class CGSManager implements CGSManagerInterface {
                     this.cgs[name].animations.add(key, frames, frameRate)
                 }
             }
-        } 
+        }
 
         if (!position){
             position = {x: this.cgs[name].x, y: this.cgs[name].y}
@@ -156,7 +156,7 @@ export default class CGSManager implements CGSManagerInterface {
                     if (Object.keys(tweenables).length == 0){
                         // no tweenables, cases 2, 3 and 4
                         if (!looped){
-                            // case 2, 
+                            // case 2,
                             if (this.game.control.skipping){
                                 // if skipping game stop immediately
                                 return stopAnimation()
@@ -181,7 +181,7 @@ export default class CGSManager implements CGSManagerInterface {
             // case 1 or 6, will resolve after tween
             this.game.managers.tween.tween(this.cgs[name], tweenables, resolveFunction, time, true);
         })
-        
+
     }
 
     async hide (name, transitionName): Promise<void> {

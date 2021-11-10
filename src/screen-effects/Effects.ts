@@ -34,7 +34,7 @@ export default class Effects implements RJSScreenEffectInterface {
         if (params.music){
             this.audioManager.play(params.music, 'bgm', true, null, 'FADE');
         }
-        
+
         const style = this.game.gui.hud.cHandlers['default'].config.text.style;
         const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, ' ', style);
         credits.anchor.set(0.5);
@@ -49,7 +49,7 @@ export default class Effects implements RJSScreenEffectInterface {
         }
         const timePerLine = params.timePerLine ? params.timePerLine : 1500;
         credits.updateTransform();
-        
+
         return new Promise(resolve => {
             this.tweenManager.tween(credits, {y: -(separation * params.text.length + 30)}, async ()=>{
                 credits.destroy();
@@ -71,9 +71,9 @@ export default class Effects implements RJSScreenEffectInterface {
     async FLASHIMAGE(params): Promise<void> {
         if (params.screenShake){
             this.SHAKE();
-        } 
+        }
         if (params.sfx){
-            this.audioManager.playSFX(params.sfx);    
+            this.audioManager.playSFX(params.sfx);
         }
         const image = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, params.image);
         image.anchor.set(0.5);
@@ -88,7 +88,7 @@ export default class Effects implements RJSScreenEffectInterface {
                 tween.start();
             }, this.game.storyConfig.fadetime / 3);
         })
-        
+
     }
 
 }

@@ -69,7 +69,7 @@ export default class MessageBox extends Sprite{
         }
         // punctuation
         if (this.game.storyConfig.punctuationMarks){
-            this.punctuationMarks = this.game.storyConfig.punctuationMarks;    
+            this.punctuationMarks = this.game.storyConfig.punctuationMarks;
         }
         if (this.game.storyConfig.punctuationWait){
             this.punctuationWait = this.game.storyConfig.punctuationWait
@@ -86,7 +86,7 @@ export default class MessageBox extends Sprite{
     }
 
     // display message box with transition
-    // show text character per character, 
+    // show text character per character,
     // when whole text is displayed, show click to continue and wait for click
     // when player clicks, message box is hid with transition and action ends
     show(text,sfx?): Promise<any> {
@@ -109,10 +109,10 @@ export default class MessageBox extends Sprite{
             return;
         }
         this.text.setText('', true);
-        
+
         // add new line characters at the end of each line
         if (this.game.storyConfig.precomputeBreakLines){
-            
+
             const lines = this.text.precalculateWordWrap(finalText)
             // make it much wider so adding the breaklines wont change again the word wrapping
             this.text.wordWrapWidth = this.config.text.style.wordWrapWidth*2;
@@ -121,7 +121,7 @@ export default class MessageBox extends Sprite{
                 finalText+=line.replace(/.$/,"\n");
             }
         }
-        
+
         // split in characters to add one by one
         const characters = finalText.split('');
         let charIdx = 0;
@@ -129,7 +129,7 @@ export default class MessageBox extends Sprite{
         let waitingFor = 0;
         // how many characters to add per sfx played
         let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
-        
+
         if (sfx && charPerSfx=='auto'){
             charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
         }
@@ -181,7 +181,7 @@ export default class MessageBox extends Sprite{
                 // } else {
                     // this.text.text += " "+(characters[charIdx]);
                 // }
-                
+
                 if (this.onCharacter){
                     this.onCharacter(characters,charIdx);
                 }

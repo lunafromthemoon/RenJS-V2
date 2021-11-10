@@ -10,15 +10,15 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
         // converts assets and fonts
         super.initAssets(gui)
 
-        // convert to new scheme with elements list per menu 
+        // convert to new scheme with elements list per menu
         // each element has type and any other parameter it needs
-        
+
         this.config.menus = {}
         var menus = ['main','settings','hud','saveload']
         for (const menu of menus){
             if (!gui.config[menu]) continue;
             const menuConfig = [];
-            
+
             // if background present, convert to normal image
             if (gui.config[menu].background){
               menuConfig.push({type:'image',x:0,y:0,asset:gui.config[menu].background.id});
@@ -43,7 +43,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                     separation: parseInt(choiceConfig.separation, 10),
                     sfx: choiceConfig.sfx,
                     chosenColor: choiceConfig['chosen-color'],
-                    text: this.convertText(choiceConfig) 
+                    text: this.convertText(choiceConfig)
                 }
                 menuConfig.push(choice);
                 delete gui.config[menu].choice
@@ -157,7 +157,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                 }
                 delete gui.config[menu].sliders
             }
-            
+
             // button -> {x:number,y:number,asset:string,sfx:string,binding:string,pushButton?:boolean,pushed?:boolean}
             if (gui.config[menu].buttons){
                 for (var i = 0; i < gui.config[menu].buttons.length; i++) {
