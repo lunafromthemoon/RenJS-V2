@@ -172,7 +172,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     async checkTextAction(firstChoice): Promise<boolean>{
         const action: StoryAction=this.game.managers.story.parseAction({...firstChoice});
         if (action && (action.actionType == 'say' || action.actionType == 'text')){
-            const textAction = action as StoryActionText;
+            const textAction = action;
             // set property so the text will not be hidden after it's shown
             textAction.dontHide = true;
             return new Promise(resolve=>{
