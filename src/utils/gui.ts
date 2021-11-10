@@ -30,7 +30,7 @@ export function setTextStyles(text: string,text_obj: Text): string {
   const styles = []
   while(true){
     const re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
-    const match = text.match(re);
+    const match = re.exec(text);
     if (match){
       const s = {
         start: text.search(re),
