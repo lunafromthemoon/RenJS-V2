@@ -6,7 +6,7 @@ export default class StoryActionEffect extends StoryAction {
     actor: string
     contAfterTrans: boolean
 
-    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)
         this.actor = this.parseActor();
         this.contAfterTrans = this.parseParameter('CONTINUE')
@@ -14,7 +14,7 @@ export default class StoryActionEffect extends StoryAction {
 
     execute(): void {
     	if (this.game.screenEffects.effects[this.actor]){
-    		let transitioning: Promise<any> = this.game.screenEffects.effects[this.actor](this.properties);
+    		const transitioning: Promise<any> = this.game.screenEffects.effects[this.actor](this.properties);
             this.resolve(transitioning,this.contAfterTrans);
     	} else if (this.game.pluginsRJS[this.actor]){
             // deprecate this
@@ -23,6 +23,6 @@ export default class StoryActionEffect extends StoryAction {
     	} else {
             this.resolve();
         }
-    	
+
     }
 }

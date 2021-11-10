@@ -1,4 +1,4 @@
-import RJS from './RJS'
+import RJS from './RJS';
 
 export interface PluginInterface {
 }
@@ -13,17 +13,27 @@ export default class Plugin implements PluginInterface {
 		this.name = name
 	}
 
-	onInit(): void {}
+	onInit(): void {
+		// base plugin does nothing
+	}
 
-	onStart(): void {}
+	onStart(): void {
+		// base plugin does nothing
+	}
 
-	onLoad(slot,data): void {}
+	onLoad(slot,data): void {
+		// base plugin does nothing
+	}
 
-	onSave(slot,data): void {}
+	onSave(slot,data): void {
+		// base plugin does nothing
+	}
 
-	onCall(params): void {}
+	onCall(params): void {
+		// base plugin does nothing
+	}
 
 	onTeardown(): void {
-
+		// base plugin does nothing
 	}
 }

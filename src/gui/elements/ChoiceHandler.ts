@@ -8,22 +8,22 @@ export default class ChoiceHandler extends Graphics {
     game: RJS
 
     config: {
-        asset: string,
-        x: number,
-        y: number,
-        alignment: string, //centered|bottomUp|topDown
-        separation: number,
-        chosenColor: string,
-        transition?: string,
-        sfx: string,
+        asset: string;
+        x: number;
+        y: number;
+        alignment: string; // centered|bottomUp|topDown
+        separation: number;
+        chosenColor: string;
+        transition?: string;
+        sfx: string;
         text: {
-            x: number,
-            y: number,
-            width: number,
-            height: number,
-            lineSpacing?: number,
-            style: any
-        },
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+            lineSpacing?: number;
+            style: any;
+        };
     }
 
     boxes: Button[] = []
@@ -49,15 +49,15 @@ export default class ChoiceHandler extends Graphics {
             this.visible = true;
             this.updateTransform();
             this.visible = visible;
-            let transition = this.game.screenEffects.transition.get(this.config.transition);
+            const transition = this.game.screenEffects.transition.get(this.config.transition);
             // wait some miliseconds before showing the boxes so the text is properly set
             setTimeout(()=>{
                 this.visible = true;
                 transition(null,this);
             },20)
-             
+
         })
-        
+
     }
 
     createChoiceBox(choice, x,y, index,totalChoices,resolve) {
@@ -79,7 +79,7 @@ export default class ChoiceHandler extends Graphics {
         const text = new Label(this.game,this.config.text,chBox);
         text.setText(setTextStyles(choice.choiceText,text), true);
         chBox.addChild(text);
-        
+
         if (choice.previouslyChosen){
             chBox.tint = toHexColor(this.config.chosenColor);
         }
@@ -89,7 +89,7 @@ export default class ChoiceHandler extends Graphics {
     async hide(transitionName?): Promise<any> {
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
-        let transition = this.game.screenEffects.transition.get(transitionName);
+        const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this,null);
         // hide all boxes
         this.boxes.forEach(box=>box.destroy());

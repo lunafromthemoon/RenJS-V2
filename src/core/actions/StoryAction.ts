@@ -1,11 +1,12 @@
 import RJS from '../RJS';
 
 export interface StoryActionInterface {
-    resolve(transitioning: Promise<any>, cont:boolean);
+    resolve(transitioning: Promise<any>, cont: boolean);
     execute();
 }
 
 export default class StoryAction implements StoryActionInterface {
+	dontHide?: boolean;
 
 	protected key: string
 	protected body: any
@@ -13,16 +14,16 @@ export default class StoryAction implements StoryActionInterface {
 	protected keyParams: string[]
 
 
-	constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+	constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
 		this.key = Object.keys(properties)[0];
 		this.keyParams = this.key.split(' ');
         this.body = properties[this.key]
 
-		
-		//each action should parse their specific params after this
+
+		// each action should parse their specific params after this
 	}
 
-	resolve(transitioning?: Promise<any>, cont?:boolean): void {
+	resolve(transitioning?: Promise<any>, cont?: boolean): void {
 		if (transitioning && !cont){
             transitioning.then(()=> this.game.resolveAction())
         } else {
@@ -31,23 +32,25 @@ export default class StoryAction implements StoryActionInterface {
 	}
 
 	// execute action during story
-	execute(): void {}
+	execute(): void {
+		// base action does nothing
+	}
 
 	parseParams(keyParams){
 		if (keyParams){
 			return this.keyParams;
 		}
 		if (!this.params){
-			this.params = this.body ? this.body.split(' ') : [];	
+			this.params = this.body ? this.body.split(' ') : [];
 		}
-		return this.params;		
+		return this.params;
 	}
 
 	parseActor(){
 		return this.keyParams[1]
 	}
 
-	parseParameter(reservedWord:string, argType:string = 'boolean', inKeyParams:boolean = false){
+	parseParameter(reservedWord: string, argType = 'boolean', inKeyParams = false){
 		const params = this.parseParams(inKeyParams);
 		const idx = params.indexOf(reservedWord);
 		if (argType=='boolean'){

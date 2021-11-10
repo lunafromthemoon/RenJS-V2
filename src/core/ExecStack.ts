@@ -1,18 +1,18 @@
 import objectHash from 'object-hash';
 
 interface ExecItem {
-    c: number; //action counter
-    total?: number; //total actions
-    scope?: string; //base name of action, scene, if, choice etc
-    index?: number; //in choices, index of chosen scope
-    origin?: number; //if inside interruption, which is the interrupting action
+    c: number; // action counter
+    total?: number; // total actions
+    scope?: string; // base name of action, scene, if, choice etc
+    index?: number; // in choices, index of chosen scope
+    origin?: number; // if inside interruption, which is the interrupting action
     // interrupting?: any;
 }
 
 export default class ExecStack {
     private execStack: ExecItem[]  = [];
 
-    constructor(stack?: [{c:number,total:number,scope:string,index:number}]){
+    constructor(stack?: [{c: number;total: number;scope: string;index: number}]){
         if (stack){
             stack.forEach(item => {
                 this.execStack.push(item)
@@ -25,7 +25,7 @@ export default class ExecStack {
         return this.execStack.map(item => {return {c:item.c, total: item.total, scope: item.scope, index:item.index, origin: item.origin} })
     }
 
-    hash():string {
+    hash(): string {
         return objectHash(this.shallowCopy())
     }
 
@@ -44,12 +44,12 @@ export default class ExecStack {
 
     replace(scope: string){
         // replace the whole stack, scope will be a new scene
-        this.execStack = [{c:-1,scope:scope}]
+        this.execStack = [{c:-1,scope}]
     }
 
     stack(scope,total,index = -1, origin = -1){
         // stack a new scope, normally a branch but could be another scene
-        this.execStack.unshift({c:-1, total: total, scope: scope, index: index, origin: origin});
+        this.execStack.unshift({c:-1, total, scope, index, origin});
     }
 
     advance(): void{
@@ -82,16 +82,16 @@ export default class ExecStack {
                     case 'interrupt':
                         // the nested scope will not be the last counter, but in the stack origin
                         nestedScope = allActions[stack.origin];
-                        const int_op = Object.keys(nestedScope.interrupt[stack.index])[0]
-                        allActions = nestedScope.interrupt[stack.index][int_op];
+                        const intOp = Object.keys(nestedScope.interrupt[stack.index])[0]
+                        allActions = nestedScope.interrupt[stack.index][intOp];
                         break;
                     case 'choice':
                         // find sub scope corresponding to index
-                        let ch_op = Object.keys(nestedScope.choice[stack.index])[0]
-                        allActions = nestedScope.choice[stack.index][ch_op];
+                        const chOp = Object.keys(nestedScope.choice[stack.index])[0]
+                        allActions = nestedScope.choice[stack.index][chOp];
                         break;
                     case 'if':
-                        //if and else are their own only scope
+                        // if and else are their own only scope
                         const action = Object.keys(nestedScope)[0];
                         allActions = nestedScope[action];
 

@@ -4,9 +4,9 @@ import RJS from '../RJS';
 export default class StoryActionEffect extends StoryAction {
 
     condition: string
-    branches: {ISTRUE: any, ISFALSE?: any}
+    branches: {ISTRUE: any; ISFALSE?: any}
 
-    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)
         this.condition = this.key.substr(this.key.indexOf('('));
         this.branches = {
@@ -22,7 +22,7 @@ export default class StoryActionEffect extends StoryAction {
     }
 
 
-    execute(): void {    	
+    execute(): void {
         this.game.managers.logic.branch(this.condition, this.branches);
     	this.resolve();
     }

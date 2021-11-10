@@ -46,7 +46,7 @@ export default class RJSLoadingScreen {
 
     destroy(game): void {
         if (game.config.loadingScreen.fade){
-            const tween:Tween = game.add.tween(this.container).to({alpha:0},500);
+            const tween: Tween = game.add.tween(this.container).to({alpha:0},500);
             tween.onComplete.addOnce(()=>{
                 this.container.destroy();
             })

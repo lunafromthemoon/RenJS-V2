@@ -13,8 +13,8 @@ export class UserPreference {
 }
 
 export class RangedUserPreference extends UserPreference{
-    
-    constructor(value:number, public min:number, public max: number, private inverted:boolean = false){
+
+    constructor(value: number, public min: number, public max: number, private inverted: boolean = false){
         super(value)
     }
 
@@ -30,13 +30,13 @@ export class RangedUserPreference extends UserPreference{
 
 export default class UserPreferences {
     preferences: {
-        textSpeed: RangedUserPreference,
-        autoSpeed: RangedUserPreference,
-        bgmv: RangedUserPreference,
-        sfxv: RangedUserPreference,
-        muted: UserPreference
+        textSpeed: RangedUserPreference;
+        autoSpeed: RangedUserPreference;
+        bgmv: RangedUserPreference;
+        sfxv: RangedUserPreference;
+        muted: UserPreference;
     }
-    
+
 
     constructor(private game: RJS,defaultPreferences){
         this.preferences = {
@@ -46,7 +46,7 @@ export default class UserPreferences {
             sfxv: new RangedUserPreference(0.5,0,1),
             muted: new UserPreference(false)
         }
-        
+
         const data = localStorage.getItem('RenJSUserPreferences' + game.config.name);
         if (data) {
             this.setPreferences(JSON.parse(data));
@@ -57,7 +57,7 @@ export default class UserPreferences {
 
     setPreferences(preferences){
         if (preferences) {
-            for (var preference in this.preferences) {
+            for (const preference in this.preferences) {
                 if (preferences[preference] !== undefined) {
                     // set the raw value
                     this.preferences[preference].value = preferences[preference];
@@ -85,7 +85,7 @@ export default class UserPreferences {
 
     savePreferences(){
         // save raw values
-        var prefs = JSON.stringify(this.preferences);
+        const prefs = JSON.stringify(this.preferences);
         localStorage.setItem('RenJSUserPreferences' + this.game.config.name,prefs);
     }
 }

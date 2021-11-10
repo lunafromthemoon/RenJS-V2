@@ -8,17 +8,17 @@ export default class RJSAssetLoader {
     episodes: any[] = []
     loadedAssets: {} = {}
     loadedEpisodes: {} = {}
-    loading: boolean = false;
-    loadingScreen:RJSLoadingScreen;
+    loading = false;
+    loadingScreen: RJSLoadingScreen;
     backgroundLoading: Promise<any>;
 
     constructor(private game) {
         if (this.game.setup.lazyloading.findAssets){
             // get each scene asset
-            for (var scene in this.game.story) {
-                
+            for (const scene in this.game.story) {
+
                 const actions = [...this.game.story[scene]];
-                var action = actions.shift()
+                let action = actions.shift()
                 while (action){
                     const actionKey = Object.keys(action)[0];
                     if (actionKey.includes('show') || actionKey.includes('play')){
@@ -40,19 +40,19 @@ export default class RJSAssetLoader {
                 }
             }
             const assetsText = jsyaml.dump(this.assetsPerScene)
-            console.log("COPY THIS TEXT INTO THE LAZY LOADING SETUP");
-            console.log("assetsPerScene:");
+            console.log('COPY THIS TEXT INTO THE LAZY LOADING SETUP');
+            console.log('assetsPerScene:');
             console.log(assetsText);
         } else {
             this.assetsPerScene = this.game.setup.lazyloading.assetsPerScene;
             this.episodes = this.game.setup.lazyloading.episodes;
             if (!this.episodes) this.episodes = [];
         }
-        
+
     }
 
     getEpisode(sceneName: string){
-        for (var i = 0; i < this.episodes.length; i++) {
+        for (let i = 0; i < this.episodes.length; i++) {
             if (this.episodes[i].includes(sceneName)){
                 return i;
             }
@@ -65,26 +65,26 @@ export default class RJSAssetLoader {
         const episodeIdx = this.getEpisode(sceneName);
         if (episodeIdx!=-1) {
             return this.loadEpisode(episodeIdx,this.game.setup.lazyloading.backgroundLoading);
-        } 
-        let toLoad = this.assetsPerScene[sceneName];
+        }
+        const toLoad = this.assetsPerScene[sceneName];
         return this.loadAssets(toLoad);
     }
 
     loadEpisodeInBackground(episodeIdx){
         if(episodeIdx<=this.episodes.length-1){
             if (this.game.config.debugMode){
-                console.log("Loading episode "+episodeIdx+" in background");
+                console.log('Loading episode '+episodeIdx+' in background');
             }
-            
+
             this.backgroundLoading = this.loadEpisode(episodeIdx,false,true);
         }
-        
+
     }
 
     async loadEpisode(episodeIdx, loadNextAfter, background?){
         if (this.loadedEpisodes[episodeIdx]){
             if (this.game.config.debugMode){
-                console.log("Episode "+episodeIdx+" already loaded.");
+                console.log('Episode '+episodeIdx+' already loaded.');
             }
             // this episode was already loaded, but we try to load the next one anyway
             if (loadNextAfter){
@@ -93,16 +93,16 @@ export default class RJSAssetLoader {
             return;
         }
         if (this.game.config.debugMode){
-            console.log("Loading episode "+episodeIdx);
+            console.log('Loading episode '+episodeIdx);
         }
         this.loadedEpisodes[episodeIdx]=true;
         let toLoad = {};
-        
-        for (var i = 0; i < this.episodes[episodeIdx].length; i++) {
+
+        for (let i = 0; i < this.episodes[episodeIdx].length; i++) {
             // add assets for each scene in the episode
             toLoad = {...toLoad, ...this.assetsPerScene[this.episodes[episodeIdx][i]]};
         }
-        let promise = this.loadAssets(toLoad,background);
+        const promise = this.loadAssets(toLoad,background);
         if (loadNextAfter){
             promise.then(()=>{
                 // after loading the current episode, we set to load the next one in the background
@@ -114,12 +114,12 @@ export default class RJSAssetLoader {
 
     async loadAssets(assets: {},background?){
         if (!assets) return;
-        for (var asset in this.loadedAssets) {
+        for (const asset in this.loadedAssets) {
             // remove assets already loaded
             delete assets[asset]
         }
         if (this.game.config.debugMode){
-            console.log("Loading assets:");
+            console.log('Loading assets:');
             console.log(assets)
         }
         if (Object.keys(assets).length==0){
@@ -137,31 +137,31 @@ export default class RJSAssetLoader {
 
         const audioList = [];
         // load assets on the fly
-        for (var asset in assets) {
-            let assetType = assets[asset];
+        for (const asset in assets) {
+            const assetType = assets[asset];
             switch (assetType) {
-                case "backgrounds":
+                case 'backgrounds':
                     preloadBackground(asset,this.game);
                     break;
-                case "cgs":
+                case 'cgs':
                     preloadCGS(asset,this.game);
                     break;
-                case "characters":
+                case 'characters':
                     preloadCharacter(asset,this.game);
                     break;
-                case "music":
+                case 'music':
                     audioList.push(asset);
-                    preloadAudio(asset,"music",this.game);
+                    preloadAudio(asset,'music',this.game);
                     break;
-                case "sfx":
+                case 'sfx':
                     audioList.push(asset);
-                    preloadAudio(asset,"sfx",this.game);
+                    preloadAudio(asset,'sfx',this.game);
                     break;
                 default:
                     preloadExtra(asset,assetType,this.game);
             }
         }
-        
+
         return new Promise(resolve=>{
             this.game.load.onLoadComplete.addOnce(async () => {
             // teardown loading screen
@@ -180,7 +180,7 @@ export default class RJSAssetLoader {
                     this.backgroundLoading=null;
                 }
                 if (this.game.config.debugMode){
-                    console.log("All assets loaded.");
+                    console.log('All assets loaded.');
                 }
                 resolve(true);
             }, this);

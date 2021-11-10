@@ -84,8 +84,8 @@ class Boot extends RJSState {
             game.gui = new RJSGUIByBuilder(game)
         } else {
             // older GUI configuration, now deprecated
-            console.error("Old GUI configuration is deprecated!!!!")
-            console.error("Check the docs at http://renjs.net/docs-page.html")
+            console.error('Old GUI configuration is deprecated!!!!')
+            console.error('Check the docs at http://renjs.net/docs-page.html')
         }
 
         game.state.add('preloadStory', PreloadStory);

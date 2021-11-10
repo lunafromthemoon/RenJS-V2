@@ -10,33 +10,33 @@ export default class MessageBox extends Sprite{
 
     textLoop: number
     punctuationMarks: string[] = []
-    punctuationWait: number = 5
+    punctuationWait = 5
     // sound effects
     defaultSfx?: Sound
 
     game: RJS
 
     config: {
-        id: string,
-        x: number,
-        y: number,
-        asset: string,
-        sfx: string,
-        transition?: string,
+        id: string;
+        x: number;
+        y: number;
+        asset: string;
+        sfx: string;
+        transition?: string;
         text: {
-            x: number,
-            y: number,
-            lineSpacing: number,
-            style: any
-        },
+            x: number;
+            y: number;
+            lineSpacing: number;
+            style: any;
+        };
         ctc: {
-            x: number,
-            y: number,
-            asset: string,
-            sfx: string,
-            animationStyle?: string,
-        },
-        alwaysOn: boolean
+            x: number;
+            y: number;
+            asset: string;
+            sfx: string;
+            animationStyle?: string;
+        };
+        alwaysOn: boolean;
     }
 
     constructor(game: RJS, config) {
@@ -69,14 +69,14 @@ export default class MessageBox extends Sprite{
         }
         // punctuation
         if (this.game.storyConfig.punctuationMarks){
-            this.punctuationMarks = this.game.storyConfig.punctuationMarks;    
+            this.punctuationMarks = this.game.storyConfig.punctuationMarks;
         }
         if (this.game.storyConfig.punctuationWait){
             this.punctuationWait = this.game.storyConfig.punctuationWait
         }
     }
 
-    onCharacter?: (characters:string[],index:number) => void;
+    onCharacter?: (characters: string[],index: number) => void;
 
     destroy(): void {
         this.text.destroy();
@@ -86,7 +86,7 @@ export default class MessageBox extends Sprite{
     }
 
     // display message box with transition
-    // show text character per character, 
+    // show text character per character,
     // when whole text is displayed, show click to continue and wait for click
     // when player clicks, message box is hid with transition and action ends
     show(text,sfx?): Promise<any> {
@@ -98,7 +98,7 @@ export default class MessageBox extends Sprite{
         }
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
         let finalText = setTextStyles(text,this.text);
-        let textSpeed:number = this.game.userPreferences.get('textSpeed');
+        const textSpeed: number = this.game.userPreferences.get('textSpeed');
         if (this.game.control.skipping || textSpeed < 10){
             this.text.setText(finalText, true);
             this.visible = true;
@@ -109,19 +109,19 @@ export default class MessageBox extends Sprite{
             return;
         }
         this.text.setText('', true);
-        
+
         // add new line characters at the end of each line
         if (this.game.storyConfig.precomputeBreakLines){
-            
+
             const lines = this.text.precalculateWordWrap(finalText)
             // make it much wider so adding the breaklines wont change again the word wrapping
             this.text.wordWrapWidth = this.config.text.style.wordWrapWidth*2;
             finalText = '';
             for (const line of lines){
-                finalText+=line.replace(/.$/,"\n");
+                finalText+=line.replace(/.$/,'\n');
             }
         }
-        
+
         // split in characters to add one by one
         const characters = finalText.split('');
         let charIdx = 0;
@@ -129,7 +129,7 @@ export default class MessageBox extends Sprite{
         let waitingFor = 0;
         // how many characters to add per sfx played
         let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
-        
+
         if (sfx && charPerSfx=='auto'){
             charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
         }
@@ -154,7 +154,7 @@ export default class MessageBox extends Sprite{
 
 
             this.visible = true;
-            let transition = this.game.screenEffects.transition.get(this.config.transition);
+            const transition = this.game.screenEffects.transition.get(this.config.transition);
             await transition(null,this);
 
             if (sfx && charPerSfx==-1){
@@ -181,13 +181,13 @@ export default class MessageBox extends Sprite{
                 // } else {
                     // this.text.text += " "+(characters[charIdx]);
                 // }
-                
+
                 if (this.onCharacter){
                     this.onCharacter(characters,charIdx);
                 }
                 // play sfx
                 if (sfx){
-                    if (characters[charIdx] == " " || this.punctuationMarks.includes(characters[charIdx]) || sfxCharCount==charPerSfx){
+                    if (characters[charIdx] == ' ' || this.punctuationMarks.includes(characters[charIdx]) || sfxCharCount==charPerSfx){
                         // reset count, but don't play
                         sfxCharCount=-1;
                     } else if (sfxCharCount==0){
@@ -212,7 +212,7 @@ export default class MessageBox extends Sprite{
     async hide(transitionName?){
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
-        let transition = this.game.screenEffects.transition.get(transitionName);
+        const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this,null);
         this.visible = false;
     }

@@ -19,9 +19,9 @@ import {RJSGameConfig,StoryConfig} from './RJSGameConfig';
 import UserPreferences from './UserPreferences';
 import Boot from '../states/Boot';
 import LanguageChooser from '../states/LanguageChooser';
+import PACKAGE from '../../package.json';
 
-var PACKAGE = require('../../package.json');
-var version = PACKAGE.version;
+const version = PACKAGE.version;
 
 
 export default class RJS extends Game {
@@ -35,7 +35,7 @@ export default class RJS extends Game {
     guiSetup: any
     gui: RJSGUI
     tools: any = {}
-    screenReady: boolean = false;
+    screenReady = false;
 
     pluginsRJS: any = {}
 
@@ -43,15 +43,15 @@ export default class RJS extends Game {
         this.pluginsRJS[name] = new cls(name,this)
     }
 
-    get renjsversion():string{
+    get renjsversion(): string{
         return version
     }
 
     config: RJSGameConfig
-    userPreferences: UserPreferences 
+    userPreferences: UserPreferences
     storyConfig: StoryConfig
 
-    textLog: Array<any> = []
+    textLog: any[] = []
 
     interruptAction: any = null
 
@@ -125,14 +125,14 @@ export default class RJS extends Game {
                 this.config.userScale(scale,parentBounds);
             },this)
         }
-        
+
         this.scale.refresh();
         this.screenReady = true;
     }
 
     async initStory () {
         this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
-        
+
         this.managers = {
             tween: new TweenManager(this),
             story: new StoryManager(this),
@@ -152,7 +152,7 @@ export default class RJS extends Game {
         this.managers.character.transition = this.screenEffects.transition;
         this.managers.cgs.transition = this.screenEffects.transition;
 
-        
+
         // init game and start main menu
         this.managers.story.setupStory()
         await this.gui.init();
@@ -160,7 +160,7 @@ export default class RJS extends Game {
         this.initInput();
 
         await this.checkPlugins('onInit');
-        
+
         if (!this.setup.lazyloading){
             // decode audio for all game
             if (!this.setup.music) this.setup.music = {};
@@ -172,10 +172,10 @@ export default class RJS extends Game {
                 this.managers.story.assetLoader.loadEpisodeInBackground(0);
             }
         }
-        
+
     }
 
-    async checkPlugins(signal:string,params?:any[]){
+    async checkPlugins(signal: string,params?: any[]){
         for (const plugin in this.pluginsRJS) {
             if (this.pluginsRJS[plugin][signal]){
                 await this.pluginsRJS[plugin][signal](...params);
@@ -192,7 +192,7 @@ export default class RJS extends Game {
 
     takeXShot (): void {
         if (!this.xShots) this.xShots = [];
-        this.xShots.push(this.canvas.toDataURL("image/jpeg"));
+        this.xShots.push(this.canvas.toDataURL('image/jpeg'));
     }
 
     async unpause (){
@@ -267,7 +267,7 @@ export default class RJS extends Game {
             vars: this.managers.logic.vars
             // should include any interrupts showing
         }
-        
+
         await this.checkPlugins('onSave',[slot,data]);
         const dataSerialized = JSON.stringify(data);
         localStorage.setItem('RenJSDATA' + this.config.name + slot,dataSerialized);
@@ -278,7 +278,7 @@ export default class RJS extends Game {
             localStorage.setItem('RenJSThumbnail' + this.config.name + slot,thumbnail);
         }
         if (this.config.debugMode){
-            console.log("Saved data in slot "+slot);
+            console.log('Saved data in slot '+slot);
             console.log(data);
         }
     }
@@ -313,7 +313,7 @@ export default class RJS extends Game {
         this.gameStarted = true;
         await this.managers.story.show();
         if (this.config.debugMode){
-            console.log("Loaded data from slot "+slot);
+            console.log('Loaded data from slot '+slot);
             console.log(dataParsed);
         }
         this.unpause();
@@ -330,7 +330,7 @@ export default class RJS extends Game {
             setTimeout(this.control.nextAction.bind(this), timeout);
         } else {
             if (this.config.debugMode){
-                console.log("Waiting for click");
+                console.log('Waiting for click');
             }
             this.control.waitForClick = true;
         }
@@ -373,13 +373,13 @@ export default class RJS extends Game {
         // continue with next action and lock the click for some miliseconds
         if (this.control.waitForClick && !this.control.clickLocked){
             if (this.config.debugMode){
-                console.log("Clicked, continue with next action.");
+                console.log('Clicked, continue with next action.');
             }
             this.control.waitForClick = false;
             this.lockClick();
             this.control.nextAction();
         }
-        
+
     }
 
     initInput(): void {
@@ -389,7 +389,7 @@ export default class RJS extends Game {
         //  Stop the following keys from propagating up to the browser
         this.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
         // spacebar == ontap, continue with the game
-        this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(this.onTap, this); 
+        this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(this.onTap, this);
     }
 
     lockClick(): void {
@@ -402,7 +402,7 @@ export default class RJS extends Game {
     resolveAction = (): void => {
         this.control.waitForClick = false;
         if (this.config.debugMode){
-            console.log("Resolving action.");
+            console.log('Resolving action.');
         }
         if (!this.control.paused){
             this.managers.story.interpret()

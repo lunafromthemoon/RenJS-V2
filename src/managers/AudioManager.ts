@@ -2,16 +2,16 @@ import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
 
 export interface AudioManagerInterface extends RJSManagerInterface {
-    play(key: string, type: string, looped: boolean, fromSeconds:number, transition: string): void;
+    play(key: string, type: string, looped: boolean, fromSeconds: number, transition: string): void;
     stop (type: string, transition: string): void;
     playSFX (key: string): void;
     isMusic(actor): boolean;
     isSfx(actor): boolean;
     decodeAudio(audioList): Promise<any>;
-    mute(mute:boolean): void;
+    mute(mute: boolean): void;
     changeVolume(volume): void;
     stopAll(): void;
-    getActive():object;
+    getActive(): object;
     current: {
         bgm: Phaser.Sound;
         bgs: Phaser.Sound;
@@ -33,7 +33,7 @@ export default class AudioManager implements AudioManagerInterface {
         this.changeVolume(game.userPreferences.get('bgmv'))
     }
 
-    getActive():object{
+    getActive(): object{
        return this.active;
     }
 
@@ -52,10 +52,10 @@ export default class AudioManager implements AudioManagerInterface {
         // add new music
         const music = this.game.add.audio(key);
         this.active[type] = {
-            key: key,
-            looped: looped,
-            fromSeconds: fromSeconds,
-            transition: transition
+            key,
+            looped,
+            fromSeconds,
+            transition
         }
         this.current[type] = music;
         let marker = ''
@@ -65,8 +65,8 @@ export default class AudioManager implements AudioManagerInterface {
             // looped = false;
             music.addMarker(marker,0,fromSeconds,null,false);
             music.onMarkerComplete.addOnce(()=>{
-                music.addMarker("looped",fromSeconds,music.totalDuration-fromSeconds,null,true);
-                music.play("looped");
+                music.addMarker('looped',fromSeconds,music.totalDuration-fromSeconds,null,true);
+                music.play('looped');
                 music.volume = volume;
             })
         }
@@ -76,13 +76,13 @@ export default class AudioManager implements AudioManagerInterface {
 
         if (transition == 'FADE'){
             music.volume = 0;
-            this.game.add.tween(music).to({volume: volume},1500,null,true);
+            this.game.add.tween(music).to({volume},1500,null,true);
         } else {
             music.volume = volume;
         }
     }
 
-    stop(type: string, transition: string = 'FADE'): void {
+    stop(type: string, transition = 'FADE'): void {
         if (!this.current[type]){
             return;
         }
@@ -103,7 +103,7 @@ export default class AudioManager implements AudioManagerInterface {
             audio.destroy();
         }
     }
-  
+
     playSFX(key,volume?): void {
         if (this.unavailableAudio.includes(key)) {
           console.warn(
@@ -120,7 +120,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     set (active): void {
-        for (let type of ['bgm','bgs']){
+        for (const type of ['bgm','bgs']){
 
             if (!active[type]) continue;
             this.play(active[type].key,type,active[type].looped,active[type].fromSeconds,active[type].transition);
@@ -139,10 +139,10 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    async decodeAudio(audioList:string[]):Promise<any> {
+    async decodeAudio(audioList: string[]): Promise<any> {
         const availableAudios = audioList.filter(audio => this.game.cache.checkSoundKey(audio));
         this.unavailableAudio = audioList.filter(audio => !this.game.cache.checkSoundKey(audio));
-        
+
         if (availableAudios.length == 0) return;
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(availableAudios, () => {
@@ -150,7 +150,7 @@ export default class AudioManager implements AudioManagerInterface {
               resolve(true);
             });
         })
-        
+
     }
 
     isMusic(actor): boolean {
@@ -161,7 +161,7 @@ export default class AudioManager implements AudioManagerInterface {
         return this.game.setup.sfx && actor in this.game.setup.sfx
     }
 
-    mute(mute:boolean): void {
+    mute(mute: boolean): void {
         if (mute){
             this.game.sound.volume = 0;
         } else {

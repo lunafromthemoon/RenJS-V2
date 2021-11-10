@@ -1,7 +1,7 @@
 import RJS from '../core/RJS';
 import {Sprite,Text} from 'phaser-ce';
 
-export function getButtonFrames(total:number, pushed:boolean = false){
+export function getButtonFrames(total: number, pushed = false){
   // button frames -> over|out|down|up
   const buttonFrames = {
       1: {normal: [0,0,0,0],pushed:[1,1,1,1]},
@@ -14,54 +14,54 @@ export function getButtonFrames(total:number, pushed:boolean = false){
 
 export function changeInputEnabled(displayObj,enabled){
   if (displayObj.input){
-    displayObj.input.enabled = enabled;  
+    displayObj.input.enabled = enabled;
   }
   for (const child of displayObj.children){
     changeInputEnabled(child,enabled);
   }
-  
+
 }
 
 // sets text styles tags in a phaser text object (but NOT the text itself)
-// returns final text without tags, that has to be set to text object as text_obj.text 
-export function setTextStyles(text:string,text_obj:Text): string {
-  text_obj.clearFontValues();
-  text_obj.clearColors()
-  let styles = []
+// returns final text without tags, that has to be set to text object as textObj.text
+export function setTextStyles(text: string,textObj: Text): string {
+  textObj.clearFontValues();
+  textObj.clearColors()
+  const styles = []
   while(true){
-    let re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
-    let match = text.match(re);
+    const re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
+    const match = re.exec(text);
     if (match){
-      let s = {
+      const s = {
         start: text.search(re),
-        style: match[1].includes("color") ? "color" : match[1],
+        style: match[1].includes('color') ? 'color' : match[1],
         end: -1,
         color: null
       }
-      if (s.style == "color"){
+      if (s.style == 'color'){
         s.color = match[2];
       }
-      text = text.replace(re,"")
-      let endIdx = text.indexOf("(end)");
+      text = text.replace(re,'')
+      const endIdx = text.indexOf('(end)');
       if (endIdx!=-1){
-        text = text.replace("(end)","")
+        text = text.replace('(end)','')
         s.end = endIdx;
         styles.push(s)
       }
     } else break;
   }
   styles.forEach(s=>{
-    if (s.style=="italic"){
-      text_obj.addFontStyle("italic", s.start);
-      text_obj.addFontStyle("normal", s.end);
+    if (s.style=='italic'){
+      textObj.addFontStyle('italic', s.start);
+      textObj.addFontStyle('normal', s.end);
     }
-    if (s.style=="bold"){
-      text_obj.addFontWeight("bold", s.start);
-      text_obj.addFontWeight("normal", s.end);
+    if (s.style=='bold'){
+      textObj.addFontWeight('bold', s.start);
+      textObj.addFontWeight('normal', s.end);
     }
-    if (s.style=="color"){
-      text_obj.addColor(s.color, s.start)
-      text_obj.addColor(text_obj.fill, s.end)
+    if (s.style=='color'){
+      textObj.addColor(s.color, s.start)
+      textObj.addColor(textObj.fill, s.end)
     }
   })
   return text;
