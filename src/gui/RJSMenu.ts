@@ -50,7 +50,7 @@ export default class RJSMenu extends Group {
         }
     }
 
-    createImage(element: {x: number,y: number,asset: string}) {
+    createImage(element: {x: number;y: number;asset: string}) {
         const spr = this.game.add.sprite(element.x,element.y,element.asset,0);
         if (spr.animations.frameTotal){
             spr.animations.add('do').play()
@@ -58,11 +58,11 @@ export default class RJSMenu extends Group {
         return spr;
     }
 
-    createLabel(element: {x: number,y: number,text: string,lineSpacing: number,style: any}) {
+    createLabel(element: {x: number;y: number;text: string;lineSpacing: number;style: any}) {
         return new Label(this.game, element)
     }
 
-    createButton(element: {x: number,y: number,asset: string,sfx: string,binding: string,pushButton?: boolean,pushed?: boolean}) {
+    createButton(element: {x: number;y: number;asset: string;sfx: string;binding: string;pushButton?: boolean;pushed?: boolean}) {
         if (element.pushButton){
             const btn = new PushButton(this.game,element)
             if (element.binding=='auto' || element.binding=='skip'){
@@ -75,7 +75,7 @@ export default class RJSMenu extends Group {
         return new BaseButton(this.game,element)
     }
 
-    createSlider(element: {x: number,y: number,asset: string,binding: string,userPreference?: string,sfx: string, mask?: string}) {
+    createSlider(element: {x: number;y: number;asset: string;binding: string;userPreference?: string;sfx: string; mask?: string}) {
         let value = 0.5;
         if (element.binding == 'changeUserPreference'){
             const preference = this.game.userPreferences.preferences[element.userPreference];
@@ -85,7 +85,7 @@ export default class RJSMenu extends Group {
         return slider
     }
 
-    createSaveSlot(element: {x: number,y: number,asset: string,slot: number,thumbnail: {x: number,y: number,width: number,height: number}}) {
+    createSaveSlot(element: {x: number;y: number;asset: string;slot: number;thumbnail: {x: number;y: number;width: number;height: number}}) {
         const saveSlot = new SaveSlot(this.game,element)
         this.saveSlots[element.slot] = saveSlot;
         return saveSlot;

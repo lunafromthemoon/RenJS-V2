@@ -8,22 +8,22 @@ export default class ChoiceHandler extends Graphics {
     game: RJS
 
     config: {
-        asset: string,
-        x: number,
-        y: number,
-        alignment: string, // centered|bottomUp|topDown
-        separation: number,
-        chosenColor: string,
-        transition?: string,
-        sfx: string,
+        asset: string;
+        x: number;
+        y: number;
+        alignment: string; // centered|bottomUp|topDown
+        separation: number;
+        chosenColor: string;
+        transition?: string;
+        sfx: string;
         text: {
-            x: number,
-            y: number,
-            width: number,
-            height: number,
-            lineSpacing?: number,
-            style: any
-        },
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+            lineSpacing?: number;
+            style: any;
+        };
     }
 
     boxes: Button[] = []

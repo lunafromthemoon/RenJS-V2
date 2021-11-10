@@ -8,11 +8,11 @@ export default class Label extends Text {
     styleChanges: {[key: string]: any} = {};
 
     config: {
-        x: number,
-        y: number,
-        text?: string,
-        lineSpacing: number,
-        style: any
+        x: number;
+        y: number;
+        text?: string;
+        lineSpacing: number;
+        style: any;
     }
 
     constructor(game: RJS, config, parent?) {

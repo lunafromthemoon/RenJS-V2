@@ -4,7 +4,7 @@ import RJS from '../RJS';
 export default class StoryActionEffect extends StoryAction {
 
     condition: string
-    branches: {ISTRUE: any, ISFALSE?: any}
+    branches: {ISTRUE: any; ISFALSE?: any}
 
     constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)

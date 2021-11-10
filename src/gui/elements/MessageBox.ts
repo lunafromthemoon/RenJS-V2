@@ -17,26 +17,26 @@ export default class MessageBox extends Sprite{
     game: RJS
 
     config: {
-        id: string,
-        x: number,
-        y: number,
-        asset: string,
-        sfx: string,
-        transition?: string,
+        id: string;
+        x: number;
+        y: number;
+        asset: string;
+        sfx: string;
+        transition?: string;
         text: {
-            x: number,
-            y: number,
-            lineSpacing: number,
-            style: any
-        },
+            x: number;
+            y: number;
+            lineSpacing: number;
+            style: any;
+        };
         ctc: {
-            x: number,
-            y: number,
-            asset: string,
-            sfx: string,
-            animationStyle?: string,
-        },
-        alwaysOn: boolean
+            x: number;
+            y: number;
+            asset: string;
+            sfx: string;
+            animationStyle?: string;
+        };
+        alwaysOn: boolean;
     }
 
     constructor(game: RJS, config) {

@@ -6,8 +6,8 @@ import RJSHUD from './RJSHUD';
 
 export interface RJSGUIInterface {
     init();
-    assets: GUIAsset[]
-    fonts: string[]
+    assets: GUIAsset[];
+    fonts: string[];
 
     showMenu(menu);
     changeMenu(menu): void;

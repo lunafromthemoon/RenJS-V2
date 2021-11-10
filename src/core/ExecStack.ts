@@ -12,7 +12,7 @@ interface ExecItem {
 export default class ExecStack {
     private execStack: ExecItem[]  = [];
 
-    constructor(stack?: [{c: number,total: number,scope: string,index: number}]){
+    constructor(stack?: [{c: number;total: number;scope: string;index: number}]){
         if (stack){
             stack.forEach(item => {
                 this.execStack.push(item)

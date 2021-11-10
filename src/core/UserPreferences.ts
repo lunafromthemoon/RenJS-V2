@@ -30,11 +30,11 @@ export class RangedUserPreference extends UserPreference{
 
 export default class UserPreferences {
     preferences: {
-        textSpeed: RangedUserPreference,
-        autoSpeed: RangedUserPreference,
-        bgmv: RangedUserPreference,
-        sfxv: RangedUserPreference,
-        muted: UserPreference
+        textSpeed: RangedUserPreference;
+        autoSpeed: RangedUserPreference;
+        bgmv: RangedUserPreference;
+        sfxv: RangedUserPreference;
+        muted: UserPreference;
     }
 
 

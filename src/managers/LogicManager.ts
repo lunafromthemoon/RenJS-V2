@@ -17,7 +17,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     choicesLog: object;
     vars: object = {};
     currentChoices: any[];
-    interrupting?: {origin: number,execId: string};
+    interrupting?: {origin: number;execId: string};
     showingText: boolean = false;
 
     constructor(private game: RJS) {

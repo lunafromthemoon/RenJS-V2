@@ -6,16 +6,16 @@ export default class SaveSlot extends Sprite {
     game: RJS
 
     config: {
-        x: number,
-        y: number,
-        asset: string,
-        slot: number
+        x: number;
+        y: number;
+        asset: string;
+        slot: number;
         thumbnail: {
-            x: number,
-            y: number,
-            width: number,
-            height: number
-        }
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        };
     }
 
     constructor(game: RJS, config) {

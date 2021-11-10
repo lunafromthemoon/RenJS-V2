@@ -81,5 +81,5 @@ export interface StoryConfig extends IGameConfig {
         bgmv: number;
         sfxv: number;
         muted: boolean;
-    }
+    };
 }

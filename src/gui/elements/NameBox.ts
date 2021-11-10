@@ -8,20 +8,20 @@ export default class NameBox extends Sprite {
     text: Label
     game: RJS
     config: {
-        id: string,
-        asset: string,
-        x: number,
-        y: number,
-        transition?: string,
-        tintStyle?: string,
+        id: string;
+        asset: string;
+        x: number;
+        y: number;
+        transition?: string;
+        tintStyle?: string;
         text: {
-            x: number,
-            y: number,
-            width: number,
-            height: number,
-            style: any,
-            lineSpacing: number
-        }
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+            style: any;
+            lineSpacing: number;
+        };
     }
 
     constructor(game: RJS, config) {

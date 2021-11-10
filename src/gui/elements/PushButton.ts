@@ -7,14 +7,14 @@ export default class PushButton extends BaseButton {
     pushed: boolean;
 
     config: {
-        x: number,
-        y: number,
-        asset: string,
-        sfx: string,
-        binding: string,
-        slot: string,
-        pushButton?: boolean,
-        pushed?: boolean
+        x: number;
+        y: number;
+        asset: string;
+        sfx: string;
+        binding: string;
+        slot: string;
+        pushButton?: boolean;
+        pushed?: boolean;
     }
 
     constructor(game: RJS, config) {

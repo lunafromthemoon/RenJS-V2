@@ -1,19 +1,19 @@
 import {Sprite,Sound} from 'phaser-ce';
 
 export interface CharacterInterface {
-    keyName: string
+    keyName: string;
     config: {
-        displayName: string,
-        color: string,
-        voice: string,
-        nameBox: string,
-        messageBox: string
-    }
+        displayName: string;
+        color: string;
+        voice: string;
+        nameBox: string;
+        messageBox: string;
+    };
     voice: Sound;
     currentLook: Sprite;
     usePortraits: boolean;
 
-    createLook(props: {look?: string,position?: {x: number,y: number},flipped?: any}): Sprite;
+    createLook(props: {look?: string;position?: {x: number;y: number};flipped?: any}): Sprite;
 }
 
 export default class Character implements CharacterInterface {
@@ -39,7 +39,7 @@ export default class Character implements CharacterInterface {
         this.usePortraits = (hasPortrait == true)
     }
 
-    createLook(props: {look?: string,position?: {x: number,y: number},flipped?: any} = {}): Sprite {
+    createLook(props: {look?: string;position?: {x: number;y: number};flipped?: any} = {}): Sprite {
         const data = this.currentLook ? this.getLookData() : {
             look: 'normal',
             position: this.game.storyConfig.positions.DEFAULT,
@@ -72,7 +72,7 @@ export default class Character implements CharacterInterface {
         this.currentLook = null;
     }
 
-    getLookData(): {look: string, position: {x: number,y: number}, flipped: boolean}{
+    getLookData(): {look: string; position: {x: number;y: number}; flipped: boolean}{
         if (!this.currentLook) return null
         return {look:this.currentLook.name,position: {x: this.currentLook.x, y: this.currentLook.y}, flipped: (this.currentLook.scale.x == -1)};
     }
