@@ -6,7 +6,7 @@ export default class StoryActionEffect extends StoryAction {
     condition: string
     branches: {ISTRUE: any, ISFALSE?: any}
 
-    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)
         this.condition = this.key.substr(this.key.indexOf('('));
         this.branches = {

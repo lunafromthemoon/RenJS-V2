@@ -2,16 +2,16 @@ import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
 
 export interface AudioManagerInterface extends RJSManagerInterface {
-    play(key: string, type: string, looped: boolean, fromSeconds:number, transition: string): void;
+    play(key: string, type: string, looped: boolean, fromSeconds: number, transition: string): void;
     stop (type: string, transition: string): void;
     playSFX (key: string): void;
     isMusic(actor): boolean;
     isSfx(actor): boolean;
     decodeAudio(audioList): Promise<any>;
-    mute(mute:boolean): void;
+    mute(mute: boolean): void;
     changeVolume(volume): void;
     stopAll(): void;
-    getActive():object;
+    getActive(): object;
     current: {
         bgm: Phaser.Sound;
         bgs: Phaser.Sound;
@@ -33,7 +33,7 @@ export default class AudioManager implements AudioManagerInterface {
         this.changeVolume(game.userPreferences.get('bgmv'))
     }
 
-    getActive():object{
+    getActive(): object{
        return this.active;
     }
 
@@ -139,7 +139,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    async decodeAudio(audioList:string[]):Promise<any> {
+    async decodeAudio(audioList: string[]): Promise<any> {
         const availableAudios = audioList.filter(audio => this.game.cache.checkSoundKey(audio));
         this.unavailableAudio = audioList.filter(audio => !this.game.cache.checkSoundKey(audio));
 
@@ -161,7 +161,7 @@ export default class AudioManager implements AudioManagerInterface {
         return this.game.setup.sfx && actor in this.game.setup.sfx
     }
 
-    mute(mute:boolean): void {
+    mute(mute: boolean): void {
         if (mute){
             this.game.sound.volume = 0;
         } else {

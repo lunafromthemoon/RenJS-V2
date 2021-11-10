@@ -43,7 +43,7 @@ export default class RJS extends Game {
         this.pluginsRJS[name] = new cls(name,this)
     }
 
-    get renjsversion():string{
+    get renjsversion(): string{
         return version
     }
 
@@ -175,7 +175,7 @@ export default class RJS extends Game {
 
     }
 
-    async checkPlugins(signal:string,params?:any[]){
+    async checkPlugins(signal: string,params?: any[]){
         for (const plugin in this.pluginsRJS) {
             if (this.pluginsRJS[plugin][signal]){
                 await this.pluginsRJS[plugin][signal](...params);

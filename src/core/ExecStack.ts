@@ -12,7 +12,7 @@ interface ExecItem {
 export default class ExecStack {
     private execStack: ExecItem[]  = [];
 
-    constructor(stack?: [{c:number,total:number,scope:string,index:number}]){
+    constructor(stack?: [{c: number,total: number,scope: string,index: number}]){
         if (stack){
             stack.forEach(item => {
                 this.execStack.push(item)
@@ -25,7 +25,7 @@ export default class ExecStack {
         return this.execStack.map(item => {return {c:item.c, total: item.total, scope: item.scope, index:item.index, origin: item.origin} })
     }
 
-    hash():string {
+    hash(): string {
         return objectHash(this.shallowCopy())
     }
 

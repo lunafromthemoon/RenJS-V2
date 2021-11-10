@@ -12,7 +12,7 @@ export interface RJSGameConfig extends IGameConfig {
     name: string;
     w: number;
     h: number;
-    backgroundColor:number;
+    backgroundColor: number;
     loadingScreen: {
         minTime?: number;
         background: string;
@@ -35,7 +35,7 @@ export interface RJSGameConfig extends IGameConfig {
     parent: string;
     fonts: string;
     scaleMode: number;
-    userScale: (scale:any,parent:any)=>any;
+    userScale: (scale: any,parent: any) => any;
     guiConfig: string;
     storySetup: string;
     storyConfig: string;

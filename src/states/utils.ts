@@ -19,7 +19,7 @@ export function preloadBackground(bgName: string, game: RJS): void {
     }
 }
 
-export function preloadCGS(cgName: string, game:RJS):void {
+export function preloadCGS(cgName: string, game: RJS): void {
     const cgs = game.setup.cgs[cgName];
     if (typeof cgs === 'string') {
         // normal cgs
@@ -35,14 +35,14 @@ export function preloadAudio(audioName: string, audioType, game: RJS): void {
     game.load.audio(audioName, preparePath(game.setup[audioType][audioName], game));
 }
 
-export function preloadCharacter(chName: string, game:RJS):void {
+export function preloadCharacter(chName: string, game: RJS): void {
     const char = game.setup.characters[chName];
     for (const look in char.looks) {
         game.load.image(chName + '_' + look, preparePath(char.looks[look], game));
     }
 }
 
-export function preloadExtra(asset:string, type:string, game:RJS){
+export function preloadExtra(asset: string, type: string, game: RJS){
     if (type === 'spritesheets') {
         const str = game.setup.extra[type][asset].split(' ');
         game.load.spritesheet(asset, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));

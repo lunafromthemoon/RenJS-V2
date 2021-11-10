@@ -14,7 +14,7 @@ export class UserPreference {
 
 export class RangedUserPreference extends UserPreference{
 
-    constructor(value:number, public min:number, public max: number, private inverted:boolean = false){
+    constructor(value: number, public min: number, public max: number, private inverted: boolean = false){
         super(value)
     }
 

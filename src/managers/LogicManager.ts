@@ -17,7 +17,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     choicesLog: object;
     vars: object = {};
     currentChoices: any[];
-    interrupting?: {origin:number,execId:string};
+    interrupting?: {origin: number,execId: string};
     showingText: boolean = false;
 
     constructor(private game: RJS) {
@@ -104,7 +104,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     parseChoice(index,choice): any {
         let rawText = Object.keys(choice)[0];
-        const parsedChoice:any = {
+        const parsedChoice: any = {
             index: index,
             actions: choice[rawText] || [],
             available: true,
@@ -170,7 +170,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     }
 
     async checkTextAction(firstChoice): Promise<boolean>{
-        const action:StoryAction=this.game.managers.story.parseAction({...firstChoice});
+        const action: StoryAction=this.game.managers.story.parseAction({...firstChoice});
         if (action && (action.actionType == "say" || action.actionType == "text")){
             const textAction = action as StoryActionText;
             // set property so the text will not be hidden after it's shown

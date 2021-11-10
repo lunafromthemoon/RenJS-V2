@@ -51,7 +51,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             if (gui.config[menu]['message-box']){
                 const config = gui.config[menu]['message-box'];
-                const messageBox:any = {
+                const messageBox: any = {
                     id:'default',
                     type: 'messageBox',
                     asset: config.id,
@@ -76,7 +76,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             if (gui.config[menu]['name-box']){
                 const config = gui.config[menu]['name-box'];
-                const nameBox:any = {
+                const nameBox: any = {
                     id:'default',
                     type: 'nameBox',
                     asset: config.id,
@@ -202,7 +202,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
     }
 
     convertText(config){
-        const text:any = {
+        const text: any = {
             x: config.isTextCentered ? 0 : parseInt(config['offset-x'], 10),
             y: config.isTextCentered ? 0 : parseInt(config['offset-y'], 10),
             lineSpacing: config.lineSpacing,
@@ -216,7 +216,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
     }
 
     convertTextStyle(config){
-        const textStyle:any = {
+        const textStyle: any = {
             font: config.font,
             fontSize: config.size+'px',
             fill: config.color

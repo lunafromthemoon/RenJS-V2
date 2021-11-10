@@ -9,7 +9,7 @@ export default class StoryActionShow extends StoryAction {
     transition: string
     contAfterTrans: boolean
 
-    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
     	super(game,actionType,properties)
         this.actor = this.parseActor();
         this.actorType = this.game.managers.story.getActorType(this.actor)
@@ -53,7 +53,7 @@ export default class StoryActionShow extends StoryAction {
     }
 
     execute(): void {
-        const manager:RJSSpriteManagerInterface = this.game.managers.story.getManagerByActorType(this.actorType);
+        const manager: RJSSpriteManagerInterface = this.game.managers.story.getManagerByActorType(this.actorType);
     	let transitioning: Promise<any> = manager.show(this.actor, this.transition, this.properties);
         this.resolve(transitioning,this.contAfterTrans);
     }

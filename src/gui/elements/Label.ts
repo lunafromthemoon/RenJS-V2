@@ -5,7 +5,7 @@ import {setTextStyles} from '../../utils/gui'
 
 export default class Label extends Text {
 
-    styleChanges: {[key:string]: any} = {};
+    styleChanges: {[key: string]: any} = {};
 
     config: {
         x: number,

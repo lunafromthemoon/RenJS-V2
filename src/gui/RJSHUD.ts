@@ -179,7 +179,7 @@ export default class RJSHUD extends RJSMenu {
         this.forEach(child => {changeInputEnabled(child,true)})
     }
 
-    async hide(mute:boolean = true){
+    async hide(mute: boolean = true){
         this.ignoreChildInput=true;
         this.forEach(child => {changeInputEnabled(child,false)})
     }

@@ -9,7 +9,7 @@ export default class RJSAssetLoader {
     loadedAssets: {} = {}
     loadedEpisodes: {} = {}
     loading: boolean = false;
-    loadingScreen:RJSLoadingScreen;
+    loadingScreen: RJSLoadingScreen;
     backgroundLoading: Promise<any>;
 
     constructor(private game) {

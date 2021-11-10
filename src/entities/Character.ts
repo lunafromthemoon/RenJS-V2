@@ -13,7 +13,7 @@ export interface CharacterInterface {
     currentLook: Sprite;
     usePortraits: boolean;
 
-    createLook(props: {look?: string,position?: {x:number,y:number},flipped?:any}): Sprite;
+    createLook(props: {look?: string,position?: {x: number,y: number},flipped?: any}): Sprite;
 }
 
 export default class Character implements CharacterInterface {
@@ -28,7 +28,7 @@ export default class Character implements CharacterInterface {
     currentLook = null;
     usePortraits = false;
     voice = null;
-    constructor(private game,public keyName,config,hasPortrait?:boolean) {
+    constructor(private game,public keyName,config,hasPortrait?: boolean) {
         Object.assign(this.config,config);
         if (this.config.voice != 'none'){
             this.voice = this.game.add.audio(this.config.voice);
@@ -39,7 +39,7 @@ export default class Character implements CharacterInterface {
         this.usePortraits = (hasPortrait == true)
     }
 
-    createLook(props: {look?: string,position?: {x:number,y:number},flipped?:any} = {}): Sprite {
+    createLook(props: {look?: string,position?: {x: number,y: number},flipped?: any} = {}): Sprite {
         let data = this.currentLook ? this.getLookData() : {
             look: "normal",
             position: this.game.storyConfig.positions.DEFAULT,
@@ -72,7 +72,7 @@ export default class Character implements CharacterInterface {
         this.currentLook = null;
     }
 
-    getLookData() : {look: string, position: {x:number,y:number}, flipped: boolean}{
+    getLookData(): {look: string, position: {x: number,y: number}, flipped: boolean}{
         if (!this.currentLook) return null
         return {look:this.currentLook.name,position: {x: this.currentLook.x, y: this.currentLook.y}, flipped: (this.currentLook.scale.x == -1)};
     }

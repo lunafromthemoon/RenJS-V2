@@ -76,7 +76,7 @@ export default class MessageBox extends Sprite{
         }
     }
 
-    onCharacter?: (characters:string[],index:number) => void;
+    onCharacter?: (characters: string[],index: number) => void;
 
     destroy(): void {
         this.text.destroy();
@@ -98,7 +98,7 @@ export default class MessageBox extends Sprite{
         }
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
         let finalText = setTextStyles(text,this.text);
-        let textSpeed:number = this.game.userPreferences.get('textSpeed');
+        let textSpeed: number = this.game.userPreferences.get('textSpeed');
         if (this.game.control.skipping || textSpeed < 10){
             this.text.setText(finalText, true);
             this.visible = true;

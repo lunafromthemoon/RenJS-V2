@@ -27,7 +27,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         }
     }
 
-    set(ambients:[]){
+    set(ambients: []){
         if(!ambients) return;
         // set ambients after loading game
         for (var i = 0; i < ambients.length; i++) {

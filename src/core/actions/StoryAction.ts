@@ -1,7 +1,7 @@
 import RJS from '../RJS';
 
 export interface StoryActionInterface {
-    resolve(transitioning: Promise<any>, cont:boolean);
+    resolve(transitioning: Promise<any>, cont: boolean);
     execute();
 }
 
@@ -13,7 +13,7 @@ export default class StoryAction implements StoryActionInterface {
 	protected keyParams: string[]
 
 
-	constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+	constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
 		this.key = Object.keys(properties)[0];
 		this.keyParams = this.key.split(' ');
         this.body = properties[this.key]
@@ -22,7 +22,7 @@ export default class StoryAction implements StoryActionInterface {
 		// each action should parse their specific params after this
 	}
 
-	resolve(transitioning?: Promise<any>, cont?:boolean): void {
+	resolve(transitioning?: Promise<any>, cont?: boolean): void {
 		if (transitioning && !cont){
             transitioning.then(()=> this.game.resolveAction())
         } else {
@@ -47,7 +47,7 @@ export default class StoryAction implements StoryActionInterface {
 		return this.keyParams[1]
 	}
 
-	parseParameter(reservedWord:string, argType:string = 'boolean', inKeyParams:boolean = false){
+	parseParameter(reservedWord: string, argType: string = 'boolean', inKeyParams: boolean = false){
 		const params = this.parseParams(inKeyParams);
 		const idx = params.indexOf(reservedWord);
 		if (argType=='boolean'){
