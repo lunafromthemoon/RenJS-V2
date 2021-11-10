@@ -113,10 +113,10 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                       asset:element.id,
                       slot: element.slot,
                       thumbnail: {
-                          x: parseInt(element['thumbnail-x']),
-                          y: parseInt(element['thumbnail-y']),
-                          width: parseInt(element['thumbnail-width']),
-                          height: parseInt(element['thumbnail-height']),
+                          x: parseInt(element['thumbnail-x'], 10),
+                          y: parseInt(element['thumbnail-y'], 10),
+                          width: parseInt(element['thumbnail-width'], 10),
+                          height: parseInt(element['thumbnail-height'], 10),
                       }
                   }
                   menuConfig.push(saveSlot);
