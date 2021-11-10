@@ -46,14 +46,14 @@ export default class NameBox extends Sprite {
             this.text.fill = color;
         }
         this.visible = true;
-        let transition = this.game.screenEffects.transition.get(this.config.transition);
+        const transition = this.game.screenEffects.transition.get(this.config.transition);
         await transition(null,this);
     }
 
     async hide(transitionName?){
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
-        let transition = this.game.screenEffects.transition.get(transitionName);
+        const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this,null);
         this.visible = false;
         this.text.setText('', true);

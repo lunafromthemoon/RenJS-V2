@@ -98,7 +98,7 @@ export default class MessageBox extends Sprite{
         }
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
         let finalText = setTextStyles(text,this.text);
-        let textSpeed: number = this.game.userPreferences.get('textSpeed');
+        const textSpeed: number = this.game.userPreferences.get('textSpeed');
         if (this.game.control.skipping || textSpeed < 10){
             this.text.setText(finalText, true);
             this.visible = true;
@@ -154,7 +154,7 @@ export default class MessageBox extends Sprite{
 
 
             this.visible = true;
-            let transition = this.game.screenEffects.transition.get(this.config.transition);
+            const transition = this.game.screenEffects.transition.get(this.config.transition);
             await transition(null,this);
 
             if (sfx && charPerSfx==-1){
@@ -212,7 +212,7 @@ export default class MessageBox extends Sprite{
     async hide(transitionName?){
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
-        let transition = this.game.screenEffects.transition.get(transitionName);
+        const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this,null);
         this.visible = false;
     }

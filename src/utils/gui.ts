@@ -27,12 +27,12 @@ export function changeInputEnabled(displayObj,enabled){
 export function setTextStyles(text: string,text_obj: Text): string {
   text_obj.clearFontValues();
   text_obj.clearColors()
-  let styles = []
+  const styles = []
   while(true){
-    let re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
-    let match = text.match(re);
+    const re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
+    const match = text.match(re);
     if (match){
-      let s = {
+      const s = {
         start: text.search(re),
         style: match[1].includes("color") ? "color" : match[1],
         end: -1,
@@ -42,7 +42,7 @@ export function setTextStyles(text: string,text_obj: Text): string {
         s.color = match[2];
       }
       text = text.replace(re,"")
-      let endIdx = text.indexOf("(end)");
+      const endIdx = text.indexOf("(end)");
       if (endIdx!=-1){
         text = text.replace("(end)","")
         s.end = endIdx;

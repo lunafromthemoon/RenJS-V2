@@ -107,7 +107,7 @@ export default class RJSMenu extends Group {
         if (this.backgroundMusic){
             this.game.managers.audio.play(this.backgroundMusic,"bgm",true);
         }
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         await transition(null, this);
         // unlock unskippable
         this.game.control.unskippable = false;
@@ -119,7 +119,7 @@ export default class RJSMenu extends Group {
             this.game.managers.audio.stop('bgm');
         }
         this.game.control.unskippable = true;
-        let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
+        const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         await transition(this, null);
         this.game.control.unskippable = false;
         this.visible = false;

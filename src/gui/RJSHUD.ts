@@ -102,7 +102,7 @@ export default class RJSHUD extends RJSMenu {
             choices.forEach((choice,index) => {
                 this.createVisualChoice(choice,index,resolve);
             });
-            let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
+            const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
             transition(null,this.visualChoices);
         });
     }
@@ -143,7 +143,7 @@ export default class RJSHUD extends RJSMenu {
 
     async hideVisualChoices(transitionName?) {
         if (!transitionName) transitionName = this.game.storyConfig.transitions.visualChoices;
-        let transition = this.game.screenEffects.transition.get(transitionName);
+        const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this.visualChoices,null);
         this.visualChoices.destroy()
         this.visualChoices = null;
@@ -155,7 +155,7 @@ export default class RJSHUD extends RJSMenu {
     }
 
     async clear(transition?) {
-        let hiding = [];
+        const hiding = [];
         if (this.visualChoices) hiding.push(this.hideVisualChoices(transition));
         for (const mBox in this.mBoxes) hiding.push(this.mBoxes[mBox].clear(transition));
         for (const nBox in this.nBoxes) hiding.push(this.nBoxes[nBox].hide(transition));

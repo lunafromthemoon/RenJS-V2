@@ -14,7 +14,7 @@ export default class StoryActionEffect extends StoryAction {
 
     execute(): void {
     	if (this.game.screenEffects.effects[this.actor]){
-    		let transitioning: Promise<any> = this.game.screenEffects.effects[this.actor](this.properties);
+    		const transitioning: Promise<any> = this.game.screenEffects.effects[this.actor](this.properties);
             this.resolve(transitioning,this.contAfterTrans);
     	} else if (this.game.pluginsRJS[this.actor]){
             // deprecate this

@@ -14,7 +14,7 @@ export default class StoryActionAnimate extends StoryAction {
     }
 
     execute(): void {
-    	let transitioning: Promise<any> = this.game.managers.cgs.animate(this.actor, this.properties);
+    	const transitioning: Promise<any> = this.game.managers.cgs.animate(this.actor, this.properties);
     	this.resolve(transitioning,this.contAfterTrans);
     }
 }

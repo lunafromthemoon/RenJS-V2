@@ -66,7 +66,7 @@ export default class RJSAssetLoader {
         if (episodeIdx!=-1) {
             return this.loadEpisode(episodeIdx,this.game.setup.lazyloading.backgroundLoading);
         }
-        let toLoad = this.assetsPerScene[sceneName];
+        const toLoad = this.assetsPerScene[sceneName];
         return this.loadAssets(toLoad);
     }
 
@@ -102,7 +102,7 @@ export default class RJSAssetLoader {
             // add assets for each scene in the episode
             toLoad = {...toLoad, ...this.assetsPerScene[this.episodes[episodeIdx][i]]};
         }
-        let promise = this.loadAssets(toLoad,background);
+        const promise = this.loadAssets(toLoad,background);
         if (loadNextAfter){
             promise.then(()=>{
                 // after loading the current episode, we set to load the next one in the background
@@ -138,7 +138,7 @@ export default class RJSAssetLoader {
         const audioList = [];
         // load assets on the fly
         for (var asset in assets) {
-            let assetType = assets[asset];
+            const assetType = assets[asset];
             switch (assetType) {
                 case "backgrounds":
                     preloadBackground(asset,this.game);

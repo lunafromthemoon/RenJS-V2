@@ -40,7 +40,7 @@ export default class Character implements CharacterInterface {
     }
 
     createLook(props: {look?: string,position?: {x: number,y: number},flipped?: any} = {}): Sprite {
-        let data = this.currentLook ? this.getLookData() : {
+        const data = this.currentLook ? this.getLookData() : {
             look: "normal",
             position: this.game.storyConfig.positions.DEFAULT,
             flipped: false

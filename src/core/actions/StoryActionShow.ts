@@ -54,7 +54,7 @@ export default class StoryActionShow extends StoryAction {
 
     execute(): void {
         const manager: RJSSpriteManagerInterface = this.game.managers.story.getManagerByActorType(this.actorType);
-    	let transitioning: Promise<any> = manager.show(this.actor, this.transition, this.properties);
+    	const transitioning: Promise<any> = manager.show(this.actor, this.transition, this.properties);
         this.resolve(transitioning,this.contAfterTrans);
     }
 }

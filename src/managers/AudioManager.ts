@@ -120,7 +120,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     set (active): void {
-        for (let type of ['bgm','bgs']){
+        for (const type of ['bgm','bgs']){
 
             if (!active[type]) continue;
             this.play(active[type].key,type,active[type].looped,active[type].fromSeconds,active[type].transition);

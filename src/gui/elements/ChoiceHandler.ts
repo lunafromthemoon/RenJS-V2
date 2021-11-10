@@ -49,7 +49,7 @@ export default class ChoiceHandler extends Graphics {
             this.visible = true;
             this.updateTransform();
             this.visible = visible;
-            let transition = this.game.screenEffects.transition.get(this.config.transition);
+            const transition = this.game.screenEffects.transition.get(this.config.transition);
             // wait some miliseconds before showing the boxes so the text is properly set
             setTimeout(()=>{
                 this.visible = true;
@@ -89,7 +89,7 @@ export default class ChoiceHandler extends Graphics {
     async hide(transitionName?): Promise<any> {
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
-        let transition = this.game.screenEffects.transition.get(transitionName);
+        const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this,null);
         // hide all boxes
         this.boxes.forEach(box=>box.destroy());

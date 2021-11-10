@@ -87,7 +87,7 @@ export default class ExecStack {
                         break;
                     case 'choice':
                         // find sub scope corresponding to index
-                        let ch_op = Object.keys(nestedScope.choice[stack.index])[0]
+                        const ch_op = Object.keys(nestedScope.choice[stack.index])[0]
                         allActions = nestedScope.choice[stack.index][ch_op];
                         break;
                     case 'if':

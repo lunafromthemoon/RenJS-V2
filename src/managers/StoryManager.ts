@@ -200,7 +200,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
 
     parseAction(actionRaw): StoryAction {
         const keyParams = Object.keys(actionRaw)[0].split(' ');
-        let actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
+        const actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
         const ActionClass = this.actionFactory[actionType];
         if (ActionClass){
             return new ActionClass(this.game,actionType,actionRaw);

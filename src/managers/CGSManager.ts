@@ -43,7 +43,7 @@ export default class CGSManager implements CGSManagerInterface {
 
     show (name, transitionName, props): Promise<any> {
         let position = props.position
-        let previousSprite = this.cgs[name];
+        const previousSprite = this.cgs[name];
         if (!previousSprite){
             if (!position){
                 position = {x: this.game.world.centerX, y: this.game.world.centerY}
@@ -76,7 +76,7 @@ export default class CGSManager implements CGSManagerInterface {
         }
         let flipped = false;
         if (props.flipped !== undefined){
-            let currently_flipped = this.cgs[name].scale.x < 0;
+            const currently_flipped = this.cgs[name].scale.x < 0;
             if (props.flipped === 'flip'){
                 this.cgs[name].scale.x *= -1;
                 flipped = !currently_flipped
