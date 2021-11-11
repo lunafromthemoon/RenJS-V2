@@ -25,8 +25,7 @@ const RenJSConfig =  {
   storySetup: 'multiboxportraits/Setup.yaml',
   'storyText': [
     'multiboxportraits/Story.yaml'
-  ],
-  debugMode: true
+  ]
 }
 
 const RenJSGame = new RenJS.game(RenJSConfig)
