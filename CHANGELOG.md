@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.4...v2.3.0) (2021-11-11)
+
+
+### Features
+
+* Message Boxes with portraits ([cea7542](https://github.com/lunafromthemoon/RenJS-V2/commit/cea75420d42f3c1bcdd7b2174e53c61628e06b31))
+
 ## [2.2.4](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.2.3...v2.2.4) (2021-11-10)
 
 
