@@ -10,15 +10,15 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
         // converts assets and fonts
         super.initAssets(gui)
 
-        // convert to new scheme with elements list per menu 
+        // convert to new scheme with elements list per menu
         // each element has type and any other parameter it needs
-        
+
         this.config.menus = {}
-        var menus = ['main','settings','hud','saveload']
+        const menus = ['main','settings','hud','saveload']
         for (const menu of menus){
             if (!gui.config[menu]) continue;
             const menuConfig = [];
-            
+
             // if background present, convert to normal image
             if (gui.config[menu].background){
               menuConfig.push({type:'image',x:0,y:0,asset:gui.config[menu].background.id});
@@ -43,7 +43,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                     separation: parseInt(choiceConfig.separation, 10),
                     sfx: choiceConfig.sfx,
                     chosenColor: choiceConfig['chosen-color'],
-                    text: this.convertText(choiceConfig) 
+                    text: this.convertText(choiceConfig)
                 }
                 menuConfig.push(choice);
                 delete gui.config[menu].choice
@@ -51,7 +51,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             if (gui.config[menu]['message-box']){
                 const config = gui.config[menu]['message-box'];
-                const messageBox:any = {
+                const messageBox: any = {
                     id:'default',
                     type: 'messageBox',
                     asset: config.id,
@@ -76,7 +76,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             if (gui.config[menu]['name-box']){
                 const config = gui.config[menu]['name-box'];
-                const nameBox:any = {
+                const nameBox: any = {
                     id:'default',
                     type: 'nameBox',
                     asset: config.id,
@@ -91,10 +91,10 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             // list components
             // image -> {x:number,y:number,asset:string}
             // animations are just images now
-            var imageTypes = ['animations','images']
+            const imageTypes = ['animations','images']
             for (const listType of imageTypes){
                 if (gui.config[menu][listType]){
-                    for (var i = 0; i < gui.config[menu][listType].length; i++) {
+                    for (let i = 0; i < gui.config[menu][listType].length; i++) {
                       const element = gui.config[menu][listType][i];
                       menuConfig.push({type:'image',x:element.x,y:element.y,asset:element.id});
                     }
@@ -104,7 +104,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // saveslot -> {x: number,y: number,asset: string,slot: number,thumbnail: {x: number,y: number,width: number,height: number}}
             if (gui.config[menu]['save-slots']){
-                for (var i = 0; i < gui.config[menu]['save-slots'].length; i++) {
+                for (let i = 0; i < gui.config[menu]['save-slots'].length; i++) {
                   const element = gui.config[menu]['save-slots'][i];
                   const saveSlot = {
                       type:'saveSlot',
@@ -113,10 +113,10 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                       asset:element.id,
                       slot: element.slot,
                       thumbnail: {
-                          x: parseInt(element['thumbnail-x']),
-                          y: parseInt(element['thumbnail-y']),
-                          width: parseInt(element['thumbnail-width']),
-                          height: parseInt(element['thumbnail-height']),
+                          x: parseInt(element['thumbnail-x'], 10),
+                          y: parseInt(element['thumbnail-y'], 10),
+                          width: parseInt(element['thumbnail-width'], 10),
+                          height: parseInt(element['thumbnail-height'], 10),
                       }
                   }
                   menuConfig.push(saveSlot);
@@ -126,7 +126,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // label -> {x:number,y:number,text:string,lineSpacing:number,style:any}
             if (gui.config[menu].labels){
-                for (var i = 0; i < gui.config[menu].labels.length; i++) {
+                for (let i = 0; i < gui.config[menu].labels.length; i++) {
                   const element = gui.config[menu].labels[i];
                   const label = {
                       type:'label',
@@ -141,14 +141,14 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             }
             // slider -> {x: number,y: number,asset: string,binding: string,sfx: string, mask?:string}
             if (gui.config[menu].sliders){
-                for (var i = 0; i < gui.config[menu].sliders.length; i++) {
+                for (let i = 0; i < gui.config[menu].sliders.length; i++) {
                   const element = gui.config[menu].sliders[i];
                   const slider = {
                       type:'slider',
                       x: element.x,
                       y: element.y,
                       asset:element.id,
-                      binding: "changeUserPreference",
+                      binding: 'changeUserPreference',
                       userPreference: element.binding,
                       sfx: element.sfx,
                       mask: 'horizontal'
@@ -157,10 +157,10 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                 }
                 delete gui.config[menu].sliders
             }
-            
+
             // button -> {x:number,y:number,asset:string,sfx:string,binding:string,pushButton?:boolean,pushed?:boolean}
             if (gui.config[menu].buttons){
-                for (var i = 0; i < gui.config[menu].buttons.length; i++) {
+                for (let i = 0; i < gui.config[menu].buttons.length; i++) {
                   const element = gui.config[menu].buttons[i];
                   const button: any = {
                       type:'button',
@@ -193,16 +193,16 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
         }
         if (this.game.config.debugMode){
             delete gui.config.loader
-            console.log("Converted gui configuration");
-            console.log("Replace the config property for this into GUI.yaml file to use new gui configuration directly.");
-            console.log("MAKE SURE ===> GUIVersion=='2.0'");
+            console.log('Converted gui configuration');
+            console.log('Replace the config property for this into GUI.yaml file to use new gui configuration directly.');
+            console.log('MAKE SURE ===> GUIVersion==\'2.0\'');
             const configText = jsyaml.safeDump(JSON.parse(JSON.stringify(this.config)))
             console.log(configText);
         }
     }
 
     convertText(config){
-        const text:any = {
+        const text: any = {
             x: config.isTextCentered ? 0 : parseInt(config['offset-x'], 10),
             y: config.isTextCentered ? 0 : parseInt(config['offset-y'], 10),
             lineSpacing: config.lineSpacing,
@@ -216,7 +216,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
     }
 
     convertTextStyle(config){
-        const textStyle:any = {
+        const textStyle: any = {
             font: config.font,
             fontSize: config.size+'px',
             fill: config.color

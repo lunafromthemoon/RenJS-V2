@@ -11,11 +11,11 @@ import { changeInputEnabled, hudSort } from '../utils/gui';
 export default class RJSHUD extends RJSMenu {
     mBoxes = {}
     nBoxes = {}
-    cHandlers = {}
-    
+    cHandlers: { [key: string]: ChoiceHandler } = {}
+
     skipClickArea: Phaser.Rectangle[] = []
     visualChoices: Graphics
-    
+
 
     constructor(game: RJS, config) {
         super(game, config.slice().sort(hudSort));
@@ -56,11 +56,11 @@ export default class RJSHUD extends RJSMenu {
     // these control setttings can be unset when tapping anywhere on the screen
     // this function will be called when this happens, so it can reset the push buttons
     unsetSkipButtons(){
-        if (this.indexedElements['skipButton']){
-            this.indexedElements['skipButton'].setPushed(false);
+        if (this.indexedElements.skipButton){
+            this.indexedElements.skipButton.setPushed(false);
         }
-        if (this.indexedElements['autoButton']){
-            this.indexedElements['autoButton'].setPushed(false);
+        if (this.indexedElements.autoButton){
+            this.indexedElements.autoButton.setPushed(false);
         }
     }
 
@@ -102,13 +102,13 @@ export default class RJSHUD extends RJSMenu {
             choices.forEach((choice,index) => {
                 this.createVisualChoice(choice,index,resolve);
             });
-            let transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
+            const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
             transition(null,this.visualChoices);
         });
     }
 
     createVisualChoice(choice, index, resolve) {
-        const defaultChoicesConfig = this.cHandlers['default'].config;
+        const defaultChoicesConfig = this.cHandlers.default.config;
         // visual choice text -> spriteId AT x,y|positionId SFX sfxId
         const str = choice.choiceText.split(' ');
         const spriteId = str[0];
@@ -143,7 +143,7 @@ export default class RJSHUD extends RJSMenu {
 
     async hideVisualChoices(transitionName?) {
         if (!transitionName) transitionName = this.game.storyConfig.transitions.visualChoices;
-        let transition = this.game.screenEffects.transition.get(transitionName);
+        const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this.visualChoices,null);
         this.visualChoices.destroy()
         this.visualChoices = null;
@@ -155,7 +155,7 @@ export default class RJSHUD extends RJSMenu {
     }
 
     async clear(transition?) {
-        let hiding = [];
+        const hiding = [];
         if (this.visualChoices) hiding.push(this.hideVisualChoices(transition));
         for (const mBox in this.mBoxes) hiding.push(this.mBoxes[mBox].clear(transition));
         for (const nBox in this.nBoxes) hiding.push(this.nBoxes[nBox].hide(transition));
@@ -179,7 +179,7 @@ export default class RJSHUD extends RJSMenu {
         this.forEach(child => {changeInputEnabled(child,true)})
     }
 
-    async hide(mute:boolean = true){
+    async hide(mute = true){
         this.ignoreChildInput=true;
         this.forEach(child => {changeInputEnabled(child,false)})
     }

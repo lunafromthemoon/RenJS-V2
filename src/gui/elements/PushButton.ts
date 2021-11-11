@@ -7,14 +7,14 @@ export default class PushButton extends BaseButton {
     pushed: boolean;
 
     config: {
-        x:number,
-        y:number,
-        asset:string,
-        sfx:string,
-        binding:string,
-        slot:string,
-        pushButton?:boolean,
-        pushed?:boolean
+        x: number;
+        y: number;
+        asset: string;
+        sfx: string;
+        binding: string;
+        slot: string;
+        pushButton?: boolean;
+        pushed?: boolean;
     }
 
     constructor(game: RJS, config) {
@@ -27,7 +27,7 @@ export default class PushButton extends BaseButton {
         super.onClick();
     }
 
-    setPushed(pushed:boolean){
+    setPushed(pushed: boolean){
         this.pushed = pushed;
         this.setFrames(...getButtonFrames(this.animations.frameTotal/2,this.pushed));
     }

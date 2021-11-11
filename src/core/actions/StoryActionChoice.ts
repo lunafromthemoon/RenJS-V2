@@ -7,7 +7,7 @@ export default class StoryActionText extends StoryAction {
     isInterrupt: boolean
     handlerId: string
 
-    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)
         this.isInterrupt = this.parseParameter('interrupt','boolean',true)
         this.isVisualChoice = this.parseParameter('visualchoice','boolean',true)

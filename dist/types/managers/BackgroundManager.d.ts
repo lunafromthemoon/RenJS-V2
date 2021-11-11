@@ -3,9 +3,6 @@ import RJS from '../core/RJS';
 import { RJSSpriteManagerInterface } from './RJSManager';
 export default class BackgroundManager implements RJSSpriteManagerInterface {
     private game;
-    backgrounds: {
-        [key: string]: string;
-    };
     current?: Sprite;
     constructor(game: RJS);
     createBackground(name: string): Sprite;

@@ -3,10 +3,10 @@ import RJS from '../RJS';
 
 export default class StoryActionSay extends StoryActionText {
 
-    actor:string
-    look:string
+    actor: string
+    look: string
 
-    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)
         this.actor = this.keyParams[0];
         this.look = (this.keyParams.length > 2) ? this.keyParams[2] : null;

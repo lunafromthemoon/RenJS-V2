@@ -12,7 +12,7 @@ export default class StoryActionAudio extends StoryAction {
     force: boolean
     channel: string
 
-    constructor(protected game: RJS, public actionType: string, protected properties:{[key: string]:any}){
+    constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)
         this.actor = this.keyParams[1]
         this.actorType = this.game.managers.story.getActorType(this.actor)

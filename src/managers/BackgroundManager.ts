@@ -3,17 +3,13 @@ import RJS from '../core/RJS';
 import { RJSSpriteManagerInterface } from './RJSManager';
 
 export default class BackgroundManager implements RJSSpriteManagerInterface {
-    backgrounds: { [key: string]: string } = {};
     current?: Sprite;
 
     constructor(private game: RJS) {
-        if (game.setup.backgrounds){
-            this.backgrounds = game.setup.backgrounds
-        }
     }
 
     createBackground(name: string): Sprite {
-        const str = this.backgrounds[name].split(' ');
+        const str = this.game.setup.backgrounds[name].split(' ');
         const pos = this.game.storyConfig.positions.BACKGROUND ?
                 this.game.storyConfig.positions.BACKGROUND :
                 {x:this.game.world.centerX, y:this.game.world.centerY};
@@ -59,7 +55,7 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
     }
 
     isBackground (actor: string): boolean {
-        return actor in this.backgrounds;
+        return this.game.setup.backgrounds && actor in this.game.setup.backgrounds;
     }
 }
 

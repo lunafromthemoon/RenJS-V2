@@ -27,10 +27,10 @@ export default class Ambient implements RJSScreenEffectInterface {
         }
     }
 
-    set(ambients:[]){
+    set(ambients: []){
         if(!ambients) return;
         // set ambients after loading game
-        for (var i = 0; i < ambients.length; i++) {
+        for (let i = 0; i < ambients.length; i++) {
             this.start(ambients[i]);
         }
     }
@@ -79,8 +79,8 @@ export default class Ambient implements RJSScreenEffectInterface {
 
     RAIN (): void {
         this.audioManager.play('rainBGS','bgs',true,null,'FADE');
-        let maxLifespan = 1600;
-        let emitter = this.addEmitter({
+        const maxLifespan = 1600;
+        const emitter = this.addEmitter({
             maxParticles: 400,
             sprite:'rain',
             frames: [0],
@@ -95,8 +95,8 @@ export default class Ambient implements RJSScreenEffectInterface {
     }
 
     SAKURA (): void {
-        let maxLifespan = 6000;
-        let e1 = this.addEmitter({
+        const maxLifespan = 6000;
+        const e1 = this.addEmitter({
             maxParticles: 200,
             sprite:'sakura',
             frames: [0, 1, 2, 3, 4, 5],
@@ -105,7 +105,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             rotation: [0,40]
         },[false, maxLifespan, 20]);
 
-        let e2 = this.addEmitter({
+        const e2 = this.addEmitter({
             maxParticles: 150,
             sprite:'sakura',
             frames: [0, 1, 2, 3, 4, 5],
@@ -121,8 +121,8 @@ export default class Ambient implements RJSScreenEffectInterface {
     }
 
     SNOW (): void {
-        let maxLifespan = 6000;
-        let e1 = this.addEmitter({
+        const maxLifespan = 6000;
+        const e1 = this.addEmitter({
             maxParticles: 200,
             sprite:'snowflakes',
             frames: [0, 1, 2, 3, 4, 5],
@@ -131,7 +131,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             rotation: [0,40],
         },[false, 6000, 20]);
 
-        let e2 = this.addEmitter({
+        const e2 = this.addEmitter({
             maxParticles: 150,
             sprite:'snowflakes',
             frames: [0, 1, 2, 3, 4, 5],
@@ -139,7 +139,7 @@ export default class Ambient implements RJSScreenEffectInterface {
             speed: {y:[50,150]},
             rotation: [0,40],
         },[false, 5000, 40]);
-        let e3 = this.addEmitter({
+        const e3 = this.addEmitter({
             maxParticles: 150,
             sprite:'snowflakes_large',
             frames: [0, 1, 2, 3, 4, 5],

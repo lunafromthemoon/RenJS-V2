@@ -2,7 +2,7 @@ import {IGameConfig} from 'phaser-ce';
 
 // eslint-disable-next-line @typescript-eslint/class-name-casing
 export interface i18nInterface {
-    
+
     background: string;
     langs: any;
     current?: string;
@@ -12,7 +12,7 @@ export interface RJSGameConfig extends IGameConfig {
     name: string;
     w: number;
     h: number;
-    backgroundColor:number;
+    backgroundColor: number;
     loadingScreen: {
         minTime?: number;
         background: string;
@@ -35,7 +35,7 @@ export interface RJSGameConfig extends IGameConfig {
     parent: string;
     fonts: string;
     scaleMode: number;
-    userScale: (scale:any,parent:any)=>any;
+    userScale: (scale: any,parent: any) => any;
     guiConfig: string;
     storySetup: string;
     storyConfig: string;
@@ -81,5 +81,5 @@ export interface StoryConfig extends IGameConfig {
         bgmv: number;
         sfxv: number;
         muted: boolean;
-    }
+    };
 }

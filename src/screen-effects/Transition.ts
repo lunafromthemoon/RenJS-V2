@@ -56,7 +56,7 @@ export default class Transition implements RJSScreenEffectInterface {
                 {sprite: to, tweenables: {alpha: 1}}
             ],false, this.game.storyConfig.fadetime);
         })
-        
+
     }
 
     async FADEOUT(from): Promise<void> {
@@ -79,7 +79,7 @@ export default class Transition implements RJSScreenEffectInterface {
         return new Promise(resolve => {
             if (from.parent) {
                 from.parent.bringToTop(from);
-            } 
+            }
             setNewProperties(to, position, scaleX);
             to.alpha = 1;
             this.tweenManager.tween(from, {alpha: 0}, () => {

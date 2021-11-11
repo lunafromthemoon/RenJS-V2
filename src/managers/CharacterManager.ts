@@ -31,6 +31,7 @@ export default class CharacterManager implements CharacterManagerInterface {
     }
 
     loadCharacters(){
+        if (!this.game.setup.characters) return;
         for (const name in this.game.setup.characters){
             const characterData = this.game.setup.characters[name];
             // for compatibility, speechColour is deprecated now
@@ -41,7 +42,7 @@ export default class CharacterManager implements CharacterManagerInterface {
         }
     }
 
-    get showing(): { [key:string]: {look: string, position: {x:number,y:number}, flipped: boolean}}{
+    get showing(): { [key: string]: {look: string; position: {x: number;y: number}; flipped: boolean}}{
         const showing = {}
         for( const name in this.characters){
             if (this.characters[name].currentLook){
