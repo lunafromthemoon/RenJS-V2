@@ -1,9 +1,10 @@
-const globalConfig =  {
+const RenJSConfig =  {
   'name': 'Quickstart',
   'w': 800,
   'h': 600,
   'renderer': Phaser.AUTO, // become renderer
-  'scaleMode': Phaser.ScaleManager.SHOW_ALL,
+  'scaleMode': Phaser.ScaleManager.NO_SCALE,
+  parent: "renjs-canvas",
   'loadingScreen': {
     'background': 'assets/gui/quickstartbg.png',
     'loadingBar': {
@@ -18,14 +19,15 @@ const globalConfig =  {
       }
     }
   },
-  'fonts': 'assets/gui/fonts.css',
-  'guiConfig': 'story/multipleboxes/GUI.yaml',
-  'storyConfig': 'story/Config.yaml',
-  storySetup: 'story/multipleboxes/Setup.yaml',
+  'fonts': 'assets/gui_pink/fonts.css',
+  'guiConfig': 'multiboxportraits/GUI.yaml',
+  'storyConfig': 'Config.yaml',
+  storySetup: 'multiboxportraits/Setup.yaml',
   'storyText': [
-    'story/multipleboxes/Story.yaml'
-  ]
+    'multiboxportraits/Story.yaml'
+  ],
+  debugMode: true
 }
 
-const RenJSGame = new RenJS.game(globalConfig)
+const RenJSGame = new RenJS.game(RenJSConfig)
 RenJSGame.launch()

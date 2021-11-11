@@ -11,7 +11,8 @@ export default class StoryActionSay extends StoryActionText {
         this.actor = this.keyParams[0];
         this.look = (this.keyParams.length > 2) ? this.keyParams[2] : null;
         if (this.game.managers.story.reservedWords.includes(this.look)){
-            this.properties.look = null;
+            console.log('look is reserved word')
+            this.look = null;
         }
     }
 

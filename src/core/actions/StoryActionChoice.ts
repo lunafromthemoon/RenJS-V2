@@ -11,7 +11,7 @@ export default class StoryActionText extends StoryAction {
         super(game,actionType,properties)
         this.isInterrupt = this.parseParameter('interrupt','boolean',true)
         this.isVisualChoice = this.parseParameter('visualchoice','boolean',true)
-        this.handlerId = this.parseParameter('IN','boolean',true)
+        this.handlerId = this.parseParameter('IN','string',true)
         if (!this.handlerId){
             this.handlerId = this.isVisualChoice ? 'visualChoices' : 'default'
         }

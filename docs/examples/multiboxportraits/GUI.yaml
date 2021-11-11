@@ -482,9 +482,5 @@ assets:
       fileName: audioEvan_Schaeffer_-_01_-_Aqueduct.mp3
       name: Evan_Schaeffer_-_01_-_Aqueduct
       type: music
-    textaudio:
-      fileName: generaltextaudio.wav
-      name: textaudio
-      type: sfx
 GUIVersion: "2.0"
 assetsPath: assets/gui/
