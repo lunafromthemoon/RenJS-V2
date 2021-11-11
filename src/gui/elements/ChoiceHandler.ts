@@ -24,7 +24,7 @@ export default class ChoiceHandler extends Graphics {
             lineSpacing?: number;
             style: any;
         };
-        background?:{
+        background?: {
             x: number;
             y: number;
             asset: string;

@@ -93,7 +93,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             for (const v of vars){
                 const varName = v.substring(1,v.length-1);
                 let value = this.vars[varName]
-                if (useQM && typeof value == 'string'){
+                if (useQM && typeof value === 'string'){
                     value = '"'+value+'"';
                 }
                 text = text.replace(v,value);

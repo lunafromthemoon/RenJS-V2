@@ -48,13 +48,13 @@ export default class TextManager implements TextManagerInterface {
         if (look){
             if (!character.usePortraits){
                 // usual behaviour, just change the character look
-                this.game.managers.character.show(keyName, this.game.storyConfig.transitions.say,{look});    
+                this.game.managers.character.show(keyName, this.game.storyConfig.transitions.say,{look});
             } else {
                 // obtain the message box
                 const messageBox = this.game.gui.hud.mBoxes[boxId];
                 character.createPortrait(look,messageBox);
             }
-            
+
         }
         // display text and wait for click
         await this.display(text,boxId,dontHide);

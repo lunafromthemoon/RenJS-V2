@@ -29,7 +29,7 @@ export default class Character implements CharacterInterface {
     currentLook = null;
     usePortraits = false;
     voice = null;
-    
+
     constructor(private game,public keyName,config,hasPortrait?) {
         Object.assign(this.config,config);
         if (this.config.voice != 'none'){
@@ -41,7 +41,7 @@ export default class Character implements CharacterInterface {
         this.usePortraits = (hasPortrait != undefined)
     }
 
-    createPortrait(portrait:String,parent:MessageBox) {
+    createPortrait(portrait: string,parent: MessageBox) {
         if (this.usePortraits && parent.config.portrait){
             const imgKey = this.keyName+'_portrait_'+portrait;
             const position = parent.config.portrait;
