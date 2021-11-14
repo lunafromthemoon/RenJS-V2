@@ -2,7 +2,6 @@ import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
 import StoryAction from '../core/actions/StoryAction';
-import StoryActionText from '../core/actions/StoryActionText';
 
 export interface LogicManagerInterface<T> extends RJSManagerInterface {
     choicesLog: object;
@@ -171,7 +170,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
     async checkTextAction(firstChoice): Promise<boolean>{
         const action: StoryAction=this.game.managers.story.parseAction({...firstChoice});
-        if (action && (action.actionType == 'say' || action.actionType == 'text')){
+        if (action && (action.actionType === 'say' || action.actionType === 'text')){
             const textAction = action;
             // set property so the text will not be hidden after it's shown
             textAction.dontHide = true;
@@ -188,7 +187,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return false;
     }
 
-    async showChoices(boxId,choices) {
+    async showChoices(boxId,choices): Promise<boolean> {
         this.showingText = await this.checkTextAction(choices[0]);
         if (this.showingText){
             choices.shift();
@@ -198,13 +197,14 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.currentChoices = this.currentChoices.filter(choice=>choice.available)
         let chosenIdx = -1;
         if (!boxId) boxId = 'default';
-        if (boxId == 'visualChoices'){
+        if (boxId === 'visualChoices'){
             chosenIdx = await this.game.gui.hud.showVisualChoices(this.currentChoices);
         } else {
             // text choices
             chosenIdx = await this.game.gui.hud.showChoices(boxId,this.currentChoices);
         }
         this.choose(chosenIdx);
+        return;
     }
 
     interrupt(boxId, choices): any {

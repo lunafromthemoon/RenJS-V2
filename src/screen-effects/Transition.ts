@@ -1,6 +1,5 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
 import {TweenManagerInterface} from '../managers/TweenManager';
-import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 
 

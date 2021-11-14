@@ -1,5 +1,4 @@
 import RJS from '../core/RJS';
-import {Sprite,Text} from 'phaser-ce';
 
 export function preparePath(path: string, game: RJS): string {
     if (game.config.i18n){

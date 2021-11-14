@@ -1,7 +1,6 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
 import { AudioManagerInterface } from '../managers/AudioManager';
 import {StoryManagerInterface} from '../managers/StoryManager';
-import {Animation, Group, Sprite} from 'phaser-ce';
 import Emitter = Phaser.Particles.Arcade.Emitter;
 import RJS from '../core/RJS';
 
@@ -27,11 +26,11 @@ export default class Ambient implements RJSScreenEffectInterface {
         }
     }
 
-    set(ambients: []){
+    set(ambients: []): void{
         if(!ambients) return;
         // set ambients after loading game
-        for (let i = 0; i < ambients.length; i++) {
-            this.start(ambients[i]);
+        for (const ambient of ambients) {
+            this.start(ambient);
         }
     }
 
@@ -59,7 +58,7 @@ export default class Ambient implements RJSScreenEffectInterface {
         return emitter;
     }
 
-    destroyEmitters(emitters,maxLifespan){
+    destroyEmitters(emitters,maxLifespan): void{
         emitters.forEach( emitter => emitter.on = false);
         setTimeout(() => {
             emitters.forEach( emitter => emitter.destroy());

@@ -1,6 +1,5 @@
 import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
-import Transition from '../screen-effects/Transition';
 
 export interface TextManagerInterface extends RJSManagerInterface {}
 

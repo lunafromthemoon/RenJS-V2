@@ -1,4 +1,3 @@
-import {Tween} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSTween from '../core/RJSTween';
 import RJSManagerInterface from './RJSManager';
@@ -73,7 +72,7 @@ export default class TweenManager implements TweenManagerInterface {
     parallel (tweens, unskippable = false, time?): void {
         this.current = [];
         tweens.forEach(tw => {
-            const tween = this.tween(tw.sprite,tw.tweenables,tw.callback,time,true,tw.delay);
+            this.tween(tw.sprite,tw.tweenables,tw.callback,time,true,tw.delay);
         });
         if (!this.canSkip() && !unskippable) {
             this.game.waitForClick(() => this.skip());
