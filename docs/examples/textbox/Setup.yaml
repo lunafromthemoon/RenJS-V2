@@ -1,0 +1,18 @@
+
+backgrounds:
+  room_night: assets/backgrounds/room_night.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    color: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+  player:
+    color: "#FFFFFF"
+
+extra:
+  spritesheets:
+    confirmBtn: assets/gui/confirm.png 163 82

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>RenJS Examples - Title Card Plugin</title>
+	    <!-- Meta -->
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	        	<meta name="title" content="RenJS">
+	    <meta name="description" content="A Visual Novel creator made for writers!">
+	    <meta name="author" content="lunafromthemoon">    
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+
+	    <!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://renjs.fr/">
+		<meta property="og:title" content="RenJS">
+		<meta property="og:description" content="A Visual Novel creator made for writers!">
+		<meta property="og:image" content="assets/images/thumbnail.png">
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://renjs.fr/">
+		<meta property="twitter:title" content="RenJS">
+		<meta property="twitter:description" content="A Visual Novel creator made for writers!">
+		<meta property="twitter:image" content="assets/images/thumbnail.png"> 
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+	    
+	    <!-- Google Font -->
+	    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+	    
+	    <!-- FontAwesome JS-->
+	    <script defer src="../assets/fontawesome/js/all.min.js"></script>
+	     <link rel="stylesheet" href="../assets/css/prism.css" />
+
+	    <!-- Theme CSS -->  
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/tabs.css">
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/theme.css">
+	    
+
+
+		
+	</head>
+
+
+	<body style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;margin-right: 0px;">
+		<header class="header fixed-top">	    
+	        <div class="branding docs-branding">
+	            <div class="container-fluid position-relative py-2">
+	                <div class="docs-logo-wrapper">
+		                <div class="site-logo"><a class="navbar-brand" href="../index.html"><img class="logo-icon mr-2" src="../assets/images/renjs-logo.svg" alt="logo"></a></div>    
+	                </div><!--//docs-logo-wrapper-->
+		            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+						<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+							<li class="list-inline-item"><a href="https://github.com/lunafromthemoon/RenJS-V2"><i class="fab fa-github fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="https://twitter.com/lunafromthem00n"><i class="fab fa-twitter fa-fw"></i></a></li>
+			                <li class="list-inline-item"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></li>
+			                <li class="list-inline-item"><a href="https://lunafromthemoon.itch.io/renjs"><i class="fab fa-itch-io"></i></a></li>
+			            </ul><!--//social-list-->
+			            <a href="../index.html#downloads" class="btn btn-primary d-none d-lg-flex">Download</a>
+		            </div><!--//docs-top-utilities-->
+	            </div><!--//container-->
+	        </div><!--//branding-->
+	    </header><!--//header-->
+		
+		<section id="downloads" class="cta-section py-5 theme-bg-dark position-relative">
+			<div class="text-center">
+	   			<img src="../assets/images/renjs-title-white.svg" class="m-3 w-25">
+	   			<h1 class="title text-center text-white mb-5">Text Input Plugin</h1>
+	   		</div>
+			<div id="renjs-canvas"></div>
+		    <div class="container">
+			   <div class="docs-overview py-5">
+		    		  <section class="accordion">
+					    <section class="accordion-tabs">
+					      <button class="accordion-tab accordion-active" data-actab-group="0" data-actab-id="0"><i class="fas fa-pen-alt"></i> Story.yaml</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="1"><i class="fas fa-toolbox"></i> Setup.yaml</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="2"><i class="fas fa-cog"></i> ShowTitle.js</button>
+					    </section>
+					    <section class="accordion-content line-numbers">
+					      <article class="accordion-item accordion-active" data-actab-group="0" data-actab-id="0">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-yaml">
+start:
+  - show room_night: CONTINUE
+  - show deuzi: normal AT CENTER WITH FADE
+  - deuzi says: Hey, I thought I would find you here. I'm Deuzilene. You're the new student, right?
+  - deuzi says: What's your name?
+  - call TextInput: name player Alex
+  - deuzi says happy: Nice to meet you {TextInputName_player}. 
+  - player says: Thank you, nice to meet you too Deuzilene.
+  - deuzi says: One more question, where do you come from?
+  - call TextInput: var hometown
+  - deuzi says normal: So, you're from {hometown}? I think there's another student from there too.
+  - deuzi says: I hope you'll meet them soon! Now you can go back to sleep.
+  - endgame:
+									</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="1">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-yaml">
+
+backgrounds:
+  room_night: assets/backgrounds/room_night.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    color: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+  player:
+    color: "#FFFFFF"
+
+extra:
+  spritesheets:
+    confirmBtn: assets/gui/confirm.png 163 82
+
+								</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="2">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-js">
+class TextInput extends RenJS.Plugin {
+
+	async onCall(params) {
+		const str = params.body.split(' ');
+		await this.showTextInput(...str);
+		this.game.resolveAction();
+	}
+
+	onStart(){
+		// keep track of which names are changed during game
+		this.game.managers.logic.vars.names = []
+	}
+
+	onLoad(slot,dataParsed){
+		for (const name of dataParsed.vars.names){
+			// add names to character objects
+			this.game.managers.character.characters[name].name = dataParsed.vars[`TextInputName_${name}`]
+		}
+	}
+
+	showTextInput(propertyType,propertyName,defaultValue){
+		return new Promise(resolve=>{
+			// lock game scale so it won't resize while showing the text box, or it will look bad
+			this.game.lockScale = true;
+			// create html input
+			const input = this.createInputElement(defaultValue);
+
+			const confirmChange = async ()=>{
+				if (input.value != ""){
+					// play an sfx if you want
+					// this.game.managers.audio.playSFX('buttonsfx');
+					if (propertyType == 'var'){
+						this.game.managers.logic.vars[propertyName] = input.value;
+					}
+					if (propertyType == 'name' && this.game.managers.character.characters[propertyName]){
+						this.game.managers.logic.vars[`TextInputName_${propertyName}`] = input.value;
+						this.game.managers.logic.vars.names.push(propertyName);
+						// change also the character name to show in nameBoxes
+						this.game.managers.character.characters[propertyName].config.displayName = input.value;
+					}
+					
+					// hide everything
+					let tween = this.game.add.tween(input.style).to({opacity:0},750,Phaser.Easing.Linear.None,true);
+					await this.game.screenEffects.transition.FADEOUT(btn);
+					// destroy everything
+					btn.destroy();
+					input.remove();
+					// re activate hud
+					this.game.gui.hud.show();
+					// unlock scaling
+					this.game.lockScale = false;
+
+					// end action
+					resolve();
+				}
+			}
+
+			// confirm on enter
+			input.onkeydown = function(e){
+				if(e.keyCode==13){
+					confirmChange();
+				}
+				e.stopPropagation();
+			};
+			input.style.opacity = 0;
+			document.body.appendChild(input);
+			// create confirm button ass well
+			const btn = this.game.add.button(
+				this.game.world.centerX,
+				this.game.world.centerY+100,
+				"confirmBtn",
+				confirmChange,
+				this,1,0,2,0);
+			btn.anchor.set(0.5);
+
+			// deactivate the hud, so players won't mess up with it while inputing text
+			this.game.gui.hud.hide();
+			// fade in background and input element
+			this.game.screenEffects.transition.FADEIN(btn);
+			this.game.add.tween(input.style).to({opacity:1},750,Phaser.Easing.Linear.None,true);
+		})
+	}
+
+	createInputElement(defaultValue){
+		const input = document.createElement("input");
+		input.type = "text";
+		input.value = defaultValue ? defaultValue : ""
+		// add a css class to the input
+		// input.className = "canvas-input";
+		
+		// if you want max input text length, add it here
+		// input.setAttribute('maxlength', '10');
+
+		// the input element needs to be scaled along he game
+		const scale = this.game.scale.width/this.game.width;
+		const inputProps = {
+			x:100,
+			y:350,
+			width:600,
+			height:50,
+			fontSize:25
+		}
+		const canvas = this.game.canvas;
+		const canvasWidth = canvas.offsetWidth;
+		const canvasHeight = canvas.offsetHeight;
+		const topLeft = [(canvasWidth/2)-(this.game.scale.width/2)+canvas.offsetLeft, (canvasHeight/2)-(this.game.scale.height/2)+canvas.offsetTop]
+		input.style.position = "absolute";
+		input.style.left = (topLeft[0]+(inputProps.x*scale))+"px";
+		input.style.top = (topLeft[1]+(inputProps.y*scale))+"px";
+		input.style.width = (inputProps.width*scale)+"px";
+		input.style.height = (inputProps.height*scale)+"px";
+		input.style['font-size'] = (inputProps.fontSize*scale)+"px";
+		return input;
+	}
+
+	async changeProperty(value,propertyType,propertyName){
+		
+	}
+}
+
+RenJSGame.addPlugin('TextInput',TextInput)
+								</code></pre>
+							</div>
+					      </article>
+					    </section>
+					  </section>
+		    	</div>
+		    </div>
+		    <p class="text-center mt-3">
+                <a class="btn btn-cta-light" href="../examples-gallery.html"><i class="fas fa-arrow-left"></i> Return to the Gallery</a>
+                <a class="btn btn-cta-light" href="https://github.com/lunafromthemoon/RenJS/tree/gh-pages/examples" target="_blank"><i class="fab fa-github fa-fw"></i> Download from Github</a>
+            </p>  
+		</section>
+		<footer class="footer">
+      <div class="footer-bottom text-center py-3">
+            <p>Ren<strong>JS</strong> created by <strong><i class="fas fa-rocket"></i></strong> <a href="https://twitter.com/lunafromthem00n">lunafromthemoon</a> <strong><i class="fas fa-moon"></i></strong></p>
+      </div>
+    </footer>
+	</body>
+	<script src="../assets/js/prism.js"></script> 
+	<script type="text/javascript" src="../assets/js/tabs.js"></script>
+	<script src="/downloads/releases/renjs.js"></script>
+	<script src="textbox/boot.js"></script>
+	<script src="plugins/TextInput.js"></script>
+
+</html>

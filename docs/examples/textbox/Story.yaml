@@ -1,0 +1,13 @@
+start:
+  - show room_night: CONTINUE
+  - show deuzi: normal AT CENTER WITH FADE
+  - deuzi says: Hey, I thought I would find you here. I'm Deuzilene. You're the new student, right?
+  - deuzi says: What's your name?
+  - call TextInput: name player Alex
+  - deuzi says happy: Nice to meet you {TextInputName_player}. 
+  - player says: Thank you, nice to meet you too Deuzilene.
+  - deuzi says: One more question, where do you come from?
+  - call TextInput: var hometown
+  - deuzi says normal: So, you're from {hometown}? I think there's another student from there too.
+  - deuzi says: I hope you'll meet them soon! Now you can go back to sleep.
+  - endgame:
