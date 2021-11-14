@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <title>RenJS - API</title>
-    
+
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="RenJS">
     <meta name="description" content="A Visual Novel creator made for writers!">
-    <meta name="author" content="lunafromthemoon">    
-    <link rel="shortcut icon" href="favicon.ico"> 
+    <meta name="author" content="lunafromthemoon">
+    <link rel="shortcut icon" href="favicon.ico">
 
     <!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website">
@@ -25,21 +25,21 @@
 	<meta property="twitter:title" content="RenJS">
 	<meta property="twitter:description" content="A Visual Novel creator made for writers!">
 	<meta property="twitter:image" content="assets/images/thumbnail.png">
-    
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
-    
+
     <!-- FontAwesome JS-->
     <script defer src="assets/fontawesome/js/all.min.js"></script>
     <link rel="stylesheet" href="assets/css/prism.css" />
-    
-    <!-- Theme CSS -->  
+
+    <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="assets/css/theme.css">
 
-</head> 
+</head>
 
-<body class="docs-page  line-numbers">    
-    <header class="header fixed-top">	    
+<body class="docs-page  line-numbers">
+    <header class="header fixed-top">
         <div class="branding docs-branding">
             <div class="container-fluid position-relative py-2">
                 <div class="docs-logo-wrapper">
@@ -48,7 +48,7 @@
 	                    <span></span>
 	                    <span></span>
 	                </button>
-	                <div class="site-logo"><a class="navbar-brand" href="index.html"><img class="logo-icon mr-2" src="assets/images/renjs-logo.svg" alt="logo"></a></div>    
+	                <div class="site-logo"><a class="navbar-brand" href="index.html"><img class="logo-icon mr-2" src="assets/images/renjs-logo.svg" alt="logo"></a></div>
                 </div><!--//docs-logo-wrapper-->
 	            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
 	                <!-- <div class="top-search-box d-none d-lg-flex">
@@ -69,7 +69,7 @@
             </div><!--//container-->
         </div><!--//branding-->
     </header><!--//header-->
-    
+
     <div class="docs-wrapper">
 	    <div id="docs-sidebar" class="docs-sidebar">
 		    <div class="top-search-box d-lg-none p-3">
@@ -131,7 +131,7 @@
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#mobile-desktop-section"><span class="theme-icon-holder mr-2"><i class="fas fa-tablet-alt"></i></span>Mobile and Desktop</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#electron-section">Desktop</a></li>
 				    <!-- <li class="nav-item"><a class="nav-link scrollto" href="#cordova-section">Cordova</a></li> -->
-				    
+
 			    </ul>
 
 		    </nav><!--//docs-nav-->
@@ -143,10 +143,10 @@
 					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2019-06-01</span></h1>
 					    <section class="docs-intro">
 						    <p>If you’re reading this, you’re probably thinking about making a visual novel. That is, a videogame of the genre <b>Visual Novel</b>, subgenre of <b>Interactive Fiction</b>. It's important to define what this means, because it will give you a framework in which you can develop the game more easily.</p>
-						    <p>For example, visual novels often tell a rich story aided by static visuals. There are many more rules and conventions of visual novels that you should familiarize yourself before starting to write such a game. Of course, you can bend, break and subverse these guidelines, but knowing them will help you write better games.</p>  
+						    <p>For example, visual novels often tell a rich story aided by static visuals. There are many more rules and conventions of visual novels that you should familiarize yourself before starting to write such a game. Of course, you can bend, break and subverse these guidelines, but knowing them will help you write better games.</p>
 						    <p>To make a visual novel with RenJS it doesn’t matter if you’ve never made a videogame before, or if you don't know any programming. As said above, one of the most important aspects of the genre is the story. RenJS lets you focus on it, by providing a way to use movie-script like text files and easily configurable visuals, to create the game you envision.</p>
 						    <p>RenJS, broadly speaking, is a tool to help you make visual novels. You’ve probably heard about other game engines, like Unity or Game Maker. Those tools provide a whole environment for developing many kinds of games. RenJS is a bit different.</p>
-						    <p>To build the games, you only need to create text files for story and visual configuration. There’s no <i>program</i> you have to install or open to make your game. RenJS is just a library that you import into an html file, that knows how to read a story and show it in a web browser. 
+						    <p>To build the games, you only need to create text files for story and visual configuration. There’s no <i>program</i> you have to install or open to make your game. RenJS is just a library that you import into an html file, that knows how to read a story and show it in a web browser.
 						    </p>
 						    <p>To write the story and make up your visuals, you can use any tools you like and know already. Some great open source and free tools to use can be:</p>
 						    <ul>
@@ -180,7 +180,7 @@
 							<p>Indentation is the amount of spaces at the start of the line, before any text. You can choose between two or four whitespaces, or a tab character, but you can't mix between them once you decided on one.</p>
 							<p>In the script example above you can see the indentation at play. The first word, marking the name of the scene starts at zero level of indentation, and all the actions inside it are at level one. The <strong>choice</strong> action has a list of options inside (that will be displayed to the player to make a decision), and each is indented one extra level.Furthermore, each possible option in the action has inside a list of actions that will be played if the player chooses that path, and each of these actions are indented one more level.</p>
 						</section><!--//docs-intro-->
-						
+
 				    </header>
 				    <section class="docs-section" id="tutorial-section">
 						<h2 class="section-heading">The Tutorial</h2>
@@ -244,10 +244,10 @@
 						    <li><strong class="mr-1">Call:</strong> RenJS allows you to add whatever custom action you might need in your story alongside the ones listed above. The call action will execute a javascript function in a <strong>plugin</strong>, and it will also send any parameters that you want. Inside this function you can use any of the game elements used by RenJS, for example, the visual elements currently showing, and all the variables created by the story. And since RenJS is based on PhaserJS, all of its API is available to add new graphical elements, and even create minigames.</li>
 						</ul>
 					</section>
-					
-					
+
+
 			    </article>
-			    
+
 			    <article class="docs-article" id="files-section">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Files Structure</h1>
@@ -292,9 +292,9 @@
 						    <li><strong class="mr-1">Story Text:</strong> This parameter is a list of files that will contain the scenes of the story. In this case, and for short games, you can have everything in a single file. But as the story grows, keeping the story separated in different files is a great way to organize your writing.</li>
 						</ul>
 					</section><!--//section-->
-				
+
 			    </article><!--//docs-article-->
-			    
+
 			    <article class="docs-article" id="setup-section">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Story Setup</h1>
@@ -314,7 +314,7 @@
 						</code></pre>
 						<p>After the <strong>backgrounds</strong> tag, three backgrounds are declared with key name and file.</p>
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="ch-setup-section">
 						<h2 class="section-heading">Characters</h2>
 						<p>The characters are declared under the <strong>characters</strong> tag, with an unique key name and a few parameters:</p>
@@ -367,11 +367,11 @@ characters:
 							</figure>
 						</div>
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="cgs-setup-section">
 						<h2 class="section-heading">CGs</h2>
 						<p>The CGs (Computer Graphics) are images that can be displayed and animated. CGs can be a static image or a spritesheet. A spritesheet is a single image that contains all the frames of one or more animations.</p>
-						<p>As with the other elements, the <strong>cgs</strong> tag starts the section where the cgs are declared, each with unique key name. If the cgs is static, only the file information is needed. If it's a spritesheet, it needs not only the file, but also the frame size inside the image, and a list of all the animations that it contains. 
+						<p>As with the other elements, the <strong>cgs</strong> tag starts the section where the cgs are declared, each with unique key name. If the cgs is static, only the file information is needed. If it's a spritesheet, it needs not only the file, but also the frame size inside the image, and a list of all the animations that it contains.
 						</p>
 						<p>The animations are declared with a key name, and are defined by their start and end frames, and the framerate. The frames inside a spritesheet are numbered starting with zero, and counting all the frames that fit inside the image, by going from the top left corner to the bottom right one.</p>
 						<pre><code class="language-yaml">
@@ -437,7 +437,7 @@ characters:
 						<p>After the <strong>extra</strong> tag, we load a few assets of each category.</p>
 					</section><!--//section-->
 			    </article><!--//docs-article-->
-			    
+
 			    <article class="docs-article" id="configuration-section">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Configuration</h1>
@@ -458,19 +458,19 @@ characters:
 						<p>You can define as many special positions as you want. If you have a <strong>DEFAULT</strong> position, it will be used when the position is not specified.</p>
 						<pre><code class="language-yaml">
 positions:
-  DEFAULT: 
+  DEFAULT:
     x: 400
     y: 600
   OUTLEFT: #Outside of the screen, left side
     x: -133
     y: 600 #The y should be at the bottom of the screen
-  LEFT: 
+  LEFT:
     x: 133
     y: 600
-  CENTER: 
+  CENTER:
     x: 400
     y: 600
-  RIGHT: 
+  RIGHT:
     x: 666
     y: 600
   OUTRIGHT: #Outside of the screen, right side
@@ -479,7 +479,7 @@ positions:
 						</code></pre>
 						<p>In the Quickstart example, there are five different positions, and the <strong>DEFAULT</strong> is the same as the CENTER. The screen resolution for this game is 800x600 pixels, and since we want the character's feet to be at the very bottom of the screen, the <strong>y coordinate</strong> is 600 for all the options. The positions <strong>OUTLEFT</strong> and <strong>OUTRIGHT</strong> are outside the screen, when showing characters in these positions, they will not really appear, but they're useful for simulating a character entering from the sides of the screen.</p>
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="config-transitions">
 						<h2 class="section-heading">Default Transitions</h2>
 						<p>A <strong>transition</strong> is the way in which a image will be shown, hidden or exchanged for another one. The most usual transitions are CUT, that will simply show or hide the image at once, and FADE, that will make appear or dissappear slowly by changing the transparency of the image, but there are a few others. Check the whole list of transitions <a class="scrollto" href="#transitions-section">here</a>.</p>
@@ -504,7 +504,7 @@ transitions:
 						</code></pre>
 						<p>In this example, the default transitions for all visual elements will be FADE, but when using the <strong>say</strong> action, the character looks will change immediately with a <strong>CUT</strong> transition. The visual choices and the menus will be faded into the screen, but the text choices (along with their boxes) will be shown with CUT.</p>
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="config-timers">
 							<h2 class="section-heading">Timers</h2>
 						<p>The timers section lets you tweak the waiting time for:.</p>
@@ -557,21 +557,32 @@ punctuationWait: 5
 charPerSfx: 1
 						</code></pre>
 					</section><!--//section-->
-					<section class="docs-section" id="config-lazy-loading">
+          <section class="docs-section" id="config-lazy-loading">
 						<h2 class="section-heading">Lazy Loading</h2>
 						<p>Normally, when you want to play a RenJS Visual Novel, the first step is to load the entire game into the webpage. When loading the assets (setup in this same Setup.yaml file), the player will see a loading screen that can include a bar showing the progress. For short and small games, this is not a problem, since the game will be loaded fairly quickly. But for long games with lots of assets in higher quality, the waiting time could become a problem.</p>
 						<p>The main idea of lazy loading is that the player can start playing the game before the whole game is really loaded. The assets will be loaded in batches, sorted by priority according to what the player needs to see next. In big games, where the player is expected to play in different session, the game will not need to load the totality of the assets, and the player will never see any difference.</p>
 						<p>In esence, what this module does is to delay the loading of the assets until the moment they are needed, grouping them by scene. Just as before, the player will see a loading screen while the assets are loaded. But this doesn't mean there will be a loading screen at the start of each scene. The assets have to be loaded just once, and they will be available for all subsequent scenes that need to use it. If all the assets used in a scene were loaded previously, then no loading screen is needed and the scene can start immediately.</p>
 						<p>The assets can be further grouped into episodes. That is, an episode is a group of scenes, that will all be loaded together at the same time. So when a scene from an episode starts, the assets from that scene, and from all the scenes in that episode will be loaded. This will effectively skip any loading phase for any other scene in the same episode.</p>
-						<p>To add lazy loading to your game you will need to setup a few things. The main information needed is which assets will be used in each scene. This can be obtained directly from the story, but analyzing the whole script to do this extraction is costly. Furthermore, some assets, like the ones set in the extra section of the file, may be harder to find, since they could be used internally by Ambients, Effects or Plugins, without being explicitly written in the story. For these reasons, the first configuration under the lazy loading tag will be <strong>assetsPerScene</strong>, that will have, per each scene in the game, a list of the assets it needs. To make things easy, when the option <a>findAssets</a> is set to true, the story script will be analysed in its entirety when loading the game, and the assets per scene list (minus the extra assets) will be printed in the console, ready to be copied and pasted into this setup. <strong>Extra assets should be added manually into the scenes that use them.</strong></p>
+						<p><strong>To add lazy loading to your game you will need to setup a few things in Setup.yaml file</strong>. The main information needed is which assets will be used in each scene. This can be obtained directly from the story, but analyzing the whole script to do this extraction is costly. Furthermore, some assets, like the ones set in the extra section of the file, may be harder to find, since they could be used internally by Ambients, Effects or Plugins, without being explicitly written in the story. For these reasons, the first configuration under the lazy loading tag will be <strong>assetsPerScene</strong>, that will have, per each scene in the game, a list of the assets it needs.</p>
+            <p>To make things easy, when the option <a>findAssets</a> is set to true, the story script will be analysed in its entirety when loading the game, and the assets per scene list (minus the extra assets) will be printed in the console, ready to be copied and pasted into this setup. <strong>Extra assets should be added manually into the scenes that use them.</strong></p>
+            <pre><code class="language-yaml">
+lazyloading:
+  findAssets: true
+            </code></pre>
+            <div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/lazy-loading-findAssets-true-console.png" alt="">
+							    <figcaption class="figure-caption mt-3">assetsPerScene list printed in console when findAssets under lazyloading is set to true.</figcaption>
+							</figure>
+						</div>
 						<p>Another configurable parameter is <strong>backgroundLoading</strong>. To further minimize waiting time, this option starts loading further episodes in the background. This means that the player will see a loading screen for the first episode, and while playing it, the assets for the next one will start loading. When the player gets to the next episode, there is a possibility most or all of the assets for it will be already loaded. The benefit of this option will depend on the nature of the game you're writing. If the game is mostly linear, at least in the use of its assets, then this feature will save lots of waiting time. But if the game can take wildly different paths (again, in terms of assets) then predicting what asset will be used next won't be as easy, and the benefits of background loading will be minimal.</p>
-	
+
 						<pre><code class="language-yaml">
-lazyloading: 
+lazyloading:
   findAssets: false
   loadingScreen: true
   backgroundLoading: true
-  episodes: 
+  episodes:
     - [start, enterSchool]
     - [storySetup, writingTheStory]
     - [interval, storeAtNight,backToTheRoom]
@@ -645,7 +656,7 @@ lazyloading:
 							</figure>
 						</div> -->
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="gui-hud">
 						<h2 class="section-heading">HUD</h2>
 						<p>The <strong>HUD (heads-up display)</strong>, is the method by which information is visually relayed to the player as part of a game's user interface; that is, everything you see in the screen while playing the game, that is not strictly part of the stort itself. This includes the message box where the story text and dialogues will be displayed, the name box, where the talking character name will be displayed, buttons for using the Skip/Auto features or accessing the menus, any many more.</p>
@@ -654,7 +665,7 @@ lazyloading:
 							<li><strong>Message Box</strong>: A box, usually ocuppying the bottom of the screen, where the story text will be displayed.</li>
 							<li><strong>Name Box</strong>: When the text displaying in the Message Box is part of a dialogue, the an extra box will be shown containing the name of the character talking.</li>
 							<li><strong>Click to Continue (CTC)</strong>: To give the players all the time they need to read the contents of the Message Box, the game will not continue until they click anywhere on the screen. The Click to Continue is simply an animated image that will indicate to the players that the game is waiting for them to click to continue.</li>
-							<li><strong>Choice Box</strong>: The <strong>choice action</strong> allows the players to make decisions during the game by choosing between different options. These options will be presented each in their own box, that the player can click as a button.</li>											
+							<li><strong>Choice Box</strong>: The <strong>choice action</strong> allows the players to make decisions during the game by choosing between different options. These options will be presented each in their own box, that the player can click as a button.</li>
 						</ul>
 						<div class="text-center">
 						    <figure class="figure docs-figure py-3 text-center">
@@ -732,7 +743,7 @@ config:
 		menu2:
 			# other menu configuration
 # path to assets
-assetsPath: assets/gui/ 
+assetsPath: assets/gui/
 # gui version
 GUIVersion: "2.0"
 						</code></pre>
@@ -775,7 +786,7 @@ config:
 			# second element
 			- type: ['image'|'button'|'label'|'slider'|'saveSlot']
 			  elementProperty1: value1
-			  elementProperty2: value2  
+			  elementProperty2: value2
 						</code></pre>
 						<p>Let's see how to configure each of the elements, starting with the general elements allowed by both menus and hud.</p>
 						<br>
@@ -853,7 +864,7 @@ config:
 	  style:
 	  	font: "audimat-mono"
 	  	fontSize: "32px"
-	  	fill: "#00FF00"	  	
+	  	fill: "#00FF00"
 						</code></pre>
 						<p id="text-style">The text style in this element, and in any other element that uses text, can have any property allowed for <a href="https://phaser.io/docs/2.6.2/Phaser.Text.html">Phaser Text</a> objects. Some of the most important properties are:</p>
 						<ul>
@@ -959,7 +970,7 @@ config:
 	  	# ctc image can be a normal image or a spritesheet to animate
 	  	asset: ctcAsset
 	  	# sfx to play when the text in the message box is completed and ctc is shown
-	  	sfx: ctcSoundAsset	  	
+	  	sfx: ctcSoundAsset
 	  	# The ctc can be animated: as a spritesheet or tweening the animation
 	  	animationStyle: spritesheet|tween|static
 						</code></pre>
@@ -1006,13 +1017,13 @@ config:
 	  # the alignment determines how to position the boxes related to the base location
 	  alignment: centered|bottomUp|topDown
 	  # separation between the choice boxes, in pixels
-	  separation: 10	  
+	  separation: 10
 	  # transition to show the choices, if not present the default choices transition will be used
 	  transition: "CUT"
 	  # the chosenColor property will be used to tint the choices previously taken in game
 	  chosenColor: #FF0000
 	  # sfx to play when a choice is pressed
-  	  sfx: soundAsset	  	
+  	  sfx: soundAsset
 	  # configuration for the text, could be either single or multi line
 	  text:
 	  	# position related to the top left corner of the box
@@ -1026,7 +1037,7 @@ config:
 	  		boundsAlignH: center
           	boundsAlignV: middle
 						</code></pre>
-						
+
 					</section><!--//section-->
 					<section class="docs-section" id="gui-builder">
 						<h2 class="section-heading">RenJS GUI Builder</h2>
@@ -1148,7 +1159,7 @@ config:
 						</code></pre>
 						<strong>Variables</strong>
 						<pre><code class="language-yaml">
-	# define a variable and assign a value 
+	# define a variable and assign a value
 	- var [variable_name]: [TEXT|NUMBER|BOOLEAN]
 
 	# show variable in a text
@@ -1182,7 +1193,7 @@ SCENE2:
     - wait: [miliseconds|click]
 						</code></pre>
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="show-hide-actions">
 						<h2 class="section-heading">Show and hide</h2>
 						<p>The <strong>show</strong> action allows you to display images in the screen, while the <strong>hide</strong> action removes them.</p>
@@ -1323,7 +1334,7 @@ SCENE2:
       y: 350
     time: 2000
 						</code></pre>
-						
+
 					</section><!--//section-->
 					<section class="docs-section" id="say-text-actions">
 						<h2 class="section-heading">Say and Text</h2>
@@ -1337,7 +1348,7 @@ SCENE2:
 	# display a message with say
 	- liz says: Hey! What are you doing here?
 	# display a message with say, changing the look
-	- liz says angry: We were all looking for you! 
+	- liz says angry: We were all looking for you!
 						</code></pre>
 					</section><!--//section-->
 					<section class="docs-section" id="play-stop-actions">
@@ -1369,7 +1380,7 @@ SCENE2:
 					<section class="docs-section" id="choice-interrupt-actions">
 						<h2 class="section-heading">Choice and Interrupt</h2>
 						<p>The <strong>choice</strong> action is one of the most important actions you can use, since it's the main way for the player to interact with the game.</p>
-						<p>This action will show a list of options to the player for them to choose, and each of these options will have a list of actions to execute only if the player chose them. This list of actions can be anything you do in a normal scene, including another choice, or a change of scene.</p> 
+						<p>This action will show a list of options to the player for them to choose, and each of these options will have a list of actions to execute only if the player chose them. This list of actions can be anything you do in a normal scene, including another choice, or a change of scene.</p>
 						<p>Normally, after executing the chosen option actions, the game will continue with the actions directly after the choice, but if a change of scene is triggered, any action after that one will be discarded.</p>
 						<p>In the next example three options will be displayed. If the player chooses the first option (with text "Yes!"), the scene will change after the dialogue, and the actions after the choice will be discarded. If the player choses any other option, the game will continue with the actions after the choice, as normal.</p>
 						<pre><code class="language-yaml">
@@ -1395,9 +1406,9 @@ SCENE2:
   - deuzi says: What do you think?
   - interrupt 6:
     - Isn't it a bit awkward???:
-      - deuzi says angryC: What do you mean?  Because I'm your teacher?  
+      - deuzi says angryC: What do you mean?  Because I'm your teacher?
       - deuzi says happyC: We're almost the same age!
-      - deuzi says normalC: You might be teaching some years from now too. 
+      - deuzi says normalC: You might be teaching some years from now too.
       - deuzi says angryC: Then you'll see how awkward it is to be called professor and be treated like and old person.
       - deuzi says normalC: Anyway, as I was saying...
   - deuzi says: You probably know it already, but this is a small town.
@@ -1570,7 +1581,7 @@ start:
       #other actions
 
 # second scene
-choosePartner: 
+choosePartner:
   - marco says: We should go to the teachers room
   - show teachersRoom:
   # other actions
@@ -1672,12 +1683,12 @@ choosePartner:
 			- Example made by
 			- lunafromthemoon
 			# empty line next
-			- Made with 
+			- Made with
 			- RenJS
 						</code></pre>
 					</section>
 			    </article><!--//docs-article-->
-			    
+
 			    <article class="docs-article" id="transitions-section">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Transitions</h1>
@@ -1694,8 +1705,8 @@ choosePartner:
 						</section><!--//docs-intro-->
 				    </header>
 			    </article><!--//docs-article-->
-			    
-			    
+
+
 				<article class="docs-article" id="i18n-section">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Multilanguage Games</h1>
@@ -1816,7 +1827,7 @@ RenJSGame.launch()
 
 	RenJSGame.addPlugin('helloWorld',HelloWorld)
 							</code></pre>
-							<p>In this minimalistic example, the plugin is created, extending the <strong>RenJS.Plugin</strong> class, with just one function. The funtion onCall will be called from the story script, when using the <a href="#call-action">call action</a>. This example does nothing but printing on the console the parameters sent, and finally, it calls the <i>this.game.resolveAction()</i> function to let the game know it can continue with the next action in the script.</p>	
+							<p>In this minimalistic example, the plugin is created, extending the <strong>RenJS.Plugin</strong> class, with just one function. The funtion onCall will be called from the story script, when using the <a href="#call-action">call action</a>. This example does nothing but printing on the console the parameters sent, and finally, it calls the <i>this.game.resolveAction()</i> function to let the game know it can continue with the next action in the script.</p>
 						</section><!--//docs-intro-->
 				    </header>
 				     <section class="docs-section" id="plugins-structure-section">
@@ -1900,7 +1911,7 @@ RenJSGame.launch()
 
 			// load data from the cloud with the given slot
 			let serializedData = cloudAPI.get(`MyRenJSGame_slot_${slot}`)
-			
+
 			if (serializedData) {
 				// parse as JSON
 				let loadedData = JSON.parse(serializedData)
@@ -1915,7 +1926,7 @@ RenJSGame.launch()
 						<h3>On Teardown</h3>
 						<p>This handle will only be called when the player goes from the story to the main menu, usually, after finishing the game. If the player simply closes the game, it will not be executed. Use to clean up any big memory objects you might be using during the story, but avoid saving data or doing anything else that is of big importance for the story.</p>
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="transition-plugin-section">
 						<h2 class="section-heading">Adding Transitions</h2>
 						<p>Another way to use the <strong>Plugins</strong> is to add new <a href="transitions-section">transitions</a> to the game. A transition is simply a function that will receive two sprites: <strong>from</strong> and <strong>to</strong>, and a few other parameters. The goal of this function is to transition between these two sprites, so that <strong>from</strong> will end up hidden at the end of the transition and <strong>to</strong> will be shown. The extra parameters are position and scale, that have to be set in <strong>to</strong>.</p>
@@ -1932,7 +1943,7 @@ RenJSGame.launch()
 			this.game.screenEffects.transition['MoveAfterOneSecond'] = (from, to, position, scaleX) => {
 				// We need to return a promise so the game will know when the transition finished
 				return new Promise(resolve => {
-		            // set new properties 
+		            // set new properties
 		            to.x = position.x;
 		            to.y = position.y;
 		            to.scale.x = scaleX;
@@ -1945,13 +1956,13 @@ RenJSGame.launch()
 						// finish transition
 						resolve();
 					}, 1500);
-		        }); 
+		        });
 			}
-		}	    
+		}
 	}
 
 	RenJSGame.addPlugin('MOVEONESECOND',MoveAfterOneSecond)
-						</code></pre>						
+						</code></pre>
 						<p>Let's see in more detail what the parameters are:</p>
 						<ul>
 							<li><strong>From</strong>: A <a href="https://phaser.io/docs/2.6.2/Phaser.Sprite.html">Phaser Sprite</a> representing the RenJS element (a background, character look or cgs) to hide. When showing an element for the first time, this property will be <i>null</i>.</li>
@@ -1967,9 +1978,9 @@ start:
 	show deuzi: WITH CUT AT LEFT
 	# Move deuzi to the other side of the screen after one second
 	show deuzi: WITH MoveAfterOneSecond AT RIGHT
-						</code></pre>	
+						</code></pre>
 					</section><!--//section-->
-					
+
 					<section class="docs-section" id="renjs-internals">
 						<h2 class="section-heading">RenJS Internals</h2>
 						<p>We said that when creating a Plugin, the <i>this.game</i> property will contain a reference to the RenJS game, and that you can take advantage of this to do whatever you want with it. But this means little if you don't know what's inside a RenJS game itself.</p>
@@ -2029,8 +2040,8 @@ start:
 						<p>And finally, as RenJS is based on PhaserJS, the <i>this.game</i> property is also a reference to a Phaser Game, and you can use it to create sprites, groups, phyiscs, particle systems, and much more. Don't forget to check out their <a href="https://phaser.io/examples/v2">examples page</a> and their <a href="https://phaser.io/docs/2.6.2/index">API documentation</a>.</p>
 					</section><!--//section-->
 			    </article><!--//docs-article-->
-			    
-			    
+
+
 			    <article class="docs-article" id="mobile-desktop-section">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Mobile & Desktop</h1>
@@ -2110,39 +2121,38 @@ npm run package-win-32
 						<h2 class="section-heading">Mobile</h2>
 						<p>Comming soon!</p>
 					</section>
- 
+
 			    </article>
 
 	    		<div class="title text-center cta-container cta-container-pink">
-		            <div class="speech-bubble">                    
+		            <div class="speech-bubble">
 		                <p class="intro text-white">Can't find what you're looking for? Join us in Discord and tell us what's missing!</p>
 		                <div class="icon-holder  text-center text-white"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></div>
 		            </div>
 		        	<a class="btn btn-cta-primary" href="https://discord.gg/uSMpYFnHZN">Join Us!</a>
 		        </div><!--//cta-container-->
-			    
+
 			    <footer class="footer">
 				    <div class="footer-bottom text-center py-3">
 			            <p>Ren<strong>JS</strong> created by <strong><i class="fas fa-rocket"></i></strong> <a href="https://twitter.com/lunafromthem00n">lunafromthemoon</a> <strong><i class="fas fa-moon"></i></strong></p>
 				    </div>
 			    </footer>
-		    </div> 
+		    </div>
 	    </div>
     </div><!--//docs-wrapper-->
-    
-   
-       
-    <!-- Javascript -->          
+
+
+
+    <!-- Javascript -->
     <script src="assets/plugins/jquery-3.4.1.min.js"></script>
     <script src="assets/plugins/popper.min.js"></script>
-    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
-    
-    <script src="assets/js/prism.js"></script> 
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="assets/js/prism.js"></script>
     <!-- Page Specific JS -->
     <script src="assets/plugins/jquery.scrollTo.min.js"></script>
-    <script src="assets/plugins/lightbox/dist/ekko-lightbox.min.js"></script> 
-    <script src="assets/js/docs.js"></script> 
+    <script src="assets/plugins/lightbox/dist/ekko-lightbox.min.js"></script>
+    <script src="assets/js/docs.js"></script>
 
 </body>
-</html> 
-
+</html>
