@@ -3,3 +3,4 @@
 public
 .idea
 node_modules
+.atom-live-server.json
