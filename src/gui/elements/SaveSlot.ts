@@ -26,10 +26,9 @@ export default class SaveSlot extends Sprite {
         if (thumbnailData) {
             this.loadThumbnail(thumbnailData);
         }
-        // this.saveSlots[element.slot] = sprite;
     }
 
-    loadThumbnail(thumbnail) {
+    loadThumbnail(thumbnail): void {
         const id = 'thumbnail'+Math.floor(Math.random() * 5000);
         this.game.load.image(id, thumbnail);
         this.game.load.onLoadComplete.addOnce(() => {

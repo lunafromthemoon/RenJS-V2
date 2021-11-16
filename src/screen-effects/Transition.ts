@@ -47,7 +47,7 @@ export default class Transition implements RJSScreenEffectInterface {
         return new Promise(resolve => {
             this.tweenManager.chain([
                 {
-                    sprite: from, tweenables: {alpha: 0}, callback: () => {
+                    sprite: from, tweenables: {alpha: 0}, callback: (): void => {
                         setNewProperties(to, position, scaleX);
                         resolve(true);
                     }
@@ -122,7 +122,7 @@ export default class Transition implements RJSScreenEffectInterface {
                     }
                 },
                 {
-                    sprite: sprBg, tweenables: {alpha: 0}, callback: () => {
+                    sprite: sprBg, tweenables: {alpha: 0}, callback: (): void => {
                         sprBg.destroy();
                         resolve();
                     }

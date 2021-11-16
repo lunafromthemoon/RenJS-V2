@@ -1,7 +1,6 @@
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSAssetLoader from '../core/RJSAssetLoader';
-import RJSManagerInterface from './RJSManager';
 import {RJSSpriteManagerInterface} from './RJSManager';
 import StoryAction from '../core/actions/StoryAction';
 
@@ -21,7 +20,7 @@ import StoryActionIf from '../core/actions/StoryActionIf';
 import StoryActionCall from '../core/actions/StoryActionCall';
 import StoryActionEnd from '../core/actions/StoryActionEnd';
 
-export interface StoryManagerInterface<T> extends RJSManagerInterface {
+export interface StoryManagerInterface<T> {
     behindCharactersSprites: T;
     characterSprites: T;
     cgsSprites: T;
@@ -86,11 +85,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         }
     }
 
-    set(...args: any): void {
-        //
-    }
-
-    async show(){
+    async show(): Promise<any>{
         if (this.characterSprites.visible) return;
         const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
         this.backgroundSprites.visible = true;
@@ -104,7 +99,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         await this.game.gui.hud.showHUD();
     }
 
-    async hide(){
+    async hide(): Promise<any>{
         if (!this.characterSprites.visible) return;
         // only hide if things are visible
         const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
@@ -136,7 +131,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     }
 
     // removes everything from screen immediately
-    clearScene(): void{
+    clearScene(): void {
         this.game.control.execStack.clear();
         this.game.gui.hud.clear('CUT');
         this.game.control.waitForClick = false;
@@ -148,7 +143,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.currentScene = [];
     }
 
-    async startScene(name: string) {
+    async startScene(name: string): Promise<any> {
         await this.game.gui.hud.clear();
         if (this.game.setup.lazyloading){
             // load scene or episode assets (not loaded yet)
@@ -208,7 +203,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         return null;
     }
 
-    async interpretAction(actionRaw) {
+    async interpretAction(actionRaw): Promise<any> {
         // const action = this.parseAction(actionRaw);
         const storyAction: StoryAction = this.parseAction(actionRaw)
         this.game.control.nextAction = null;

@@ -32,7 +32,7 @@
     "build": "webpack --config webpack.prod.js",
     "build:docs": "./scripts/build-docs.sh",
     "build:demo": "./scripts/build-demo.sh",
-    "lint": "eslint \"./src/**/*.{j,t}s\" --fix",
+    "lint": "eslint \"./src/**/*.{j,t}s\"",
     "postversion": "npm run build && npm run build:docs"
   },
   "release": {

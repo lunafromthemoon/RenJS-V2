@@ -1,6 +1,5 @@
 import RJS from '../../core/RJS';
 import BaseButton from './BaseButton';
-import {getButtonFrames} from '../../utils/gui'
 
 export default class PushButton extends BaseButton {
 
@@ -22,13 +21,13 @@ export default class PushButton extends BaseButton {
         this.setPushed(config.pushed)
     }
 
-    onClick(){
+    onClick(): void{
         this.setPushed(!this.pushed);
         super.onClick();
     }
 
-    setPushed(pushed: boolean){
+    setPushed(pushed: boolean): void{
         this.pushed = pushed;
-        this.setFrames(...getButtonFrames(this.animations.frameTotal/2,this.pushed));
+        this.setFrames(...BaseButton.getButtonFrames(this.animations.frameTotal/2,this.pushed));
     }
 }

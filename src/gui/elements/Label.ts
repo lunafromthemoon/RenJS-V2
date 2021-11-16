@@ -29,7 +29,7 @@ export default class Label extends Text {
         }
     }
 
-    changeStyle(style){
+    changeStyle(style): void{
         // change some style options and save original value them to reset
         for (const prop in style){
             this.styleChanges[prop] = this[prop];
@@ -37,7 +37,7 @@ export default class Label extends Text {
         }
     }
 
-    resetStyle(){
+    resetStyle(): void{
         for (const prop in this.styleChanges){
             this[prop] = this.styleChanges[prop];
         }

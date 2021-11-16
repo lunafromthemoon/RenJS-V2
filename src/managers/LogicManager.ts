@@ -33,7 +33,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.interrupting = null;
     }
 
-    setVar(name, value): void {
+    setVar(name: string, value: any): void {
         value = value+'';
         value = this.parseVars(value);
         try {
@@ -44,7 +44,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
     }
 
-    updateChoiceLog(index){
+    updateChoiceLog(index: number): void{
         const execId = this.interrupting ? this.interrupting.execId : this.getExecStackId()
         if (!this.choicesLog[execId].includes(index)){
             this.choicesLog[execId].push(index);
@@ -54,11 +54,11 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
     }
 
-    choiceInLog(index){
+    choiceInLog(index: number): boolean{
         return this.choicesLog[this.getExecStackId()].includes(index);
     }
 
-    evalExpression(expression): any {
+    evalExpression(expression): boolean {
         expression = expression + '';
         expression = this.parseVars(expression,true);
         try {
@@ -125,7 +125,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
 
 
-    async choose(index) {
+    async choose(index): Promise<any> {
         const chosenOption = this.currentChoices[index];
         // update choice log
         this.updateChoiceLog(chosenOption.index);
@@ -176,7 +176,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             textAction.dontHide = true;
             return new Promise(resolve=>{
                 // replace resolve function so the text action won't call resolveAction
-                textAction.resolve = async (transition)=>{
+                textAction.resolve = async (transition): Promise<any> =>{
                     await transition
                     resolve(true);
                 }
@@ -214,7 +214,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.game.resolveAction();
     }
 
-    async clearChoices() {
+    async clearChoices(): Promise<any> {
         // clears everything
         await this.game.gui.hud.clear();
         this.currentChoices = [];

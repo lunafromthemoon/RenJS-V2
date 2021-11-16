@@ -1,6 +1,5 @@
 import RJS from '../../core/RJS';
-import {Sprite,Text} from 'phaser-ce';
-import {toHexColor} from '../../utils/gui'
+import {Sprite,Color} from 'phaser-ce';
 import Label from './Label'
 
 export default class NameBox extends Sprite {
@@ -36,11 +35,11 @@ export default class NameBox extends Sprite {
         this.addChild(this.text);
     }
 
-    async show(text,color) {
+    async show(text: string,color: string): Promise<any> {
         this.text.setText(text, true);
         this.text.updateTransform();
-        if (this.config.tintStyle == 'box'){
-            this.tint = toHexColor(color);
+        if (this.config.tintStyle === 'box'){
+            this.tint = Color.hexToRGB(color);
         } else {
             // change name color
             this.text.fill = color;
@@ -50,7 +49,7 @@ export default class NameBox extends Sprite {
         await transition(null,this);
     }
 
-    async hide(transitionName?){
+    async hide(transitionName?: string): Promise<any>{
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
         const transition = this.game.screenEffects.transition.get(transitionName);

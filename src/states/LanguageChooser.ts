@@ -10,7 +10,7 @@ export default class LanguageChooser extends RJSState {
         super();
     }
 
-    preload() {
+    preload(): void {
         if (this.game.config.i18n.background){
             this.game.load.image('langChooserBg', this.game.config.i18n.background);
         }
@@ -21,7 +21,7 @@ export default class LanguageChooser extends RJSState {
         }
     }
 
-    create() {
+    create(): void {
         if (this.game.config.i18n.background){
             this.game.add.image(0,0,'langChooserBg');
         }

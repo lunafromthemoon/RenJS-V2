@@ -1,18 +1,6 @@
-import RJS from '../core/RJS';
-import {Sprite,Text} from 'phaser-ce';
+import {Text} from 'phaser-ce';
 
-export function getButtonFrames(total: number, pushed = false){
-  // button frames -> over|out|down|up
-  const buttonFrames = {
-      1: {normal: [0,0,0,0],pushed:[1,1,1,1]},
-      2: {normal: [1,0,1,0],pushed:[3,2,3,2]},
-      3: {normal: [1,0,2,0],pushed:[4,3,5,3]},
-      4: {normal: [1,0,2,3],pushed:[5,4,6,7]},
-  }
-  return buttonFrames[total][pushed ? 'pushed' : 'normal']
-}
-
-export function changeInputEnabled(displayObj,enabled){
+export function changeInputEnabled(displayObj,enabled): void{
   if (displayObj.input){
     displayObj.input.enabled = enabled;
   }
@@ -38,12 +26,12 @@ export function setTextStyles(text: string,textObj: Text): string {
         end: -1,
         color: null
       }
-      if (s.style == 'color'){
+      if (s.style === 'color'){
         s.color = match[2];
       }
       text = text.replace(re,'')
       const endIdx = text.indexOf('(end)');
-      if (endIdx!=-1){
+      if (endIdx!==-1){
         text = text.replace('(end)','')
         s.end = endIdx;
         styles.push(s)
@@ -51,15 +39,15 @@ export function setTextStyles(text: string,textObj: Text): string {
     } else break;
   }
   styles.forEach(s=>{
-    if (s.style=='italic'){
+    if (s.style==='italic'){
       textObj.addFontStyle('italic', s.start);
       textObj.addFontStyle('normal', s.end);
     }
-    if (s.style=='bold'){
+    if (s.style==='bold'){
       textObj.addFontWeight('bold', s.start);
       textObj.addFontWeight('normal', s.end);
     }
-    if (s.style=='color'){
+    if (s.style==='color'){
       textObj.addColor(s.color, s.start)
       textObj.addColor(textObj.fill, s.end)
     }
@@ -67,18 +55,13 @@ export function setTextStyles(text: string,textObj: Text): string {
   return text;
 }
 
-// convert hex color to number
-export function toHexColor(color) {
-    // eslint-disable-next-line no-bitwise
-    return (parseInt(color.substr(1), 16) << 8) / 256;
-}
 
 /**
  * compareFn for hud config elements.
  * ensures that name box is on top of dialogue,
  * and that choices and buttons are on top of both
  */
-export function hudSort(a: { type: string }, b: { type: string }) {
+export function hudSort(a: { type: string }, b: { type: string }): number {
   const order = [
     'messageBox',
     'nameBox',

@@ -1,6 +1,7 @@
 import RJS from '../../core/RJS';
-import {Graphics,Button} from 'phaser-ce';
-import {toHexColor,setTextStyles,getButtonFrames} from '../../utils/gui'
+import {Graphics,Button,Color} from 'phaser-ce';
+import BaseButton from './BaseButton';
+import {setTextStyles} from '../../utils/gui'
 import Label from './Label'
 
 export default class ChoiceHandler extends Graphics {
@@ -69,8 +70,8 @@ export default class ChoiceHandler extends Graphics {
 
     }
 
-    createChoiceBox(choice, x,y, index,totalChoices,resolve) {
-        const chBox = this.game.add.button(x,y, this.config.asset, async () => {
+    createChoiceBox(choice, x,y, index,totalChoices,resolve): Button     {
+        const chBox: Button = this.game.add.button(x,y, this.config.asset, async () => {
             if (this.config.sfx && this.config.sfx !== 'none') {
                 this.game.managers.audio.playSFX(this.config.sfx);
             }
@@ -79,18 +80,18 @@ export default class ChoiceHandler extends Graphics {
         },this,1,0,2,0);
         this.addChild(chBox);
 
-        if (this.config.alignment=='centered'){
+        if (this.config.alignment === 'centered'){
             chBox.y -= (chBox.height*totalChoices + this.config.separation*(totalChoices-1))/2
         }
-        const separation = index*(chBox.height+this.config.separation*(this.config.alignment=='bottomUp' ? -1 : 1))
+        const separation = index*(chBox.height+this.config.separation*(this.config.alignment === 'bottomUp' ? -1 : 1))
         chBox.y += separation;
-        chBox.setFrames(...getButtonFrames(chBox.animations.frameTotal))
+        chBox.setFrames(...BaseButton.getButtonFrames(chBox.animations.frameTotal))
         const text = new Label(this.game,this.config.text,chBox);
         text.setText(setTextStyles(choice.choiceText,text), true);
         chBox.addChild(text);
 
         if (choice.previouslyChosen){
-            chBox.tint = toHexColor(this.config.chosenColor);
+            chBox.tint = Color.hexToRGB(this.config.chosenColor);
         }
         return chBox;
     }

@@ -2,7 +2,6 @@ import {RJSSpriteManagerInterface} from './RJSManager';
 import Transition from '../screen-effects/Transition';
 import Character from '../entities/Character';
 import RJS from '../core/RJS';
-import {Sprite} from 'phaser-ce';
 
 export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
     characters: object;
@@ -30,7 +29,7 @@ export default class CharacterManager implements CharacterManagerInterface {
         return this.game.storyConfig.transitions.defaults.characters;
     }
 
-    loadCharacters(){
+    loadCharacters(): void{
         if (!this.game.setup.characters) return;
         for (const name in this.game.setup.characters){
             const characterData = this.game.setup.characters[name];
@@ -58,7 +57,7 @@ export default class CharacterManager implements CharacterManagerInterface {
             const props = showing[name];
             // for compatibility with older version
             if (props.scaleX) {
-                props.flipped = props.scaleX == -1;
+                props.flipped = props.scaleX === -1;
             }
             this.characters[name].createLook(props);
             this.characters[name].currentLook.alpha = 1;

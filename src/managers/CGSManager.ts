@@ -1,9 +1,5 @@
-import RJSManager from './RJSManager';
 import Transition from '../screen-effects/Transition';
-import {StoryManagerInterface} from './StoryManager';
 import {range} from '../utils/array';
-import {TweenManagerInterface} from './TweenManager';
-import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import {RJSSpriteManagerInterface} from './RJSManager';
 
@@ -82,7 +78,7 @@ export default class CGSManager implements CGSManagerInterface {
                 flipped = !currentlyFlipped
             } else {
                 flipped = props.flipped;
-                if (flipped != currentlyFlipped){
+                if (flipped !== currentlyFlipped){
                     this.cgs[name].scale.x *= -1;
                 }
             }
@@ -153,7 +149,7 @@ export default class CGSManager implements CGSManagerInterface {
                         animation.reverseOnce()
                     }
                     animation.play(null, looped);
-                    if (Object.keys(tweenables).length == 0){
+                    if (Object.keys(tweenables).length === 0){
                         // no tweenables, cases 2, 3 and 4
                         if (!looped){
                             // case 2,

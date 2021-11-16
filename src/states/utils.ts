@@ -44,7 +44,7 @@ export function preloadCharacter(chName: string, game: RJS): void {
     }
 }
 
-export function preloadExtra(asset: string, type: string, game: RJS){
+export function preloadExtra(asset: string, type: string, game: RJS): void{
     if (type === 'spritesheets') {
         const str = game.setup.extra[type][asset].split(' ');
         game.load.spritesheet(asset, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));
@@ -80,7 +80,7 @@ export function loadStyle(href, callback?): void {
     link.type = 'text/css';
     link.href = href;
     if (callback) {
-        link.onload = () => { callback() }
+        link.onload = (): void => { callback() }
     }
     head.appendChild(link);
 }

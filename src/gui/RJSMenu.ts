@@ -1,8 +1,5 @@
 import RJS from '../core/RJS';
-import {Group,Text} from 'phaser-ce';
-
-import {setTextStyles,getButtonFrames} from '../utils/gui'
-
+import {Group,Sprite} from 'phaser-ce';
 import MaskSlider from './elements/MaskSlider'
 import SaveSlot from './elements/SaveSlot'
 import PushButton from './elements/PushButton'
@@ -33,10 +30,10 @@ export default class RJSMenu extends Group {
         }
     }
 
-    init(){
+    init(): void{
         for (const elementConfig of this.config){
             // create element with factory
-            if (elementConfig.type == 'music'){
+            if (elementConfig.type === 'music'){
                 this.backgroundMusic = elementConfig.asset;
                 continue;
             }
@@ -50,22 +47,30 @@ export default class RJSMenu extends Group {
         }
     }
 
-    createImage(element: {x: number;y: number;asset: string}) {
-        const spr = this.game.add.sprite(element.x,element.y,element.asset,0);
+    createImage(element: {x: number;y: number;asset: string}): Sprite {
+        const spr: Sprite = this.game.add.sprite(element.x,element.y,element.asset,0);
         if (spr.animations.frameTotal){
             spr.animations.add('do').play()
         }
         return spr;
     }
 
-    createLabel(element: {x: number;y: number;text: string;lineSpacing: number;style: any}) {
+    createLabel(element: {x: number;y: number;text: string;lineSpacing: number;style: any}): Label {
         return new Label(this.game, element)
     }
 
-    createButton(element: {x: number;y: number;asset: string;sfx: string;binding: string;pushButton?: boolean;pushed?: boolean}) {
+    createButton(element: {
+        x: number;
+        y: number;
+        asset: string;
+        sfx: string;
+        binding: string;
+        pushButton?: boolean;
+        pushed?: boolean;
+    }): BaseButton {
         if (element.pushButton){
             const btn = new PushButton(this.game,element)
-            if (element.binding=='auto' || element.binding=='skip'){
+            if (element.binding === 'auto' || element.binding === 'skip'){
                 // auto and skip will be unset when tapping anywhere in the screen
                 // always index for changing state when this happens
                 this.indexedElements[element.binding+'Button'] = btn;
@@ -75,9 +80,17 @@ export default class RJSMenu extends Group {
         return new BaseButton(this.game,element)
     }
 
-    createSlider(element: {x: number;y: number;asset: string;binding: string;userPreference?: string;sfx: string; mask?: string}) {
+    createSlider(element: {
+        x: number;
+        y: number;
+        asset: string;
+        binding: string;
+        userPreference?: string;
+        sfx: string;
+        mask?: string;
+    }): MaskSlider {
         let value = 0.5;
-        if (element.binding == 'changeUserPreference'){
+        if (element.binding === 'changeUserPreference'){
             const preference = this.game.userPreferences.preferences[element.userPreference];
             value = (preference.value-preference.min)/(preference.max - preference.min);
         }
@@ -85,20 +98,31 @@ export default class RJSMenu extends Group {
         return slider
     }
 
-    createSaveSlot(element: {x: number;y: number;asset: string;slot: number;thumbnail: {x: number;y: number;width: number;height: number}}) {
+    createSaveSlot(element: {
+        x: number;
+        y: number;
+        asset: string;
+        slot: number;
+        thumbnail: {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        };
+    }): SaveSlot{
         const saveSlot = new SaveSlot(this.game,element)
         this.saveSlots[element.slot] = saveSlot;
         return saveSlot;
     }
 
     // add thumbnail to specific save slot
-    addThumbnail(thumbnail, slot) {
+    addThumbnail(thumbnail: string, slot: number): void {
         if (this.saveSlots[slot]){
             this.saveSlots[slot].loadThumbnail(thumbnail)
         }
     }
 
-    async show() {
+    async show(): Promise<any> {
         if (this.visible) return;
         this.alpha = 0;
         this.visible = true;
@@ -113,7 +137,7 @@ export default class RJSMenu extends Group {
         this.game.control.unskippable = false;
     }
 
-    async hide(mute = true){
+    async hide(mute = true): Promise<any>{
         if (!this.visible) return;
         if (mute && this.backgroundMusic){
             this.game.managers.audio.stop('bgm');

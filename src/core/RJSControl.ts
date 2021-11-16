@@ -13,21 +13,9 @@ interface RJSControlInterface {
     execStack: ExecStack;
     actionsCounter: number;
     nextAction?: () => (void | Promise<any>);
-    // wholeAction: any;
-    // action?: any;
-
-    // resolve?: () => Promise<any>;
-
-    // doBeforeResolve?: () => void;
 }
 
 export default class RJSControl implements RJSControlInterface {
-
-    constructor() {
-        // this.clickCooldown = defaultValues.clickCooldown
-        // this.fadetime = defaultValues.fadetime
-        // this.timeout = defaultValues.timeout
-    }
     // game status controls
     skipping = false;
     unskippable = false;
@@ -41,11 +29,4 @@ export default class RJSControl implements RJSControlInterface {
     execStack = new ExecStack()
     actionsCounter = 0;
     nextAction = null
-
-    // doBeforeResolve = null
-
-    // resolve = null
-
-    // wholeAction: any;
-    // action = null;
 }

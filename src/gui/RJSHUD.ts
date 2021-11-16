@@ -1,8 +1,8 @@
 import RJS from '../core/RJS';
-import {Group,Graphics,Text} from 'phaser-ce';
-import {toHexColor} from '../utils/gui'
+import {Graphics,Color} from 'phaser-ce';
 import RJSMenu from './RJSMenu'
 import MessageBox from './elements/MessageBox'
+import BaseButton from './elements/BaseButton'
 import NameBox from './elements/NameBox'
 import ChoiceHandler from './elements/ChoiceHandler'
 
@@ -30,23 +30,23 @@ export default class RJSHUD extends RJSMenu {
 
     // create HUD specific components
 
-    createMessageBox(element) {
+    createMessageBox(element): MessageBox{
         this.mBoxes[element.id] = new MessageBox(this.game,element)
         return this.mBoxes[element.id]
     }
 
-    createNameBox(element) {
+    createNameBox(element): NameBox{
         this.nBoxes[element.id] = new NameBox(this.game,element)
         return this.nBoxes[element.id]
     }
 
-    createChoiceHandler(element) {
+    createChoiceHandler(element): ChoiceHandler{
         this.cHandlers[element.id] =  new ChoiceHandler(this.game,element)
         return this.cHandlers[element.id];
     }
 
-    createButton(element){
-        const btn = super.createButton(element);
+    createButton(element): BaseButton{
+        const btn: BaseButton = super.createButton(element);
         // when pressing a button, tapping should be ignored to avoid continuing the game
         this.skipClickArea.push(new Phaser.Rectangle(btn.x,btn.y,btn.width,btn.height))
         return btn;
@@ -55,7 +55,7 @@ export default class RJSHUD extends RJSMenu {
     // if skip or auto are push buttons, they will be indexed as skipButton and autoButton
     // these control setttings can be unset when tapping anywhere on the screen
     // this function will be called when this happens, so it can reset the push buttons
-    unsetSkipButtons(){
+    unsetSkipButtons(): void{
         if (this.indexedElements.skipButton){
             this.indexedElements.skipButton.setPushed(false);
         }
@@ -65,13 +65,14 @@ export default class RJSHUD extends RJSMenu {
     }
 
     // display character names
-    showName(boxId, name, color){
+    // TODO: this should be async too
+    showName(boxId, name, color): void{
         if (this.nBoxes[boxId]){
             this.nBoxes[boxId].show(name,color);
         }
     }
-
-    hideName(boxId){
+    // TODO: this should be async too
+    hideName(boxId): void{
         if (this.nBoxes[boxId]){
             this.nBoxes[boxId].hide();
         }
@@ -82,15 +83,16 @@ export default class RJSHUD extends RJSMenu {
         return this.mBoxes[boxId].show(text,sfx);
     }
 
-    hideText(boxId){
+    // TODO: this should be async too
+    hideText(boxId): void{
         this.mBoxes[boxId].clear();
     }
 
     async showChoices(handlerId,choices): Promise<any>{
         return this.cHandlers[handlerId].show(choices)
     }
-
-    hideChoices(handlerId){
+    // TODO: this should be async too
+    hideChoices(handlerId): void{
         this.cHandlers[handlerId].hide()
     }
 
@@ -107,7 +109,7 @@ export default class RJSHUD extends RJSMenu {
         });
     }
 
-    createVisualChoice(choice, index, resolve) {
+    createVisualChoice(choice, index, resolve): void{
         const defaultChoicesConfig = this.cHandlers.default.config;
         // visual choice text -> spriteId AT x,y|positionId SFX sfxId
         const str = choice.choiceText.split(' ');
@@ -126,7 +128,7 @@ export default class RJSHUD extends RJSMenu {
         if (str.indexOf('SFX') !== -1){
             sfx = str[str.indexOf('SFX')+1];
         }
-        const visualChoice = this.game.add.button(position.x,position.y,str[0],async () => {
+        const visualChoice = this.game.add.button(position.x,position.y,spriteId,async (): Promise<any> => {
             if (sfx && sfx !== 'none') {
                 this.game.managers.audio.playSFX(sfx);
             }
@@ -137,11 +139,11 @@ export default class RJSHUD extends RJSMenu {
         visualChoice.updateTransform();
         this.visualChoices.addChild(visualChoice);
         if (choice.previouslyChosen){
-            visualChoice.tint = toHexColor(defaultChoicesConfig.chosenColor);
+            visualChoice.tint = Color.hexToRGB(defaultChoicesConfig.chosenColor);
         }
     }
 
-    async hideVisualChoices(transitionName?) {
+    async hideVisualChoices(transitionName?): Promise<any>{
         if (!transitionName) transitionName = this.game.storyConfig.transitions.visualChoices;
         const transition = this.game.screenEffects.transition.get(transitionName);
         await transition(this.visualChoices,null);
@@ -149,12 +151,12 @@ export default class RJSHUD extends RJSMenu {
         this.visualChoices = null;
     }
 
-    ignoreTap(pointer) {
+    ignoreTap(pointer): boolean{
         // If user clicks on buttons, the tap shouldn't count to continue the story
         return this.skipClickArea.find(area => area.contains(pointer.x,pointer.y)) !== undefined;
     }
 
-    async clear(transition?) {
+    async clear(transition?): Promise<any>{
         const hiding = [];
         if (this.visualChoices) hiding.push(this.hideVisualChoices(transition));
         for (const mBox in this.mBoxes) hiding.push(this.mBoxes[mBox].clear(transition));
@@ -163,23 +165,23 @@ export default class RJSHUD extends RJSMenu {
         await Promise.all(hiding);
     }
 
-    async showHUD(){
+    async showHUD(): Promise<any>{
         await super.show();
     }
 
-    async hideHUD(){
+    async hideHUD(): Promise<any>{
         await super.hide();
     }
 
     // hud is shown along with the story layers
     // when hiding/pausing, only disable input
 
-    async show() {
+    async show(): Promise<any>{
         this.ignoreChildInput=false;
         this.forEach(child => {changeInputEnabled(child,true)})
     }
 
-    async hide(mute = true){
+    async hide(): Promise<any>{
         this.ignoreChildInput=true;
         this.forEach(child => {changeInputEnabled(child,false)})
     }

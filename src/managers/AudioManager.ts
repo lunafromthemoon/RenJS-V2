@@ -38,7 +38,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     play (key,type='bgm',looped=false,fromSeconds=null,transition='FADE',force=false): void {
-        if (!force && this.current[type] && this.current[type].key == key && this.current[type].isPlaying){
+        if (!force && this.current[type] && this.current[type].key === key && this.current[type].isPlaying){
             // music is the same, and it's playing, do nothing
             return;
         }
@@ -74,7 +74,7 @@ export default class AudioManager implements AudioManagerInterface {
         music.play(marker,0,null,looped);
         // volume has to be set after it starts or it will ignore it
 
-        if (transition == 'FADE'){
+        if (transition === 'FADE'){
             music.volume = 0;
             this.game.add.tween(music).to({volume},1500,null,true);
         } else {
@@ -93,7 +93,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    stopAudio(audio: Phaser.Sound,transition: string){
+    stopAudio(audio: Phaser.Sound,transition: string): void{
         if (transition === 'FADE') {
             audio.onFadeComplete.add(()=>{
                 audio.destroy();
@@ -127,7 +127,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    changeVolume(volume): void {
+    changeVolume(): void {
         if (this.current.bgm){
             this.current.bgm.volume = this.game.userPreferences.get('bgmv');
         }
@@ -143,7 +143,7 @@ export default class AudioManager implements AudioManagerInterface {
         const availableAudios = audioList.filter(audio => this.game.cache.checkSoundKey(audio));
         this.unavailableAudio = audioList.filter(audio => !this.game.cache.checkSoundKey(audio));
 
-        if (availableAudios.length == 0) return;
+        if (availableAudios.length === 0) return;
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(availableAudios, () => {
               // this.audioLoaded = true;

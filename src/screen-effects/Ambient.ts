@@ -1,6 +1,5 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
 import { AudioManagerInterface } from '../managers/AudioManager';
-import {StoryManagerInterface} from '../managers/StoryManager';
 import Emitter = Phaser.Particles.Arcade.Emitter;
 import RJS from '../core/RJS';
 

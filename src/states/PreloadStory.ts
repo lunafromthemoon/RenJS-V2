@@ -106,7 +106,7 @@ class PreloadStory extends RJSState {
         }
     }
 
-    async create() {
+    async create(): Promise<any> {
         // game finished loading, now has to build game
         // we add a tween to the loading bar to make it a bit less static
         this.loadingScreen.waitingScreen();
@@ -119,7 +119,7 @@ class PreloadStory extends RJSState {
 
     }
 
-    initGame(){
+    initGame(): void{
         this.loadingScreen.destroy(this.game);
         this.game.gui.showMenu('main');
     }

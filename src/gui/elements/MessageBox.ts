@@ -1,5 +1,5 @@
 import RJS from '../../core/RJS';
-import {Sprite,Text,Sound} from 'phaser-ce';
+import {Sprite,Sound} from 'phaser-ce';
 import {setTextStyles} from '../../utils/gui'
 import Label from './Label'
 
@@ -53,7 +53,7 @@ export default class MessageBox extends Sprite{
         this.game = game;
         this.visible = false;
         // create sound effects
-        if (this.config.sfx != 'none' && this.game.cache.checkSoundKey(this.config.sfx)){
+        if (this.config.sfx !== 'none' && this.game.cache.checkSoundKey(this.config.sfx)){
             this.defaultSfx = this.game.add.audio(this.config.sfx);
             // play and stop to load the sound for real, it's a phaser thing
             this.defaultSfx.play();
@@ -66,7 +66,7 @@ export default class MessageBox extends Sprite{
             this.ctc = this.game.add.sprite(this.config.ctc.x,this.config.ctc.y,config.ctc.asset);
             if (this.config.ctc.animationStyle === 'spritesheet') {
                 this.ctc.animations.add('do').play(12,true)
-            } else if (this.config.ctc.animationStyle != 'none') {
+            } else if (this.config.ctc.animationStyle !== 'none') {
                 this.ctc.alpha = 0;
                 this.game.add.tween(this.ctc).to({ alpha: 1 }, 400, Phaser.Easing.Linear.None,true,0,-1,true);
             }
@@ -96,9 +96,9 @@ export default class MessageBox extends Sprite{
     // when whole text is displayed, show click to continue and wait for click
     // when player clicks, message box is hid with transition and action ends
     show(text,sfx?): Promise<any> {
-        if (sfx=='none'){
+        if (sfx === 'none'){
             // if character voice configured as none, don't make any sound
-            sfx=null;
+            sfx = null;
         } else if (!sfx && this.defaultSfx){
             sfx = this.defaultSfx;
         }
@@ -136,13 +136,13 @@ export default class MessageBox extends Sprite{
         // how many characters to add per sfx played
         let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
 
-        if (sfx && charPerSfx=='auto'){
+        if (sfx && charPerSfx === 'auto'){
             charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
         }
-        // sfx will only play when sfxCharCount == 0, and will reset when sfxCharCount == charPerSfx
+        // sfx will only play when sfxCharCount === 0, and will reset when sfxCharCount === charPerSfx
         let sfxCharCount = 0;
         return new Promise(async resolve=>{
-            const completeText = () => {
+            const completeText = (): void => {
                 // text finished showing, clear timeout
                 clearTimeout(this.textLoop);
                 // complete text in case of skipping
@@ -163,7 +163,7 @@ export default class MessageBox extends Sprite{
             const transition = this.game.screenEffects.transition.get(this.config.transition);
             await transition(null,this);
 
-            if (sfx && charPerSfx==-1){
+            if (sfx && charPerSfx === -1){
                 // play only once and mute
                 sfx.play();
                 sfx.volume = this.game.userPreferences.get('sfxv');
@@ -193,10 +193,12 @@ export default class MessageBox extends Sprite{
                 }
                 // play sfx
                 if (sfx){
-                    if (characters[charIdx] == ' ' || this.punctuationMarks.includes(characters[charIdx]) || sfxCharCount==charPerSfx){
+                    if (characters[charIdx] === ' '
+                        || this.punctuationMarks.includes(characters[charIdx])
+                        || sfxCharCount === charPerSfx){
                         // reset count, but don't play
                         sfxCharCount=-1;
-                    } else if (sfxCharCount==0){
+                    } else if (sfxCharCount === 0){
                         sfx.play();
                         sfx.volume = this.game.userPreferences.get('sfxv');
                     }
@@ -215,7 +217,7 @@ export default class MessageBox extends Sprite{
         })
     }
 
-    async hide(transitionName?){
+    async hide(transitionName?): Promise<any>{
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
         const transition = this.game.screenEffects.transition.get(transitionName);
@@ -223,7 +225,7 @@ export default class MessageBox extends Sprite{
         this.visible = false;
     }
 
-    async clear(transitionName?) {
+    async clear(transitionName?): Promise<any> {
         if(!this.config.alwaysOn){
             await this.hide(transitionName)
         }
