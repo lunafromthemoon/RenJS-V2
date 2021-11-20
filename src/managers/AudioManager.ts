@@ -30,7 +30,7 @@ export default class AudioManager implements AudioManagerInterface {
 
     constructor(game: RJS) {
         this.game = game
-        this.changeVolume(game.userPreferences.get('bgmv'))
+        this.changeVolume()
     }
 
     getActive(): object{
