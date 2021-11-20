@@ -30,7 +30,7 @@ export default class StoryActionShow extends StoryAction {
             this.properties.flipped = 'flip';
         }
         // parse layer with BEHIND if cgs or with IN more generally
-        if (this.actorType == 'cgs'){
+        if (this.actorType === 'cgs'){
             this.properties.layer = this.parseParameter('BEHIND') ? 'behindCharactersSprites' : 'cgsSprites'
         }
         const layer = this.parseParameter('IN','string');
@@ -38,7 +38,7 @@ export default class StoryActionShow extends StoryAction {
             this.properties.layer = layer;
         }
         // parse look if its a character
-        if (this.actorType == 'characters'){
+        if (this.actorType === 'characters'){
             this.properties.look = this.params[0];
             if (this.game.managers.story.reservedWords.includes(this.properties.look)){
                 this.properties.look = null;

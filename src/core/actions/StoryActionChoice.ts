@@ -19,7 +19,7 @@ export default class StoryActionText extends StoryAction {
     }
 
     execute(): void {
-        if (this.isInterrupt && this.body == 'hide'){
+        if (this.isInterrupt && this.body === 'hide'){
             // interrupts remain in screen until interacted or hidden
             this.game.managers.logic.clearChoices();
             this.resolve()

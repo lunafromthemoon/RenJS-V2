@@ -1,12 +1,9 @@
 import RJSGUIByNewBuilder from './RJSGUIByNewBuilder';
-import {Group} from 'phaser-ce';
-import RJS from '../core/RJS';
-import {GUIAsset} from './elements/GUIAsset';
 import jsyaml from 'js-yaml'
 
 export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
-    initAssets(gui: any){
+    initAssets(gui: any): void{
         // converts assets and fonts
         super.initAssets(gui)
 
@@ -32,7 +29,6 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             if (gui.config[menu].choice){
                 const choiceConfig = gui.config[menu].choice;
                 const choiceWidth = parseInt(gui.config[menu].choice.width,10)
-                const choiceHeight = parseInt(gui.config[menu].choice.height,10)
                 const choice = {
                     id:'default',
                     type: 'choices',
@@ -94,8 +90,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             const imageTypes = ['animations','images']
             for (const listType of imageTypes){
                 if (gui.config[menu][listType]){
-                    for (let i = 0; i < gui.config[menu][listType].length; i++) {
-                      const element = gui.config[menu][listType][i];
+                    for (const element of gui.config[menu][listType]) {
                       menuConfig.push({type:'image',x:element.x,y:element.y,asset:element.id});
                     }
                     delete gui.config[menu][listType]
@@ -104,8 +99,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // saveslot -> {x: number,y: number,asset: string,slot: number,thumbnail: {x: number,y: number,width: number,height: number}}
             if (gui.config[menu]['save-slots']){
-                for (let i = 0; i < gui.config[menu]['save-slots'].length; i++) {
-                  const element = gui.config[menu]['save-slots'][i];
+                for (const element of gui.config[menu]['save-slots']) {
                   const saveSlot = {
                       type:'saveSlot',
                       x: element.x,
@@ -126,8 +120,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // label -> {x:number,y:number,text:string,lineSpacing:number,style:any}
             if (gui.config[menu].labels){
-                for (let i = 0; i < gui.config[menu].labels.length; i++) {
-                  const element = gui.config[menu].labels[i];
+                for (const element of gui.config[menu].labels) {
                   const label = {
                       type:'label',
                       x: element.x,
@@ -141,8 +134,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             }
             // slider -> {x: number,y: number,asset: string,binding: string,sfx: string, mask?:string}
             if (gui.config[menu].sliders){
-                for (let i = 0; i < gui.config[menu].sliders.length; i++) {
-                  const element = gui.config[menu].sliders[i];
+                for (const element of gui.config[menu].sliders) {
                   const slider = {
                       type:'slider',
                       x: element.x,
@@ -160,8 +152,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
 
             // button -> {x:number,y:number,asset:string,sfx:string,binding:string,pushButton?:boolean,pushed?:boolean}
             if (gui.config[menu].buttons){
-                for (let i = 0; i < gui.config[menu].buttons.length; i++) {
-                  const element = gui.config[menu].buttons[i];
+                for (const element of gui.config[menu].buttons) {
                   const button: any = {
                       type:'button',
                       x: element.x,
@@ -172,11 +163,11 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                   if (menus.includes(element.binding)){
                       button.binding = 'openMenu';
                       button.menu = element.binding;
-                  } else if (element.binding == 'other'){
+                  } else if (element.binding === 'other'){
                       button.binding = element['other-binding'];
                   } else {
                       button.binding = element.binding
-                      if (element.binding == 'save' || element.binding=='load'){
+                      if (element.binding === 'save' || element.binding ==='load'){
                           button.slot = element.slot;
                       }
                   }
@@ -184,7 +175,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
                 }
                 delete gui.config[menu].buttons
             }
-            if (menu == 'hud'){
+            if (menu === 'hud'){
                 this.config.hud = menuConfig;
             } else {
                 this.config.menus[menu] = menuConfig;
@@ -201,21 +192,31 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
         }
     }
 
-    convertText(config){
+    convertText(config): {
+        x: number;
+        y: number;
+        lineSpacing: number;
+        style: any;
+    } {
         const text: any = {
             x: config.isTextCentered ? 0 : parseInt(config['offset-x'], 10),
             y: config.isTextCentered ? 0 : parseInt(config['offset-y'], 10),
             lineSpacing: config.lineSpacing,
             style: this.convertTextStyle(config)
         }
-        // if (config.width && config.height){
-        //     text.width = parseInt(config.width)
-        //     text.height = parseInt(config.height)
-        // }
         return text
     }
 
-    convertTextStyle(config){
+    convertTextStyle(config): {
+        font: string;
+        fontSize: string;
+        fill: string;
+        align?: string;
+        wordWrap?: boolean;
+        wordWrapWidth?: number;
+        boundsAlignV?: string;
+        boundsAlignH?: string;
+    } {
         const textStyle: any = {
             font: config.font,
             fontSize: config.size+'px',

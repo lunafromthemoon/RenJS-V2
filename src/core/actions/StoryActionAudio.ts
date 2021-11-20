@@ -17,7 +17,7 @@ export default class StoryActionAudio extends StoryAction {
         this.actor = this.keyParams[1]
         this.actorType = this.game.managers.story.getActorType(this.actor)
         this.transition = this.parseParameter('WITH','string')
-        if (this.actionType == 'play'){
+        if (this.actionType === 'play'){
             // we don't care for these params when stopping
             this.looped = this.parseParameter('LOOPED')
             if (this.looped){
@@ -38,7 +38,7 @@ export default class StoryActionAudio extends StoryAction {
     }
 
     execute(): void {
-        if (this.actionType=='play'){
+        if (this.actionType === 'play'){
             if (this.actorType === 'music') {
                 this.game.managers.audio.play(this.actor, this.channel, this.looped, this.fromSeconds, this.transition, this.force);
             } else {

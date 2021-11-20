@@ -48,10 +48,9 @@ export default class RJSAssetLoader {
             this.episodes = this.game.setup.lazyloading.episodes;
             if (!this.episodes) this.episodes = [];
         }
-
     }
 
-    getEpisode(sceneName: string){
+    getEpisode(sceneName: string): number {
         for (let i = 0; i < this.episodes.length; i++) {
             if (this.episodes[i].includes(sceneName)){
                 return i;
@@ -60,17 +59,17 @@ export default class RJSAssetLoader {
         return -1;
     }
 
-    async loadScene(sceneName: string){
+    async loadScene(sceneName: string): Promise<any> {
 
         const episodeIdx = this.getEpisode(sceneName);
-        if (episodeIdx!=-1) {
+        if (episodeIdx !== -1) {
             return this.loadEpisode(episodeIdx,this.game.setup.lazyloading.backgroundLoading);
         }
         const toLoad = this.assetsPerScene[sceneName];
         return this.loadAssets(toLoad);
     }
 
-    loadEpisodeInBackground(episodeIdx){
+    loadEpisodeInBackground(episodeIdx): void{
         if(episodeIdx<=this.episodes.length-1){
             if (this.game.config.debugMode){
                 console.log('Loading episode '+episodeIdx+' in background');
@@ -81,7 +80,7 @@ export default class RJSAssetLoader {
 
     }
 
-    async loadEpisode(episodeIdx, loadNextAfter, background?){
+    async loadEpisode(episodeIdx, loadNextAfter, background?): Promise<any> {
         if (this.loadedEpisodes[episodeIdx]){
             if (this.game.config.debugMode){
                 console.log('Episode '+episodeIdx+' already loaded.');
@@ -98,9 +97,9 @@ export default class RJSAssetLoader {
         this.loadedEpisodes[episodeIdx]=true;
         let toLoad = {};
 
-        for (let i = 0; i < this.episodes[episodeIdx].length; i++) {
+        for (const asset of this.episodes[episodeIdx]) {
             // add assets for each scene in the episode
-            toLoad = {...toLoad, ...this.assetsPerScene[this.episodes[episodeIdx][i]]};
+            toLoad = {...toLoad, ...this.assetsPerScene[asset]};
         }
         const promise = this.loadAssets(toLoad,background);
         if (loadNextAfter){
@@ -112,7 +111,7 @@ export default class RJSAssetLoader {
         return promise;
     }
 
-    async loadAssets(assets: {},background?){
+    async loadAssets(assets: {},background?): Promise<any> {
         if (!assets) return;
         for (const asset in this.loadedAssets) {
             // remove assets already loaded
@@ -122,7 +121,7 @@ export default class RJSAssetLoader {
             console.log('Loading assets:');
             console.log(assets)
         }
-        if (Object.keys(assets).length==0){
+        if (Object.keys(assets).length === 0){
             return Promise.resolve();
         }
         // set loading screen

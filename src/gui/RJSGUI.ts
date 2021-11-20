@@ -1,5 +1,4 @@
 import RJS from '../core/RJS';
-import {Group} from 'phaser-ce';
 import {GUIAsset} from './elements/GUIAsset';
 import RJSMenu from './RJSMenu';
 import RJSHUD from './RJSHUD';
@@ -37,17 +36,17 @@ export default class RJSGUI implements RJSGUIInterface {
     // ----------------------------------------------------------------
     // Init the gui, build the elements and menus
     // ----------------------------------------------------------------
-    initAssets(gui: any){
+    initAssets(gui: any): void{
         // convert specific gui config to general one
         // has to init this.assets, this.fonts and this.config
     }
 
-    async init() {
+    async init(): Promise<any> {
         // decode audios used in the menu
         const audioList = [];
-        for (let i = 0; i < this.assets.length; i++) {
-            if (this.assets[i].type=='audio'){
-                audioList.push(this.assets[i].key);
+        for (const asset of this.assets) {
+            if (asset.type==='audio'){
+                audioList.push(asset.key);
             }
         }
         await this.game.managers.audio.decodeAudio(audioList);
@@ -66,11 +65,11 @@ export default class RJSGUI implements RJSGUIInterface {
     // GUI user interaction, buttons and sliders
     // ----------------------------------------------------------------
 
-    getCurrent(){
+    getCurrent(): RJSMenu{
         return this.menus[this.currentMenu];
     }
 
-    async showMenu(menu) {
+    async showMenu(menu): Promise<any> {
         // this.game.pause();
         this.previousMenu = this.currentMenu;
         this.currentMenu = menu;
@@ -78,7 +77,7 @@ export default class RJSGUI implements RJSGUIInterface {
         await this.menus[menu].show();
     }
 
-    async hideMenu(menu, mute, callback?) {
+    async hideMenu(menu, mute, callback?): Promise<any> {
         if (!menu){
             menu = this.currentMenu;
         }
@@ -89,7 +88,7 @@ export default class RJSGUI implements RJSGUIInterface {
         }
     }
 
-    async changeMenu(menu) {
+    async changeMenu(menu): Promise<any> {
         const previous = this.currentMenu;
         if (previous){
             if (menu) {
@@ -110,42 +109,42 @@ export default class RJSGUI implements RJSGUIInterface {
 
     initBindingActions (): void {
         this.bindingActions = {
-            start: async () => {
+            start: async (): Promise<any> => {
                 // hide current menu
                 await this.game.gui.changeMenu('hud');
                 this.game.start();
             },
-            load: async (element) => {
+            load: async (element): Promise<any> => {
                 // hide current menu
                 await this.game.gui.changeMenu('hud');
                 this.game.loadSlot(parseInt(element.slot, 10));
             },
-            save: (element) => {
+            save: (element): void => {
                 this.game.save(parseInt(element.slot, 10));
             },
             auto: this.game.auto.bind(this.game),
             skip: this.game.skip.bind(this.game),
-            mute: (element,mute) =>{
+            mute: (element,mute): void =>{
                 // mutes or unmutes audio and saves preference
                 this.game.managers.audio.mute(mute);
              },
-            openMenu: (element)=>{
+            openMenu: (element): void =>{
                 this.game.pause();
                 this.changeMenu(element.menu);
             },
-            return: async () => {
+            return: async (): Promise<any> => {
                 const prev = this.previousMenu;
                 await this.game.gui.changeMenu(prev);
-                if (prev=='hud') {
+                if (prev==='hud') {
                     this.game.unpause();
                 }
             },
             // slider bindings
-            changeUserPreference: (element,value) => {
+            changeUserPreference: (element,value): void => {
                 this.game.userPreferences.set(element.userPreference,value);
-                if (element.userPreference == 'bgmv'){
+                if (element.userPreference === 'bgmv'){
                     // change music volume immediately
-                    this.game.managers.audio.changeVolume(this.game.userPreferences.get(element.userPreference));
+                    this.game.managers.audio.changeVolume();
                 }
             }
         };

@@ -1,15 +1,13 @@
 import RJS from '../core/RJS';
 
-
-
 export class UserPreference {
     constructor(public value){}
 
-    set(value){ this.value = value;}
+    set(value): void { this.value = value;}
 
-    get(){ return this.value }
+    get(): any { return this.value }
 
-    toJSON(){return this.value}
+    toJSON(): any {return this.value}
 }
 
 export class RangedUserPreference extends UserPreference{
@@ -18,12 +16,12 @@ export class RangedUserPreference extends UserPreference{
         super(value)
     }
 
-    set(value){
+    set(value): void{
         // value between 0 and 1
         this.value = value*(this.max-this.min)+this.min
     }
 
-    get(){
+    get(): void {
         return this.inverted ? this.max - this.value : this.value;
     }
 }
@@ -55,7 +53,7 @@ export default class UserPreferences {
         }
     }
 
-    setPreferences(preferences){
+    setPreferences(preferences): void {
         if (preferences) {
             for (const preference in this.preferences) {
                 if (preferences[preference] !== undefined) {
@@ -66,24 +64,24 @@ export default class UserPreferences {
         }
     }
 
-    set(type,value){
+    set(type,value): void {
         this.preferences[type].set(value);
         this.savePreferences();
     }
 
-    get(type){
+    get(type): any {
         return this.preferences[type].get();
     }
 
-    addPreference(type,value,data){
-        if (data == 'boolean'){
+    addPreference(type,value,data): void {
+        if (data === 'boolean'){
             this.preferences[type] = new UserPreference(value);
         } else {
             this.preferences[type] = new RangedUserPreference(value,data.min,data.max);
         }
     }
 
-    savePreferences(){
+    savePreferences(): void {
         // save raw values
         const prefs = JSON.stringify(this.preferences);
         localStorage.setItem('RenJSUserPreferences' + this.game.config.name,prefs);

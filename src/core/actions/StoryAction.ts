@@ -18,9 +18,6 @@ export default class StoryAction implements StoryActionInterface {
 		this.key = Object.keys(properties)[0];
 		this.keyParams = this.key.split(' ');
         this.body = properties[this.key]
-
-
-		// each action should parse their specific params after this
 	}
 
 	resolve(transitioning?: Promise<any>, cont?: boolean): void {
@@ -36,7 +33,7 @@ export default class StoryAction implements StoryActionInterface {
 		// base action does nothing
 	}
 
-	parseParams(keyParams){
+	parseParams(keyParams): string[] {
 		if (keyParams){
 			return this.keyParams;
 		}
@@ -46,19 +43,19 @@ export default class StoryAction implements StoryActionInterface {
 		return this.params;
 	}
 
-	parseActor(){
+	parseActor(): string {
 		return this.keyParams[1]
 	}
 
-	parseParameter(reservedWord: string, argType = 'boolean', inKeyParams = false){
+	parseParameter(reservedWord: string, argType = 'boolean', inKeyParams = false): any {
 		const params = this.parseParams(inKeyParams);
 		const idx = params.indexOf(reservedWord);
-		if (argType=='boolean'){
-			return idx!=-1;
+		if (argType === 'boolean'){
+			return idx !== -1;
 		}
-		if (idx==-1) return null;
+		if (idx === -1) return null;
 		const value = params[idx+1];
-		if (argType=='coords'){
+		if (argType === 'coords'){
 			// coords can be a special position
 			if (value in this.game.storyConfig.positions){
 				return this.game.storyConfig.positions[value]
@@ -67,6 +64,6 @@ export default class StoryAction implements StoryActionInterface {
             const coords = value.split(',');
             return {x:parseInt(coords[0], 10),y:parseInt(coords[1], 10)};
 		}
-		return argType=='number' ? parseFloat(value) : value
+		return argType === 'number' ? parseFloat(value) : value
 	}
 }

@@ -120,7 +120,7 @@ export default class RJS extends Game {
             this.scale.pageAlignVertically = true;
         }
 
-        if (this.config.scaleMode===undefined){
+        if (this.config.scaleMode === undefined){
             this.scale.setResizeCallback((scale,parentBounds)=>{
                 this.config.userScale(scale,parentBounds);
             },this)
@@ -130,7 +130,7 @@ export default class RJS extends Game {
         this.screenReady = true;
     }
 
-    async initStory () {
+    async initStory(): Promise<any> {
         this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
 
         this.managers = {
@@ -175,7 +175,7 @@ export default class RJS extends Game {
 
     }
 
-    async checkPlugins(signal: string,params?: any[]){
+    async checkPlugins(signal: string,params?: any[]): Promise<any>{
         for (const plugin in this.pluginsRJS) {
             if (this.pluginsRJS[plugin][signal]){
                 await this.pluginsRJS[plugin][signal](...params);
@@ -183,27 +183,27 @@ export default class RJS extends Game {
         }
     }
 
-    pause (keepGUI?: boolean): void {
+    pause(): void {
         this.control.paused = true;
         this.control.skipping = false;
         this.control.auto = false;
         this.takeXShot();
     }
 
-    takeXShot (): void {
+    takeXShot(): void {
         if (!this.xShots) this.xShots = [];
         this.xShots.push(this.canvas.toDataURL('image/jpeg'));
     }
 
-    async unpause (){
+    async unpause(): Promise<any>{
         this.control.paused = false;
         // await this.gui.hud.show();
-        if (!this.control.waitForClick && this.managers.logic.currentChoices.length==0){
+        if (!this.control.waitForClick && this.managers.logic.currentChoices.length === 0){
             this.resolveAction();
         }
     }
 
-    async endGame() {
+    async endGame(): Promise<any> {
         await this.managers.story.hide();
         this.managers.story.clearScene();
         this.gameStarted = false;
@@ -212,7 +212,7 @@ export default class RJS extends Game {
         this.gui.changeMenu('main');
     }
 
-    async start(initialVars = {}) {
+    async start(initialVars = {}): Promise<any> {
         await this.managers.story.hide();
         this.control.paused = false;
         this.managers.story.clearScene();
@@ -249,7 +249,7 @@ export default class RJS extends Game {
         }
     }
 
-    async save (slot?) {
+    async save (slot?): Promise<any> {
         if (!this.gameStarted){
             return;
         }
@@ -283,11 +283,11 @@ export default class RJS extends Game {
         }
     }
 
-    getSlotThumbnail (slot): string {
+    getSlotThumbnail(slot): string {
         return localStorage.getItem('RenJSThumbnail' + this.config.name + slot)
     }
 
-    async loadSlot (slot): Promise<void> {
+    async loadSlot(slot): Promise<void> {
         if (!slot){
             slot = 0;
         }
@@ -319,7 +319,7 @@ export default class RJS extends Game {
         this.unpause();
     }
 
-    waitForClick (callback?): void {
+    waitForClick(callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping || this.control.auto){
             let timeout = this.control.skipping ? this.storyConfig.skiptime : this.storyConfig.autotime;
@@ -336,7 +336,7 @@ export default class RJS extends Game {
         }
     }
 
-    waitTimeout (time, callback?): void {
+    waitTimeout(time, callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping){
             this.control.nextAction.call(this);
@@ -345,17 +345,17 @@ export default class RJS extends Game {
         }
     }
 
-    waitForClickOrTimeout (time,callback): void {
+    waitForClickOrTimeout(time,callback): void {
         this.control.nextAction = callback;
         this.control.waitForClick = true;
-        setTimeout((() => {
+        setTimeout(((): void => {
                 this.control.waitForClick = false;
                 this.control.nextAction();
             }).bind(this),time ? time : this.storyConfig.timeout);
     }
 
     // controls the game flow when an action requires the player to 'click to continue'
-    onTap (pointer, doubleTap?): void {
+    onTap(pointer): void {
         if (this.control.paused){
             return;
         }

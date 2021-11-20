@@ -1,5 +1,4 @@
 import StoryAction from './StoryAction';
-import RJS from '../RJS';
 
 export default class StoryActionEnd extends StoryAction {
 

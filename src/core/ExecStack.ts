@@ -20,7 +20,7 @@ export default class ExecStack {
         }
     }
 
-    shallowCopy(){
+    shallowCopy(): any[] {
         // convert to list of objects for saving
         return this.execStack.map(item => {return {c:item.c, total: item.total, scope: item.scope, index:item.index, origin: item.origin} })
     }
@@ -29,30 +29,30 @@ export default class ExecStack {
         return objectHash(this.shallowCopy())
     }
 
-    top(): ExecItem{
+    top(): ExecItem {
         // the current scope is at the top of the stack
         return this.execStack[0]
     }
 
-    bottom(): ExecItem{
+    bottom(): ExecItem {
         return this.execStack[this.execStack.length-1]
     }
 
-    clear(){
+    clear(): void {
         this.execStack = []
     }
 
-    replace(scope: string){
+    replace(scope: string): void {
         // replace the whole stack, scope will be a new scene
         this.execStack = [{c:-1,scope}]
     }
 
-    stack(scope,total,index = -1, origin = -1){
+    stack(scope,total,index = -1, origin = -1): void {
         // stack a new scope, normally a branch but could be another scene
         this.execStack.unshift({c:-1, total, scope, index, origin});
     }
 
-    advance(): void{
+    advance(): void {
         // advance the counter on the top scope
         this.top().c++;
         // if counter is total, then this scope (scene, if or choice) is over
@@ -64,7 +64,7 @@ export default class ExecStack {
         // if execStack is empty, game over
     }
 
-    getActions(story): any[]{
+    getActions(story): any[] {
         let stack = this.bottom()
         // find all action of the scene
         // scene name should be the bottom stack scope

@@ -32,16 +32,16 @@ export default class Character implements CharacterInterface {
 
     constructor(private game,public keyName,config,hasPortrait?) {
         Object.assign(this.config,config);
-        if (this.config.voice != 'none'){
+        if (this.config.voice !== 'none'){
             this.voice = this.game.add.audio(this.config.voice);
             // play silently once so the duration set
             this.voice.play();
             this.voice.stop();
         }
-        this.usePortraits = (hasPortrait != undefined)
+        this.usePortraits = (hasPortrait !== undefined)
     }
 
-    createPortrait(portrait: string,parent: MessageBox) {
+    createPortrait(portrait: string,parent: MessageBox): void {
         if (this.usePortraits && parent.config.portrait){
             const imgKey = this.keyName+'_portrait_'+portrait;
             const position = parent.config.portrait;
@@ -63,9 +63,9 @@ export default class Character implements CharacterInterface {
 
         const look: Sprite = this.game.managers.story.characterSprites.create(data.position.x, data.position.y, imgKey);
         look.name = data.look;
-        if (props.flipped == 'flip'){
+        if (props.flipped === 'flip'){
             if (this.currentLook){
-                data.flipped = !(this.currentLook.scale.x == -1);
+                data.flipped = !(this.currentLook.scale.x === -1);
             } else {
                 data.flipped = true
             }
@@ -80,14 +80,14 @@ export default class Character implements CharacterInterface {
     }
 
     // destroys look and resets properties
-    resetLook(){
+    resetLook(): void{
         this.currentLook.destroy();
         this.currentLook = null;
     }
 
     getLookData(): {look: string; position: {x: number;y: number}; flipped: boolean}{
         if (!this.currentLook) return null
-        return {look:this.currentLook.name,position: {x: this.currentLook.x, y: this.currentLook.y}, flipped: (this.currentLook.scale.x == -1)};
+        return {look:this.currentLook.name,position: {x: this.currentLook.x, y: this.currentLook.y}, flipped: (this.currentLook.scale.x === -1)};
     }
 
 }
