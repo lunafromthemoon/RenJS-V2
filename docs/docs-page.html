@@ -1300,6 +1300,12 @@ SCENE2:
 	# hide all
 	- hide ALL: WITH CUT
 						</code></pre>
+						<h3>Hide all CGS</h3>
+						<p>You can hide all the CGS at the same time using special id <strong>CGS</strong>, this is different from <strong>ALL</strong>.</p>
+						<pre><code class="language-yaml">
+	# hide all CGs at the same time
+	- hide CGS: WITH FADE
+						</code></pre>
 						<h3>Show, hide and continue</h3>
 						<p>Sometimes you want to show (or hide) many elements at the same time. For example, show a background and a character at the same time, show or hide two characters, or show one character when another one is being hidden.<p>
 						<p>All of this can be achieved with the keyword <strong>CONTINUE</strong>. By default when showing or hiding elements, you will use a transition that takes a little bit of time, the most common one being FADE. When you Fade In or Out an image, the game will wait until the transition is over to execute the next action.<p>
