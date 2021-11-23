@@ -12,7 +12,6 @@ interface RJSControlInterface {
     nextAction?: () => (void | Promise<any>);
 }
 export default class RJSControl implements RJSControlInterface {
-    constructor();
     skipping: boolean;
     unskippable: boolean;
     auto: boolean;

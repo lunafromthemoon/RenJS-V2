@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.3.1...v2.3.2) (2021-11-23)
+
+
+### Bug Fixes
+
+* delint ([d3fd082](https://github.com/lunafromthemoon/RenJS-V2/commit/d3fd082246442fe7f9bfb4bee799a7079a157f23))
+
 ## [2.3.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.3.0...v2.3.1) (2021-11-14)
 
  

@@ -11,5 +11,6 @@ export default class BaseButton extends Button {
         pushed?: boolean;
     };
     constructor(game: RJS, config: any);
+    static getButtonFrames(total: number, pushed?: boolean): number[];
     onClick(): void;
 }

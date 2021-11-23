@@ -13,13 +13,7 @@ export default class ExecStack {
         scope: string;
         index: number;
     }]);
-    shallowCopy(): {
-        c: number;
-        total: number;
-        scope: string;
-        index: number;
-        origin: number;
-    }[];
+    shallowCopy(): any[];
     hash(): string;
     top(): ExecItem;
     bottom(): ExecItem;

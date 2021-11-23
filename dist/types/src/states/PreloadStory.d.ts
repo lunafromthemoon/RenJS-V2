@@ -6,7 +6,7 @@ declare class PreloadStory extends RJSState {
     constructor();
     init(): void;
     preload(): void;
-    create(): Promise<void>;
+    create(): Promise<any>;
     initGame(): void;
 }
 export default PreloadStory;

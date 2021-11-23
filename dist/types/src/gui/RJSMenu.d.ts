@@ -1,5 +1,5 @@
 import RJS from '../core/RJS';
-import { Group } from 'phaser-ce';
+import { Group, Sprite } from 'phaser-ce';
 import MaskSlider from './elements/MaskSlider';
 import SaveSlot from './elements/SaveSlot';
 import BaseButton from './elements/BaseButton';
@@ -20,7 +20,7 @@ export default class RJSMenu extends Group {
         x: number;
         y: number;
         asset: string;
-    }): Phaser.Sprite;
+    }): Sprite;
     createLabel(element: {
         x: number;
         y: number;
@@ -58,8 +58,8 @@ export default class RJSMenu extends Group {
             height: number;
         };
     }): SaveSlot;
-    addThumbnail(thumbnail: any, slot: any): void;
-    show(): Promise<void>;
-    hide(mute?: boolean): Promise<void>;
+    addThumbnail(thumbnail: string, slot: number): void;
+    show(): Promise<any>;
+    hide(mute?: boolean): Promise<any>;
     destroy(): void;
 }

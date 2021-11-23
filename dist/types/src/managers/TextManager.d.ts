@@ -1,12 +1,10 @@
-import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
-export interface TextManagerInterface extends RJSManagerInterface {
+export interface TextManagerInterface {
 }
 export default class TextManager implements TextManagerInterface {
     private game;
     textLog: any[];
     constructor(game: RJS);
-    set(...args: any): void;
-    display(text: any, boxId: any, dontHide?: boolean): Promise<unknown>;
-    characterSays(keyName: any, look: any, text: any, boxId: any, dontHide?: boolean): Promise<void>;
+    display(text: string, boxId: string, dontHide?: boolean): Promise<any>;
+    characterSays(keyName: string, look: string, text: string, boxId: string, dontHide?: boolean): Promise<any>;
 }

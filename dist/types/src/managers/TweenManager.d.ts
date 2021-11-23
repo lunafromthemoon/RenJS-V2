@@ -1,7 +1,6 @@
 import RJS from '../core/RJS';
 import RJSTween from '../core/RJSTween';
-import RJSManagerInterface from './RJSManager';
-export interface TweenManagerInterface extends RJSManagerInterface {
+export interface TweenManagerInterface {
     tween(sprite: any, tweenables: any, callback: any, time: number, start: boolean, delay?: number, unskippable?: boolean): any;
     chain(tweens: any[], unskippable: boolean, time?: number): any;
     skip(): any;
@@ -16,5 +15,4 @@ export default class TweenManager implements TweenManagerInterface {
     parallel(tweens: any, unskippable?: boolean, time?: any): void;
     canSkip(): boolean;
     skip(): void;
-    set(...args: any): void;
 }

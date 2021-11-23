@@ -22,7 +22,7 @@ export default class NameBox extends Sprite {
         };
     };
     constructor(game: RJS, config: any);
-    show(text: any, color: any): Promise<void>;
-    hide(transitionName?: any): Promise<void>;
+    show(text: string, color: string): Promise<any>;
+    hide(transitionName?: string): Promise<any>;
     destroy(): void;
 }

@@ -35,7 +35,7 @@ export default class AudioManager implements AudioManagerInterface {
     stopAudio(audio: Phaser.Sound, transition: string): void;
     playSFX(key: any, volume?: any): void;
     set(active: any): void;
-    changeVolume(volume: any): void;
+    changeVolume(): void;
     decodeAudio(audioList: string[]): Promise<any>;
     isMusic(actor: any): boolean;
     isSfx(actor: any): boolean;

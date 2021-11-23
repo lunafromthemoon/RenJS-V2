@@ -19,17 +19,17 @@ export default class LogicManager implements LogicManagerInterface<Group> {
     showingText: boolean;
     constructor(game: RJS);
     set(vars: any): void;
-    setVar(name: any, value: any): void;
-    updateChoiceLog(index: any): void;
-    choiceInLog(index: any): any;
-    evalExpression(expression: any): any;
+    setVar(name: string, value: any): void;
+    updateChoiceLog(index: number): void;
+    choiceInLog(index: number): boolean;
+    evalExpression(expression: any): boolean;
     branch(expression: any, branches: any): void;
     parseVars(text: any, useQM?: any): string;
     parseChoice(index: any, choice: any): any;
-    choose(index: any): Promise<void>;
+    choose(index: any): Promise<any>;
     getExecStackId(): string;
     checkTextAction(firstChoice: any): Promise<boolean>;
-    showChoices(boxId: any, choices: any): Promise<void>;
+    showChoices(boxId: any, choices: any): Promise<boolean>;
     interrupt(boxId: any, choices: any): any;
-    clearChoices(): Promise<void>;
+    clearChoices(): Promise<any>;
 }

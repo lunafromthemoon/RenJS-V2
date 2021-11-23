@@ -23,10 +23,10 @@ export default class RJSGUI implements RJSGUIInterface {
     previousMenu: any;
     constructor(game: RJS);
     initAssets(gui: any): void;
-    init(): Promise<void>;
+    init(): Promise<any>;
     getCurrent(): RJSMenu;
-    showMenu(menu: any): Promise<void>;
-    hideMenu(menu: any, mute: any, callback?: any): Promise<void>;
-    changeMenu(menu: any): Promise<void>;
+    showMenu(menu: any): Promise<any>;
+    hideMenu(menu: any, mute: any, callback?: any): Promise<any>;
+    changeMenu(menu: any): Promise<any>;
     initBindingActions(): void;
 }

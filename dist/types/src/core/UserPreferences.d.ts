@@ -12,7 +12,7 @@ export declare class RangedUserPreference extends UserPreference {
     private inverted;
     constructor(value: number, min: number, max: number, inverted?: boolean);
     set(value: any): void;
-    get(): any;
+    get(): void;
 }
 export default class UserPreferences {
     private game;

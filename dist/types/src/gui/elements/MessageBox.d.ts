@@ -40,6 +40,6 @@ export default class MessageBox extends Sprite {
     onCharacter?: (characters: string[], index: number) => void;
     destroy(): void;
     show(text: any, sfx?: any): Promise<any>;
-    hide(transitionName?: any): Promise<void>;
-    clear(transitionName?: any): Promise<void>;
+    hide(transitionName?: any): Promise<any>;
+    clear(transitionName?: any): Promise<any>;
 }

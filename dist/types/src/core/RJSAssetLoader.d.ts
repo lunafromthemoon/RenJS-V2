@@ -10,8 +10,8 @@ export default class RJSAssetLoader {
     backgroundLoading: Promise<any>;
     constructor(game: any);
     getEpisode(sceneName: string): number;
-    loadScene(sceneName: string): Promise<unknown>;
+    loadScene(sceneName: string): Promise<any>;
     loadEpisodeInBackground(episodeIdx: any): void;
-    loadEpisode(episodeIdx: any, loadNextAfter: any, background?: any): Promise<unknown>;
-    loadAssets(assets: {}, background?: any): Promise<unknown>;
+    loadEpisode(episodeIdx: any, loadNextAfter: any, background?: any): Promise<any>;
+    loadAssets(assets: {}, background?: any): Promise<any>;
 }
