@@ -1,6 +1,6 @@
 ## [2.3.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.3.0...v2.3.1) (2021-11-14)
 
-
+ 
 ### Bug Fixes
 
 * send body to plugins, text input example ([264731f](https://github.com/lunafromthemoon/RenJS-V2/commit/264731ff5489485948688b5d11c383194859eabd))
