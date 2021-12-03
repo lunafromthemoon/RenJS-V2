@@ -13,8 +13,7 @@ Happy linting! 💖
 */
 module.exports = {
     "env": {
-        "browser": true,
-        "node": true
+        "browser": true
     },
     "extends": [
         "plugin:@typescript-eslint/recommended",
@@ -29,7 +28,6 @@ module.exports = {
     "plugins": [
         "@typescript-eslint",
         "import",
-        "node",
         "promise",
         "standard"
     ],
