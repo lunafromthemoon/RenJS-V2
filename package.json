@@ -66,13 +66,13 @@
   },
   "dependencies": {
     "fontfaceobserver": "^2.1.0",
-    "js-yaml": "^3.14.0",
+    "js-yaml": "^4.1.0",
     "object-hash": "^2.0.3",
     "phaser-ce": "^2.16.0"
   },
   "devDependencies": {
     "@types/fontfaceobserver": "^2.1.0",
-    "@types/js-yaml": "^3.12.5",
+    "@types/js-yaml": "^4.0.5",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "bestzip": "^2.2.0",
