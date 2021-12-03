@@ -40,31 +40,6 @@ module.exports = {
         ],
         "@typescript-eslint/require-await": "off",
         "@typescript-eslint/no-empty-interface": "off",
-        "@typescript-eslint/ban-types": [
-            "error",
-            {
-                "types": {
-                    "Object": {
-                        "message": "Avoid using the `Object` type. Did you mean `object`?"
-                    },
-                    "Function": {
-                        "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
-                    },
-                    "Boolean": {
-                        "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
-                    },
-                    "Number": {
-                        "message": "Avoid using the `Number` type. Did you mean `number`?"
-                    },
-                    "String": {
-                        "message": "Avoid using the `String` type. Did you mean `string`?"
-                    },
-                    "Symbol": {
-                        "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
-                    }
-                }
-            }
-        ],
         "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/dot-notation": "error",
         "@typescript-eslint/member-ordering": "off",
@@ -171,7 +146,32 @@ module.exports = {
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": ["error", { "allowNumber": true, "allowAny": true }],
-        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "extendDefaults": false,
+                "types": {
+                    "Object": {
+                        "message": "Avoid using the `Object` type. Did you mean `object`?"
+                    },
+                    "Function": {
+                        "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+                    },
+                    "Boolean": {
+                        "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
+                    },
+                    "Number": {
+                        "message": "Avoid using the `Number` type. Did you mean `number`?"
+                    },
+                    "String": {
+                        "message": "Avoid using the `String` type. Did you mean `string`?"
+                    },
+                    "Symbol": {
+                        "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+                    }
+                }
+            }
+        ],
         "@typescript-eslint/no-misused-promises": "off",
         // TODO: either remove when legacy case has been fixed, or disable entirely if not desired
         "max-classes-per-file":"warn",
