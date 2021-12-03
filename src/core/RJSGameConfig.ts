@@ -1,6 +1,6 @@
 import {IGameConfig} from 'phaser-ce';
 
-// eslint-disable-next-line @typescript-eslint/class-name-casing
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface i18nInterface {
 
     background: string;
