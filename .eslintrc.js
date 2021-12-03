@@ -156,10 +156,27 @@ module.exports = {
         ],
         "use-isnan": "error",
         "valid-typeof": "off",
+        "@typescript-eslint/naming-convention": [
+            "error", 
+            { "selector": "default", "format": ["camelCase", "UPPER_CASE", "PascalCase"] },
+            { "selector": "variableLike", "format": ["camelCase", "UPPER_CASE", "PascalCase"], "leadingUnderscore": "allow" },
+            { "selector": "memberLike", "format": ["camelCase", "UPPER_CASE"] },
+            { "selector": "typeLike", "format": ["PascalCase"] },
+        ],
+        "@typescript-eslint/no-floating-promises": "off",
 
         // TODO: remove these overrides when legacy cases have been fixed
         "eqeqeq":"warn",
         "@typescript-eslint/prefer-for-of":"warn",
+        "@typescript-eslint/restrict-plus-operands": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/restrict-template-expressions": ["error", { "allowNumber": true, "allowAny": true }],
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/no-misused-promises": "off",
         // TODO: either remove when legacy case has been fixed, or disable entirely if not desired
         "max-classes-per-file":"warn",
     }
