@@ -166,8 +166,6 @@ module.exports = {
         "@typescript-eslint/no-floating-promises": "off",
 
         // TODO: remove these overrides when legacy cases have been fixed
-        "eqeqeq":"warn",
-        "@typescript-eslint/prefer-for-of":"warn",
         "@typescript-eslint/restrict-plus-operands": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-argument": "off",
