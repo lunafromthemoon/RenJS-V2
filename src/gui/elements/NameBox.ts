@@ -36,6 +36,7 @@ export default class NameBox extends Sprite {
     }
 
     async show(text: string,color: string): Promise<any> {
+        this.game.accessibility.name(text);
         this.text.setText(text, true);
         this.text.updateTransform();
         if (this.config.tintStyle === 'box'){
@@ -50,6 +51,7 @@ export default class NameBox extends Sprite {
     }
 
     async hide(transitionName?: string): Promise<any>{
+        this.game.accessibility.name();
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
         const transition = this.game.screenEffects.transition.get(transitionName);
