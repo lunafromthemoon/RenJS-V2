@@ -96,6 +96,7 @@ export default class MessageBox extends Sprite{
     // when whole text is displayed, show click to continue and wait for click
     // when player clicks, message box is hid with transition and action ends
     show(text,sfx?): Promise<any> {
+        this.game.accessibility.text(text);
         if (sfx === 'none'){
             // if character voice configured as none, don't make any sound
             sfx = null;
@@ -218,6 +219,7 @@ export default class MessageBox extends Sprite{
     }
 
     async hide(transitionName?): Promise<any>{
+        this.game.accessibility.text();
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
         const transition = this.game.screenEffects.transition.get(transitionName);
