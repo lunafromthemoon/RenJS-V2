@@ -161,15 +161,6 @@ config:
         x: 640
         assetType: images
     buttons:
-      - id: asset23
-        sfx: none
-        slot: '0'
-        binding: saveload
-        height: '39'
-        width: '41'
-        'y': 474
-        x: 688
-        assetType: spritesheets
       - id: asset24
         sfx: none
         slot: '0'
@@ -179,13 +170,13 @@ config:
         'y': 474
         x: 646
         assetType: spritesheets
-      - id: asset25
+      - id: asset23
         sfx: none
         slot: '0'
-        binding: skip
+        binding: saveload
         height: '39'
         width: '41'
-        'y': 514
+        'y': 474
         x: 688
         assetType: spritesheets
       - id: asset26
@@ -196,6 +187,15 @@ config:
         width: '41'
         'y': 514
         x: 646
+        assetType: spritesheets
+      - id: asset25
+        sfx: none
+        slot: '0'
+        binding: skip
+        height: '39'
+        width: '41'
+        'y': 514
+        x: 688
         assetType: spritesheets
     choice:
       id: asset31
