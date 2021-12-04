@@ -112,6 +112,21 @@ export default class RJSMenu extends Group {
             value = (preference.value-preference.min)/(preference.max - preference.min);
         }
         const slider = new MaskSlider(this.game,element,value);
+        this.game.accessibility.slider({
+            isActive: () => !this.game.control.unskippable && slider.parent === this.game.gui.menus[this.game.gui.currentMenu],
+            label: [element.binding, element.userPreference].filter(i => i).join(' '),
+            min: 0,
+            max: 1,
+            step: 0.05,
+            get: () => slider.currentValue,
+            set: (value) => slider.setValue(value),
+            getBounds: () => {
+                const r = slider.getBounds();
+                r.x = slider.position.x;
+                r.y = slider.position.y;
+                return r;
+            },
+        });
         return slider
     }
 
