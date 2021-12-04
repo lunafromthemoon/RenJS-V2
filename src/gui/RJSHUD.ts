@@ -101,15 +101,24 @@ export default class RJSHUD extends RJSMenu {
             this.visualChoices = this.game.add.graphics();
             this.addChild(this.visualChoices);
             this.visualChoices.alpha = 0;
-            choices.forEach((choice,index) => {
-                this.createVisualChoice(choice,index,resolve);
-            });
+            const boxes = choices.map((choice,index) => this.createVisualChoice(choice,index,resolve));
             const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.visualChoices);
             transition(null,this.visualChoices);
+
+            this.game.accessibility.choices(
+                choices.map((choice, index) => ({
+                    // TODO: better accessible label - this is just the texture name,
+                    // not something necessarily meant to be user-facing
+                    label: choice.choiceText.split(' AT ')[0],
+                    isActive: () => !this.game.control.unskippable && boxes[index].parent.parent === this.game.gui.menus[this.game.gui.currentMenu],
+                    onclick: () => resolve(index),
+                    getBounds: () => boxes[index].getBounds(),
+                }))
+            );
         });
     }
 
-    createVisualChoice(choice, index, resolve): void{
+    createVisualChoice(choice, index, resolve) {
         const defaultChoicesConfig = this.cHandlers.default.config;
         // visual choice text -> spriteId AT x,y|positionId SFX sfxId
         const str = choice.choiceText.split(' ');
@@ -141,6 +150,7 @@ export default class RJSHUD extends RJSMenu {
         if (choice.previouslyChosen){
             visualChoice.tint = Color.hexToRGB(defaultChoicesConfig.chosenColor);
         }
+        return visualChoice;
     }
 
     async hideVisualChoices(transitionName?): Promise<any>{
@@ -149,6 +159,8 @@ export default class RJSHUD extends RJSMenu {
         await transition(this.visualChoices,null);
         this.visualChoices.destroy()
         this.visualChoices = null;
+
+        this.game.accessibility.choices();
     }
 
     ignoreTap(pointer): boolean{
