@@ -119,7 +119,7 @@ export default class RJSMenu extends Group {
             max: 1,
             step: 0.05,
             get: () => slider.currentValue,
-            set: (value) => slider.setValue(value),
+            set: (v) => slider.setValue(v),
             getBounds: () => {
                 const r = slider.getBounds();
                 r.x = slider.position.x;
