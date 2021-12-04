@@ -184,8 +184,8 @@ testtext:
   - deuzi says angry:  Lorem ipsum dolor sit amet, consectetur adipiscing elit... Aasdf qwer! asdfasdf.
   - liz says happy: asdf qwer asdf 
   - text:  Text with styles
-  - text: This is (italic)italic(end), this is (bold)bold(end).
-  - text: Text can have (color:red)color(end) too. With hex (color:#f593e6)this is pink(end).
+  - text: This is (italic)italic(end), this is (bold)bold(end). This is (italic)italic (bold)and(end) bold(end).
+  - text: Text can have (color:red)color(end) too. With hex (color:#f593e6)this is pink(end). This is (italic)italic (color:red)and(end) red(end).
   - deuzi says normal: Praesent finibus nunc id mauris ullamcorper fermentum. Mauris faucibus eu sem in aliquet. 
   - show liz: AT OUTLEFT WITH CUT
     flipped: true
