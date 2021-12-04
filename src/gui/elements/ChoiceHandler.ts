@@ -3,6 +3,7 @@ import {Graphics,Button,Color} from 'phaser-ce';
 import BaseButton from './BaseButton';
 import {setTextStyles} from '../../utils/gui'
 import Label from './Label'
+import { AccessibilityBounds } from '../a11y/Accessibility';
 
 export default class ChoiceHandler extends Graphics {
 
@@ -69,11 +70,11 @@ export default class ChoiceHandler extends Graphics {
             this.game.accessibility.choices(
                 choices.map((choice, index) => ({
                     label: choice.choiceText,
-                    isActive: () => !this.game.control.unskippable && this.boxes[index].parent.parent === this.game.gui.menus[this.game.gui.currentMenu],
-                    onclick: () => resolve(index),
-                    onfocus: () => this.boxes[index].frame = 1,
-                    onblur: () => this.boxes[index].frame = 0,
-                    getBounds: () => this.boxes[index].getBounds(),
+                    isActive: (): boolean => !this.game.control.unskippable && this.boxes[index].parent.parent === this.game.gui.menus[this.game.gui.currentMenu],
+                    onclick: (): void => resolve(index),
+                    onfocus: (): void => { this.boxes[index].frame = 1; },
+                    onblur: (): void => { this.boxes[index].frame = 0; },
+                    getBounds: (): AccessibilityBounds => this.boxes[index].getBounds(),
                 }))
             );
         })
