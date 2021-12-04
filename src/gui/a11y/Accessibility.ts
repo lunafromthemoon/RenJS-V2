@@ -148,6 +148,7 @@ export default class Accessibility {
 	}
 
 	boot(): void {
+		this.game.canvas.setAttribute('aria-hidden', 'true');
 		this.game.scale.onSizeChange.add(this.updateLayout);
 		this.updateLayout();
 		this.game.load.onLoadStart.add(() => {
