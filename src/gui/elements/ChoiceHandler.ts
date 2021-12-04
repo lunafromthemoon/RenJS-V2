@@ -66,6 +66,16 @@ export default class ChoiceHandler extends Graphics {
                 transition(null,this);
             },20)
 
+            this.game.accessibility.choices(
+                choices.map((choice, index) => ({
+                    label: choice.choiceText,
+                    isActive: () => !this.game.control.unskippable && this.boxes[index].parent.parent === this.game.gui.menus[this.game.gui.currentMenu],
+                    onclick: () => resolve(index),
+                    onfocus: () => this.boxes[index].frame = 1,
+                    onblur: () => this.boxes[index].frame = 0,
+                    getBounds: () => this.boxes[index].getBounds(),
+                }))
+            );
         })
 
     }
@@ -97,6 +107,7 @@ export default class ChoiceHandler extends Graphics {
     }
 
     async hide(transitionName?): Promise<any> {
+        this.game.accessibility.choices();
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
         const transition = this.game.screenEffects.transition.get(transitionName);
