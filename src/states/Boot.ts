@@ -18,6 +18,7 @@ class Boot extends RJSState {
     init(): void {
         this.game.setupScreen();
         this.game.sound.boot();
+        this.game.accessibility.boot();
     }
 
     preload (): void {

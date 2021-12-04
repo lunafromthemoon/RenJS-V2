@@ -73,6 +73,7 @@ export default class RJSGUI implements RJSGUIInterface {
         // this.game.pause();
         this.previousMenu = this.currentMenu;
         this.currentMenu = menu;
+        this.game.accessibility.updateLayout();
         this.game.world.bringToTop(this.menus[menu])
         await this.menus[menu].show();
     }
@@ -81,7 +82,9 @@ export default class RJSGUI implements RJSGUIInterface {
         if (!menu){
             menu = this.currentMenu;
         }
-        await this.menus[menu].hide(mute);
+        const p = this.menus[menu].hide(mute);
+        this.game.accessibility.updateLayout();
+        await p;
         this.currentMenu = null;
         if (callback){
             callback()
