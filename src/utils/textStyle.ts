@@ -3,7 +3,7 @@ type Token = { text: string; tag?: never } | { text?: never; tag: string };
 const re = /\((?:color:(?:\w+|#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6})|italic|bold|end)\)/;
 
 /** converts text into a list of tokens that can be used to construct styles */
-export function tokenizeTextStyle(text: string) {
+export function tokenizeTextStyle(text: string): Token[] {
 	const styles: Token[] = [];
 	while (true) {
 		const match = re.exec(text);
