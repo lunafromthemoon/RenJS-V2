@@ -253,15 +253,6 @@ config:
         font: fontsaudimat-mono
         color: '#B0B0B0'
     buttons:
-      - id: asset51
-        sfx: none
-        slot: '0'
-        binding: return
-        height: '82'
-        width: '163'
-        'y': '506'
-        x: '616'
-        assetType: spritesheets
       - id: asset52
         sfx: none
         slot: '0'
@@ -315,6 +306,15 @@ config:
         width: '145'
         'y': '408'
         x: 561
+        assetType: spritesheets
+      - id: asset51
+        sfx: none
+        slot: '0'
+        binding: return
+        height: '82'
+        width: '163'
+        'y': '506'
+        x: '616'
         assetType: spritesheets
     save-slot:
       id: asset18

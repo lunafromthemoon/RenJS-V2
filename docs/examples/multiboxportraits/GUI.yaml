@@ -321,46 +321,46 @@ config:
           boundsAlignH: left
           boundsAlignV: top
       - type: button
+        x: 120
+        'y': 340
+        asset: asset39
+        binding: save
+        slot: '0'
+      - type: button
+        x: 120
+        'y': 408
+        asset: asset40
+        binding: load
+        slot: '0'
+      - type: button
+        x: 353
+        'y': 340
+        asset: asset39
+        binding: save
+        slot: '1'
+      - type: button
+        x: 353
+        'y': 408
+        asset: asset40
+        binding: load
+        slot: '1'
+      - type: button
+        x: 580
+        'y': 340
+        asset: asset39
+        binding: save
+        slot: '2'
+      - type: button
+        x: 580
+        'y': 408
+        asset: asset40
+        binding: load
+        slot: '2'
+      - type: button
         x: 616
         'y': 506
         asset: asset17
         binding: return
-      - type: button
-        x: 120
-        'y': 340
-        asset: asset39
-        binding: save
-        slot: '0'
-      - type: button
-        x: 120
-        'y': 408
-        asset: asset40
-        binding: load
-        slot: '0'
-      - type: button
-        x: 353
-        'y': 340
-        asset: asset39
-        binding: save
-        slot: '1'
-      - type: button
-        x: 353
-        'y': 408
-        asset: asset40
-        binding: load
-        slot: '1'
-      - type: button
-        x: 580
-        'y': 340
-        asset: asset39
-        binding: save
-        slot: '2'
-      - type: button
-        x: 580
-        'y': 408
-        asset: asset40
-        binding: load
-        slot: '2'
 assets:
   images:
     loaderbackground:
