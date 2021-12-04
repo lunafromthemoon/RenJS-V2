@@ -1,5 +1,5 @@
 import RJS from '../core/RJS';
-import {Graphics,Color} from 'phaser-ce';
+import {Graphics,Color, Button} from 'phaser-ce';
 import RJSMenu from './RJSMenu'
 import MessageBox from './elements/MessageBox'
 import BaseButton from './elements/BaseButton'
@@ -7,6 +7,7 @@ import NameBox from './elements/NameBox'
 import ChoiceHandler from './elements/ChoiceHandler'
 
 import { changeInputEnabled, hudSort } from '../utils/gui';
+import { AccessibilityBounds } from './a11y/Accessibility';
 
 export default class RJSHUD extends RJSMenu {
     mBoxes = {}
@@ -110,15 +111,15 @@ export default class RJSHUD extends RJSMenu {
                     // TODO: better accessible label - this is just the texture name,
                     // not something necessarily meant to be user-facing
                     label: choice.choiceText.split(' AT ')[0],
-                    isActive: () => !this.game.control.unskippable && boxes[index].parent.parent === this.game.gui.menus[this.game.gui.currentMenu],
-                    onclick: () => resolve(index),
-                    getBounds: () => boxes[index].getBounds(),
+                    isActive: (): boolean => !this.game.control.unskippable && boxes[index].parent.parent === this.game.gui.menus[this.game.gui.currentMenu],
+                    onclick: (): void => resolve(index),
+                    getBounds: (): AccessibilityBounds => boxes[index].getBounds(),
                 }))
             );
         });
     }
 
-    createVisualChoice(choice, index, resolve) {
+    createVisualChoice(choice, index, resolve): Button {
         const defaultChoicesConfig = this.cHandlers.default.config;
         // visual choice text -> spriteId AT x,y|positionId SFX sfxId
         const str = choice.choiceText.split(' ');

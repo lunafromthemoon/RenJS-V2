@@ -1,23 +1,23 @@
 import RJS from '../../core/RJS';
 import { tokenizeTextStyle } from '../../utils/textStyle';
 
-interface Bounds {
+export interface AccessibilityBounds {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
 }
 
-interface Button {
+export interface AccessibilityButton {
 	label?: string;
 	isActive: () => boolean;
 	onclick: HTMLButtonElement['onclick'];
 	onfocus?: HTMLButtonElement['onfocus'];
 	onblur?: HTMLButtonElement['onblur'];
-	getBounds: () => Bounds;
+	getBounds: () => AccessibilityBounds;
 }
 
-interface Slider {
+export interface AccessibilitySlider {
 	label?: string;
 	isActive: () => boolean;
 	min: number;
@@ -25,16 +25,16 @@ interface Slider {
 	step: number | 'any';
 	set: (value: number) => void;
 	get: () => number;
-	getBounds: () => Bounds;
+	getBounds: () => AccessibilityBounds;
 }
 
 /** sanitize strings for better screen-reading */
-function sanitize(str: string) {
+function sanitize(str: string): string {
 	return str.replace(/\s+/g, ' ').trim();
 }
 
 /** converts RenJS formatted text to an HTML markup string */
-function textToHtml(text: string) {
+function textToHtml(text: string): string {
 	const tokens = tokenizeTextStyle(text);
 	const tags = [];
 	let result = '';
@@ -78,9 +78,9 @@ export default class Accessibility {
 	state: {
 		name: string;
 		text: string;
-		choices: Button[];
-		buttons: Button[];
-		sliders: Slider[];
+		choices: AccessibilityButton[];
+		buttons: AccessibilityButton[];
+		sliders: AccessibilitySlider[];
 	} = {
 		name: '',
 		text: '',
@@ -120,7 +120,7 @@ export default class Accessibility {
 		this.elText.setAttribute('role', 'main');
 		this.elText.setAttribute('aria-roledescription', 'text');
 		this.elText.tabIndex = 0;
-		this.elText.onclick = () => {
+		this.elText.onclick = (): void => {
 			this.game.onTap(null);
 		};
 		this.elText.style.position = 'absolute';
@@ -147,7 +147,7 @@ export default class Accessibility {
 		this.elContainer.appendChild(this.elButtons);
 	}
 
-	boot() {
+	boot(): void {
 		this.game.scale.onSizeChange.add(this.updateLayout);
 		this.updateLayout();
 		this.game.load.onLoadStart.add(() => {
@@ -166,7 +166,7 @@ export default class Accessibility {
 		document.body.appendChild(this.elContainer);
 	}
 
-	progress(progress) {
+	progress(progress): void {
 		if (progress === undefined) {
 			delete this.elProgress.value;
 		} else {
@@ -174,15 +174,15 @@ export default class Accessibility {
 		}
 	}
 
-	busy() {
+	busy(): void {
 		this.elText.setAttribute('aria-busy', 'true');
 	}
 
-	ready() {
+	ready(): void {
 		this.elText.setAttribute('aria-busy', 'false');
 	}
 
-	updateLayoutText() {
+	updateLayoutText(): void {
 		let text = textToHtml(
 			this.game.gui?.currentMenu !== 'hud'
 				? ''
@@ -199,21 +199,21 @@ export default class Accessibility {
 		this.elText.innerHTML = text;
 	}
 
-	updateLayoutContainer() {
+	updateLayoutContainer(): void {
 		this.elContainer.style.width = `${this.game.scale.width}px`;
 		this.elContainer.style.height = `${this.game.scale.height}px`;
 		this.elContainer.style.top = `${this.game.scale.margin.top}px`;
 		this.elContainer.style.left = `${this.game.scale.margin.left}px`;
 	}
 
-	updateLayoutBounds(el: HTMLElement, rect: Bounds) {
+	updateLayoutBounds(el: HTMLElement, rect: AccessibilityBounds): void {
 		el.style.width = `${rect.width * this.game.scale.scaleFactorInversed.x}px`;
 		el.style.height = `${rect.height * this.game.scale.scaleFactorInversed.y}px`;
 		el.style.top = `${rect.y * this.game.scale.scaleFactorInversed.y}px`;
 		el.style.left = `${rect.x * this.game.scale.scaleFactorInversed.x}px`;
 	}
 
-	updateLayoutList(elList: HTMLUListElement | HTMLOListElement, list: Pick<Button, 'isActive' | 'getBounds'>[]) {
+	updateLayoutList(elList: HTMLUListElement | HTMLOListElement, list: Pick<AccessibilityButton, 'isActive' | 'getBounds'>[]): void {
 		this.rescueFocus(elList);
 		list.forEach((choice, index) => {
 			const elChoice = elList.children[index] as HTMLLIElement;
@@ -222,19 +222,19 @@ export default class Accessibility {
 		});
 	}
 
-	updateLayoutChoices() {
+	updateLayoutChoices(): void {
 		this.updateLayoutList(this.elChoices, this.state.choices);
 	}
 
-	updateLayoutButtons() {
+	updateLayoutButtons(): void {
 		this.updateLayoutList(this.elButtons, this.state.buttons);
 	}
 
-	updateLayoutSliders() {
+	updateLayoutSliders(): void {
 		this.updateLayoutList(this.elSliders, this.state.sliders);
 	}
 
-	rescueFocus(elContainer: HTMLElement) {
+	rescueFocus(elContainer: HTMLElement): void {
 		const elActive = document.activeElement;
 		if (elContainer === elActive) return;
 		if (!elActive || elContainer.contains(elActive)) {
@@ -242,7 +242,7 @@ export default class Accessibility {
 		}
 	}
 
-	updateLayout = () => {
+	updateLayout = (): void => {
 		this.updateLayoutContainer();
 		this.updateLayoutText();
 		this.updateLayoutChoices();
@@ -250,17 +250,17 @@ export default class Accessibility {
 		this.updateLayoutSliders();
 	};
 
-	text(text = '') {
+	text(text = ''): void {
 		this.state.text = text;
 		this.updateLayoutText();
 	}
 
-	name(name = '') {
+	name(name = ''): void {
 		this.state.name = name;
 		this.updateLayoutText();
 	}
 
-	button(button: Button) {
+	button(button: AccessibilityButton): void {
 		this.state.buttons.push(button);
 		const li = document.createElement('li');
 		li.style.position = 'absolute';
@@ -288,7 +288,7 @@ export default class Accessibility {
 		this.updateLayoutButtons();
 	}
 
-	slider(slider: Slider) {
+	slider(slider: AccessibilitySlider): void {
 		this.state.sliders.push(slider);
 		const li = document.createElement('li');
 		li.style.position = 'absolute';
@@ -316,14 +316,16 @@ export default class Accessibility {
 			input.style.color = 'transparent';
 			input.style.fontSize = '0';
 		}
-		input.onchange = event => slider.set(Number((event.currentTarget as HTMLInputElement).value));
-		input.onfocus = () => (input.value = slider.get().toString(10));
+		input.onchange = (event): void => slider.set(Number((event.currentTarget as HTMLInputElement).value));
+		input.onfocus = (): void => {
+			input.value = slider.get().toString(10);
+		};
 		li.appendChild(input);
 		this.elSliders.appendChild(li);
 		this.updateLayoutSliders();
 	}
 
-	choices(choices: Button[] = []) {
+	choices(choices: AccessibilityButton[] = []): void {
 		this.state.choices = choices;
 		this.rescueFocus(this.elChoices);
 		this.elChoices.innerHTML = '';
