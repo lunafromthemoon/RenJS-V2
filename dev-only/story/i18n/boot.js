@@ -22,6 +22,7 @@ const globalConfig =  {
   'fonts': 'assets/gui/fonts.css',
   'guiConfig': 'story/i18n/LANG/GUI.yaml',
   'storyConfig': 'story/Config.yaml',
+  'storyAccessibility': 'story/i18n/LANG/Accessibility.yaml',
   storySetup: 'story/i18n/Setup.yaml',
   'storyText': [
     'story/i18n/LANG/Story.yaml'
