@@ -27,7 +27,7 @@ export default class TextManager implements TextManagerInterface {
                 resolve(true);
             });
         })
-    };
+    }
 
     async characterSays(keyName: string, look: string, text: string, boxId: string,dontHide=false): Promise<any>{
         // get character configuration

@@ -13,8 +13,7 @@ Happy linting! 💖
 */
 module.exports = {
     "env": {
-        "browser": true,
-        "node": true
+        "browser": true
     },
     "extends": [
         "plugin:@typescript-eslint/recommended",
@@ -22,14 +21,13 @@ module.exports = {
         // "standard-with-typescript"
     ],
     "parser": "@typescript-eslint/parser",
-    // "parserOptions": {
-    //     "project": "tsconfig.json",
-    //     "sourceType": "module"
-    // },
+    "parserOptions": {
+        "project": "tsconfig.json",
+        "sourceType": "module"
+    },
     "plugins": [
         "@typescript-eslint",
         "import",
-        "node",
         "promise",
         "standard"
     ],
@@ -42,31 +40,6 @@ module.exports = {
         ],
         "@typescript-eslint/require-await": "off",
         "@typescript-eslint/no-empty-interface": "off",
-        "@typescript-eslint/ban-types": [
-            "error",
-            {
-                "types": {
-                    "Object": {
-                        "message": "Avoid using the `Object` type. Did you mean `object`?"
-                    },
-                    "Function": {
-                        "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
-                    },
-                    "Boolean": {
-                        "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
-                    },
-                    "Number": {
-                        "message": "Avoid using the `Number` type. Did you mean `number`?"
-                    },
-                    "String": {
-                        "message": "Avoid using the `String` type. Did you mean `string`?"
-                    },
-                    "Symbol": {
-                        "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
-                    }
-                }
-            }
-        ],
         "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/dot-notation": "error",
         "@typescript-eslint/member-ordering": "off",
@@ -156,10 +129,50 @@ module.exports = {
         ],
         "use-isnan": "error",
         "valid-typeof": "off",
+        "@typescript-eslint/naming-convention": [
+            "error", 
+            { "selector": "default", "format": ["camelCase", "UPPER_CASE", "PascalCase"] },
+            { "selector": "variableLike", "format": ["camelCase", "UPPER_CASE", "PascalCase"], "leadingUnderscore": "allow" },
+            { "selector": "memberLike", "format": ["camelCase", "UPPER_CASE"] },
+            { "selector": "typeLike", "format": ["PascalCase"] },
+        ],
+        "@typescript-eslint/no-floating-promises": "off",
 
         // TODO: remove these overrides when legacy cases have been fixed
-        "eqeqeq":"warn",
-        "@typescript-eslint/prefer-for-of":"warn",
+        "@typescript-eslint/restrict-plus-operands": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/restrict-template-expressions": ["error", { "allowNumber": true, "allowAny": true }],
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "extendDefaults": false,
+                "types": {
+                    "Object": {
+                        "message": "Avoid using the `Object` type. Did you mean `object`?"
+                    },
+                    "Function": {
+                        "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+                    },
+                    "Boolean": {
+                        "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
+                    },
+                    "Number": {
+                        "message": "Avoid using the `Number` type. Did you mean `number`?"
+                    },
+                    "String": {
+                        "message": "Avoid using the `String` type. Did you mean `string`?"
+                    },
+                    "Symbol": {
+                        "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+                    }
+                }
+            }
+        ],
+        "@typescript-eslint/no-misused-promises": "off",
         // TODO: either remove when legacy case has been fixed, or disable entirely if not desired
         "max-classes-per-file":"warn",
     }

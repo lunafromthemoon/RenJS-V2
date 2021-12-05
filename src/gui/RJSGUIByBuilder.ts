@@ -187,7 +187,7 @@ export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {
             console.log('Converted gui configuration');
             console.log('Replace the config property for this into GUI.yaml file to use new gui configuration directly.');
             console.log('MAKE SURE ===> GUIVersion==\'2.0\'');
-            const configText = jsyaml.safeDump(JSON.parse(JSON.stringify(this.config)))
+            const configText = jsyaml.dump(JSON.parse(JSON.stringify(this.config)))
             console.log(configText);
         }
     }
