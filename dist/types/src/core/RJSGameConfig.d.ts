@@ -34,6 +34,7 @@ export interface RJSGameConfig extends IGameConfig {
     guiConfig: string;
     storySetup: string;
     storyConfig: string;
+    storyAccessibility: string;
     storyText: string[];
     i18n?: i18nInterface;
     debugMode?: boolean;

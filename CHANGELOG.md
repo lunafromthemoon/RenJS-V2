@@ -1,3 +1,11 @@
+# [2.6.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.5.0...v2.6.0) (2021-12-05)
+
+
+### Features
+
+* **a11y:** allow accessible labels to be overridden from a yaml file ([77fe35b](https://github.com/lunafromthemoon/RenJS-V2/commit/77fe35b03ec5917a4f30f6c37033c79b79a74913))
+* **a11y:** make rolling credits effect text accessible ([2a62911](https://github.com/lunafromthemoon/RenJS-V2/commit/2a62911e8eedd31949ba2060f47f0fbabfbaae1a))
+
 # [2.5.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.4.0...v2.5.0) (2021-12-05)
 
 

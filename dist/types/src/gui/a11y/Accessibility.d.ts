@@ -23,6 +23,17 @@ export interface AccessibilitySlider {
     get: () => number;
     getBounds: () => AccessibilityBounds;
 }
+export interface AccessibilityConfig {
+    buttons?: {
+        [key: string]: string;
+    };
+    sliders?: {
+        [key: string]: string;
+    };
+    choices?: {
+        [key: string]: string;
+    };
+}
 /**
  * Adds an accessible DOM layer on top of the game canvas
  * in order to support keyboard navigation and screen-reading
