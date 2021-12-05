@@ -28,6 +28,18 @@ export interface AccessibilitySlider {
 	getBounds: () => AccessibilityBounds;
 }
 
+export interface AccessibilityConfig {
+	buttons?: {
+		[key: string]: string;
+	};
+	sliders?: {
+		[key: string]: string;
+	};
+	choices?: {
+		[key: string]: string;
+	};
+}
+
 /** sanitize strings for better screen-reading */
 function sanitize(str: string): string {
 	return str.replace(/\s+/g, ' ').trim();
@@ -280,7 +292,7 @@ export default class Accessibility {
 			btn.style.color = 'transparent';
 			btn.style.fontSize = '0';
 		}
-		btn.textContent = button.label || `Button ${this.state.buttons.length}`;
+		btn.textContent = (this.game.storyAccessibility?.buttons?.[button.label] ?? button.label) || `Button ${this.state.buttons.length}`;
 		btn.onclick = button.onclick;
 		btn.onfocus = button.onfocus;
 		btn.onblur = button.onblur;
@@ -295,7 +307,7 @@ export default class Accessibility {
 		li.style.position = 'absolute';
 		const input = document.createElement('input');
 		input.type = 'number';
-		input.setAttribute('aria-label', slider.label || `Slider ${this.state.buttons.length}`);
+		input.setAttribute('aria-label', (this.game.storyAccessibility?.sliders?.[slider.label] ?? slider.label) || `Slider ${this.state.buttons.length}`);
 		input.min = slider.min.toString(10);
 		input.max = slider.max.toString(10);
 		input.step = slider.step.toString(10);
@@ -348,7 +360,7 @@ export default class Accessibility {
 				btn.style.color = 'transparent';
 				btn.style.fontSize = '0';
 			}
-			btn.innerHTML = textToHtml(i.label);
+			btn.innerHTML = textToHtml((this.game.storyAccessibility?.choices?.[i.label] ?? i.label));
 			btn.onclick = i.onclick;
 			btn.onfocus = i.onfocus;
 			btn.onblur = i.onblur;

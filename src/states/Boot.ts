@@ -7,6 +7,7 @@ import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
 import RJSGUIByNewBuilder from '../gui/RJSGUIByNewBuilder';
 import RJS from '../core/RJS';
 import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
+import { AccessibilityConfig } from '../gui/a11y/Accessibility';
 
 
 class Boot extends RJSState {
@@ -39,6 +40,7 @@ class Boot extends RJSState {
         this.game.load.text('guiConfig', preparePath(this.game.config.guiConfig, this.game));
         this.game.load.text('storySetup', preparePath(this.game.config.storySetup, this.game));
         this.game.load.text('storyConfig', preparePath(this.game.config.storyConfig, this.game));
+        this.game.load.text('storyAccessibility', preparePath(this.game.config.storyAccessibility, this.game));
         for (let i = this.game.config.storyText.length - 1; i >= 0; i--) {
             this.game.load.text('story'+i, preparePath(this.game.config.storyText[i], this.game));
         }
@@ -57,6 +59,7 @@ class Boot extends RJSState {
         this.game.setup = jsyaml.load(this.game.cache.getText('storySetup'));
         if (!game.setup) this.game.setup = {};
         this.game.storyConfig = jsyaml.load(this.game.cache.getText('storyConfig')) as any;
+        this.game.storyAccessibility = jsyaml.load(this.game.cache.getText('storyAccessibility')) as AccessibilityConfig;
         // load the story text
         const story = {};
         this.game.config.storyText.forEach((file,index) => {
