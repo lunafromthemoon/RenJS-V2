@@ -1,4 +1,5 @@
-import {Text} from 'phaser-ce';
+import { Text } from 'phaser-ce';
+import { tokenizeTextStyle } from './textStyle';
 
 export function changeInputEnabled(displayObj,enabled): void{
   if (displayObj.input){
@@ -13,30 +14,41 @@ export function changeInputEnabled(displayObj,enabled): void{
 // sets text styles tags in a phaser text object (but NOT the text itself)
 // returns final text without tags, that has to be set to text object as textObj.text
 export function setTextStyles(text: string,textObj: Text): string {
+  const tokens = tokenizeTextStyle(text);
   textObj.clearFontValues();
-  textObj.clearColors()
-  const styles = []
-  while(true){
-    const re = /\((color:((\w+|#(\d|\w)+))|italic|bold)\)/
-    const match = re.exec(text);
-    if (match){
-      const s = {
-        start: text.search(re),
-        style: match[1].includes('color') ? 'color' : match[1],
-        end: -1,
-        color: null
+  textObj.clearColors();
+  const styles: {
+    start: number;
+    end: number;
+    style: string;
+    color?: string;
+  }[] = [];
+  const stack: typeof styles = []
+  let token: typeof tokens[number];
+  let result = '';
+  while(tokens.length){
+    token = tokens.shift();
+    if (token.text !== undefined) {
+      result += token.text;
+    } else {
+      const [style, color] = token.tag.split(':');
+      if (style === 'end') {
+        // find the most recent unclosed style on the stack and close it
+        const lastStyle = stack.pop();
+        if (lastStyle) {
+          lastStyle.end = result.length;
+        }
+      } else {
+        // add new unclosed style onto the stack
+        styles.push({
+          start: result.length,
+          end: -1,
+          style,
+          color,
+        });
+        stack.push(styles[styles.length-1]);
       }
-      if (s.style === 'color'){
-        s.color = match[2];
-      }
-      text = text.replace(re,'')
-      const endIdx = text.indexOf('(end)');
-      if (endIdx!==-1){
-        text = text.replace('(end)','')
-        s.end = endIdx;
-        styles.push(s)
-      }
-    } else break;
+    }
   }
   styles.forEach(s=>{
     if (s.style==='italic'){
@@ -48,11 +60,11 @@ export function setTextStyles(text: string,textObj: Text): string {
       textObj.addFontWeight('normal', s.end);
     }
     if (s.style==='color'){
-      textObj.addColor(s.color, s.start)
-      textObj.addColor(textObj.fill, s.end)
+      textObj.addColor(s.color, s.start);
+      textObj.addColor(textObj.fill, s.end);
     }
   })
-  return text;
+  return result;
 }
 
 
