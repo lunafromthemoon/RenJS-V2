@@ -152,15 +152,6 @@ config:
         x: 640
         assetType: images
     buttons:
-      - id: asset23
-        sfx: none
-        slot: '0'
-        binding: saveload
-        height: '39'
-        width: '41'
-        'y': 474
-        x: 688
-        assetType: spritesheets
       - id: asset24
         sfx: none
         slot: '0'
@@ -170,13 +161,13 @@ config:
         'y': 474
         x: 646
         assetType: spritesheets
-      - id: asset25
+      - id: asset23
         sfx: none
         slot: '0'
-        binding: skip
+        binding: saveload
         height: '39'
         width: '41'
-        'y': 514
+        'y': 474
         x: 688
         assetType: spritesheets
       - id: asset26
@@ -187,6 +178,15 @@ config:
         width: '41'
         'y': 514
         x: 646
+        assetType: spritesheets
+      - id: asset25
+        sfx: none
+        slot: '0'
+        binding: skip
+        height: '39'
+        width: '41'
+        'y': 514
+        x: 688
         assetType: spritesheets
     choice:
       id: asset31
@@ -237,6 +237,60 @@ config:
         font: fontsaudimat-mono
         color: '#B0B0B0'
     buttons:
+      - id: asset39
+        sfx: none
+        slot: '0'
+        binding: save
+        height: '53'
+        width: '103'
+        'y': 340
+        x: 120
+        assetType: spritesheets
+      - id: asset40
+        sfx: none
+        slot: '0'
+        binding: load
+        height: '53'
+        width: '103'
+        'y': 408
+        x: 120
+        assetType: spritesheets
+      - id: asset39
+        sfx: none
+        slot: '1'
+        binding: save
+        height: '53'
+        width: '103'
+        'y': 340
+        x: 353
+        assetType: spritesheets
+      - id: asset40
+        sfx: none
+        slot: '1'
+        binding: load
+        height: '53'
+        width: '103'
+        'y': 408
+        x: 353
+        assetType: spritesheets
+      - id: asset39
+        sfx: none
+        slot: '2'
+        binding: save
+        height: '53'
+        width: '103'
+        'y': 340
+        x: 580
+        assetType: spritesheets
+      - id: asset40
+        sfx: none
+        slot: '2'
+        binding: load
+        height: '53'
+        width: '103'
+        'y': 408
+        x: 580
+        assetType: spritesheets
       - id: asset17
         sfx: none
         slot: '0'
@@ -245,60 +299,6 @@ config:
         width: '163'
         'y': 506
         x: 616
-        assetType: spritesheets
-      - id: asset39
-        sfx: none
-        slot: '0'
-        binding: save
-        height: '53'
-        width: '103'
-        'y': 340
-        x: 120
-        assetType: spritesheets
-      - id: asset40
-        sfx: none
-        slot: '0'
-        binding: load
-        height: '53'
-        width: '103'
-        'y': 408
-        x: 120
-        assetType: spritesheets
-      - id: asset39
-        sfx: none
-        slot: '1'
-        binding: save
-        height: '53'
-        width: '103'
-        'y': 340
-        x: 353
-        assetType: spritesheets
-      - id: asset40
-        sfx: none
-        slot: '1'
-        binding: load
-        height: '53'
-        width: '103'
-        'y': 408
-        x: 353
-        assetType: spritesheets
-      - id: asset39
-        sfx: none
-        slot: '2'
-        binding: save
-        height: '53'
-        width: '103'
-        'y': 340
-        x: 580
-        assetType: spritesheets
-      - id: asset40
-        sfx: none
-        slot: '2'
-        binding: load
-        height: '53'
-        width: '103'
-        'y': 408
-        x: 580
         assetType: spritesheets
     save-slots:
       - id: asset18

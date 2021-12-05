@@ -5,6 +5,7 @@ import RJSControl from './RJSControl';
 import ExecStack from './ExecStack';
 import BackgroundManager from '../managers/BackgroundManager';
 import CharacterManager from '../managers/CharacterManager';
+import Accessibility from '../gui/a11y/Accessibility';
 import AudioManager from '../managers/AudioManager';
 import CGSManager from '../managers/CGSManager';
 import TextManager from '../managers/TextManager';
@@ -50,6 +51,7 @@ export default class RJS extends Game {
     config: RJSGameConfig
     userPreferences: UserPreferences
     storyConfig: StoryConfig
+    accessibility: Accessibility;
 
     textLog: any[] = []
 
@@ -88,6 +90,7 @@ export default class RJS extends Game {
         super(config.w,config.h,config.renderer, config.parent)
         this.control = new RJSControl();
         this.config = config;
+        this.accessibility = new Accessibility(this);
         // this.userPreferences = new UserPreferences(this);
     }
 

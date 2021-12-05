@@ -3,6 +3,7 @@ import {Graphics,Button,Color} from 'phaser-ce';
 import BaseButton from './BaseButton';
 import {setTextStyles} from '../../utils/gui'
 import Label from './Label'
+import { AccessibilityBounds } from '../a11y/Accessibility';
 
 export default class ChoiceHandler extends Graphics {
 
@@ -66,6 +67,16 @@ export default class ChoiceHandler extends Graphics {
                 transition(null,this);
             },20)
 
+            this.game.accessibility.choices(
+                choices.map((choice, index) => ({
+                    label: choice.choiceText,
+                    isActive: (): boolean => !this.game.control.unskippable && this.boxes[index].parent.parent === this.game.gui.menus[this.game.gui.currentMenu],
+                    onclick: (): void => resolve(index),
+                    onfocus: (): void => { this.boxes[index].frame = 1; },
+                    onblur: (): void => { this.boxes[index].frame = 0; },
+                    getBounds: (): AccessibilityBounds => this.boxes[index].getBounds(),
+                }))
+            );
         })
 
     }
@@ -97,6 +108,7 @@ export default class ChoiceHandler extends Graphics {
     }
 
     async hide(transitionName?): Promise<any> {
+        this.game.accessibility.choices();
         if (!this.visible) return;
         if (!transitionName) transitionName = this.config.transition;
         const transition = this.game.screenEffects.transition.get(transitionName);

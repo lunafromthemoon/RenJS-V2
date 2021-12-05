@@ -32,7 +32,7 @@ export default class RJSLoadingScreen {
         }
     }
 
-    setLoadingBar(game): void{
+    setLoadingBar(game: RJS): void{
         if (!this.loadingBar) return;
         const dir = game.config.loadingScreen.loadingBar.direction ? game.config.loadingScreen.loadingBar.direction : 0;
         game.load.setPreloadSprite(this.loadingBar,dir);
@@ -44,7 +44,7 @@ export default class RJSLoadingScreen {
         }
     }
 
-    destroy(game): void {
+    destroy(game: RJS): void {
         if (game.config.loadingScreen.fade){
             const tween: Tween = game.add.tween(this.container).to({alpha:0},500);
             tween.onComplete.addOnce(()=>{

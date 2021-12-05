@@ -65,19 +65,36 @@ export default class RJSMenu extends Group {
         asset: string;
         sfx: string;
         binding: string;
+        menu?: string;
+        slot?: number;
         pushButton?: boolean;
         pushed?: boolean;
     }): BaseButton {
+        let btn: BaseButton;
         if (element.pushButton){
-            const btn = new PushButton(this.game,element)
+            btn = new PushButton(this.game,element)
             if (element.binding === 'auto' || element.binding === 'skip'){
                 // auto and skip will be unset when tapping anywhere in the screen
                 // always index for changing state when this happens
                 this.indexedElements[element.binding+'Button'] = btn;
             }
-            return btn;
+        } else {
+            btn = new BaseButton(this.game,element);
         }
-        return new BaseButton(this.game,element)
+        this.game.accessibility.button({
+            isActive: () => !this.game.control.unskippable && btn.parent === this.game.gui.menus[this.game.gui.currentMenu],
+            label: [element.binding, element.menu, element.slot].filter(i => i).join(' '),
+            onclick: () => btn.onClick(),
+            onfocus: () => btn.frame = 1,
+            onblur: () => btn.frame = 0,
+            getBounds: () => {
+                const r = btn.getBounds();
+                r.x = btn.position.x;
+                r.y = btn.position.y;
+                return r;
+            },
+        });
+        return btn;
     }
 
     createSlider(element: {
@@ -95,6 +112,21 @@ export default class RJSMenu extends Group {
             value = (preference.value-preference.min)/(preference.max - preference.min);
         }
         const slider = new MaskSlider(this.game,element,value);
+        this.game.accessibility.slider({
+            isActive: () => !this.game.control.unskippable && slider.parent === this.game.gui.menus[this.game.gui.currentMenu],
+            label: [element.binding, element.userPreference].filter(i => i).join(' '),
+            min: 0,
+            max: 1,
+            step: 0.05,
+            get: () => slider.currentValue,
+            set: (v) => slider.setValue(v),
+            getBounds: () => {
+                const r = slider.getBounds();
+                r.x = slider.position.x;
+                r.y = slider.position.y;
+                return r;
+            },
+        });
         return slider
     }
 
