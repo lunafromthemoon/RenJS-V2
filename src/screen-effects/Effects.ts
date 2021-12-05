@@ -29,6 +29,7 @@ export default class Effects implements RJSScreenEffectInterface {
         timePerLine?: number;
         endGame?: boolean;
     }): Promise<void> {
+        this.game.accessibility.text(params.text.join('\n'));
         this.game.control.unskippable = true;
         await this.game.managers.story.hide();
         if (params.music){

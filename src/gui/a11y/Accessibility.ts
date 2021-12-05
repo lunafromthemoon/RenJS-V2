@@ -305,7 +305,7 @@ export default class Accessibility {
 		input.style.left = '0';
 		input.style.width = '100%';
 		input.style.height = '100%';
-		// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		input.style.appearance = 'textfield';
 		input.style.background = 'transparent';
