@@ -1,3 +1,11 @@
+# [2.4.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.3.2...v2.4.0) (2021-12-05)
+
+
+### Features
+
+* update `js-yaml` ([996bd7d](https://github.com/lunafromthemoon/RenJS-V2/commit/996bd7d231876e6dcc5deae227699b3fb97383e7)), closes [/github.com/nodeca/js-yaml/blob/master/CHANGELOG.md#400---2021-01-03](https://github.com//github.com/nodeca/js-yaml/blob/master/CHANGELOG.md/issues/400---2021-01-03)
+* update bundler ([2c6864b](https://github.com/lunafromthemoon/RenJS-V2/commit/2c6864b2bee18cee7ffc7722f60c37289eb94056))
+
 ## [2.3.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.3.1...v2.3.2) (2021-11-23)
 
 
