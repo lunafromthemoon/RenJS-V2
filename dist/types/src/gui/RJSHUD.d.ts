@@ -1,5 +1,5 @@
 import RJS from '../core/RJS';
-import { Graphics } from 'phaser-ce';
+import { Graphics, Button } from 'phaser-ce';
 import RJSMenu from './RJSMenu';
 import MessageBox from './elements/MessageBox';
 import BaseButton from './elements/BaseButton';
@@ -26,7 +26,7 @@ export default class RJSHUD extends RJSMenu {
     showChoices(handlerId: any, choices: any): Promise<any>;
     hideChoices(handlerId: any): void;
     showVisualChoices(choices: any): Promise<any>;
-    createVisualChoice(choice: any, index: any, resolve: any): void;
+    createVisualChoice(choice: any, index: any, resolve: any): Button;
     hideVisualChoices(transitionName?: any): Promise<any>;
     ignoreTap(pointer: any): boolean;
     clear(transition?: any): Promise<any>;

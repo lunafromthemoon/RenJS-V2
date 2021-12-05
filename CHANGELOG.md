@@ -1,3 +1,24 @@
+# [2.5.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.4.0...v2.5.0) (2021-12-05)
+
+
+### Bug Fixes
+
+* **a11y:** hide canvas from accessibility tree ([511b100](https://github.com/lunafromthemoon/RenJS-V2/commit/511b100277a32691dc0642fcd7f2d5e61a8a5b62))
+* **a11y:** move "return" on saveload below save/load buttons ([0999ce6](https://github.com/lunafromthemoon/RenJS-V2/commit/0999ce6801a167cbdafc12e0a7781768e10a2fba))
+* **a11y:** reorder HUD menu buttons to be settings > saveload > auto > skip ([eac1ac7](https://github.com/lunafromthemoon/RenJS-V2/commit/eac1ac7400974c5082432edd4c0f7d897776a89b))
+
+
+### Features
+
+* **a11y:** make choices accessible ([23aef71](https://github.com/lunafromthemoon/RenJS-V2/commit/23aef7119e8dee9aa03817c47238b16e787f82c0))
+* **a11y:** make menu buttons accessible ([2350aad](https://github.com/lunafromthemoon/RenJS-V2/commit/2350aadd2b1dd4a00a6652b9952829c4d2b8c96f))
+* **a11y:** make message box text accessible ([724a2e3](https://github.com/lunafromthemoon/RenJS-V2/commit/724a2e3178d480e4e2fd5bcf8bb0c91cab27ef06))
+* **a11y:** make name text accessible ([ab48c89](https://github.com/lunafromthemoon/RenJS-V2/commit/ab48c89bd3960c6ded7b9adfaaa96c0a3db7172a))
+* **a11y:** make sliders accessible ([fac4ca8](https://github.com/lunafromthemoon/RenJS-V2/commit/fac4ca875085ff6919f70dd47b112c80bb3c066e))
+* **a11y:** make visual choices accessible ([9569fd0](https://github.com/lunafromthemoon/RenJS-V2/commit/9569fd02acb949b9958bd10bd1260f1c4f03f8ff))
+* add accessibility layer to game ([02d7636](https://github.com/lunafromthemoon/RenJS-V2/commit/02d7636964862cf77567ca96b1410403edde3226))
+* support nested text styles ([540c8d5](https://github.com/lunafromthemoon/RenJS-V2/commit/540c8d5143d8eb2231d2c115581af2eb0f2b1326))
+
 # [2.4.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.3.2...v2.4.0) (2021-12-05)
 
 

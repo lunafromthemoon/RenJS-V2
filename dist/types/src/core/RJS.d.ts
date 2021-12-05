@@ -4,6 +4,7 @@ import { Game, Graphics } from 'phaser-ce';
 import RJSControl from './RJSControl';
 import BackgroundManager from '../managers/BackgroundManager';
 import CharacterManager from '../managers/CharacterManager';
+import Accessibility from '../gui/a11y/Accessibility';
 import AudioManager from '../managers/AudioManager';
 import CGSManager from '../managers/CGSManager';
 import TextManager from '../managers/TextManager';
@@ -33,6 +34,7 @@ export default class RJS extends Game {
     config: RJSGameConfig;
     userPreferences: UserPreferences;
     storyConfig: StoryConfig;
+    accessibility: Accessibility;
     textLog: any[];
     interruptAction: any;
     managers: {

@@ -8,7 +8,7 @@ export default class RJSLoadingScreen {
     background: Sprite;
     loadingDir: number;
     constructor(game: RJS);
-    setLoadingBar(game: any): void;
+    setLoadingBar(game: RJS): void;
     waitingScreen(): void;
-    destroy(game: any): void;
+    destroy(game: RJS): void;
 }

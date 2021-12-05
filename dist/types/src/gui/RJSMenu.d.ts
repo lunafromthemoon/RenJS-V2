@@ -34,6 +34,8 @@ export default class RJSMenu extends Group {
         asset: string;
         sfx: string;
         binding: string;
+        menu?: string;
+        slot?: number;
         pushButton?: boolean;
         pushed?: boolean;
     }): BaseButton;
