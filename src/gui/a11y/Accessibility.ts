@@ -45,9 +45,15 @@ function sanitize(str: string): string {
 	return str.replace(/\s+/g, ' ').trim();
 }
 
+function escapeHTML(html) {
+	const el = document.createElement('div');
+	el.textContent = html;
+	return el.innerHTML;
+}
+
 /** converts RenJS formatted text to an HTML markup string */
 function textToHtml(text: string): string {
-	const tokens = tokenizeTextStyle(text);
+	const tokens = tokenizeTextStyle(escapeHTML(text));
 	const tags = [];
 	let result = '';
 	while (tokens.length) {
