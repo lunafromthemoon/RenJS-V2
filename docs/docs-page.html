@@ -122,6 +122,7 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#ambient-effect-actions">Ambients and Effects</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#transitions-section"><span class="theme-icon-holder mr-2"><i class="fas fa-magic"></i></span>Transitions</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#i18n-section"><span class="theme-icon-holder mr-2"><i class="fas fa-hand-spock"></i></span>Internationalization</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#a11y-section"><span class="theme-icon-holder mr-2"><i class="fas fa-hand-spock"></i></span>Accesssibility</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#language-screen-section">Language Selection Screen</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#language-config-section">Resources Configuration</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#plugins-section"><span class="theme-icon-holder mr-2"><i class="fas fa-puzzle-piece"></i></span>Plugins</a></li>
@@ -1847,7 +1848,7 @@ const globalConfig =  {
   'fonts': 'assets/gui/fonts.css',
   'guiConfig': 'story/LANG/GUI.yaml',
   'storyConfig': 'story/Config.yaml',
-  storySetup: 'story/Setup.yaml',
+  'storySetup': 'story/Setup.yaml',
   'storyText': [
     'story/LANG/Story.yaml'
   ],
@@ -1863,7 +1864,63 @@ RenJSGame.launch()
 						<p>You can check the <a href="/examples/i18n.html">Internationalization</a> example and see it in action!</p>
 					</section>
 			    </article><!--//docs-article-->
+			    <article class="docs-article" id="a11y-section">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Accessibility</h1>
+					    <section class="docs-intro">
+						    <p><strong>RenJS</strong> (> v2.6) provides an Accessibility (A11y) module, that automatically adds all your GUI and story elements to an accessible DOM layer on top of the game canvas in order to support keyboard navigation and screen-reading.</p>
+						    <p>Each element (e.g. buttons, sliders) will have a label taken from its binding action. </p>
+						    <!-- TODO add more about how the feature works -->
+						    <p>Additionally, it's possible to include an <strong>A11y</strong> configuration file, in YAML format, to overload some of the labels. The binding actions of the elements are not usually human friendly, so it's good practice to use this file to overload them. The same issue arises for visual choices, where the image tag will be used.</p>
+						    <p>Combined with the I18N module, it's possible to add different A11y files in different laguages too.</p>
+						</section><!--//docs-intro-->
+				    </header>
+				    <section class="docs-section" id="a11y-file-section">
+						<h2 class="section-heading">The A11y configuration file</h2>						
+						<p>If an A11y config file is going to be used, it needs to be declared in the <a href="#boot-file-section">boot.js</a> file, along with all the other configuration files.</p>
+						<pre><code class="language-js">
+const globalConfig =  {
+  ...  
+  'fonts': 'assets/gui/fonts.css',
+  'guiConfig': 'story/LANG/GUI.yaml',
+  'storyConfig': 'story/Config.yaml',
+  'storySetup': 'story/Setup.yaml',
+  'storySetup': 'story/Setup.yaml',
+  'storyAccessibility': 'story/Accessibility.yaml',
+  'storyText': [
+    'story/LANG/Story.yaml'
+  ],
+  ...
+}
 
+const RenJSGame = new RenJS.game(globalConfig)
+RenJSGame.launch()
+						</code></pre>
+						<p>Now let's see how a minimal A11y configuration file looks like.</p>
+						<pre><code class="language-yaml">
+# Replacements for accessible button labels
+# the default labels will be the internal binding + menu/save slot keys
+buttons:
+  openMenu saveload: save/load
+  openMenu settings: settings
+# Replacements for accessible slider labels
+# the default labels will be the internal binding + user preference keys
+sliders:
+  changeUserPreference bgmv: music volume
+  changeUserPreference sfxv: sound effects volume
+  changeUserPreference textSpeed: text speed
+  changeUserPreference autoSpeed: auto speed
+# Replacements for accessible choice labels
+# the default labels will be the choice text, or in the case of visual choices, the cg key
+choices:
+  phone1: Liz's phone
+  phone2: Deuzilene's phone
+						</code></pre>
+						<p>We have a <strong>buttons</strong> section, a <strong>sliders</strong> section, where the labels for different binding actions are overloaded to be much more human friendly. And finally, the <strong>choices</strong> section will be used to overload the visual choices labels when they are displayed.</p>
+						<!-- TODO document cgs labels, plugin calls -->
+						<!-- TODO explain how to add elements to A11y directly from plugins -->
+					</section>
+				</article>
 		        <article class="docs-article" id="plugins-section">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Plugins</h1>
