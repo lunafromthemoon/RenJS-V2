@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.0...v2.6.1) (2021-12-12)
+
+
+### Bug Fixes
+
+* **a11y:** escape html before tokenizing it for accessible label ([663e9e3](https://github.com/lunafromthemoon/RenJS-V2/commit/663e9e30b183c854b30ddc22af56db659139a96e))
+
 # [2.6.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.5.0...v2.6.0) (2021-12-05)
 
 
