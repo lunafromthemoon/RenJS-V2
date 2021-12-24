@@ -1,3 +1,10 @@
+## [2.6.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.1...v2.6.2) (2021-12-24)
+
+
+### Bug Fixes
+
+* lazyloading failed when whole action key included parts of reserved words like 'if' or 'choice', added also the cgs used by visual choices ([1fd68b2](https://github.com/lunafromthemoon/RenJS-V2/commit/1fd68b2bfbf616561ed480d6980eb3bca1d493cf))
+
 ## [2.6.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.0...v2.6.1) (2021-12-12)
 
 

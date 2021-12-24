@@ -8,6 +8,7 @@ export default class StoryActionSay extends StoryActionText {
     };
     actor: string;
     look: string;
+    actorType: string;
     constructor(game: RJS, actionType: string, properties: {
         [key: string]: any;
     });
