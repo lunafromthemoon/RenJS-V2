@@ -20,19 +20,27 @@ export default class RJSAssetLoader {
                 const actions = [...this.game.story[scene]];
                 let action = actions.shift()
                 while (action){
-                    const actionKey = Object.keys(action)[0];
-                    if (actionKey.includes('show') || actionKey.includes('play')){
+                    const rawKey = Object.keys(action)[0];
+                    const key = rawKey.split(' ');
+                    const actionKey = key[0];
+                    const characterSays = key.length > 1 && key[1] === "says";
+                    if (actionKey === 'show' || actionKey === 'play' || characterSays) {
                         const parsedAction = this.game.managers.story.parseAction(action);
                         if (!this.assetsPerScene[scene]) this.assetsPerScene[scene]={};
                         this.assetsPerScene[scene][parsedAction.actor]=parsedAction.actorType;
                     }
-                    if (actionKey.includes('if') || actionKey.includes('else')){
+                    if (actionKey === 'if' || actionKey === 'else'){
                         // check nested actions
-                        actions.unshift(...action[actionKey])
+                        actions.unshift(...action[rawKey])
                     }
-                    if (actionKey.includes('choice') || actionKey.includes('interrupt')){
-                        for (const nestedAction of action[actionKey]){
+                    if (actionKey === 'choice' || actionKey === 'interrupt' || actionKey === "visualChoice"){
+                        for (const nestedAction of action[rawKey]){
                             const nestedActionKey = Object.keys(nestedAction)[0];
+                            if (actionKey === 'visualChoice') {
+                                const cg = nestedActionKey.split(' ')[0];
+                                if (!this.assetsPerScene[scene]) this.assetsPerScene[scene]={};
+                                this.assetsPerScene[scene][cg]='cgs';
+                            }
                             actions.unshift(...nestedAction[nestedActionKey])
                         }
                     }
@@ -40,7 +48,8 @@ export default class RJSAssetLoader {
                 }
             }
             const assetsText = jsyaml.dump(this.assetsPerScene)
-            console.log('COPY THIS TEXT INTO THE LAZY LOADING SETUP');
+            console.log('These are the automatically found assets in each scene, you can copy the following text directly into the lazyloading configuration.');
+            console.log('Make sure to still check that everything looks alright, and remember to manually add any assets used by Plugin calls, ambients and effects, as these cannot be found automatically!');
             console.log('assetsPerScene:');
             console.log(assetsText);
         } else {
