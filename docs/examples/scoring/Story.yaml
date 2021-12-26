@@ -1,0 +1,57 @@
+start:
+  - play rollingCredits:
+  - show room: WITH FADE CONTINUE
+  - show deuzi: happy AT CENTER WITH FADE
+  - deuzi says: Hello, welcome to (bold)the Scoring Example!(end)
+  - var score: 0
+  - deuzi says normal: Are you ready to have scoring for your choices?
+  - choice:
+    - "Yes!":
+      - deuzi says happy: That's great!
+      - call Scorer: "{score}"
+      - wait: 100
+      - deuzi says normal: Now you have score box on top right corner!
+      - deuzi says happy: As you made a right choice, I give you (bold)+50(end) points.
+      - var score: "{score} + 50"
+      - call Scorer: "{score}"
+    - "Not yet!":
+      - deuzi says: Well, scoring is important to keep track of your progress.
+      - call Scorer: "{score}"
+      - deuzi says happy: So, it here anyway! Look at the top right corner.
+      - deuzi says angry: "Your choice not to have the scoring was lazy. (bold)-50(end) points."
+      - var score: "{score} - 50"
+      - call Scorer: REMOVE
+      - call Scorer: "{score}"
+  - deuzi says normal: That's it for scoring example.
+  - deuzi says happy: Use this example as starting point in your games. Best Wishes!
+  - deuzi says normal: If you're new, don't forget to play (bold)the Tutorial(end) game, where me and my friends will show you around the basic features of RenJS.
+  - deuzi says happy: And if you already have some experience, you can go ahead and start writing!
+  - scene: endGame
+
+endGame:
+  - deuzi says normal: Quickstart over!
+  - hide ALL:
+  - effect ROLLINGCREDITS:
+    endGame: true
+    text:
+      - RenJS.V2 created by
+      - lunafromthemoon
+      - null
+      - In collaboration with
+      - RockDaFox
+      - null
+      - Inspired by Ren'Py
+      - Powered by PhaserJS
+      - null
+      - null
+      - Thanks for playing
+      - The Quickstart Game
+      - null
+      - background art and cgs by
+      - konett
+      - null
+      - characters by
+      - Shida
+      - null
+      - music by
+      - Evan Schaeffer
