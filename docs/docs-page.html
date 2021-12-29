@@ -194,7 +194,7 @@
 						<a href="downloads/RenJSQuickstart.zip" target="_blank" class="btn btn-primary">Download the Quickstart</a>
 					</section>
 					<section class="docs-section" id="elements-section">
-						<h2 class="section-heading">RenJS Glosary</h2>
+						<h2 class="section-heading">RenJS Glossary</h2>
 						<p>To create a visual novel with RenJS, we're going to use many different elements to compose both the game and the story itself. When reading this documentation, you will find references to all of these concepts, so it's better to get familiar with them first.</p>
 						<h3>Game elements</h3>
 						<p>To make the game structure more easy to design, there are four main elements that compose it. These are:</p>
@@ -1977,7 +1977,7 @@ choices:
 						<p>This is the class definition of the <strong>RenJS Plugins</strong>. As you can see, the constructor receives a name and the <strong>game</strong> object, that will be later available to use from any of the handles. Then handles themselves are empty and do nothing unless you redefine them.</p>
 						<h3>On Init</h3>
 						<p>The <strong>onInit()</strong> handle will be called when the game is loaded, but not yet started. The only phase previous to this one is preloading of the game and initialization of the game itself. So, the game will be fully loaded, the GUI will be created (but no menus are shown yet), and the story text, setup and configuration will all be available for you to use.</p>
-						<p>This handle is perfect for adding new features to the GUI, since no part of the GUI, except the loading screen, is shown yet. For example, you could add new menus like a gallery, a glosary, etc.</p>
+						<p>This handle is perfect for adding new features to the GUI, since no part of the GUI, except the loading screen, is shown yet. For example, you could add new menus like a gallery, a glossary, etc.</p>
 						<h3>On Start</h3>
 						<p>This handle will be executed at the start of a new game, just before the first action of the script is executed. Use it to set up things you need to do in a per game run basis. For example, if you want to change some things in a New Game + run.</p>
 						<h3>On Action</h3>
@@ -2151,7 +2151,7 @@ start:
 							<li><strong>Game Config</strong>: The game configuration (object sent to the game in boot.js) will be in <i>this.game.config</i>.</li>
 						</ul>
 						<h3>Phaser JS</h3>
-						<p>And finally, as RenJS is based on PhaserJS, the <i>this.game</i> property is also a reference to a Phaser Game, and you can use it to create sprites, groups, phyiscs, particle systems, and much more. Don't forget to check out their <a href="https://phaser.io/examples/v2">examples page</a> and their <a href="https://phaser.io/docs/2.6.2/index">API documentation</a>.</p>
+						<p>And finally, as RenJS is based on PhaserJS, the <i>this.game</i> property is also a reference to a Phaser Game, and you can use it to create sprites, groups, physics, particle systems, and much more. Don't forget to check out their <a href="https://phaser.io/examples/v2">examples page</a> and their <a href="https://phaser.io/docs/2.6.2/index">API documentation</a>.</p>
 					</section><!--//section-->
 			    </article><!--//docs-article-->
 
