@@ -1,0 +1,18 @@
+backgrounds:
+  room: assets/backgrounds/room_day.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+
+sfx:
+  scoreUpdateSFX: assets/gui/scoreUpdate.mp3
+
+extra:
+  image:
+    scorer: assets/gui/scorerBox.png
