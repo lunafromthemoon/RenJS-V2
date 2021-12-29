@@ -5,7 +5,7 @@ export default class StoryActionSay extends StoryActionText {
 
     actor: string
     look: string
-    actorType: string = "characters"
+    actorType = 'characters'
 
     constructor(protected game: RJS, public actionType: string, protected properties: {[key: string]: any}){
         super(game,actionType,properties)

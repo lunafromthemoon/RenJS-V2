@@ -58,12 +58,12 @@ class Boot extends RJSState {
         this.game.tools.jsyaml = jsyaml;
         this.game.setup = jsyaml.load(this.game.cache.getText('storySetup'));
         if (!game.setup) this.game.setup = {};
-        this.game.storyConfig = jsyaml.load(this.game.cache.getText('storyConfig')) as any;
+        this.game.storyConfig = jsyaml.load(this.game.cache.getText('storyConfig'));
         this.game.storyAccessibility = jsyaml.load(this.game.cache.getText('storyAccessibility')) as AccessibilityConfig;
         // load the story text
         const story = {};
         this.game.config.storyText.forEach((file,index) => {
-            const text = jsyaml.load(this.game.cache.getText('story' + index)) as any;
+            const text = jsyaml.load(this.game.cache.getText('story' + index));
             Object.assign(story, {...text})
         })
 

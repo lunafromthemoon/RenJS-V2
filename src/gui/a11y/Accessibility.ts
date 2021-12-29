@@ -45,7 +45,7 @@ function sanitize(str: string): string {
 	return str.replace(/\s+/g, ' ').trim();
 }
 
-function escapeHTML(html) {
+function escapeHTML(html): string {
 	const el = document.createElement('div');
 	el.textContent = html;
 	return el.innerHTML;

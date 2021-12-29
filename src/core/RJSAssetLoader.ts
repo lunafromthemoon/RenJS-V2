@@ -23,7 +23,7 @@ export default class RJSAssetLoader {
                     const rawKey = Object.keys(action)[0];
                     const key = rawKey.split(' ');
                     const actionKey = key[0];
-                    const characterSays = key.length > 1 && key[1] === "says";
+                    const characterSays = key.length > 1 && key[1] === 'says';
                     if (actionKey === 'show' || actionKey === 'play' || characterSays) {
                         const parsedAction = this.game.managers.story.parseAction(action);
                         if (!this.assetsPerScene[scene]) this.assetsPerScene[scene]={};
@@ -33,7 +33,7 @@ export default class RJSAssetLoader {
                         // check nested actions
                         actions.unshift(...action[rawKey])
                     }
-                    if (actionKey === 'choice' || actionKey === 'interrupt' || actionKey === "visualChoice"){
+                    if (actionKey === 'choice' || actionKey === 'interrupt' || actionKey === 'visualChoice'){
                         for (const nestedAction of action[rawKey]){
                             const nestedActionKey = Object.keys(nestedAction)[0];
                             if (actionKey === 'visualChoice') {
