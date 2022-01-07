@@ -17,7 +17,7 @@ start:
     - "Not yet!":
       - deuzi says: Well, scoring is important to keep track of your progress.
       - call Scorer: "{score}"
-      - deuzi says happy: So, it here anyway! Look at the top right corner.
+      - deuzi says happy: So, it's here anyway! Look at the top right corner.
       - deuzi says angry: "Your choice not to have the scoring was lazy. (bold)-50(end) points."
       - var score: "{score} - 50"
       - call Scorer: REMOVE
