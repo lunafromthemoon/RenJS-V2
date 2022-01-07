@@ -11,5 +11,6 @@ export default class Plugin implements PluginInterface {
     onLoaded(): void;
     onSave(slot: any, data: any): void;
     onCall(params: any): void;
+    onEndScene(params: any): void;
     onTeardown(): void;
 }

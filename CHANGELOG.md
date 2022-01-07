@@ -1,3 +1,11 @@
+## [2.6.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.2...v2.6.3) (2022-01-07)
+
+
+### Bug Fixes
+
+* sfx is now sent to the message box, text sfx is skipped in new line character, indexed elements are now properly indexed by id, two new plugin handlers ([c12b278](https://github.com/lunafromthemoon/RenJS-V2/commit/c12b278e3e2703fb153431b26b6fb921e29d1b30))
+* Solve boot issues ([d774c9e](https://github.com/lunafromthemoon/RenJS-V2/commit/d774c9e0c7d4604734893a284cc3f681bfc92865))
+
 ## [2.6.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.1...v2.6.2) (2021-12-24)
 
 
