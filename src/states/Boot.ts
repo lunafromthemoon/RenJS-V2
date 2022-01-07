@@ -8,7 +8,7 @@ import RJSGUIByNewBuilder from '../gui/RJSGUIByNewBuilder';
 import RJS from '../core/RJS';
 import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 import { AccessibilityConfig } from '../gui/a11y/Accessibility';
-
+import {StoryConfig} from '../core/RJSGameConfig';
 
 class Boot extends RJSState {
     splash: Sprite
@@ -58,12 +58,12 @@ class Boot extends RJSState {
         this.game.tools.jsyaml = jsyaml;
         this.game.setup = jsyaml.load(this.game.cache.getText('storySetup'));
         if (!game.setup) this.game.setup = {};
-        this.game.storyConfig = jsyaml.load(this.game.cache.getText('storyConfig'));
+        this.game.storyConfig = jsyaml.load(this.game.cache.getText('storyConfig')) as StoryConfig;
         this.game.storyAccessibility = jsyaml.load(this.game.cache.getText('storyAccessibility')) as AccessibilityConfig;
         // load the story text
         const story = {};
         this.game.config.storyText.forEach((file,index) => {
-            const text = jsyaml.load(this.game.cache.getText('story' + index));
+            const text = jsyaml.load(this.game.cache.getText('story' + index)) as Object;
             Object.assign(story, {...text})
         })
 
