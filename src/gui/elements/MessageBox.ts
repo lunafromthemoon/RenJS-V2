@@ -79,6 +79,10 @@ export default class MessageBox extends Sprite{
         if (this.game.storyConfig.punctuationWait){
             this.punctuationWait = this.game.storyConfig.punctuationWait
         }
+        // if message box is always on, show it from the start
+        if (this.config.alwaysOn){
+            this.visible = true;
+        }
     }
 
     onCharacter?: (characters: string[],index: number) => void;
@@ -183,18 +187,14 @@ export default class MessageBox extends Sprite{
                     return;
                 }
                 // add next character
-                // if (characters[charIdx]!="\n"){
-                    this.text.text += (characters[charIdx]);
-                // } else {
-                    // this.text.text += " "+(characters[charIdx]);
-                // }
+                this.text.text += (characters[charIdx]);
 
                 if (this.onCharacter){
                     this.onCharacter(characters,charIdx);
                 }
                 // play sfx
                 if (sfx){
-                    if (characters[charIdx] === ' '
+                    if (characters[charIdx] === ' ' || characters[charIdx] === '\n'
                         || this.punctuationMarks.includes(characters[charIdx])
                         || sfxCharCount === charPerSfx){
                         // reset count, but don't play

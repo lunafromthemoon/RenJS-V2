@@ -40,7 +40,7 @@ export default class RJSMenu extends Group {
             const element = this.elementFactory[elementConfig.type](elementConfig);
             // index element if it has an id
             if (elementConfig.id){
-                this.indexedElements[elementConfig] = element;
+                this.indexedElements[elementConfig.id] = element;
             }
             // add display element to group (this)
             this.addChild(element);

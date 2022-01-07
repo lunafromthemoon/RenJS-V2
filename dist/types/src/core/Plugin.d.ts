@@ -8,6 +8,7 @@ export default class Plugin implements PluginInterface {
     onInit(): void;
     onStart(): void;
     onLoad(slot: any, data: any): void;
+    onLoaded(): void;
     onSave(slot: any, data: any): void;
     onCall(params: any): void;
     onTeardown(): void;

@@ -93,8 +93,10 @@ export default class ChoiceHandler extends Graphics {
 
         if (this.config.alignment === 'centered'){
             chBox.y -= (chBox.height*totalChoices + this.config.separation*(totalChoices-1))/2
+        } else if (this.config.alignment === 'bottomUp'){
+            chBox.y -= (chBox.height*totalChoices + this.config.separation*(totalChoices-1))
         }
-        const separation = index*(chBox.height+this.config.separation*(this.config.alignment === 'bottomUp' ? -1 : 1))
+        const separation = index*(chBox.height+this.config.separation)
         chBox.y += separation;
         chBox.setFrames(...BaseButton.getButtonFrames(chBox.animations.frameTotal))
         const text = new Label(this.game,this.config.text,chBox);

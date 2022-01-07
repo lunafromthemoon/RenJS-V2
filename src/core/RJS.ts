@@ -314,6 +314,7 @@ export default class RJS extends Game {
         // resolve stack
         this.control.execStack = new ExecStack(dataParsed.stack);
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
+        await this.checkPlugins('onLoaded');
         this.gameStarted = true;
         await this.managers.story.show();
         if (this.config.debugMode){

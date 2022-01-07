@@ -80,6 +80,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.characterSprites.visible = false;
         this.cgsSprites.visible = false;
 
+        this.backgroundSprites.alpha = 0;
+        this.behindCharactersSprites.alpha = 0;
+        this.characterSprites.alpha = 0;
+        this.cgsSprites.alpha = 0;
+
         if (this.game.setup.lazyloading){
             this.assetLoader = new RJSAssetLoader(this.game);
         }
@@ -117,6 +122,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     interpret(): void {
         if (this.game.managers.story.currentScene.length === 0 || this.game.control.paused){
            this.interpreting = false;
+           this.game.checkPlugins('onEndScene');
            return
         } else {
             const currentAction = this.game.managers.story.currentScene.shift();

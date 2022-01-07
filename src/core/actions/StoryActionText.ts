@@ -16,7 +16,7 @@ export default class StoryActionText extends StoryAction {
     execute(): void {
         let transitioning: Promise<any> = null;
         // const boxId = this.boxId ? this.boxId : 'default'
-		transitioning = this.game.managers.text.display(this.body,this.boxId, this.dontHide);
+		transitioning = this.game.managers.text.display(this.body,this.boxId, null, this.dontHide);
         this.resolve(transitioning);
     }
 }

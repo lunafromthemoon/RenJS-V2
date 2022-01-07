@@ -12,10 +12,10 @@ export default class TextManager implements TextManagerInterface {
         this.game = game
     }
 
-    async display(text: string,boxId: string,dontHide=false): Promise<any> {
+    async display(text: string,boxId: string,sfx=null,dontHide=false): Promise<any> {
         if (!boxId) boxId = 'default'
         text = this.game.managers.logic.parseVars(text.toString())
-        await this.game.gui.hud.showText(boxId,text);
+        await this.game.gui.hud.showText(boxId,text,sfx);
         if (this.game.storyConfig.logText){
             this.textLog.push({text,boxId});
         }
@@ -57,7 +57,7 @@ export default class TextManager implements TextManagerInterface {
 
         }
         // display text and wait for click
-        await this.display(text,boxId,dontHide);
+        await this.display(text,boxId,character.voice,dontHide);
         // hide namebox
         if (!dontHide){
             this.game.gui.hud.hideName(chConfig.nameBox);
