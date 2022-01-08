@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.3...v2.7.0) (2022-01-08)
+
+
+### Features
+
+* story log ([a39aece](https://github.com/lunafromthemoon/RenJS-V2/commit/a39aecea08e06fa5a7aa99a772e8e3c032ec958c))
+
 ## [2.6.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.2...v2.6.3) (2022-01-07)
 
 
