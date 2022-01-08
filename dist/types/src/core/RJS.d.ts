@@ -36,7 +36,7 @@ export default class RJS extends Game {
     storyConfig: StoryConfig;
     storyAccessibility?: AccessibilityConfig;
     accessibility: Accessibility;
-    textLog: any[];
+    storyLog: any[];
     interruptAction: any;
     managers: {
         background?: BackgroundManager;

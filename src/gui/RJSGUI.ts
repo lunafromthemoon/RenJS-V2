@@ -2,6 +2,7 @@ import RJS from '../core/RJS';
 import {GUIAsset} from './elements/GUIAsset';
 import RJSMenu from './RJSMenu';
 import RJSHUD from './RJSHUD';
+import {setTextStyles} from '../utils/gui'
 
 export interface RJSGUIInterface {
     init();
@@ -27,6 +28,9 @@ export default class RJSGUI implements RJSGUIInterface {
     // menu navigation
     currentMenu = null
     previousMenu = null
+
+    //export this function so it can be used from plugins
+    setTextStyles = setTextStyles
 
     constructor(protected game: RJS) {
         this.initAssets(game.guiSetup);

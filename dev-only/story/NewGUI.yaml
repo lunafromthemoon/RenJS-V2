@@ -64,6 +64,11 @@ config:
       'y': 468
       asset: asset22
     - type: button
+      x: 724
+      'y': 20
+      asset: logBtn
+      binding: showTextLog
+    - type: button
       x: 646
       'y': 474
       asset: asset24
@@ -304,7 +309,25 @@ assets:
     asset22:
       name: asset22
       fileName: hudasset22.png
+    logBg:
+      name: logBg
+      fileName: logbg.png
   spritesheets:
+    logBtn:
+      name: logBtn
+      fileName: logbtn.png
+      w: 56
+      h: 53
+    logReturnBtn: 
+      name: logReturnBtn
+      fileName: returnbtn.png
+      w: 137 
+      h: 53
+    arrowBtn: 
+      name: arrowBtn
+      fileName: arrowbtn.png
+      w: 56 
+      h: 45
     loading-bar:
       name: loading-bar
       fileName: loaderloading-bar.png

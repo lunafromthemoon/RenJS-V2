@@ -6,7 +6,6 @@ export interface TextManagerInterface {}
 export default class TextManager implements TextManagerInterface {
 
     private game: RJS
-    textLog: any[] = []
 
     constructor(game: RJS) {
         this.game = game
@@ -15,10 +14,7 @@ export default class TextManager implements TextManagerInterface {
     async display(text: string,boxId: string,sfx=null,dontHide=false): Promise<any> {
         if (!boxId) boxId = 'default'
         text = this.game.managers.logic.parseVars(text.toString())
-        await this.game.gui.hud.showText(boxId,text,sfx);
-        if (this.game.storyConfig.logText){
-            this.textLog.push({text,boxId});
-        }
+        await this.game.gui.hud.showText(boxId,text,sfx);        
         return new Promise(resolve=>{
             this.game.waitForClick(() => {
                 if (!dontHide){

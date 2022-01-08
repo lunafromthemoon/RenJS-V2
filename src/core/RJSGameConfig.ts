@@ -58,7 +58,7 @@ export interface StoryConfig extends IGameConfig {
     charPerSfx?: any;
     // wether the game keeps a log of the player choices for replay purposes
     logChoices: boolean;
-    logText: boolean;
+    keepStoryLog: boolean;
     lazyloading: boolean;
     precomputeBreakLines: boolean;
     transitions: {

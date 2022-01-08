@@ -16,6 +16,11 @@ export default class StoryActionText extends StoryAction {
     execute(): void {
         let transitioning: Promise<any> = null;
         // const boxId = this.boxId ? this.boxId : 'default'
+        if (this.game.storyConfig.keepStoryLog){
+            // parse the variables of the message in this exact moment, since later they could change!
+            const message = this.game.managers.logic.parseVars(this.body.toString())
+            this.game.storyLog.push({message: message});
+        }
 		transitioning = this.game.managers.text.display(this.body,this.boxId, null, this.dontHide);
         this.resolve(transitioning);
     }

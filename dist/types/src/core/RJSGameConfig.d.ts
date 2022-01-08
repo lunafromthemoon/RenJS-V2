@@ -49,7 +49,7 @@ export interface StoryConfig extends IGameConfig {
     punctuationWait?: number;
     charPerSfx?: any;
     logChoices: boolean;
-    logText: boolean;
+    keepStoryLog: boolean;
     lazyloading: boolean;
     precomputeBreakLines: boolean;
     transitions: {

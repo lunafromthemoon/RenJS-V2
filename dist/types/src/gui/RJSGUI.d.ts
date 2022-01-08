@@ -2,6 +2,7 @@ import RJS from '../core/RJS';
 import { GUIAsset } from './elements/GUIAsset';
 import RJSMenu from './RJSMenu';
 import RJSHUD from './RJSHUD';
+import { setTextStyles } from '../utils/gui';
 export interface RJSGUIInterface {
     init(): any;
     assets: GUIAsset[];
@@ -21,6 +22,7 @@ export default class RJSGUI implements RJSGUIInterface {
     hud: RJSHUD;
     currentMenu: any;
     previousMenu: any;
+    setTextStyles: typeof setTextStyles;
     constructor(game: RJS);
     initAssets(gui: any): void;
     init(): Promise<any>;

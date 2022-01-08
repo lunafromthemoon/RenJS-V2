@@ -45,6 +45,11 @@ export default class Plugin implements PluginInterface {
 		// base plugin does nothing
 	}
 
+	onAction(action): void {
+		// called before executing every single action, with actual action object
+		// base plugin does nothing
+	}
+
 	onEndScene(params): void {
 		// called when the interpreter runs out of actions, normally when a scene ends without calling another scene
 		// base plugin does nothing

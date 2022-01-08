@@ -54,7 +54,7 @@ export default class RJS extends Game {
     storyAccessibility?: AccessibilityConfig;
     accessibility: Accessibility;
 
-    textLog: any[] = []
+    storyLog: any[] = []
 
     interruptAction: any = null
 
@@ -268,7 +268,8 @@ export default class RJS extends Game {
             cgs: this.managers.cgs.current,
             ambients: this.screenEffects.ambient.current,
             stack: this.control.execStack.shallowCopy(),
-            vars: this.managers.logic.vars
+            vars: this.managers.logic.vars,
+            storyLog: this.storyLog
             // should include any interrupts showing
         }
 
@@ -313,6 +314,7 @@ export default class RJS extends Game {
         await this.gui.hud.clear();
         // resolve stack
         this.control.execStack = new ExecStack(dataParsed.stack);
+        this.storyLog = dataParsed.storyLog;
         this.managers.story.currentScene = this.control.execStack.getActions(this.story);
         await this.checkPlugins('onLoaded');
         this.gameStarted = true;

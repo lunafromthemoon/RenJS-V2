@@ -95,6 +95,7 @@ extra:
     sakura: assets/ambient/sakura-petals.png 17 26
     snowflakes: assets/ambient/snowflakes.png 17 17
     snowflakes_large: assets/ambient/snowflakes_large.png 64 64
+
   # scripts:
   #   marble: assets/ambient/Marble.js
   #   lightbeam: assets/ambient/LightBeam.js
