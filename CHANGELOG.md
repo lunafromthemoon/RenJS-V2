@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.0...v2.7.1) (2022-01-08)
+
+
+### Bug Fixes
+
+* forgot to actually push the changes??? ([173c952](https://github.com/lunafromthemoon/RenJS-V2/commit/173c9527065b044f4903931be4d4fbbf72b4dc21))
+
 # [2.7.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.6.3...v2.7.0) (2022-01-08)
 
 
