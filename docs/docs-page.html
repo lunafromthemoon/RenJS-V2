@@ -1949,30 +1949,63 @@ choices:
 						<p>As seen in already, the function <strong>onCall</strong>, allows you to call a function from the story script. But there are many other ways to use the <strong>Plugins</strong> besides this specific use case. The <strong>RenJS.Plugin Class</strong> provides handles for each phase of the game where you might need to add your own functions, that you need to simply overwrite.</p>
 						<p>Let's see in more detail the structure of a Plugin, and what handles can be overwritten.</p>
 						<pre><code class="language-js">
-	export default class Plugin implements PluginInterface {
+export default class Plugin implements PluginInterface {
 
-		protected game: RJS;
-		protected name: string
+	protected game: RJS;
+	protected name: string
 
-		constructor(name, game){
-			this.game = game;
-			this.name = name
-		}
-		// plugin handles
-		onInit(): void {}
-
-		onStart(): void {}
-
-		onAction(action): void {}
-
-		onCall(params): void {}
-
-		onLoad(slot,data): void {}
-
-		onSave(slot,data): void {}
-
-		onTeardown(): void {}
+	constructor(name, game){
+		this.game = game;
+		this.name = name
 	}
+
+	onInit(): void {
+		// called after everything is loaded (unless lazyloading), before showing any menu
+		// base plugin does nothing
+	}
+
+	onStart(): void {
+		// called when new game is started, just before interpreter is called
+		// base plugin does nothing
+	}
+
+	onLoad(slot,data): void {
+		// called when loading game data, before loading the game 
+		// "data" parameter can be modified here and change what will be loaded
+		// base plugin does nothing
+	}
+
+	onLoaded(): void {
+		// called after loaded data recreated the saved point, just before interpreter is called
+		// base plugin does nothing
+	}
+
+	onSave(slot,data): void {
+		// called just before saving game data to localstorage
+		// "data" parameter can be modified here and that's what will be saved
+		// base plugin does nothing
+	}
+
+	onCall(params): void {
+		// called from the story, by using "call" action
+		// base plugin does nothing
+	}
+
+	onAction(action): void {
+		// called before executing every single action, with actual action object
+		// base plugin does nothing
+	}
+
+	onEndScene(params): void {
+		// called when the interpreter runs out of actions, normally when a scene ends without calling another scene
+		// base plugin does nothing
+	}
+
+	onTeardown(): void {
+		// called when game ends, before returning to the main menu
+		// base plugin does nothing
+	}
+}
 						</code></pre>
 						<p>This is the class definition of the <strong>RenJS Plugins</strong>. As you can see, the constructor receives a name and the <strong>game</strong> object, that will be later available to use from any of the handles. Then handles themselves are empty and do nothing unless you redefine them.</p>
 						<h3>On Init</h3>
@@ -2002,9 +2035,11 @@ choices:
 	RenJSGame.addPlugin('helloWorld',HelloWorld)
 						</code></pre>
 						<p>In this case, when each line of the function is done executing, the function is technically over, but the action still waits for the timeout callback to finish, and let the game know it can continue with the next action in the script.</p>
-						<h3>On Save and On Load</h3>
-						<p>These two handles are called, as you might imagine, when saving and loading the game. RenJS saves games in slots (identification number), locally into the player's browser. The <strong>onSave</strong> handle is called just before the game is saved, and <strong>onLoad</strong> is called when the data is retrieved, but just before setting the game up.</p>
-						<p>You could use these handles to save and load data to and from an external API, and so have your players data online, making it available in different devices. You might also want to use them to add other information to the saved game, for example, a timestamp.</p>
+						<h3>On Save, On Load, On Loaded</h3>
+						<p>These handles are called, as you might imagine, when saving and loading the game. RenJS saves games in slots (identification number), locally into the player's browser.</p> <p>You could use these handles to save and load data to and from an external API, and so have your players data online, making it available in different devices. You might also want to use them to add other information to the saved game, for example, a timestamp, and much more.</p>
+						<p>The <strong>onSave</strong> handle is called just before the game is saved locally, receiving the slot and data to save. Whatever modification you do to the data parameter will be saved too.</p>
+						<p>The <strong>onLoad</strong> handle is called when the data is retrieved, just <i>before</i> setting the game up. Just like onSave, it will receive the slot and the data to load. By modifying the data parameter you can change too what will end up being loaded.</p>
+						<p>The <strong>onLoaded</strong> handle is called just <i>after</i> the loaded data was used to setup the game, but before the interpreter is called. You can use this handle to modify, for example, sprites or graphical elements created when loading.</p>
 						<pre><code class="language-js">
 	class CloudSaving extends RenJS.Plugin {
 
@@ -2039,6 +2074,8 @@ choices:
 						</code></pre>
 						<h3>On Teardown</h3>
 						<p>This handle will only be called when the player goes from the story to the main menu, usually, after finishing the game. If the player simply closes the game, it will not be executed. Use to clean up any big memory objects you might be using during the story, but avoid saving data or doing anything else that is of big importance for the story.</p>
+						<h3>On End Scene</h3>
+						<p>This handle will be called when the interpreter runs out of actions to execute. This can happen only if a scene is finished and no "scene" action or "endGame" action is called. Normally, you don't want this to happen, since there is no normal way for the player to continue, but sometimes this is expected. For example, the point and click plugin waits for a scene to end before enabling the clickable objects for the player, and when the player clicks an object, then another scene will be called.</p>
 					</section><!--//section-->
 
 					<section class="docs-section" id="transition-plugin-section">

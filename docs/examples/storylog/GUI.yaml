@@ -5,6 +5,11 @@ resolution:
 assetCounter: 44
 config:
   hud:
+    - type: button
+      x: 724
+      y: 20
+      asset: logBtn
+      binding: showTextLog
     - id: default
       type: choices
       asset: asset31
@@ -63,11 +68,6 @@ config:
       x: 640
       'y': 468
       asset: asset22
-    - type: button
-      x: 724
-      'y': 20
-      asset: logBtn
-      binding: showTextLog
     - type: button
       x: 646
       'y': 474

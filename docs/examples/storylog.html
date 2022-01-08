@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>RenJS Examples - Story Log Plugin</title>
+	    <!-- Meta -->
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	        	<meta name="title" content="RenJS">
+	    <meta name="description" content="A Visual Novel creator made for writers!">
+	    <meta name="author" content="lunafromthemoon">    
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+
+	    <!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://renjs.fr/">
+		<meta property="og:title" content="RenJS">
+		<meta property="og:description" content="A Visual Novel creator made for writers!">
+		<meta property="og:image" content="assets/images/thumbnail.png">
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://renjs.fr/">
+		<meta property="twitter:title" content="RenJS">
+		<meta property="twitter:description" content="A Visual Novel creator made for writers!">
+		<meta property="twitter:image" content="assets/images/thumbnail.png"> 
+	    <link rel="shortcut icon" href="../favicon.ico"> 
+	    
+	    <!-- Google Font -->
+	    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+	    
+	    <!-- FontAwesome JS-->
+	    <script defer src="../assets/fontawesome/js/all.min.js"></script>
+	     <link rel="stylesheet" href="../assets/css/prism.css" />
+
+	    <!-- Theme CSS -->  
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/tabs.css">
+	    <link id="theme-style" rel="stylesheet" href="../assets/css/theme.css">
+	    
+	</head>
+
+
+	<body style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px;margin-right: 0px;">
+		<header class="header fixed-top">	    
+	        <div class="branding docs-branding">
+	            <div class="container-fluid position-relative py-2">
+	                <div class="docs-logo-wrapper">
+		                <div class="site-logo"><a class="navbar-brand" href="../index.html"><img class="logo-icon mr-2" src="../assets/images/renjs-logo.svg" alt="logo"></a></div>    
+	                </div><!--//docs-logo-wrapper-->
+		            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+						<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+							<li class="list-inline-item"><a href="https://github.com/lunafromthemoon/RenJS-V2"><i class="fab fa-github fa-fw"></i></a></li>
+				            <li class="list-inline-item"><a href="https://twitter.com/lunafromthem00n"><i class="fab fa-twitter fa-fw"></i></a></li>
+			                <li class="list-inline-item"><a href="https://discord.gg/uSMpYFnHZN"><i class="fab fa-discord"></i></a></li>
+			                <li class="list-inline-item"><a href="https://lunafromthemoon.itch.io/renjs"><i class="fab fa-itch-io"></i></a></li>
+			            </ul><!--//social-list-->
+			            <a href="../index.html#downloads" class="btn btn-primary d-none d-lg-flex">Download</a>
+		            </div><!--//docs-top-utilities-->
+	            </div><!--//container-->
+	        </div><!--//branding-->
+	    </header><!--//header-->
+		
+		<section id="downloads" class="cta-section py-5 theme-bg-dark position-relative">
+			<div class="text-center">
+	   			<img src="../assets/images/renjs-title-white.svg" class="m-3 w-25">
+	   			<h1 class="title text-center text-white mb-5">Story Log Plugin</h1>
+	   		</div>
+			<div id="renjs-canvas"></div>
+		    <div class="container">
+			   <div class="docs-overview py-5">
+		    		
+		    		  <section class="accordion">
+					    <section class="accordion-tabs">
+					      <button class="accordion-tab accordion-active" data-actab-group="0" data-actab-id="0"><i class="fas fa-pen-alt"></i> Story.yaml</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="1"><i class="fas fa-toolbox"></i> Configuration</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="2"><i class="fas fa-cog"></i> TextLog.js</button>
+					    </section>
+					    <section class="accordion-content line-numbers">
+					      <article class="accordion-item accordion-active" data-actab-group="0" data-actab-id="0">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-yaml">
+start:
+  - show room_night: 
+  - text: Welcome to the Story Log example
+  - text: You can check the story log by pressing the button on the top right corner of the screen.
+  - text: If you open it now, you should see the first lines of the game.
+  - show deuzi: normal AT CENTER WITH FADE
+  - deuzi says: When a character speaks, the story log will record it, and also show who said what.
+  - deuzi says: You can see for yourself now, my dialogues should appear with my name.
+  - deuzi says: Isn't it great?
+  - choice:
+    - It does look nice:
+      - deuzi says happy: Yes, it looks (color:#FF0055)amazing(end)!
+    - But what about styles?:
+      - deuzi says: I was just about to tell you about (color:#FF0055)that(end)!
+  - deuzi says: If you check the log now, the last line should appear with the same style as you saw it in the message box.
+  - var variable: hello
+  - text: If you show variables, they will be saved with the value they had at that moment.
+  - text: For example
+  - text: 'The variable value is {variable}==hello'
+  - text: Let's change it now to something different.
+  - var variable: world
+  - text: 'Now the variable is {variable}==world'
+  - text: If you check the log now, the variable will have the expected values.
+  - text: This log can show about 11 lines of text at the same time.
+  - text: If the log has more than this number, navigation controls will appear!
+  - text: You should be able to see those controls if you open the Story Log right now, as a lot of text has been shown already.
+  - deuzi says: The Story Log is a plugin, so you can change how it looks completely by modifying it!
+  - deuzi says: You can check the code in the plugin tab down below.
+  - deuzi says: And that's all you need to know about this cool feature!
+  - deuzi says: Ciao!
+  - endgame:
+									</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="1">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+					      		<p>In Config.yaml, set <strong>keepStoryLog</strong> to <strong>true</strong>.</p>
+	    						<pre><code class="language-yaml">
+...
+keepStoryLog: true
+...
+								</code></pre>
+				      		<p>In GUI.yaml, add the Open Log button to the hud, and add the assets to use.</p>
+	    						<pre><code class="language-yaml">
+...
+config:
+  hud:
+    - type: button
+      x: 724
+      y: 20
+      asset: logBtn
+      binding: showTextLog
+...
+assets:
+  images:
+  	...
+    logBg:
+      name: logBg
+      fileName: logbg.png
+    ...
+  spritesheets:
+    logBtn:
+      name: logBtn
+      fileName: logbtn.png
+      w: 56
+      h: 53
+    logReturnBtn: 
+      name: logReturnBtn
+      fileName: returnbtn.png
+      w: 137 
+      h: 53
+    arrowBtn: 
+      name: arrowBtn
+      fileName: arrowbtn.png
+      w: 56 
+      h: 45
+    ...
+								</code></pre>
+							</div>
+					      </article>
+					      <article class="accordion-item" data-actab-group="0" data-actab-id="2">
+					      	<h4 class="accordion-item__label"></h4>
+					      	<div class="accordion-item__container">
+	    						<pre><code class="language-js">
+class TextLog extends RenJS.Plugin {
+
+    log = null;
+    
+    text = null;
+    maxLines = 11;
+
+    pageUpBtn = null;
+    pageDownBtn = null;
+
+    currentPage = 0;
+    finalPage = -1;
+    pages = []
+
+    onInit() {
+        //create log object
+        //create phaser group to hold all graphic elements
+        this.log = this.game.add.group();
+        this.log.visible = false;
+        //create invisible graphics layer with input enabled so when the log is shown, nothing else in the gui "works"
+        const bgLayer = this.game.add.graphics();
+        this.log.addChild(bgLayer)
+        bgLayer.beginFill(0xFFFFFF);
+        bgLayer.drawRect(0, 0, this.game.width, this.game.height);
+        bgLayer.endFill();
+        bgLayer.alpha = 0;
+        bgLayer.inputEnabled = true;
+
+        //create log background centered in the screen            
+        const bg = this.game.add.sprite(this.game.world.centerX,20,"logBg");
+        bg.anchor.set(0.5,0);
+        this.log.addChild(bg);
+
+        //create return button, to close the log
+        const btnY = 415;
+        const returnbtn = this.game.add.button(this.game.world.centerX,btnY,"logReturnBtn",async () => {
+            //hide log with fade (but faster)
+            const fade = this.game.storyConfig.fadetime
+            this.game.storyConfig.fadetime = 150;
+            await this.game.screenEffects.transition.FADEOUT(this.log)
+            this.game.storyConfig.fadetime = fade;
+
+            this.log.visible = false;
+            this.pages = [];
+            this.finalPage = -1;
+            this.currentPage = 0;
+            this.game.unpause();
+        },this,1,0,1,0,this.log);
+        returnbtn.anchor.set(0.5);
+
+        //create arrow buttons
+        this.pageUpBtn = this.game.add.button(this.game.world.centerX+80,btnY,"arrowBtn",async () => {
+            if (this.currentPage>0){
+                this.setPage(this.currentPage-1);    
+            }
+            
+        },this,1,0,1,0,this.log);
+        this.pageUpBtn.anchor.set(0,0.5);
+        this.pageDownBtn = this.game.add.button(this.game.world.centerX-80,btnY,"arrowBtn",async () => {
+            if (this.finalPage==-1 || this.currentPage&lt;this.finalPage){
+                this.setPage(this.currentPage+1);    
+            }
+        },this,1,0,1,0,this.log);
+        this.pageDownBtn.anchor.set(0,0.5);
+        //flip arrow
+        this.pageDownBtn.scale.x = -1;
+
+        // create empty text object where the text will be displayed
+        const style = {...this.game.gui.hud.mBoxes.default.config.text.style};        
+        style.wordWrapWidth = 640;
+        this.text = this.game.add.text(80, 50, "", style);
+        this.log.addChild(this.text);
+        //add new action for the text log button
+        this.game.gui.bindingActions['showTextLog'] = async ()=>{
+            this.game.world.bringToTop(this.log);
+            this.game.pause();
+            //update log text, so it will display the last messages first
+            this.setPage(0);
+            
+            //show log with fade in (but faster!)
+            this.log.alpha = 0;
+            this.log.visible = true;
+            const fade = this.game.storyConfig.fadetime
+            this.game.storyConfig.fadetime = 150;
+            await this.game.screenEffects.transition.FADEIN(this.log)
+            this.game.storyConfig.fadetime = fade;
+        }
+
+    }
+
+    setPage(page){
+        this.currentPage = page;
+        if (this.pages.length <= this.currentPage){
+            if (this.currentPage == 0){
+                this.buildPage(0);
+            } else {
+                this.buildPage(this.pages[this.currentPage-1].offset);
+            }
+        }
+        //only show page down button if you're NOT on the last page
+        this.pageDownBtn.visible = this.currentPage!=this.finalPage;
+        //only show page up if you're NOT on the first page
+        this.pageUpBtn.visible = this.currentPage!=0;
+        //set page
+        const message = this.game.gui.setTextStyles(this.pages[this.currentPage].message,this.text);
+        this.text.text = message;
+    }
+
+    buildPage(offset){
+        var lines = 0;
+        let finalRawText = '';
+        // build the log "page", with a max amount of lines
+        for (var i = this.game.storyLog.length -1 - offset; i>=0; i--){
+            const entry = this.game.storyLog[i];
+            var message = entry.message;
+            if (entry.choice){
+                message = "    - "+message;
+            }
+            if (entry.actor){
+                const name = this.game.managers.character.characters[entry.actor].config.displayName
+                //we'll show the character name in white
+                message = "(color:#ffffff)"+name +":(end) "+message;
+            }
+            //remove any style tag to calculate the wordwrap
+            const finalMessage = this.game.gui.setTextStyles(message,this.text);
+            const messageLines = this.text.precalculateWordWrap(finalMessage)
+            if (messageLines.length + lines > this.maxLines){
+                //stop adding lines
+                break;
+            }
+            lines+=messageLines.length;
+            // use the raw message text to build the final message, so it will keep the style tags
+            finalRawText = message + '\n' + finalRawText;
+        }
+        // if the index got to the end of the story log, it's the last page
+        if (i==-1){
+            this.finalPage = this.currentPage;
+            // when you get to the last page, complete the text with empty lines
+            for (var j=0;j&lt;this.maxLines-lines;j++){
+                finalRawText = '\n' + finalRawText;
+            }
+        }
+
+        this.pages.push({message: finalRawText, offset: this.game.storyLog.length-1 - i});
+
+    }
+}
+
+RenJSGame.addPlugin('TextLog',TextLog)
+								</code></pre>
+							</div>
+					      </article>
+					    </section>
+					  </section>
+		    	</div>
+		    </div>
+		    <p class="text-center mt-3">
+                <a class="btn btn-cta-light" href="../examples-gallery.html"><i class="fas fa-arrow-left"></i> Return to the Gallery</a>
+                <a class="btn btn-cta-light" href="https://github.com/lunafromthemoon/RenJS/tree/gh-pages/examples" target="_blank"><i class="fab fa-github fa-fw"></i> Download from Github</a>
+            </p>  
+		</section>
+		<footer class="footer">
+      <div class="footer-bottom text-center py-3">
+            <p>Ren<strong>JS</strong> created by <strong><i class="fas fa-rocket"></i></strong> <a href="https://twitter.com/lunafromthem00n">lunafromthemoon</a> <strong><i class="fas fa-moon"></i></strong></p>
+      </div>
+    </footer>
+	</body>
+	<script src="../assets/js/prism.js"></script> 
+	<script type="text/javascript" src="../assets/js/tabs.js"></script>
+	<script src="/downloads/releases/renjs.js"></script>
+	<script src="storylog/boot.js"></script>
+	<script src="plugins/TextLog.js"></script>
+
+</html>

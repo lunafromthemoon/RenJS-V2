@@ -1,0 +1,11 @@
+backgrounds:
+  room_night: assets/backgrounds/room_night.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png

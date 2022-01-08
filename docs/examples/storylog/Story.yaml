@@ -1,0 +1,31 @@
+start:
+  - show room_night: 
+  - text: Welcome to the Story Log example
+  - text: You can check the story log by pressing the button on the top right corner of the screen.
+  - text: If you open it now, you should see the first lines of the game.
+  - show deuzi: normal AT CENTER WITH FADE
+  - deuzi says: When a character speaks, the story log will record it, and also show who said what.
+  - deuzi says: You can see for yourself now, my dialogues should appear with my name.
+  - deuzi says: Isn't it great?
+  - choice:
+    - It does look nice:
+      - deuzi says happy: Yes, it looks (color:#FF0055)amazing(end)!
+    - But what about styles?:
+      - deuzi says: I was just about to tell you about (color:#FF0055)that(end)!
+  - deuzi says: If you check the log now, the last line should appear with the same style as you saw it in the message box.
+  - var variable: hello
+  - text: If you show variables, they will be saved with the value they had at that moment.
+  - text: For example
+  - text: 'The variable value is {variable}==hello'
+  - text: Let's change it now to something different.
+  - var variable: world
+  - text: 'Now the variable is {variable}==world'
+  - text: If you check the log now, the variable will have the expected values.
+  - text: This log can show about 11 lines of text at the same time.
+  - text: If the log has more than this number, navigation controls will appear!
+  - text: You should be able to see those controls if you open the Story Log right now, as a lot of text has been shown already.
+  - deuzi says: The Story Log is a plugin, so you can change how it looks completely by modifying it!
+  - deuzi says: You can check the code in the plugin tab down below.
+  - deuzi says: And that's all you need to know about this cool feature!
+  - deuzi says: Ciao!
+  - endgame:

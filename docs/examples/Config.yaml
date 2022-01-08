@@ -40,6 +40,7 @@ skiptime: 50
 autotime: 150
 # If logChoices is true, previously chosen choices will be shown in a different color
 logChoices: true
+keepStoryLog: true
 # Default waiting time for timeouts if not specified
 timeout: 5000
 # punctuation can add extra time when showing text in the message box, per special character
