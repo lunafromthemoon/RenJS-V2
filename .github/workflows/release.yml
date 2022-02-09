@@ -15,7 +15,7 @@ jobs:
       - id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.1.0
       - run: npm run build:demo
-      - uses: josephbmanley/butler-publish-itchio-action@v1.0.2
+      - uses: josephbmanley/butler-publish-itchio-action@v1.0.3
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: web
