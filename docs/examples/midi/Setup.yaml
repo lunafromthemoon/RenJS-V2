@@ -1,0 +1,15 @@
+backgrounds:
+  street_morning: assets/backgrounds/school_front_morning.jpg
+
+characters:
+  deuzi:
+    displayName: Deuzilene
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+      happy: assets/characters/Char3HappySchool.png
+      angry: assets/characters/Char3AngrySchool.png
+
+extra:
+  spritesheets:
+    sakura: assets/ambient/sakura-petals.png 17 26

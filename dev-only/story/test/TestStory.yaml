@@ -17,6 +17,10 @@ start:
       - scene: endgame
 
 testSound:
+  - text: Play midi
+  - call MidiPlayer: clairdelune
+  - text: Stop midi
+  - call MidiPlayer: stop
   - text: Play normal once
   - play music1:
   - text: Play looped bgs

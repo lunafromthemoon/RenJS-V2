@@ -1,0 +1,15 @@
+start:
+  - call MidiPlayer: clairdelune
+  - show street_morning:
+  - ambient SAKURA:
+  - show deuzi: normal AT CENTER WITH FADE
+  - text: A Midi file (.MID or .MIDI extension) is a Musical Instrument Digital Interface file.
+  - text: Unlike regular audio files like MP3s or WAVs, these don't contain actual audio data and are therefore much smaller in size. 
+  - text: They instead explain what notes are played, when they're played, and how long or loud each note should be.
+  - text: The midi player plugin uses the js library ToneJS to play the sounds for us directly in the browser.
+  - text: The current music playing, Clair de Lune by Debussy, is a midi file of only 15kb!
+  - deuzi says happy: Isn't it beautiful? Let's stay and listen some more!
+  - text: To stop the sound, call the midi player plugin again, with the keyword (bold)stop(end), and that's it!
+  - call MidiPlayer: stop
+  - ambient CLEAR:
+  - endgame:
