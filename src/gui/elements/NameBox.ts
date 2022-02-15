@@ -40,7 +40,7 @@ export default class NameBox extends Sprite {
         this.text.setText(text, true);
         this.text.updateTransform();
         if (this.config.tintStyle === 'box'){
-            this.tint = Color.hexToRGB(color);
+            this.tint = Color.hexToColor(color).color;
         } else {
             // change name color
             this.text.fill = color;

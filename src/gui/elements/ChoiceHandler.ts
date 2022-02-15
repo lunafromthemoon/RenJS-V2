@@ -103,8 +103,8 @@ export default class ChoiceHandler extends Graphics {
         text.setText(setTextStyles(choice.choiceText,text), true);
         chBox.addChild(text);
 
-        if (choice.previouslyChosen){
-            chBox.tint = Color.hexToRGB(this.config.chosenColor);
+        if (this.game.storyConfig.logChoices && this.config.chosenColor && choice.previouslyChosen){
+            chBox.tint = Color.hexToColor(this.config.chosenColor).color;
         }
         return chBox;
     }

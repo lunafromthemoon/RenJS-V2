@@ -6,6 +6,7 @@ buttons:
   start: iniciar
   return: volver
   skip: saltarse
+  changeLang: cambiar idioma
   save 0: guardar 0
   save 1: guardar 1
   save 2: guardar 2

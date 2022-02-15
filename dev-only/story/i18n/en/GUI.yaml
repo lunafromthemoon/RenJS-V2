@@ -93,6 +93,15 @@ config:
         'y': 506
         x: 616
         assetType: spritesheets
+      - id: langbtn
+        sfx: none
+        slot: '0'
+        binding: changeLang
+        height: '82'
+        width: '313'
+        'y': 506
+        x: 266
+        assetType: spritesheets
     sliders:
       - id: asset12
         binding: bgmv
@@ -387,6 +396,11 @@ assets:
       name: asset17
       fileName: saveloadasset17.png
       w: 163
+      h: 82
+    langbtn:
+      name: langbtn
+      fileName: en/langbtn.png
+      w: 313
       h: 82
     asset21:
       name: asset21

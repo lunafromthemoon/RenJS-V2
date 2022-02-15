@@ -3,6 +3,7 @@
 buttons:
   openMenu saveload: save/load
   openMenu settings: settings
+  changeLang: change language
 # Replacements for accessible slider labels
 # the default labels will be the internal binding + user preference keys
 sliders:

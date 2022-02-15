@@ -100,6 +100,15 @@ config:
         'y': '506'
         x: '616'
         assetType: spritesheets
+      - id: langbtn
+        sfx: none
+        slot: '0'
+        binding: changeLang
+        height: '82'
+        width: '313'
+        'y': 506
+        x: 266
+        assetType: spritesheets
     sliders:
       - id: asset12
         binding: bgmv
@@ -133,8 +142,8 @@ config:
     message-box:
       id: asset19
       text-width: '540'
-      offset-y: '24'
-      offset-x: '24'
+      offset-y: '16'
+      offset-x: '16'
       align: left
       color: '#89BAA8'
       font: fontsaudimat-mono
@@ -443,6 +452,11 @@ assets:
       fileName: es/saveloadasset53.png
       w: 145
       h: 52
+    langbtn:
+      name: langbtn
+      fileName: es/langbtn.png
+      w: 313
+      h: 82
   fonts:
     fontsaudimat-mono:
       fileName: fontsfontsaudimat-mono.ttf
