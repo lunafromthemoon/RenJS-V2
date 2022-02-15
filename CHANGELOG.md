@@ -1,3 +1,10 @@
+## [2.7.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.1...v2.7.2) (2022-02-15)
+
+
+### Bug Fixes
+
+* logChoices was not being used ([d5c541f](https://github.com/lunafromthemoon/RenJS-V2/commit/d5c541fa221f85a090d416978be097fc7f21c7e0))
+
 ## [2.7.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.0...v2.7.1) (2022-01-08)
 
 
