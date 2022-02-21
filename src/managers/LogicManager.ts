@@ -14,8 +14,8 @@ type Choice = {
 };
 
 export interface LogicManagerInterface<T> extends RJSManagerInterface {
-    choicesLog: object;
-    vars: object;
+    choicesLog: {[key: string]: any[]};
+    vars: {[key: string]: any};
 
     currentChoices: Choice[];
     // interrupting: boolean;
@@ -23,10 +23,10 @@ export interface LogicManagerInterface<T> extends RJSManagerInterface {
 }
 
 export default class LogicManager implements LogicManagerInterface<Group> {
-    choicesLog: object;
-    vars: object = {};
-    currentChoices: Choice[];
-    interrupting?: {origin: number;execId: string};
+    choicesLog: {[key: string]: any[]};
+    vars: {[key: string]: any} = {};
+    currentChoices: Choice[] = [];
+    interrupting?: {origin: number;execId: string} | null;
     showingText = false;
 
     constructor(private game: RJS) {
@@ -37,7 +37,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.choicesLog = log ? JSON.parse(log) : {};
     }
 
-    set(vars): void {
+    set(vars: {[key: string]: any}): void {
         this.vars = {...this.vars, ...vars};
         this.currentChoices = [];
         this.interrupting = null;
@@ -68,7 +68,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return this.choicesLog[this.getExecStackId()].includes(index);
     }
 
-    evalExpression(expression): boolean {
+    evalExpression(expression: string): boolean {
         expression = expression + '';
         expression = this.parseVars(expression,true);
         try {
@@ -79,7 +79,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
     }
 
-    branch(expression, branches): void {
+    branch(expression: string, branches: {ISTRUE: any; ISFALSE?: any}): void {
         const val = this.evalExpression(expression);
         let actions;
         if (val && branches.ISTRUE){
@@ -96,7 +96,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         }
     }
 
-    parseVars(text, useQM?): string {
+    parseVars(text: string, useQM?: boolean): string {
         const vars = text.match(/\{(.*?)\}/g);
         if (vars) {
             for (const v of vars){
@@ -111,7 +111,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return text;
     }
 
-    parseChoice(index: number, choice): Choice {
+    parseChoice(index: number, choice: {[key: string]: any}): Choice {
         const rawText = Object.keys(choice)[0];
         const parsedChoice: Choice = {
             index,
@@ -179,8 +179,8 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return execId;
     }
 
-    async checkTextAction(firstChoice): Promise<boolean>{
-        const action: StoryAction=this.game.managers.story.parseAction({...firstChoice});
+    async checkTextAction(firstChoice: any): Promise<boolean>{
+        const action = this.game.managers.story.parseAction({...firstChoice});
         if (action && (action.actionType === 'say' || action.actionType === 'text')){
             const textAction = action;
             // set property so the text will not be hidden after it's shown
@@ -217,14 +217,14 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         this.choose(chosenIdx);
     }
 
-    interrupt(boxId, choices): any {
+    interrupt(boxId: string, choices: any[]): void {
         this.interrupting = {origin: this.game.control.execStack.top().c, execId:this.getExecStackId()};
         this.showChoices(boxId,choices);
         // interrupts don't wait for player to make the choice
         this.game.resolveAction();
     }
 
-    async clearChoices(): Promise<any> {
+    async clearChoices(): Promise<void> {
         // clears everything
         await this.game.gui.hud.clear();
         this.currentChoices = [];

@@ -25,12 +25,12 @@ export interface StoryManagerInterface<T> {
     characterSprites: T;
     cgsSprites: T;
     backgroundSprites: T;
-    interpret();
-    startScene(name: string);
+    interpret(): void;
+    startScene(name: string): Promise<void>;
     currentScene: any[];
-    actorsIndex: object;
+    actorsIndex: {[key: string]: string};
     interpreting: boolean;
-    assetLoader: RJSAssetLoader;
+    assetLoader?: RJSAssetLoader;
 }
 
 
@@ -38,11 +38,11 @@ export default class StoryManager implements StoryManagerInterface<Group> {
     behindCharactersSprites: Group;
     cgsSprites: Group
     characterSprites: Group;
-    actorsIndex = {}
-    currentScene: any[];
+    actorsIndex: {[key: string]: string} = {};
+    currentScene: any[] = [];
     backgroundSprites: Group
-    interpreting: boolean;
-    assetLoader: RJSAssetLoader;
+    interpreting = false;
+    assetLoader?: RJSAssetLoader;
     reservedWords = ['WITH','AT','IN','FLIP','CONTINUE','LOOPED','FROM','FORCE']
     actionFactory: {[key: string]: typeof StoryAction}
 
@@ -67,9 +67,6 @@ export default class StoryManager implements StoryManagerInterface<Group> {
             'call': StoryActionCall,
             'endgame': StoryActionEnd,
         }
-    }
-
-    setupStory(): void {
         this.backgroundSprites = this.game.add.group();
         this.behindCharactersSprites = this.game.add.group();
         this.characterSprites = this.game.add.group();
@@ -144,22 +141,22 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.game.managers.character.hideAll('CUT');
         this.game.managers.audio.stopAll()
         this.game.managers.cgs.hideAll('CUT');
-        this.game.managers.background.hide(null,'CUT');
+        this.game.managers.background.hide(undefined,'CUT');
         this.game.screenEffects.ambient.CLEAR();
         this.currentScene = [];
     }
 
-    async startScene(name: string): Promise<any> {
+    async startScene(name: string): Promise<void> {
         await this.game.gui.hud.clear();
         if (this.game.setup.lazyloading){
             // load scene or episode assets (not loaded yet)
-            await this.assetLoader.loadScene(name);
+            await this.assetLoader?.loadScene(name);
         }
         this.game.control.execStack.replace(name);
         this.currentScene = [...this.game.story[name]];
     }
 
-    getActorType(actor): string {
+    getActorType(actor: string): string | null {
         // is actor background or character
         if (!actor) {
             return null;
@@ -190,7 +187,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         return null;
     }
 
-    getManagerByActorType (type: string): RJSSpriteManagerInterface {
+    getManagerByActorType (type: string): RJSSpriteManagerInterface | null {
         switch (type) {
             case 'characters': return this.game.managers.character
             case 'backgrounds': return this.game.managers.background
@@ -199,7 +196,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         return null;
     }
 
-    parseAction(actionRaw): StoryAction {
+    parseAction(actionRaw: {[key: string]: any}): StoryAction | null {
         const keyParams = Object.keys(actionRaw)[0].split(' ');
         const actionType = (keyParams[1] === 'says') ? 'say' : keyParams[0];
         const ActionClass = this.actionFactory[actionType];
@@ -209,9 +206,9 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         return null;
     }
 
-    async interpretAction(actionRaw): Promise<any> {
+    async interpretAction(actionRaw: {[key: string]: any}): Promise<any> {
         // const action = this.parseAction(actionRaw);
-        const storyAction: StoryAction = this.parseAction(actionRaw)
+        const storyAction = this.parseAction(actionRaw)
         this.game.control.nextAction = null;
         if (!storyAction){
             // nothing to do, unknown action or 'else'

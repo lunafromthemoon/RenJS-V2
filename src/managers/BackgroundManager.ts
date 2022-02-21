@@ -21,8 +21,8 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
         bg.anchor.set(0.5);
         if (str.length !== 1){
             const framerate = str.length === 4 ? parseInt(str[3], 10) : 16;
-            bg.animations.add('run', null, framerate);
-            bg.animations.play('run', null, true);
+            bg.animations.add('run', undefined, framerate);
+            bg.animations.play('run', undefined, true);
         }
         return bg
     }
@@ -32,7 +32,7 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
             this.current.destroy();
         }
         if (!name){
-            this.current = null;
+            this.current = undefined;
             return;
         }
         this.current = this.createBackground(name);
@@ -40,9 +40,9 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
         this.current.visible = true;
     }
 
-    async show (name: string, transitionName: string): Promise<void> {
+    async show (name: string | null, transitionName: string): Promise<void> {
         const oldBg = this.current;
-        this.current = name ? this.createBackground(name) : null;
+        this.current = name ? this.createBackground(name) : undefined;
         if (this.current){
             this.current.visible=true;
         }
