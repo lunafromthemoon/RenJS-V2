@@ -3,11 +3,21 @@ import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
 import StoryAction from '../core/actions/StoryAction';
 
+type Choice = {
+    index: any,
+    actions: any[],
+    available: boolean,
+    choiceText: string,
+    previouslyChosen: boolean,
+    interrupt?: boolean,
+    origin?: any,
+};
+
 export interface LogicManagerInterface<T> extends RJSManagerInterface {
     choicesLog: object;
     vars: object;
 
-    currentChoices: any[];
+    currentChoices: Choice[];
     // interrupting: boolean;
     visualChoices?: T;
 }
@@ -15,7 +25,7 @@ export interface LogicManagerInterface<T> extends RJSManagerInterface {
 export default class LogicManager implements LogicManagerInterface<Group> {
     choicesLog: object;
     vars: object = {};
-    currentChoices: any[];
+    currentChoices: Choice[];
     interrupting?: {origin: number;execId: string};
     showingText = false;
 
@@ -101,9 +111,9 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return text;
     }
 
-    parseChoice(index,choice): any {
+    parseChoice(index: number, choice): Choice {
         const rawText = Object.keys(choice)[0];
-        const parsedChoice: any = {
+        const parsedChoice: Choice = {
             index,
             actions: choice[rawText] || [],
             available: true,
@@ -125,7 +135,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 
 
 
-    async choose(index): Promise<any> {
+    async choose(index: number): Promise<void> {
         const chosenOption = this.currentChoices[index];
         // update choice log
         this.updateChoiceLog(chosenOption.index);
@@ -188,7 +198,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         return false;
     }
 
-    async showChoices(boxId,choices): Promise<boolean> {
+    async showChoices(boxId: string, choices: any[]): Promise<void> {
         this.showingText = await this.checkTextAction(choices[0]);
         if (this.showingText){
             choices.shift();
@@ -205,7 +215,6 @@ export default class LogicManager implements LogicManagerInterface<Group> {
             chosenIdx = await this.game.gui.hud.showChoices(boxId,this.currentChoices);
         }
         this.choose(chosenIdx);
-        return;
     }
 
     interrupt(boxId, choices): any {

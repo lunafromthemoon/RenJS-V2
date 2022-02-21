@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
     "target": "es5",
     "sourceMap": true,
 //    "allowJs": true,
