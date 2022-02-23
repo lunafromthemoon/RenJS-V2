@@ -1,7 +1,7 @@
 import RJS from '../core/RJS';
 
 export function preparePath(path: string, game: RJS): string {
-    if (game.config.i18n){
+    if (game.config.i18n?.current){
         return path.replace('LANG', game.config.i18n.current);
     } else {
         return path;
@@ -30,7 +30,7 @@ export function preloadCGS(cgName: string, game: RJS): void {
     }
 }
 
-export function preloadAudio(audioName: string, audioType, game: RJS): void {
+export function preloadAudio(audioName: string, audioType: 'music' | 'sfx', game: RJS): void {
     game.load.audio(audioName, preparePath(game.setup[audioType][audioName], game));
 }
 
@@ -48,7 +48,9 @@ export function preloadExtra(asset: string, type: string, game: RJS): void{
     if (type === 'spritesheets') {
         const str = game.setup.extra[type][asset].split(' ');
         game.load.spritesheet(asset, preparePath(str[0], game), parseInt(str[1], 10), parseInt(str[2], 10));
-    } else {
+    } else if (type === 'scripts') {
+        game.load.script(asset, preparePath(game.setup.extra[type][asset], game));
+    } else if (type === 'audio' || type === 'image' || type === 'script') {
         game.load[type](asset, preparePath(game.setup.extra[type][asset], game));
     }
 }
@@ -67,7 +69,7 @@ function s4(): string {
 
 // load style css
 
-export function loadStyle(href, callback?): void {
+export function loadStyle(href: string, callback?: () => any): void {
     // avoid duplicates
     for (const stylesheet of Array.from(document.styleSheets)){
         if(stylesheet.href === href){
