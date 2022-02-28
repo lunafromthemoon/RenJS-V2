@@ -59,10 +59,10 @@ export default class RJS extends Game {
     interruptAction: any = null
 
     managers: {
-        background?: BackgroundManager;
-        character?: CharacterManager;
+        background: BackgroundManager;
+        character: CharacterManager;
         audio: AudioManager;
-        cgs?: CGSManager;
+        cgs: CGSManager;
         text: TextManager;
         tween: TweenManager;
         logic: LogicManager;
