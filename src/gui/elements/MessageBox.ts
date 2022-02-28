@@ -117,7 +117,7 @@ export default class MessageBox extends Sprite{
             if (this.ctc){
                 this.ctc.visible = true;
             }
-            return;
+            return Promise.resolve(true);
         }
         this.text.setText('', true);
 
