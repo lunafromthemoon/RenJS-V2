@@ -24,7 +24,7 @@ export default class Plugin implements PluginInterface {
 	}
 
 	onLoad(slot,data): void {
-		// called when loading game data, before loading the game 
+		// called when loading game data, before loading the game
 		// "data" parameter can be modified here and change what will be loaded
 		// base plugin does nothing
 	}

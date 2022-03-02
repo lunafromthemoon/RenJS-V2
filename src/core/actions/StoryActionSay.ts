@@ -22,7 +22,7 @@ export default class StoryActionSay extends StoryActionText {
         if (this.game.storyConfig.keepStoryLog){
             // parse the variables of the message in this exact moment, since later they could change!
             const message = this.game.managers.logic.parseVars(this.body.toString())
-            this.game.storyLog.push({actor:this.actor, message: message});
+            this.game.storyLog.push({actor:this.actor, message});
         }
         transitioning = this.game.managers.text.characterSays(this.actor, this.look, this.body,this.boxId, this.dontHide);
         this.resolve(transitioning);
