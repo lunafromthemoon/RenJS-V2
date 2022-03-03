@@ -14,7 +14,7 @@ export default class TextManager implements TextManagerInterface {
     async display(text: string,boxId: string,sfx=null,dontHide=false): Promise<any> {
         if (!boxId) boxId = 'default'
         text = this.game.managers.logic.parseVars(text.toString())
-        await this.game.gui.hud.showText(boxId,text,sfx);        
+        await this.game.gui.hud.showText(boxId,text,sfx);
         return new Promise(resolve=>{
             this.game.waitForClick(() => {
                 if (!dontHide){

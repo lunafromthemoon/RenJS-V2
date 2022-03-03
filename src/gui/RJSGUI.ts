@@ -29,7 +29,7 @@ export default class RJSGUI implements RJSGUIInterface {
     currentMenu = null
     previousMenu = null
 
-    //export this function so it can be used from plugins
+    // export this function so it can be used from plugins
     setTextStyles = setTextStyles
 
     constructor(protected game: RJS) {
