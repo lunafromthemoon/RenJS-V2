@@ -1,7 +1,6 @@
 import {Group} from 'phaser-ce';
 import RJS from '../core/RJS';
 import RJSManagerInterface from './RJSManager';
-import StoryAction from '../core/actions/StoryAction';
 
 type Choice = {
     index: any,
