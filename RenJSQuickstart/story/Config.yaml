@@ -48,8 +48,6 @@ punctuationMarks: [".",",","!","?",":","-"]
 # the total amount of wait will be this value multiplied the text speed
 punctuationWait: 5
 
-precomputeBreakLines: true
-
 userPreferences:
   textSpeed: 60
   autoSpeed: 150

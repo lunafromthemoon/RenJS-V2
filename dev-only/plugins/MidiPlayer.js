@@ -18,14 +18,12 @@ class MidiPlayer extends RenJS.Plugin {
     }
 
     onCall(params) {
-        console.log(this.midis)
-        console.log(params)
         if (params.body == "stop"){
             this.stopMidi();
         } else {
             this.playMidi(params.body);
         }
-        
+        this.game.resolveAction();
     }
 
     playMidi(key){

@@ -97,22 +97,26 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         this.behindCharactersSprites.visible = true;
         this.characterSprites.visible = true;
         this.cgsSprites.visible = true;
-        transition(null,this.backgroundSprites);
-        transition(null,this.behindCharactersSprites);
-        transition(null,this.characterSprites);
-        transition(null,this.cgsSprites);
-        await this.game.gui.hud.showHUD();
+        await Promise.all([
+                    transition(null,this.backgroundSprites),
+                    transition(null,this.behindCharactersSprites),
+                    transition(null,this.characterSprites),
+                    transition(null,this.cgsSprites),
+                    this.game.gui.hud.showHUD()
+                ])
     }
 
     async hide(): Promise<any>{
         if (!this.characterSprites.visible) return;
         // only hide if things are visible
         const transition = this.game.screenEffects.transition.get(this.game.storyConfig.transitions.menus);
-        transition(this.backgroundSprites, null);
-        transition(this.behindCharactersSprites, null);
-        transition(this.characterSprites, null);
-        transition(this.cgsSprites, null);
-        await this.game.gui.hud.hideHUD();
+        await Promise.all([
+            transition(this.backgroundSprites, null),
+            transition(this.behindCharactersSprites, null),
+            transition(this.characterSprites, null),
+            transition(this.cgsSprites, null),
+            this.game.gui.hud.hideHUD()
+        ])
         this.backgroundSprites.visible = false;
         this.behindCharactersSprites.visible = false;
         this.characterSprites.visible = false;

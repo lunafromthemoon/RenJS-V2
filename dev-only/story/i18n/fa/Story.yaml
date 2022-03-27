@@ -1,0 +1,43 @@
+start:
+  - play morningBGM:
+  - show room: WITH FADE CONTINUE
+  - show deuzi: happy AT CENTER WITH FADE
+  - deuzi says: درود، به دوره فشرده، (bold) Quickstart (end) خوش آمدید!
+  - wait: 300
+  - deuzi says normal: برای نوشتن رمان تصویری آماده شده اید؟
+  - choice:
+    - "بله!":
+      - deuzi says happy: بسیار عالی! بزن بریم!
+    - "نه هنوز!":
+      - deuzi says: خب، هر موقع آماده شدید منو اینجا پیدا میکنید
+  - deuzi says normal: اگر تازه کارین، بازی آموزشی (bold) Tutorial (end) رو فراموش نکنید. من و دوستانم اونجا قابلیت های مقدماتی ‌RenJS را نشان میدیم.
+  - deuzi says happy: و اگر باتجربه این ، بفرماین نوشتن رو شروع کنید!
+  - scene: endGame
+
+endGame:
+  - deuzi says normal: دوره فشرده Quickstart تمام شد!
+  - hide ALL:
+  - effect ROLLINGCREDITS:
+    endGame: true
+    text:
+      - RenJS.V2 created by
+      - lunafromthemoon
+      - null
+      - In collaboration with
+      - RockDaFox
+      - null
+      - Inspired by Ren'Py
+      - Powered by PhaserJS
+      - null
+      - null
+      - Thanks for playing
+      - The Quickstart Game
+      - null
+      - background art and cgs by
+      - konett
+      - null
+      - characters by
+      - Shida
+      - null
+      - music by
+      - Evan Schaeffer

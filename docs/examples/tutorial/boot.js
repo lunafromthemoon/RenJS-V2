@@ -23,6 +23,7 @@ const RenJSConfig =  {
   'guiConfig': 'tutorial/GUI.yaml',
   storyConfig: 'Config.yaml',
   storySetup: 'tutorial/Setup.yaml',
+  'storyAccessibility': 'Accessibility.yaml',
   'storyText': [
     'tutorial/Story.yaml'
   ],

@@ -177,7 +177,7 @@ testtext:
   - show bus_station:
   - show deuzi: happy
   - choice:
-    - deuzi says: Choose a partner!
+    - deuzi says: Choose a (color:#FF0000)partner(end)!
     - Deuzilene:
       - text: You chose Deuzilene!
     - Liz:
@@ -186,7 +186,7 @@ testtext:
       - text: You chose both!
   - show liz: AT LEFT angry
   - deuzi says angry:  Lorem ipsum dolor sit amet, consectetur adipiscing elit... Aasdf qwer! asdfasdf.
-  - liz says happy: asdf qwer asdf 
+  - liz says happy: asdf qwer asdf
   - text:  Text with styles
   - text: This is (italic)italic(end), this is (bold)bold(end). This is (italic)italic (bold)and(end) bold(end).
   - text: Text can have (color:red)color(end) too. With hex (color:#f593e6)this is pink(end). This is (italic)italic (color:red)and(end) red(end).

@@ -33,7 +33,7 @@ const globalConfig =  {
       "en": {
         'asset': 'assets/gui/i18n/en.png',
         'position': {
-          'x': 200,
+          'x': 135,
           'y': 458
         },
         'size': {
@@ -44,14 +44,26 @@ const globalConfig =  {
       "es":{
         'asset': 'assets/gui/i18n/es.png',
         'position': {
-          'x': 450,
+          'x': 318,
           'y': 458
         },
         'size': {
           'w': 163,
           'h': 83
         }
-      }}
+      },
+      "fa":{
+        'asset': 'assets/gui/i18n/fa.png',
+        'position': {
+          'x': 502,
+          'y': 458
+        },
+        'size': {
+          'w': 163,
+          'h': 83
+        }
+      },
+    }
   },
 }
 

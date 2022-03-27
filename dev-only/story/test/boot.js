@@ -5,7 +5,7 @@ const globalConfig =  {
   // resolution: 2,
   parent: "game-canvas",
   'renderer': Phaser.AUTO, // become renderer
-  'scaleMode': Phaser.ScaleManager.SHOW_ALL,
+  'scaleMode': Phaser.ScaleManager.NO_SCALE,
   'loadingScreen': {
     'background': 'assets/gui/quickstartbg.png',
     'loadingBar': {
@@ -29,7 +29,7 @@ const globalConfig =  {
   'storyText': [
     'story/test/TestStory.yaml'
   ],
-  // debugMode:true
+  debugMode:true
 }
 
 const RenJSGame = new RenJS.game(globalConfig)

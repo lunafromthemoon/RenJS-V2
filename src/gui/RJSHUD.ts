@@ -149,7 +149,7 @@ export default class RJSHUD extends RJSMenu {
         visualChoice.updateTransform();
         this.visualChoices.addChild(visualChoice);
         if (this.game.storyConfig.logChoices && defaultChoicesConfig.chosenColor && choice.previouslyChosen){
-            visualChoice.tint = Color.hexToColor(this.config.chosenColor).color;
+            visualChoice.tint = Color.hexToColor(defaultChoicesConfig.chosenColor).color;
         }
         return visualChoice;
     }

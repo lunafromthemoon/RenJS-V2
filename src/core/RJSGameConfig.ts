@@ -60,7 +60,6 @@ export interface StoryConfig extends IGameConfig {
     logChoices: boolean;
     keepStoryLog: boolean;
     lazyloading: boolean;
-    precomputeBreakLines: boolean;
     transitions: {
         defaults: {
             characters: string;

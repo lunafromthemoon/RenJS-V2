@@ -59,7 +59,15 @@ export default class MessageBox extends Sprite{
             this.defaultSfx.play();
             this.defaultSfx.stop();
         }
-        this.text = new Label(this.game,this.config.text,this)
+        var bounds = null;
+        if (this.config.text.style.align && this.config.text.style.align != "left"){
+            // any alignment other than ltr needs to have bounds set
+            this.config.text.style.boundsAlignV = "top";
+            this.config.text.style.boundsAlignH = this.config.text.style.align;
+            // height is not as important, as we'll set the text from the top anyway
+            bounds = {width: this.config.text.style.wordWrapWidth, height: this.height}
+        }
+        this.text = new Label(this.game,this.config.text,bounds)
         this.addChild(this.text);
         // create ctc
         if (this.config.ctc){
@@ -85,7 +93,7 @@ export default class MessageBox extends Sprite{
         }
     }
 
-    onCharacter?: (characters: string[],index: number) => void;
+    onCharacter?: (characters: string,index: number) => void;
 
     destroy(): void {
         this.text.destroy();
@@ -93,6 +101,117 @@ export default class MessageBox extends Sprite{
         if (this.defaultSfx) this.defaultSfx.destroy();
         if (this.portrait) this.portrait.destroy();
     	super.destroy();
+    }
+
+    animateText(sfx): Promise<any> {
+        // animates the text by changing the alpha of each character 
+        // from transparent to whatever color it should have
+        const colors = [...this.text.colors];
+        const finalText = this.text.text;
+        const textSpeed: number = this.game.userPreferences.get('textSpeed');
+        // make all characters transparent
+        console.log(this.text.canvas.getContext('2d').textAlign)
+        this.text.clearColors();
+        console.log(this.text.canvas.getContext('2d').textAlign)
+        this.text.addColor("#FF0000",0);
+        this.text.visible = true;
+        return new Promise(async resolve=>{
+
+            let charIdx = 0;
+
+
+            const completeText = (): void => {
+                // text finished showing, clear timeout
+                clearTimeout(this.textLoop);
+                if (charIdx<finalText.length){
+                    // text was skipped
+                    // remove transparency
+                    this.text.addColor(colors[charIdx],charIdx);
+                    // add any color missing
+                    for (var i=charIdx; i<colors.length; i++){
+                        if (colors[i]){
+                            this.text.addColor(colors[i],i)
+                        }
+                    }
+                }
+                
+                // show ctc
+                this.showCTC();                
+                // finish promise
+                resolve(true);
+            }
+            this.visible = true;
+            const transition = this.game.screenEffects.transition.get(this.config.transition);
+            await transition(null,this);
+
+            // how many characters to add per sfx played
+            let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
+
+            if (sfx && charPerSfx === 'auto'){
+                charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
+            }
+            // sfx will only play when sfxCharCount === 0, and will reset when sfxCharCount === charPerSfx
+            let sfxCharCount = 0;
+
+            if (sfx && charPerSfx === -1){
+                // play only once and mute
+                sfx.play();
+                sfx.volume = this.game.userPreferences.get('sfxv');
+                sfx = null;
+            }
+            // skip text animation on click
+            if (!this.game.control.auto){
+                this.game.waitForClick(completeText);
+            }
+
+            let waitingFor = 0;
+            
+
+            
+
+            this.textLoop = window.setInterval(() => {
+                if (waitingFor>0) {
+                    // waiting after punctuation mark, don't do anything
+                    waitingFor--;
+                    return;
+                }
+                // add next character
+                // reset colors
+                if (charIdx < finalText.length){
+                    // hide all chars after charIdx+1
+                    this.text.addColor("#FF0000",charIdx+1);
+                    // show current character by removing the transparent color
+                    this.text.addColor(colors[charIdx],charIdx);
+                }
+                
+
+                if (this.onCharacter){
+                    this.onCharacter(finalText,charIdx);
+                }
+                // play sfx
+                if (sfx){
+                    if (finalText[charIdx] === ' ' || finalText[charIdx] === '\n'
+                        || this.punctuationMarks.includes(finalText[charIdx])
+                        || sfxCharCount === charPerSfx){
+                        // reset count, but don't play
+                        sfxCharCount=-1;
+                    } else if (sfxCharCount === 0){
+                        sfx.play();
+                        sfx.volume = this.game.userPreferences.get('sfxv');
+                    }
+                    sfxCharCount++;
+                }
+                // if it's punctuation mark, add waiting time
+                if (this.punctuationMarks.includes(finalText[charIdx])){
+                    waitingFor = this.punctuationWait;
+                }
+                // increment character index and check if it finished
+                charIdx++;
+                if (charIdx >= finalText.length){
+                    completeText();
+                }
+            }, textSpeed);
+        })
     }
 
     // display message box with transition
@@ -109,113 +228,33 @@ export default class MessageBox extends Sprite{
         }
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
         let finalText = setTextStyles(text,this.text);
+        console.log(this.text.canvas.getContext('2d').textAlign)
+        this.text.setText(finalText,true)
+        console.log(this.text.canvas.getContext('2d').textAlign)
+        this.text.visible = false;
+        
         const textSpeed: number = this.game.userPreferences.get('textSpeed');
         if (this.game.control.skipping || textSpeed < 10){
-            this.text.setText(finalText, true);
+            // this.text.clearColors();
+            // this.text.addColor("#FF0000",0);
+            this.text.visible = true;
             this.visible = true;
             this.alpha = 1;
-            if (this.ctc){
-                this.ctc.visible = true;
-            }
+            this.showCTC();
             return;
+        } else {
+            return this.animateText(sfx)
         }
-        this.text.setText('', true);
+    }
 
-        // add new line characters at the end of each line
-        if (this.game.storyConfig.precomputeBreakLines){
-
-            const lines = this.text.precalculateWordWrap(finalText)
-            // make it much wider so adding the breaklines wont change again the word wrapping
-            this.text.wordWrapWidth = this.config.text.style.wordWrapWidth*2;
-            finalText = '';
-            for (const line of lines){
-                finalText+=line.replace(/.$/,'\n');
+    showCTC(): void{
+        if (this.ctc){
+            this.ctc.visible = true;
+            if (this.config.ctc.sfx){
+                this.game.managers.audio.playSFX(this.config.ctc.sfx);
             }
+            // animate ctc here
         }
-
-        // split in characters to add one by one
-        const characters = finalText.split('');
-        let charIdx = 0;
-        // punctuation waiting time
-        let waitingFor = 0;
-        // how many characters to add per sfx played
-        let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
-
-        if (sfx && charPerSfx === 'auto'){
-            charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
-        }
-        // sfx will only play when sfxCharCount === 0, and will reset when sfxCharCount === charPerSfx
-        let sfxCharCount = 0;
-        return new Promise(async resolve=>{
-            const completeText = (): void => {
-                // text finished showing, clear timeout
-                clearTimeout(this.textLoop);
-                // complete text in case of skipping
-                this.text.setText(finalText, true);
-                // show ctc
-                if (this.ctc){
-                    this.ctc.visible = true;
-                    if (this.config.ctc.sfx){
-                        this.game.managers.audio.playSFX(this.config.ctc.sfx);
-                    }
-                }
-                // finish promise
-                resolve(true);
-            }
-
-
-            this.visible = true;
-            const transition = this.game.screenEffects.transition.get(this.config.transition);
-            await transition(null,this);
-
-            if (sfx && charPerSfx === -1){
-                // play only once and mute
-                sfx.play();
-                sfx.volume = this.game.userPreferences.get('sfxv');
-                sfx = null;
-            }
-            // skip text animation on click
-            if (!this.game.control.auto){
-                this.game.waitForClick(completeText);
-            }
-
-
-            this.textLoop = window.setInterval(() => {
-                if (waitingFor>0) {
-                    // waiting after punctuation mark, don't do anything
-                    waitingFor--;
-                    return;
-                }
-                // add next character
-                this.text.text += (characters[charIdx]);
-
-                if (this.onCharacter){
-                    this.onCharacter(characters,charIdx);
-                }
-                // play sfx
-                if (sfx){
-                    if (characters[charIdx] === ' ' || characters[charIdx] === '\n'
-                        || this.punctuationMarks.includes(characters[charIdx])
-                        || sfxCharCount === charPerSfx){
-                        // reset count, but don't play
-                        sfxCharCount=-1;
-                    } else if (sfxCharCount === 0){
-                        sfx.play();
-                        sfx.volume = this.game.userPreferences.get('sfxv');
-                    }
-                    sfxCharCount++;
-                }
-                // if it's punctuation mark, add waiting time
-                if (this.punctuationMarks.includes(characters[charIdx])){
-                    waitingFor = this.punctuationWait;
-                }
-                // increment character index and check if it finished
-                charIdx++;
-                if (charIdx >= characters.length){
-                    completeText();
-                }
-            }, textSpeed);
-        })
     }
 
     async hide(transitionName?): Promise<any>{
