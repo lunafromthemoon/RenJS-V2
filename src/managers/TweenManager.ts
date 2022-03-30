@@ -20,6 +20,17 @@ export default class TweenManager implements TweenManagerInterface {
     }
 
     tween(sprite, tweenables, callback, time, start, delay = 0, unskippable = false): RJSTween {
+        // if the tween has no duration, apply the changes immediately and abort
+        if (time <= 0) {
+            Object.entries(tweenables).forEach(([key, value]) => {
+                sprite[key] = value;
+            });
+            if (callback) {
+                callback.call(this);
+            }
+            return undefined;
+        }
+
         const tween: RJSTween = this.game.add.tween(sprite);
         tween.to(tweenables, time, Phaser.Easing.Linear.None,false, delay);
         if (callback) {
