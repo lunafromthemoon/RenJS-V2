@@ -1,6 +1,7 @@
 import RJSScreenEffectInterface from './RJSScreenEffect';
 import {AudioManagerInterface} from '../managers/AudioManager';
 import {TweenManagerInterface} from '../managers/TweenManager';
+import { Color } from 'phaser-ce';
 import RJS from '../core/RJS';
 import {setTextStyles} from '../utils/gui'
 
@@ -36,7 +37,14 @@ export default class Effects implements RJSScreenEffectInterface {
             this.audioManager.play(params.music, 'bgm', true, null, 'FADE');
         }
 
-        const style = this.game.gui.hud.cHandlers.default.config.text.style;
+        const style = { ...this.game.gui.hud.cHandlers.default.config.text.style };
+
+        // use a text color that contrasts with the bg
+        const { backgroundColor = 0 } = this.game.storyConfig;
+        const bgColor = typeof backgroundColor === 'string' ? Color.hexToColor(backgroundColor) : Color.getRGB(backgroundColor);
+        const textColor = Color.RGBtoHSV(bgColor.r, bgColor.g, bgColor.b).v > 0.5 ? Color.BLACK : Color.WHITE;
+        style.fill = Color.getWebRGB(textColor);
+
         const credits = this.game.add.text(this.game.world.centerX, this.game.config.h + 30, ' ', style);
         credits.anchor.set(0.5);
         const separation = credits.height + 10;
