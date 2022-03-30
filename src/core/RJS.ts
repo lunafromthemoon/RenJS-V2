@@ -135,6 +135,7 @@ export default class RJS extends Game {
     }
 
     async initStory(): Promise<any> {
+        this.stage.backgroundColor = this.storyConfig.backgroundColor || 0;
         this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
 
         this.managers = {
