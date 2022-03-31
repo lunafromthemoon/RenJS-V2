@@ -42,7 +42,7 @@ export default class AudioManager implements AudioManagerInterface {
        return this.active;
     }
 
-    play (key:string,type:string='bgm',looped=false,fromSeconds:number|null=null,transition='FADE',force=false): void {
+    play (key:string,type='bgm',looped=false,fromSeconds:number|null=null,transition='FADE',force=false): void {
         if (!force && this.current[type] && this.current[type]?.key === key && this.current[type]?.isPlaying){
             // music is the same, and it's playing, do nothing
             return;
