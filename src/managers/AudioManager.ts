@@ -2,19 +2,15 @@ import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
 
 export type CurrentAudio = {
-    bgm: Phaser.Sound | null;
-    bgs: Phaser.Sound | null;
+    [key: string]: Phaser.Sound | null;
 }
 
 export type ActiveAudio = {
-    bgm: {key:string,looped:boolean,fromSeconds:number|null,transition:string}|null;
-    bgs: {key:string,looped:boolean,fromSeconds:number|null,transition:string}|null;
+    [key: string]: {key:string,looped:boolean,fromSeconds:number|null,transition:string} | null;
 }
 
-const AUDIO_TYPES: ('bgm' | 'bgs')[] = ['bgm', 'bgs'];
-
 export interface AudioManagerInterface extends RJSManagerInterface {
-    play(key: string, type?: 'bgm'|'bgs', looped?: boolean, fromSeconds?: number | null, transition?: string): void;
+    play(key: string, type?: string, looped?: boolean, fromSeconds?: number | null, transition?: string): void;
     stop (type: string, transition: string): void;
     playSFX (key: string): void;
     isMusic(actor: string): boolean;
@@ -29,8 +25,8 @@ export interface AudioManagerInterface extends RJSManagerInterface {
 }
 
 export default class AudioManager implements AudioManagerInterface {
-    current: CurrentAudio = { bgm: null, bgs: null };
-    active: ActiveAudio = { bgm: null, bgs: null };
+    current: CurrentAudio = { bgm: null };
+    active: ActiveAudio = { bgm: null };
 
     private sfxCache: {[key: string]: Phaser.Sound} = {};
     // audioLoaded: boolean;
@@ -46,7 +42,7 @@ export default class AudioManager implements AudioManagerInterface {
        return this.active;
     }
 
-    play (key:string,type:'bgm'|'bgs'='bgm',looped=false,fromSeconds:number|null=null,transition='FADE',force=false): void {
+    play (key:string,type:string='bgm',looped=false,fromSeconds:number|null=null,transition='FADE',force=false): void {
         if (!force && this.current[type] && this.current[type]?.key === key && this.current[type]?.isPlaying){
             // music is the same, and it's playing, do nothing
             return;
@@ -91,7 +87,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    stop(type: 'bgm' | 'bgs', transition = 'FADE'): void {
+    stop(type: string, transition = 'FADE'): void {
         const sound = this.current[type];
         if (!sound){
             return;
@@ -130,22 +126,19 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     set (active: ActiveAudio): void {
-        for (const type of AUDIO_TYPES){
-            const activeAudio = active[type];
-            if (!activeAudio) {
-                continue;
+        Object.entries(active).forEach(([type, activeAudio]) => {
+            if (activeAudio) {
+                this.play(activeAudio.key, type, activeAudio.looped, activeAudio.fromSeconds, activeAudio.transition);
             }
-            this.play(activeAudio.key,type,activeAudio.looped,activeAudio.fromSeconds,activeAudio.transition);
-        }
+        });
     }
 
     changeVolume(): void {
-        if (this.current.bgm){
-            this.current.bgm.volume = this.game.userPreferences.get('bgmv');
-        }
-        if (this.current.bgs){
-            this.current.bgs.volume = this.game.userPreferences.get('bgmv');
-        }
+        Object.entries(this.current).forEach(([type, sound]) => {
+            if (sound) {
+                sound.volume = this.game.userPreferences.get('bgmv');
+            }
+        })
         if (this.game.userPreferences.get('muted')){
             this.game.sound.volume = 0;
         }
@@ -184,8 +177,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     stopAll(): void {
-        this.stop('bgs','FADE');
-        this.stop('bgm','FADE');
+        Object.keys(this.current).forEach(type => this.stop(type, 'FADE'));
     }
 
 
