@@ -10,8 +10,8 @@ import { changeInputEnabled, hudSort } from '../utils/gui';
 import { AccessibilityBounds } from './a11y/Accessibility';
 
 export default class RJSHUD extends RJSMenu {
-    mBoxes = {}
-    nBoxes = {}
+    mBoxes: {[key: string]: MessageBox} = {}
+    nBoxes: {[key: string]: NameBox} = {}
     cHandlers: { [key: string]: ChoiceHandler } = {}
 
     skipClickArea: Phaser.Rectangle[] = []

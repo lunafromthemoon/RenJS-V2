@@ -156,7 +156,7 @@
 						    	<li><a href="https://www.gimp.org/">GIMP</a>: for Image edition.</li>
 						    	<li><a href="https://www.audacityteam.org/">Audacity</a>: for Sound and Audio design.</li>
 						    </ul>
-						    <h5>Here's a sneak peek of the story script, from the <a class="theme-link" href="/Quickstart"  target="_blank">Quickstart</a> project.</h5>
+						    <h5>Here's a sneak peek of the story script, from the <a class="theme-link" href="downloads/RenJSQuickstart.zip" target="_blank">Quickstart</a> project.</h5>
 							<div class="docs-code-block">
 								<pre><code class="language-yaml">
 	start:
@@ -255,7 +255,7 @@
 					    <section class="docs-intro">
 						    <p>RenJS games falls into the multiplatform HTML5/Web category. This means they will run as a web page in a browser. The multiplatform part comes from the fact that most devices nowadays can run an internet browser, like any computer and most mobile phones and tablets.</p>
 						    <p>The game, then, is made up of a webpage, the RenJS library, and all the story assets, such as the story text and configuration and the images and audio files.</p>
-						    <p>The <a href="/Quickstart">Quickstart</a> is a minimal game that comes with all of the necesary files, organized so that it will be easier for you to start writing. Let's use this project as an example to explore the required files.</p>
+						    <p>The <a href="downloads/RenJSQuickstart.zip">Quickstart</a> is a minimal game that comes with all of the necesary files, organized so that it will be easier for you to start writing. Let's use this project as an example to explore the required files.</p>
 						    <div class="text-center">
 							    <figure class="figure docs-figure py-3 text-center">
 								    <img class="figure-img img-fluid shadow rounded" src="assets/images/folders.png" alt="">
@@ -679,7 +679,7 @@ lazyloading:
 						<h2 class="section-heading">Fonts</h2>
 						<p>As we mentioned before a few times already, a RenJS game is actually a webpage. In webpages, when you want to use special fonts and styles, you need css files. CSS, or Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language such as HTML.</p>
 						<p>The fonts you use for written text in the game are also part of the aesthetic of the game, so you'll want to choose them carefully. For example, you might want to use a cursive or gothic font for an historical or fantasy game. You can find a multitude of free fonts to use <a href="https://www.fontsquirrel.com/">around the internet</a>, usually in the <strong>ttf (TrueType Font) format</strong>. These files will have to be included in the game, and the way to include them is through the <strong>css font file</strong>.</p>
-						<p>The <strong>css font file</strong> will list all the fonts you will use in the game, and where to find the corresponding <strong>ttf font files</strong>. Finally, this file has to be included into RenJS, by way of pointing at it from the <a href="boot-file-section">boot file</a>, <strong>fonts</strong> property.</p>
+						<p>The <strong>css font file</strong> will list all the fonts you will use in the game, and where to find the corresponding <strong>ttf font files</strong>. Finally, this file has to be included into RenJS, by way of pointing at it from the <a href="#boot-file-section">boot file</a>, <strong>fonts</strong> property.</p>
 						<p>Let's see an example of a <strong>css font file</strong>. The <strong>font-family</strong> will be the name you will use to refer to that font in the GUI configuration file, and the <strong>src</strong> is a path on where to find the <strong>ttf font file</strong>. The path should be relative to the <strong>css font file</strong>, so if the css file and ttf file are in the same directory, the <strong>src</strong> should be only the name of the ttf file.</p>
 						<pre><code class="language-css">
 
@@ -722,7 +722,7 @@ lazyloading:
                             </div><!--//content-->
                         </div><!--//callout-block-->
                         <p>One of the ways to configurate the GUI is by manually writing the configuration file (GUI.yaml). This file is written in a way that is easy to understand and, therefore, easy to write.</p>
-						<p>The GUI file (identified in the <a href="boot-file-section">boot file</a> as <strong>guiConfig</strong>) has three main sections:</p>
+						<p>The GUI file (identified in the <a href="#boot-file-section">boot file</a> as <strong>guiConfig</strong>) has three main sections:</p>
 						<ul>
 							<li><strong>Assets</strong>: The list of assets used to build the gui, with key and file name.</li>
 							<li><strong>Configuration</strong>: The way the assets will be used in each menu and the HUD.</li>
@@ -1249,7 +1249,7 @@ SCENE2:
 					<section class="docs-section" id="show-hide-actions">
 						<h2 class="section-heading">Show and hide</h2>
 						<p>The <strong>show</strong> action allows you to display images in the screen, while the <strong>hide</strong> action removes them.</p>
-						<p>RenJS has three different types of images that you can use: <strong>backgrounds, characters</strong> and <strong>cgs</strong>. This elements have to be declared in the <a href="setup-section">Setup file</a> before they can be used.</p>
+						<p>RenJS has three different types of images that you can use: <strong>backgrounds, characters</strong> and <strong>cgs</strong>. This elements have to be declared in the <a href="#setup-section">Setup file</a> before they can be used.</p>
 						<h3>Show Backgrounds</h3>
 						<p>A background is an image that normally stretches to occupy the whole screen, and will be shown behind all other elements. Since only one background can be displayed at a time, if there is already a background on screen, the previous one will be hidden automatically.</p>
 						<p>With the keyword <strong>WITH</strong> you can choose the <a href="#transitions-section">transition</a> to use when showing or hiding the background.</p>
@@ -1275,7 +1275,7 @@ SCENE2:
 						<h3>Show a CGs</h3>
 						<p>CG stands for Computer Graphics, and it's a name given to any image that is not a background or a character. These images are anchored in their center, which means, the position used in the show action will align with this center point.<p>
 						<p>By default, the <strong>cgs</strong> will be shown in a layer on top of characters and behind the GUI, but they can also be forced to be shown behind the characters (always on top of the backgrounds).</p>
-						<p>In addition to the transition and the position parameters, it's possible to change the scale (zoom) and angle of the image. If you want to move or animate a CG, use the <a href="animate-action">animate action</a>.</p>
+						<p>In addition to the transition and the position parameters, it's possible to change the scale (zoom) and angle of the image. If you want to move or animate a CG, use the <a href="#animate-action">animate action</a>.</p>
 
 						<p>Just like with backgrounds and characters, a <strong>transition</strong> can be specified to define the way to show them.</p>
 
@@ -1411,7 +1411,7 @@ SCENE2:
 					</section><!--//section-->
 					<section class="docs-section" id="play-stop-actions">
 						<h2 class="section-heading">Play and Stop</h2>
-						<p>These actions allow you to <strong>play</strong> and <strong>stop</strong> sounds. Sounds can be of two types, background music and sound effects. Each one should be defined in the right section in the <a href="audio-setup-section">setup</a>.</p>
+						<p>These actions allow you to <strong>play</strong> and <strong>stop</strong> sounds. Sounds can be of two types, background music and sound effects. Each one should be defined in the right section in the <a href="#audio-setup-section">setup</a>.</p>
 						<p>You can play only one background music, or <strong>bgm</strong> at a time. If you do a <strong>play bgm</strong> action and another <strong>bgm</strong> is already playing, the first one will be stopped before starting the new one.</p>
 						<p>Background music can be played looped whole with the <strong>LOOPED</strong> parameter. You can also loop a bgm from a specific time with the <strong>LOOPED FROM time</strong> parameter. In this case, the music will start as usual, and when it reaches the end, it will restart but from the specified time (in seconds).</p>
 						<p>When executing a play action, if the <strong>bgm</strong> already playing and the new <strong>bgm</strong> are the same, nothing will happen, unless you add the <strong>FORCE</strong> parameter, in which case, it will restart the sound.</p>
@@ -1688,7 +1688,7 @@ choosePartner:
 						<h2 class="section-heading">Ambients and Effects</h2>
 						<p>These actions allow you to show visual and sound effects. The difference between them is that <strong>effect</strong> is a nuclear action that ends after its execution, while <strong>ambient</strong>  effects perdure over time. For example, an effect can be a thunder, while an ambient can be rain.</p>
 						<p>RenJS comes with a few ambients and effects, and you can tailor them a bit to better suit the aesthetic of your game. All the assets used for these screen effects, either images, spritesheets, music and even code should be loaded in the extra section of the setup file.</p>
-						<p>You can add more screen effects, you can do so in the form of <a href="plugins-section">Plugins</a>.</p>
+						<p>You can add more screen effects, you can do so in the form of <a href="#plugins-section">Plugins</a>.</p>
 						<h3>Ambients</h3>
 						<p>The <strong>ambient</strong> action starts an ambient by name. Calling the special ambient <strong>CLEAR</strong> instead will stop any ambient still on. The available ambients are:</p>
 						<ul>
@@ -1711,7 +1711,7 @@ choosePartner:
 							<li><strong>SHAKE</strong>: A screen shake.</li>
 							<li><strong>FLASHIMAGE</strong>: It will flash an image for a moment, optionally accompanied by a sound effect and a screenshake. Parameters:
 								<ul>
-									<li><strong>image</strong>: The tag of the image to show. This image has to be declared in the setup, usually in the <a href="extra-setup-section">extra section</a>.</li>
+									<li><strong>image</strong>: The tag of the image to show. This image has to be declared in the setup, usually in the <a href="#extra-setup-section">extra section</a>.</li>
 									<li><strong>screenShake</strong> (optional): Boolean value. If true, there will be a screenshake.</li>
 									<li><strong>sfx</strong> (optional): The tag of the sound effect to play.</li>
 								</ul>
@@ -1757,7 +1757,7 @@ choosePartner:
 						    	<li><strong>CUT</strong>: The image will simply appear or disappear at once. When exchanging images, for example, one character look to another, the effect will be immediate.</li>
 						    	<li><strong>FADE</strong>: This transition will interpolate the alpha (transparency) of the image in time. To show an image it will go from alpha 0 to alpha 1, in a FADE IN; to hide it, it will do the contrary, going from alpha 1 to alpha 0 in a FADE OUT. To change on image for another, it will first do a complete FADE OUT and then a FADE IN.</li>
 						    	<li><strong>FUSION</strong>: If used to show or hide an image, FUSION will behave exactly like FADE; but when changing images, FUSION will place the new image on top of the old one, with alpha 0, and do a FADE IN. This will look aproximately like one image is fusing with the other one. This transition will work best with images that have the exact same outline, for example, backgrounds, or characters that don't change their look shape.</li>
-						    	<li><strong>FADETOBLACK, FADETOWHITE, FADETOBG</strong>: In this transition the whole screen will be covered by a color in a FADEIN, then the changes to the images will be performed, and then a FADEOUT of the overlay will reveal the changes. In FADETOBG, the color is the background color defined in the <a href="boot-file-section">boot configuration</a> of the game. </li>
+						    	<li><strong>FADETOBLACK, FADETOWHITE, FADETOBG</strong>: In this transition the whole screen will be covered by a color in a FADEIN, then the changes to the images will be performed, and then a FADEOUT of the overlay will reveal the changes. In FADETOBG, the color is the background color defined in the <a href="#boot-file-section">boot configuration</a> of the game. </li>
 						    	<li><strong>MOVE</strong>: This transition, normally used for characters, will interpolate the current position of the image to the new one. For example, to show a character entering the screen from the right first you would show it in the position OUTRIGHT (outside of the screen, to the right side), and then show it at another position, using the MOVE transition. </li>
 						    </ul>
 						</section><!--//docs-intro-->
@@ -2154,7 +2154,7 @@ start:
 							</ul></li>
 							<li><strong>Audio</strong>: Access this manager through <i>this.managers.audio</i>. This manager takes care of all the audio of the story.
 							<ul>
-								<li><strong>Current Music and Sound</strong>: You can obtain the <strong>Phaser.Sound</strong> objects for <strong>bgm</strong>(background music) and <strong>bgs</strong> (background sound) with <i>this.managers.audio.current</i>.</li>
+								<li><strong>Current Music and Sound</strong>: You can obtain the <strong>Phaser.Sound</strong> objects for all music and sounds with <i>this.managers.audio.current</i>. The background music is available under the <i>bgm</i> key; all other sounds have their own unique key names (you can find all of them using <i>Object.keys(this.managers.audio.current)</i>).</li>
 							</ul></li>
 							<li><strong>Logic</strong>: Access this manager through <i>this.managers.logic</i>. This manager takes care of the permanent variables set with the <a href="#var-action">Var Action</a>, and branching the story by way of choices and ifs.
 							<ul>

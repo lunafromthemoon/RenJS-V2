@@ -32,7 +32,7 @@ export default class RJS extends Game {
     xShots = []
     blackOverlay: Graphics
     setup: any
-    story: object
+    story: {[key: string]: any}
     guiSetup: any
     gui: RJSGUI
     tools: any = {}
@@ -135,6 +135,7 @@ export default class RJS extends Game {
     }
 
     async initStory(): Promise<any> {
+        this.stage.backgroundColor = this.storyConfig.backgroundColor || 0;
         this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
 
         this.managers = {
@@ -158,7 +159,6 @@ export default class RJS extends Game {
 
 
         // init game and start main menu
-        this.managers.story.setupStory()
         await this.gui.init();
 
         this.initInput();

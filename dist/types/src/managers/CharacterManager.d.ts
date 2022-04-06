@@ -2,17 +2,21 @@ import { RJSSpriteManagerInterface } from './RJSManager';
 import Transition from '../screen-effects/Transition';
 import RJS from '../core/RJS';
 export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
-    characters: object;
+    characters: {
+        [key: string]: any;
+    };
     showing: object;
-    hideAll(transition: string): any;
-    show(name: any, transition: any, props: any): any;
-    hide(name: any, transition: any): Promise<any>;
-    isCharacter(actor: any): boolean;
+    hideAll(transition: string): Promise<void>;
+    show(name: string, transitionName?: string, props?: any): any;
+    hide(name: string, transitionName?: string): Promise<void>;
+    isCharacter(actor: string): boolean;
 }
 export default class CharacterManager implements CharacterManagerInterface {
     private game;
-    characters: {};
-    transition: Transition;
+    characters: {
+        [key: string]: any;
+    };
+    transition?: Transition;
     constructor(game: RJS);
     getDefaultTransition(): string;
     loadCharacters(): void;
@@ -26,9 +30,11 @@ export default class CharacterManager implements CharacterManagerInterface {
             flipped: boolean;
         };
     };
-    set(showing: any): Promise<any>;
-    show(name: any, transitionName?: any, props?: any): Promise<any>;
-    hide(name: any, transitionName: any): Promise<any>;
-    hideAll(transitionName?: any): Promise<any>;
-    isCharacter(actor: any): boolean;
+    set(showing: {
+        [key: string]: any;
+    }): Promise<any>;
+    show(name: string, transitionName?: string, props?: any): Promise<any>;
+    hide(name: string, transitionName?: string): Promise<void>;
+    hideAll(transitionName?: string): Promise<void>;
+    isCharacter(actor: string): boolean;
 }

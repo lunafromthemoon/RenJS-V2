@@ -6,8 +6,12 @@ import BaseButton from './elements/BaseButton';
 import NameBox from './elements/NameBox';
 import ChoiceHandler from './elements/ChoiceHandler';
 export default class RJSHUD extends RJSMenu {
-    mBoxes: {};
-    nBoxes: {};
+    mBoxes: {
+        [key: string]: MessageBox;
+    };
+    nBoxes: {
+        [key: string]: NameBox;
+    };
     cHandlers: {
         [key: string]: ChoiceHandler;
     };

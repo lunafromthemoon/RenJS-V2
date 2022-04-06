@@ -1,6 +1,6 @@
 {
   "name": "renjs",
-  "version": "2.7.2",
+  "version": "2.7.5",
   "description": "RenJS is a videogame library for making Visual Novels that run directly in the web browser",
   "author": "lunafromthemoon",
   "contributors": [
@@ -26,7 +26,7 @@
     "dist"
   ],
   "main": "dist/renjs.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/src/index.d.ts",
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --hot --progress",
     "build": "webpack --config webpack.prod.js",
