@@ -8,10 +8,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.1.0
       - run: npm run build:demo
