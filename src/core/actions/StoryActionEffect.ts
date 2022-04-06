@@ -21,6 +21,7 @@ export default class StoryActionEffect extends StoryAction {
     		this.game.pluginsRJS[this.actor].onCall(this.params);
             // plugins resolve themselves
     	} else {
+            console.warn(`Effect "${this.actor}" is unknown.`);
             this.resolve();
         }
 
