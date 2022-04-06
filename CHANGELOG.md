@@ -1,3 +1,11 @@
+## [2.7.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.2...v2.7.3) (2022-04-06)
+
+
+### Bug Fixes
+
+* incorrect `types` path ([223f60b](https://github.com/lunafromthemoon/RenJS-V2/commit/223f60b172400d6d63ca49c0e9472a95f759bb98))
+* log unknown effects to console ([8eca368](https://github.com/lunafromthemoon/RenJS-V2/commit/8eca3682cd95b60b05bb3cb13cea5f25104504e8))
+
 ## [2.7.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.1...v2.7.2) (2022-02-15)
 
 

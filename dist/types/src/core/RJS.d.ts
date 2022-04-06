@@ -23,7 +23,9 @@ export default class RJS extends Game {
     xShots: any[];
     blackOverlay: Graphics;
     setup: any;
-    story: object;
+    story: {
+        [key: string]: any;
+    };
     guiSetup: any;
     gui: RJSGUI;
     tools: any;
@@ -39,10 +41,10 @@ export default class RJS extends Game {
     storyLog: any[];
     interruptAction: any;
     managers: {
-        background?: BackgroundManager;
-        character?: CharacterManager;
+        background: BackgroundManager;
+        character: CharacterManager;
         audio: AudioManager;
-        cgs?: CGSManager;
+        cgs: CGSManager;
         text: TextManager;
         tween: TweenManager;
         logic: LogicManager;

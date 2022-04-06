@@ -2,16 +2,16 @@ import RJS from '../core/RJS';
 import RJSTween from '../core/RJSTween';
 
 export interface TweenManagerInterface {
-    tween (sprite, tweenables, callback, time: number, start: boolean, delay?: number, unskippable?: boolean);
-    chain (tweens: any[], unskippable: boolean, time?: number);
-    skip(): any;
+    tween (sprite: any, tweenables: {[key: string]: any}, callback: () => void, time: number, start: boolean, delay?: number, unskippable?: boolean): RJSTween;
+    chain (tweens: any[], unskippable: boolean, time?: number): void;
+    skip(): void;
     current: RJSTween[];
 
 
 }
 
 export default class TweenManager implements TweenManagerInterface {
-    current = []
+    current: RJSTween[] = []
     private game: RJS
 
 
@@ -19,7 +19,8 @@ export default class TweenManager implements TweenManagerInterface {
         this.game = game
     }
 
-    tween(sprite, tweenables, callback, time, start, delay = 0, unskippable = false): RJSTween | undefined {
+
+    tween(sprite: any, tweenables: {[key: string]: any}, callback: () => void, time: number | undefined, start: boolean, delay = 0, unskippable = false): RJSTween {
         // if the tween has no duration, apply the changes immediately and abort
         if (time <= 0) {
             Object.entries(tweenables).forEach(([key, value]) => {
@@ -30,7 +31,6 @@ export default class TweenManager implements TweenManagerInterface {
             }
             return undefined;
         }
-
         const tween: RJSTween = this.game.add.tween(sprite);
         tween.to(tweenables, time, Phaser.Easing.Linear.None,false, delay);
         if (callback) {
@@ -61,11 +61,11 @@ export default class TweenManager implements TweenManagerInterface {
 
     }
 
-    chain(tweens, unskippable = false, time?): void {
+    chain(tweens: any[], unskippable = false, time?: number): void {
         this.current = [];
-        let lastTween = null;
+        let lastTween: RJSTween | null = null;
         tweens.forEach(tw => {
-            const t = tw.time ? tw.time : time/tweens.length;
+            const t = tw.time ? tw.time : (time === undefined ? undefined : time/tweens.length);
             const tween = this.tween(tw.sprite, tw.tweenables, tw.callback, t, false, tw.delay);
             if (lastTween){
                 lastTween.chain(tween);
@@ -79,7 +79,7 @@ export default class TweenManager implements TweenManagerInterface {
         }
     }
 
-    parallel (tweens, unskippable = false, time?): void {
+    parallel (tweens: any[], unskippable = false, time?: number): void {
         this.current = [];
         tweens.forEach(tw => {
             this.tween(tw.sprite,tw.tweenables,tw.callback,time,true,tw.delay);

@@ -7,7 +7,7 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
     constructor(game: RJS);
     createBackground(name: string): Sprite;
     set(name: string): void;
-    show(name: string, transitionName: string): Promise<void>;
+    show(name: string | null, transitionName: string): Promise<void>;
     hide(bg?: string, transitionName?: string): Promise<void>;
     isBackground(actor: string): boolean;
 }

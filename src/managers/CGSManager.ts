@@ -3,23 +3,25 @@ import {range} from '../utils/array';
 import RJS from '../core/RJS';
 import {RJSSpriteManagerInterface} from './RJSManager';
 
+const getObjectProperty = <T extends object, U extends keyof T>(obj: T, key: U) => obj[key];
+
 export interface CGSManagerInterface extends RJSSpriteManagerInterface {
-    cgs: object;
-    current: object;
-    hideAll(transition: string);
-    show(name: string, transition: () => any, props): any;
-    hide(name, transition): Promise<any>;
+    cgs: {[key: string]: any};
+    current: {[key: string]: any};
+    hideAll(transition: string): Promise<void>;
+    show(name: string, transitionName: string, props: any): Promise<any>;
+    hide(name: string, transitionName: string): Promise<void>;
 }
 
 export default class CGSManager implements CGSManagerInterface {
 
-    cgs: object = {};
-    current: object = {};
-    transition: Transition
+    cgs: {[key: string]: any} = {};
+    current: {[key: string]: any} = {};
+    transition?: Transition
 
     constructor(private game: RJS) {}
 
-    async set(current): Promise<void> {
+    async set(current: {[key: string]: any}): Promise<void> {
         await this.hideAll(Transition.CUT);
         this.current = current;
         for (const cg in this.current) {
@@ -29,22 +31,22 @@ export default class CGSManager implements CGSManagerInterface {
         }
     }
 
-    async hideAll(transition = Transition.FADEOUT): Promise<any> {
-        const promises = []
+    async hideAll(transition = Transition.FADEOUT): Promise<void> {
+        const promises = [];
         for (const cg in this.cgs) {
             promises.push(this.hide(cg,transition));
         }
-        return Promise.all(promises)
+        await Promise.all(promises);
     }
 
-    show (name, transitionName, props): Promise<any> {
+    show (name: string, transitionName: string, props: any): Promise<any> {
         let position = props.position
         const previousSprite = this.cgs[name];
         if (!previousSprite){
             if (!position){
                 position = {x: this.game.world.centerX, y: this.game.world.centerY}
             }
-            this.cgs[name] = this.game.managers.story[props.layer].create(position.x, position.y, name);
+            this.cgs[name] = getObjectProperty(this.game.managers.story, props.layer).create(position.x, position.y, name);
             this.cgs[name].anchor.set(0.5);
             this.cgs[name].updateTransform();
             this.cgs[name].alpha = 0;
@@ -87,10 +89,10 @@ export default class CGSManager implements CGSManagerInterface {
             this.cgs[name].angle = props.angle;
         }
         this.current[name] = {name, position, zoom: props.zoom, angle: props.angle, layer:props.layer, flipped};
-        return this.transition.get(transitionName)(previousSprite, this.cgs[name], position);
+        return this.transition?.get(transitionName)(previousSprite, this.cgs[name], position);
     }
 
-    async animate (name, toAnimate): Promise<void> {
+    async animate (name: string, toAnimate: any): Promise<void> {
         const time = toAnimate.time;
         const tweenables: {
             alpha?: number;
@@ -180,14 +182,14 @@ export default class CGSManager implements CGSManagerInterface {
 
     }
 
-    async hide (name, transitionName): Promise<void> {
-        await this.transition.get(transitionName)(this.cgs[name], null)
+    async hide (name: string, transitionName: string): Promise<void> {
+        await this.transition?.get(transitionName)(this.cgs[name], null)
         this.cgs[name].destroy();
         delete this.cgs[name];
         delete this.current[name];
     }
 
-    isCGS (actor): boolean {
+    isCGS (actor: any): boolean {
         return this.game.setup.cgs && actor in this.game.setup.cgs;
     }
 }
