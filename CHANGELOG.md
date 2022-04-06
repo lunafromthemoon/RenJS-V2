@@ -1,3 +1,12 @@
+## [2.7.5](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.4...v2.7.5) (2022-04-06)
+
+
+### Bug Fixes
+
+* credits text against bg color contrast ([4592c13](https://github.com/lunafromthemoon/RenJS-V2/commit/4592c1380a51168141c6f1846ea5aca16bcc61ac))
+* make `backgroundColor` optional ([9607f74](https://github.com/lunafromthemoon/RenJS-V2/commit/9607f74d86ea8b8174bcaa366baa0afc502e56bf))
+* respect `backgroundColor` ([6bb8894](https://github.com/lunafromthemoon/RenJS-V2/commit/6bb88949de90991988f375f99a7a7048bbc28f79))
+
 ## [2.7.4](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.3...v2.7.4) (2022-04-06)
 
 
