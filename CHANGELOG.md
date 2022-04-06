@@ -1,3 +1,10 @@
+## [2.7.4](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.3...v2.7.4) (2022-04-06)
+
+
+### Bug Fixes
+
+* tweens with `time: 0` treated as `time: 1000` ([4248037](https://github.com/lunafromthemoon/RenJS-V2/commit/42480374401732d92cfbd848bbea698d90a78a17))
+
 ## [2.7.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.2...v2.7.3) (2022-04-06)
 
 
