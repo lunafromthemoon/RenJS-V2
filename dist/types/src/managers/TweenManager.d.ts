@@ -1,18 +1,22 @@
 import RJS from '../core/RJS';
 import RJSTween from '../core/RJSTween';
 export interface TweenManagerInterface {
-    tween(sprite: any, tweenables: any, callback: any, time: number, start: boolean, delay?: number, unskippable?: boolean): any;
-    chain(tweens: any[], unskippable: boolean, time?: number): any;
-    skip(): any;
+    tween(sprite: any, tweenables: {
+        [key: string]: any;
+    }, callback: () => void, time: number, start: boolean, delay?: number, unskippable?: boolean): RJSTween;
+    chain(tweens: any[], unskippable: boolean, time?: number): void;
+    skip(): void;
     current: RJSTween[];
 }
 export default class TweenManager implements TweenManagerInterface {
-    current: any[];
+    current: RJSTween[];
     private game;
     constructor(game: RJS);
-    tween(sprite: any, tweenables: any, callback: any, time: any, start: any, delay?: number, unskippable?: boolean): RJSTween;
-    chain(tweens: any, unskippable?: boolean, time?: any): void;
-    parallel(tweens: any, unskippable?: boolean, time?: any): void;
+    tween(sprite: any, tweenables: {
+        [key: string]: any;
+    }, callback: () => void, time: number | undefined, start: boolean, delay?: number, unskippable?: boolean): RJSTween;
+    chain(tweens: any[], unskippable?: boolean, time?: number): void;
+    parallel(tweens: any[], unskippable?: boolean, time?: number): void;
     canSkip(): boolean;
     skip(): void;
 }

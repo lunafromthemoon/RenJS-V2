@@ -2,22 +2,32 @@ import Transition from '../screen-effects/Transition';
 import RJS from '../core/RJS';
 import { RJSSpriteManagerInterface } from './RJSManager';
 export interface CGSManagerInterface extends RJSSpriteManagerInterface {
-    cgs: object;
-    current: object;
-    hideAll(transition: string): any;
-    show(name: string, transition: () => any, props: any): any;
-    hide(name: any, transition: any): Promise<any>;
+    cgs: {
+        [key: string]: any;
+    };
+    current: {
+        [key: string]: any;
+    };
+    hideAll(transition: string): Promise<void>;
+    show(name: string, transitionName: string, props: any): Promise<any>;
+    hide(name: string, transitionName: string): Promise<void>;
 }
 export default class CGSManager implements CGSManagerInterface {
     private game;
-    cgs: object;
-    current: object;
-    transition: Transition;
+    cgs: {
+        [key: string]: any;
+    };
+    current: {
+        [key: string]: any;
+    };
+    transition?: Transition;
     constructor(game: RJS);
-    set(current: any): Promise<void>;
-    hideAll(transition?: string): Promise<any>;
-    show(name: any, transitionName: any, props: any): Promise<any>;
-    animate(name: any, toAnimate: any): Promise<void>;
-    hide(name: any, transitionName: any): Promise<void>;
+    set(current: {
+        [key: string]: any;
+    }): Promise<void>;
+    hideAll(transition?: string): Promise<void>;
+    show(name: string, transitionName: string, props: any): Promise<any>;
+    animate(name: string, toAnimate: any): Promise<void>;
+    hide(name: string, transitionName: string): Promise<void>;
     isCGS(actor: any): boolean;
 }

@@ -3,6 +3,6 @@ export default interface RJSManagerInterface {
 }
 export interface RJSSpriteManagerInterface extends RJSManagerInterface {
     set(...args: any): any;
-    show(name: any, transition: any, props: any): any;
-    hide(name: any, transition: any): any;
+    show(name: string, transitionName: string, props: any): any;
+    hide(name: string, transitionName: string): any;
 }
