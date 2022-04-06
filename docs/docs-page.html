@@ -2154,7 +2154,7 @@ start:
 							</ul></li>
 							<li><strong>Audio</strong>: Access this manager through <i>this.managers.audio</i>. This manager takes care of all the audio of the story.
 							<ul>
-								<li><strong>Current Music and Sound</strong>: You can obtain the <strong>Phaser.Sound</strong> objects for <strong>bgm</strong>(background music) and <strong>bgs</strong> (background sound) with <i>this.managers.audio.current</i>.</li>
+								<li><strong>Current Music and Sound</strong>: You can obtain the <strong>Phaser.Sound</strong> objects for all music and sounds with <i>this.managers.audio.current</i>. The background music is available under the <i>bgm</i> key; all other sounds have their own unique key names (you can find all of them using <i>Object.keys(this.managers.audio.current)</i>).</li>
 							</ul></li>
 							<li><strong>Logic</strong>: Access this manager through <i>this.managers.logic</i>. This manager takes care of the permanent variables set with the <a href="#var-action">Var Action</a>, and branching the story by way of choices and ifs.
 							<ul>

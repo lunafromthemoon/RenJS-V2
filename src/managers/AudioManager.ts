@@ -1,44 +1,49 @@
 import RJSManagerInterface from './RJSManager';
 import RJS from '../core/RJS';
 
+export type CurrentAudio = {
+    [key: string]: Phaser.Sound | null;
+}
+
+export type ActiveAudio = {
+    [key: string]: {key:string,looped:boolean,fromSeconds:number|null,transition:string} | null;
+}
+
 export interface AudioManagerInterface extends RJSManagerInterface {
-    play(key: string, type: string, looped: boolean, fromSeconds: number, transition: string): void;
+    play(key: string, type?: string, looped?: boolean, fromSeconds?: number | null, transition?: string): void;
     stop (type: string, transition: string): void;
     playSFX (key: string): void;
-    isMusic(actor): boolean;
-    isSfx(actor): boolean;
-    decodeAudio(audioList): Promise<any>;
+    isMusic(actor: string): boolean;
+    isSfx(actor: string): boolean;
+    decodeAudio(audioList: string[]): Promise<void>;
     mute(mute: boolean): void;
-    changeVolume(volume): void;
+    changeVolume(): void;
     stopAll(): void;
-    getActive(): object;
-    current: {
-        bgm: Phaser.Sound;
-        bgs: Phaser.Sound;
-    };
+    getActive(): ActiveAudio;
+    current: CurrentAudio;
     // audioLoaded: boolean;
 }
 
 export default class AudioManager implements AudioManagerInterface {
-    current = { bgm: null, bgs: null };
-    active = { bgm: null, bgs: null };
+    current: CurrentAudio = { bgm: null };
+    active: ActiveAudio = { bgm: null };
 
-    private sfxCache = {};
+    private sfxCache: {[key: string]: Phaser.Sound} = {};
     // audioLoaded: boolean;
     private game: RJS
-    private unavailableAudio: string[];
+    private unavailableAudio: string[] = [];
 
     constructor(game: RJS) {
         this.game = game
         this.changeVolume()
     }
 
-    getActive(): object{
+    getActive(): ActiveAudio {
        return this.active;
     }
 
-    play (key,type='bgm',looped=false,fromSeconds=null,transition='FADE',force=false): void {
-        if (!force && this.current[type] && this.current[type].key === key && this.current[type].isPlaying){
+    play (key:string,type='bgm',looped=false,fromSeconds:number|null=null,transition='FADE',force=false): void {
+        if (!force && this.current[type] && this.current[type]?.key === key && this.current[type]?.isPlaying){
             // music is the same, and it's playing, do nothing
             return;
         }
@@ -63,31 +68,32 @@ export default class AudioManager implements AudioManagerInterface {
         if (looped && fromSeconds){
             marker = 'intro';
             // looped = false;
-            music.addMarker(marker,0,fromSeconds,null,false);
+            music.addMarker(marker,0,fromSeconds,undefined,false);
             music.onMarkerComplete.addOnce(()=>{
-                music.addMarker('looped',fromSeconds,music.totalDuration-fromSeconds,null,true);
+                music.addMarker('looped',fromSeconds,music.totalDuration-fromSeconds,undefined,true);
                 music.play('looped');
                 music.volume = volume;
             })
         }
 
-        music.play(marker,0,null,looped);
+        music.play(marker,0,undefined,looped);
         // volume has to be set after it starts or it will ignore it
 
         if (transition === 'FADE'){
             music.volume = 0;
-            this.game.add.tween(music).to({volume},1500,null,true);
+            this.game.add.tween(music).to({volume},1500,undefined,true);
         } else {
             music.volume = volume;
         }
     }
 
     stop(type: string, transition = 'FADE'): void {
-        if (!this.current[type]){
+        const sound = this.current[type];
+        if (!sound){
             return;
         }
         if (!this.game.userPreferences.get('muted')) {
-            this.stopAudio(this.current[type],transition);
+            this.stopAudio(sound,transition);
             this.current[type]=null;
             this.active[type]=null;
         }
@@ -104,7 +110,7 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    playSFX(key,volume?): void {
+    playSFX(key: string, volume?: number): void {
         if (this.unavailableAudio.includes(key)) {
           console.warn(
             `SFX related to key ${key} is unavailable for playback.`
@@ -119,27 +125,26 @@ export default class AudioManager implements AudioManagerInterface {
         }
     }
 
-    set (active): void {
-        for (const type of ['bgm','bgs']){
-
-            if (!active[type]) continue;
-            this.play(active[type].key,type,active[type].looped,active[type].fromSeconds,active[type].transition);
-        }
+    set (active: ActiveAudio): void {
+        Object.entries(active).forEach(([type, activeAudio]) => {
+            if (activeAudio) {
+                this.play(activeAudio.key, type, activeAudio.looped, activeAudio.fromSeconds, activeAudio.transition);
+            }
+        });
     }
 
     changeVolume(): void {
-        if (this.current.bgm){
-            this.current.bgm.volume = this.game.userPreferences.get('bgmv');
-        }
-        if (this.current.bgs){
-            this.current.bgs.volume = this.game.userPreferences.get('bgmv');
-        }
+        Object.entries(this.current).forEach(([type, sound]) => {
+            if (sound) {
+                sound.volume = this.game.userPreferences.get('bgmv');
+            }
+        })
         if (this.game.userPreferences.get('muted')){
             this.game.sound.volume = 0;
         }
     }
 
-    async decodeAudio(audioList: string[]): Promise<any> {
+    async decodeAudio(audioList: string[]): Promise<void> {
         const availableAudios = audioList.filter(audio => this.game.cache.checkSoundKey(audio));
         this.unavailableAudio = audioList.filter(audio => !this.game.cache.checkSoundKey(audio));
 
@@ -147,17 +152,17 @@ export default class AudioManager implements AudioManagerInterface {
         return new Promise(resolve=>{
             this.game.sound.setDecodedCallback(availableAudios, () => {
               // this.audioLoaded = true;
-              resolve(true);
+              resolve();
             });
         })
 
     }
 
-    isMusic(actor): boolean {
+    isMusic(actor: string): boolean {
         return this.game.setup.music && actor in this.game.setup.music
     }
 
-    isSfx(actor): boolean {
+    isSfx(actor: string): boolean {
         return this.game.setup.sfx && actor in this.game.setup.sfx
     }
 
@@ -172,8 +177,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     stopAll(): void {
-        this.stop('bgs','FADE');
-        this.stop('bgm','FADE');
+        Object.keys(this.current).forEach(type => this.stop(type, 'FADE'));
     }
 
 

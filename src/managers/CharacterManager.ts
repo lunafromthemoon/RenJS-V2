@@ -4,21 +4,21 @@ import Character from '../entities/Character';
 import RJS from '../core/RJS';
 
 export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
-    characters: object;
+    characters: {[key: string]: any};
     showing: object;
-    hideAll(transition: string);
+    hideAll(transition: string): Promise<void>;
     // add(name, displayName, speechColour, looks): void;
-    show(name, transition, props): any;
-    hide(name, transition): Promise<any>;
-    isCharacter(actor): boolean;
+    show(name: string, transitionName?: string, props?: any): any;
+    hide(name: string, transitionName?: string): Promise<void>;
+    isCharacter(actor: string): boolean;
 }
 
 
 
 export default class CharacterManager implements CharacterManagerInterface {
 
-    characters = {};
-    transition: Transition
+    characters: {[key: string]: any} = {};
+    transition?: Transition
 
     constructor(private game: RJS) {
         // this.characters = this.game.setup.characters;
@@ -42,7 +42,7 @@ export default class CharacterManager implements CharacterManagerInterface {
     }
 
     get showing(): { [key: string]: {look: string; position: {x: number;y: number}; flipped: boolean}}{
-        const showing = {}
+        const showing: {[key: string]: any} = {};
         for( const name in this.characters){
             if (this.characters[name].currentLook){
                 showing[name] = this.characters[name].getLookData();
@@ -51,7 +51,7 @@ export default class CharacterManager implements CharacterManagerInterface {
         return showing;
     }
 
-    async set (showing): Promise<any> {
+    async set (showing: {[key: string]: any}): Promise<any> {
         await this.hideAll(Transition.CUT);
         for (const name in showing) {
             const props = showing[name];
@@ -64,7 +64,7 @@ export default class CharacterManager implements CharacterManagerInterface {
         }
     }
 
-    async show(name, transitionName?, props?): Promise<any> {
+    async show(name: string, transitionName?: string, props?: any): Promise<any> {
         const character = this.characters[name];
         // grab old look to transition
         const oldLook = character.currentLook;
@@ -73,11 +73,11 @@ export default class CharacterManager implements CharacterManagerInterface {
         if (!transitionName) {
             transitionName = this.getDefaultTransition();
         }
-        await this.transition.get(transitionName)(oldLook, newLook, {x:newLook.x,y:newLook.y},newLook.scale.x);
+        await this.transition?.get(transitionName)(oldLook, newLook, {x:newLook.x,y:newLook.y},newLook.scale.x);
         if (oldLook) oldLook.destroy();
     }
 
-    async hide(name, transitionName): Promise<any> {
+    async hide(name: string, transitionName?: string): Promise<void> {
         if (!transitionName) {
             transitionName = this.getDefaultTransition();
         }
@@ -86,19 +86,19 @@ export default class CharacterManager implements CharacterManagerInterface {
         ch.lastScale = 1;
         ch.currentLook = null;
         delete this.showing[name];
-        await this.transition.get(transitionName)(oldLook,null);
+        await this.transition?.get(transitionName)(oldLook,null);
         if (oldLook) oldLook.destroy();
     }
 
-    async hideAll(transitionName?): Promise<any> {
+    async hideAll(transitionName?: string): Promise<void> {
         const promises = []
         for (const char in this.showing){
             promises.push(this.hide(char,transitionName));
         }
-        return Promise.all(promises)
+        await Promise.all(promises);
     }
 
-    isCharacter(actor): boolean {
+    isCharacter(actor: string): boolean {
         return actor in this.characters || actor === 'CHARS' || actor === 'ALL';
     }
 
