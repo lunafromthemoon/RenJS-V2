@@ -12,7 +12,7 @@ export interface RJSGameConfig extends IGameConfig {
     name: string;
     w: number;
     h: number;
-    backgroundColor: number;
+    backgroundColor?: number;
     loadingScreen: {
         minTime?: number;
         background: string;

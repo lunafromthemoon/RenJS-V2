@@ -140,8 +140,8 @@ export default class Transition implements RJSScreenEffectInterface {
     }
 
     async FADETOBG (from, to, position?, scaleX?): Promise<void> {
-        const bgColor = this.game.config.backgroundColor;
-        return this.FADETOCOLOUR(from, to, bgColor, position, scaleX)
+        const { backgroundColor = 0 } = this.game.config;
+        return this.FADETOCOLOUR(from, to, backgroundColor, position, scaleX)
     }
 }
 
