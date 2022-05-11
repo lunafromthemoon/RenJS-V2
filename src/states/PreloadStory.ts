@@ -5,7 +5,7 @@ import RJSState from './RJSState';
 import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 
 class PreloadStory extends RJSState {
-    loadingScreen: RJSLoadingScreen
+    loadingScreen?: RJSLoadingScreen
     readyToStart = false;
 
     constructor() {
@@ -17,7 +17,7 @@ class PreloadStory extends RJSState {
     }
 
     preload(): void {
-        this.loadingScreen.setLoadingBar(this.game);
+        this.loadingScreen?.setLoadingBar(this.game);
         // wait a minimal amount of time in the loading loadingScreen
         // to use as splash screen
         if (this.game.config.loadingScreen.minTime){
@@ -109,7 +109,7 @@ class PreloadStory extends RJSState {
     async create(): Promise<any> {
         // game finished loading, now has to build game
         // we add a tween to the loading bar to make it a bit less static
-        this.loadingScreen.waitingScreen();
+        this.loadingScreen?.waitingScreen();
         await this.game.initStory();
         if (this.readyToStart){
             this.initGame();
@@ -120,7 +120,7 @@ class PreloadStory extends RJSState {
     }
 
     initGame(): void{
-        this.loadingScreen.destroy(this.game);
+        this.loadingScreen?.destroy(this.game);
         this.game.gui.showMenu('main');
     }
 }

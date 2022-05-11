@@ -11,7 +11,7 @@ import { AccessibilityConfig } from '../gui/a11y/Accessibility';
 import {StoryConfig} from '../core/RJSGameConfig';
 
 class Boot extends RJSState {
-    splash: Sprite
+    splash?: Sprite
     constructor() {
         super();
     }

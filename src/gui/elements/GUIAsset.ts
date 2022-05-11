@@ -1,7 +1,7 @@
 export interface GUIAsset {
     key: string;
     file: string;
-    type: string;
+    type: 'audio' | 'image' | 'spritesheet';
     w: number;
     h: number;
 }
