@@ -37,6 +37,7 @@ export default class RJSMenu extends Group {
         menu?: string;
         slot?: number;
         pushButton?: boolean;
+        label?: any;
         pushed?: boolean;
     }): BaseButton;
     createSlider(element: {

@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.5...v2.8.0) (2022-05-22)
+
+
+### Features
+
+* add label buttons ([0be8b62](https://github.com/lunafromthemoon/RenJS-V2/commit/0be8b6230ce9d7ef86b7fe43fab60e4147c16608))
+
 ## [2.7.5](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.4...v2.7.5) (2022-04-06)
 
 

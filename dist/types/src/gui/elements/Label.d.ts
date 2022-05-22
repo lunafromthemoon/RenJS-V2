@@ -12,6 +12,7 @@ export default class Label extends Text {
         style: any;
     };
     constructor(game: RJS, config: any, parent?: any);
+    changeText(text: string): void;
     changeStyle(style: any): void;
     resetStyle(): void;
 }

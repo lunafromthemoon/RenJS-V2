@@ -8,10 +8,10 @@ export default class ChoiceHandler extends Graphics {
         y: number;
         alignment: string;
         separation: number;
-        chosenColor: string;
         transition?: string;
         sfx: string;
-        text: {
+        text: any;
+        label: {
             x: number;
             y: number;
             width: number;
@@ -24,6 +24,8 @@ export default class ChoiceHandler extends Graphics {
             y: number;
             asset: string;
         };
+        chosenColor: string;
+        chosenStyle: any;
     };
     boxes: Button[];
     constructor(game: RJS, config: any);

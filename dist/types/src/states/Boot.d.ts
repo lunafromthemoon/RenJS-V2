@@ -2,7 +2,7 @@ import RJSState from './RJSState';
 import { Sprite } from 'phaser-ce';
 import RJS from '../core/RJS';
 declare class Boot extends RJSState {
-    splash: Sprite;
+    splash?: Sprite;
     constructor();
     init(): void;
     preload(): void;
