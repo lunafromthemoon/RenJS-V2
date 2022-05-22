@@ -3,6 +3,8 @@ start:
   - choice:
     - test images:
       - scene: testimages
+    - test choices:
+      - asdfasdf
     - test text:
       - scene: testtext
     - test ambients and effects:

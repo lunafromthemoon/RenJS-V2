@@ -13,10 +13,10 @@ config:
       alignment: centered
       separation: 10
       sfx: none
-      chosenColor: '#535050'
-      text:
-        x: 0
-        'y': 0
+      # chosenColor: '#535050'
+      chosenStyle:
+        fontStyle: italic
+      label:
         style:
           font: fontsaudimat-mono
           fontSize: 32px
@@ -24,6 +24,8 @@ config:
           align: left
           boundsAlignH: center
           boundsAlignV: middle
+        overStyle:
+            fill: '#89BAA8'
     - id: default
       type: messageBox
       asset: asset19
@@ -101,9 +103,20 @@ config:
       - type: button
         x: 77
         'y': 452
-        asset: asset3
+        asset: emptybutton
         binding: openMenu
         menu: saveload
+        label:
+          text: continue
+          style: 
+            font: fontsaudimat-mono
+            fontSize: 42px
+            fill: '#808080'
+            boundsAlignH: center
+            boundsAlignV: middle
+          overStyle:
+            fill: '#89BAA8'
+            # fontStyle: italic
       - type: button
         x: 329
         'y': 452
@@ -336,6 +349,11 @@ assets:
     asset3:
       name: asset3
       fileName: mainasset3.png
+      w: 199
+      h: 82
+    emptybutton:
+      name: emptybutton
+      fileName: emptybutton.png
       w: 199
       h: 82
     asset4:

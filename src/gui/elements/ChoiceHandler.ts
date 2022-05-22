@@ -1,6 +1,7 @@
 import RJS from '../../core/RJS';
 import {Graphics,Button,Color} from 'phaser-ce';
 import BaseButton from './BaseButton';
+import LabelButton from './LabelButton';
 import {setTextStyles} from '../../utils/gui'
 import Label from './Label'
 import { AccessibilityBounds } from '../a11y/Accessibility';
@@ -15,10 +16,11 @@ export default class ChoiceHandler extends Graphics {
         y: number;
         alignment: string; // centered|bottomUp|topDown
         separation: number;
-        chosenColor: string;
+        
         transition?: string;
         sfx: string;
-        text: {
+        text: any; // backwards compatibility
+        label: {
             x: number;
             y: number;
             width: number;
@@ -31,6 +33,9 @@ export default class ChoiceHandler extends Graphics {
             y: number;
             asset: string;
         };
+        // previously chosen options can be shown in a different color/style
+        chosenColor: string;
+        chosenStyle: any;
     }
 
     boxes: Button[] = []
@@ -47,6 +52,10 @@ export default class ChoiceHandler extends Graphics {
         if (this.config.background){
             const bg = this.game.add.sprite(this.config.background.x,this.config.background.y, this.config.background.asset)
             this.addChild(bg);
+        }
+        if (this.config.text && !this.config.label){
+            // compatibility for choice boxes with LabelButtons
+            this.config.label = this.config.text
         }
     }
 
@@ -82,13 +91,12 @@ export default class ChoiceHandler extends Graphics {
     }
 
     createChoiceBox(choice, x,y, index,totalChoices,resolve): Button     {
-        const chBox: Button = this.game.add.button(x,y, this.config.asset, async () => {
-            if (this.config.sfx && this.config.sfx !== 'none') {
-                this.game.managers.audio.playSFX(this.config.sfx);
-            }
+        const chBox = new LabelButton(this.game,this.config);
+        chBox.onClick = async ()=>{
             await this.hide();
-            resolve(index);
-        },this,1,0,2,0);
+            resolve(index);   
+        }
+        chBox.label.changeText(choice.choiceText)
         this.addChild(chBox);
 
         if (this.config.alignment === 'centered'){
@@ -98,13 +106,16 @@ export default class ChoiceHandler extends Graphics {
         }
         const separation = index*(chBox.height+this.config.separation)
         chBox.y += separation;
-        chBox.setFrames(...BaseButton.getButtonFrames(chBox.animations.frameTotal))
-        const text = new Label(this.game,this.config.text,chBox);
-        text.setText(setTextStyles(choice.choiceText,text), true);
-        chBox.addChild(text);
-
-        if (this.game.storyConfig.logChoices && this.config.chosenColor && choice.previouslyChosen){
-            chBox.tint = Color.hexToColor(this.config.chosenColor).color;
+        if (this.game.storyConfig.logChoices && choice.previouslyChosen){
+            if (this.config.chosenColor){
+                chBox.tint = Color.hexToColor(this.config.chosenColor).color
+            }
+            if (this.config.chosenStyle){
+                for (const prop in this.config.chosenStyle){
+                    chBox.label[prop] = this.config.chosenStyle[prop]
+                }
+            }
+            
         }
         return chBox;
     }

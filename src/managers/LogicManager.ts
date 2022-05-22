@@ -202,7 +202,6 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         if (this.showingText){
             choices.shift();
         }
-        // const ch = choices.map(choice => ({...choice})).filter(choice => this.evalChoice(choice))
         this.currentChoices = choices.map((choice,index) => this.parseChoice(index,choice))
         this.currentChoices = this.currentChoices.filter(choice=>choice.available)
         let chosenIdx = -1;

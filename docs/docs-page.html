@@ -886,6 +886,47 @@ config:
 							<li><strong>boundsAlignH</strong>: Horizontal alignment of the text within the parent. Can be: 'left', 'center' or 'right'.</li>
 							<li><strong>boundsAlignV</strong>: Vertical alignment of the text within the parent. Can be: 'top', 'middle' or 'bottom'.</li>
 						</ul>
+						<h4>LabelButtons</h4>
+						<pre><code class="language-yaml">
+      # type is button
+      - type: button
+        # optional id
+      	id: labelButtonId
+        x: 77
+        y: 452
+        # the asset of these buttons shouldn't have any text, since we'll add that dynamically
+        asset: basebutton
+        # same binding configuration as any other button
+        binding: openMenu
+        menu: saveload
+        # the label property defines what and how text will be added
+        label:
+          # the text that will be written on the button
+          text: continue
+          # text position (x and y) can be omitted when centering inside image
+          # x: 0
+          # y: 0
+          style: 
+            font: fontsaudimat-mono
+            fontSize: 42px
+            fill: '#808080'
+            # center it inside the button asset by setting its bound alignment
+            boundsAlignH: center
+            boundsAlignV: middle
+          # additional style properties that will be used when the mouse is over this button
+          overStyle:
+            fill: '#89BAA8'
+          # additional style properties that will be used when the button is clicked
+          clickedStyle:
+            fontStyle: italic
+						</code></pre>
+						<div class="text-center">
+						    <figure class="figure docs-figure py-3 text-center">
+							    <img class="figure-img img-fluid shadow rounded" src="assets/images/basebutton.png" alt="">
+							    <figcaption class="figure-caption mt-3">Base button + label = label button</figcaption>
+							</figure>
+						</div>
+						<br>
 						<h4>Sliders</h4>
 						<pre><code class="language-yaml">
 	- type: 'slider'
@@ -1021,12 +1062,17 @@ config:
 	  separation: 10
 	  # transition to show the choices, if not present the default choices transition will be used
 	  transition: "CUT"
-	  # the chosenColor property will be used to tint the choices previously taken in game
+      # when logChoices is set to true in the configuration, the previously chosen 
+      # options can be displayed a bit different to clue the player about it
+      # chosenColor will tint the whole choice box and text
 	  chosenColor: #FF0000
+	  # chosenStyle properties will be added to the text of these options
+	  chosenStyle:
+        fontStyle: italic
 	  # sfx to play when a choice is pressed
   	  sfx: soundAsset
 	  # configuration for the text, could be either single or multi line
-	  text:
+	  label:
 	  	# position related to the top left corner of the box
 	  	x: 0
 	  	y: 0
@@ -1037,6 +1083,13 @@ config:
 	  		# center inside the box
 	  		boundsAlignH: center
           	boundsAlignV: middle
+        # style properties to add when the mouse is over this choice
+      	overStyle:
+        	fill: '#89BAA8'
+        # style properties to add when the choice is clicked
+        clickedStyle:
+        	fill: '#FF0000'
+
 						</code></pre>
 
 					</section><!--//section-->

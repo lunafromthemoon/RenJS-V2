@@ -4,6 +4,7 @@ import MaskSlider from './elements/MaskSlider'
 import SaveSlot from './elements/SaveSlot'
 import PushButton from './elements/PushButton'
 import BaseButton from './elements/BaseButton'
+import LabelButton from './elements/LabelButton'
 import Label from './elements/Label'
 
 export default class RJSMenu extends Group {
@@ -68,6 +69,7 @@ export default class RJSMenu extends Group {
         menu?: string;
         slot?: number;
         pushButton?: boolean;
+        label?: any;
         pushed?: boolean;
     }): BaseButton {
         let btn: BaseButton;
@@ -78,6 +80,8 @@ export default class RJSMenu extends Group {
                 // always index for changing state when this happens
                 this.indexedElements[element.binding+'Button'] = btn;
             }
+        } else if (element.label) {
+            btn = new LabelButton(this.game,element)
         } else {
             btn = new BaseButton(this.game,element);
         }

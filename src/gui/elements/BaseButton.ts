@@ -16,6 +16,9 @@ export default class BaseButton extends Button {
 
     constructor(game: RJS, config) {
         super(game, config.x, config.y,config.asset,()=>{
+            if (this.config.sfx && this.config.sfx !== 'none') {
+                this.game.managers.audio.playSFX(this.config.sfx);
+            }
             this.onClick();
         });
         this.setFrames(...BaseButton.getButtonFrames(this.animations.frameTotal))
@@ -35,9 +38,6 @@ export default class BaseButton extends Button {
     }
 
     onClick(): void{
-    	if (this.config.sfx && this.config.sfx !== 'none') {
-            this.game.managers.audio.playSFX(this.config.sfx);
-        }
         this.game.gui.bindingActions[this.config.binding](this.config,this);
     }
 
