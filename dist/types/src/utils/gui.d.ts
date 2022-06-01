@@ -1,10 +1,6 @@
 import { Text } from 'phaser-ce';
 export declare function changeInputEnabled(displayObj: any, enabled: any): void;
-export declare function extractPauses(text: string): [string, {
-    index: number;
-    time: number;
-}[]];
-export declare function setTextStyles(text: string, textObj: Text): string;
+export declare function setTextStyles(text: string, textObj: Text, findPauses?: boolean): any;
 /**
  * compareFn for hud config elements.
  * ensures that name box is on top of dialogue,
