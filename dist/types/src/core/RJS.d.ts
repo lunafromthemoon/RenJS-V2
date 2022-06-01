@@ -77,6 +77,7 @@ export default class RJS extends Game {
     getSlotThumbnail(slot: any): string;
     loadSlot(slot: any): Promise<void>;
     waitForClick(callback?: any): void;
+    asyncWait(time: number): Promise<any>;
     waitTimeout(time: any, callback?: any): void;
     waitForClickOrTimeout(time: any, callback: any): void;
     onTap(pointer: any): void;

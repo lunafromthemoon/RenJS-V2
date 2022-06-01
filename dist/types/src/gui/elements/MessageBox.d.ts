@@ -17,6 +17,7 @@ export default class MessageBox extends Sprite {
         asset: string;
         sfx: string;
         transition?: string;
+        textAnimation?: string;
         text: {
             x: number;
             y: number;
@@ -39,7 +40,9 @@ export default class MessageBox extends Sprite {
     constructor(game: RJS, config: any);
     onCharacter?: (characters: string[], index: number) => void;
     destroy(): void;
-    show(text: any, sfx?: any): Promise<any>;
+    show(text: string, sfx?: string): Promise<any>;
+    getCharacterSfx(sfx?: any): [Sound, number];
+    showTextAnimation(textObj: Phaser.Text, finalText: string, sfxConfig?: any): Promise<any>;
     hide(transitionName?: any): Promise<any>;
     clear(transitionName?: any): Promise<any>;
 }

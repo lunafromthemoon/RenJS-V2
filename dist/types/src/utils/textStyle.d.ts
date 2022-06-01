@@ -6,5 +6,5 @@ declare type Token = {
     tag: string;
 };
 /** converts text into a list of tokens that can be used to construct styles */
-export declare function tokenizeTextStyle(text: string): Token[];
+export declare function tokenizeTextStyle(text: string, pauses?: boolean): Token[];
 export {};

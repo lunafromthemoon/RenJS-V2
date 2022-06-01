@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.8.0...v2.9.0) (2022-06-01)
+
+
+### Features
+
+* dramatic pauses ([cb199fa](https://github.com/lunafromthemoon/RenJS-V2/commit/cb199fa6b87d9aac057abe050eb9ff7d1b235e67))
+
 # [2.8.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.7.5...v2.8.0) (2022-05-22)
 
 

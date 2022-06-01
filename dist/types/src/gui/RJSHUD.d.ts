@@ -26,7 +26,7 @@ export default class RJSHUD extends RJSMenu {
     showName(boxId: any, name: any, color: any): void;
     hideName(boxId: any): void;
     showText(boxId: any, text: any, sfx?: any): Promise<any>;
-    hideText(boxId: any): void;
+    hideText(boxId: any): Promise<any>;
     showChoices(handlerId: any, choices: any): Promise<any>;
     hideChoices(handlerId: any): void;
     showVisualChoices(choices: any): Promise<any>;
