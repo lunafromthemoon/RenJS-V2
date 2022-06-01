@@ -84,9 +84,8 @@ export default class RJSHUD extends RJSMenu {
         return this.mBoxes[boxId].show(text,sfx);
     }
 
-    // TODO: this should be async too
-    hideText(boxId): void{
-        this.mBoxes[boxId].clear();
+    async hideText(boxId): Promise<any>{
+        await this.mBoxes[boxId].clear();
     }
 
     async showChoices(handlerId,choices): Promise<any>{

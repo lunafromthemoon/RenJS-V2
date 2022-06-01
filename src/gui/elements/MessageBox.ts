@@ -1,6 +1,6 @@
 import RJS from '../../core/RJS';
 import {Sprite,Sound} from 'phaser-ce';
-import {setTextStyles} from '../../utils/gui'
+import {setTextStyles, extractPauses} from '../../utils/gui'
 import Label from './Label'
 
 
@@ -24,6 +24,7 @@ export default class MessageBox extends Sprite{
         asset: string;
         sfx: string;
         transition?: string;
+        textAnimation?: string;
         text: {
             x: number;
             y: number;
@@ -99,18 +100,13 @@ export default class MessageBox extends Sprite{
     // show text character per character,
     // when whole text is displayed, show click to continue and wait for click
     // when player clicks, message box is hid with transition and action ends
-    show(text,sfx?): Promise<any> {
+    async show(text: string,sfx?: string): Promise<any> {
         this.game.accessibility.text(text);
-        if (sfx === 'none'){
-            // if character voice configured as none, don't make any sound
-            sfx = null;
-        } else if (!sfx && this.defaultSfx){
-            sfx = this.defaultSfx;
-        }
+        
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
-        let finalText = setTextStyles(text,this.text);
-        const textSpeed: number = this.game.userPreferences.get('textSpeed');
-        if (this.game.control.skipping || textSpeed < 10){
+        let [textWithoutPauses, pauses] = extractPauses(text)
+        let finalText = setTextStyles(textWithoutPauses,this.text);
+        if (this.game.control.skipping || this.game.userPreferences.get('textSpeed') < 10){
             this.text.setText(finalText, true);
             this.visible = true;
             this.alpha = 1;
@@ -133,25 +129,65 @@ export default class MessageBox extends Sprite{
             }
         }
 
-        // split in characters to add one by one
-        const characters = finalText.split('');
-        let charIdx = 0;
-        // punctuation waiting time
-        let waitingFor = 0;
+        this.visible = true;
+        const transition = this.game.screenEffects.transition.get(this.config.transition);
+        await transition(null,this);
+        console.log(pauses)
+        if (pauses.length > 0) {
+            let pauseStart = 0
+            for(var i=0; i<pauses.length; i++){
+                console.log(pauses[i])
+                const textPart = finalText.substring(pauseStart, pauses[i].index)
+                await this.showTextAnimation(this.text, textPart, sfx);
+                pauseStart = pauses[i].index;
+                await this.game.asyncWait(pauses[i].time)
+            }
+            const textPart = finalText.substring(pauseStart)
+            await this.showTextAnimation(this.text, textPart, sfx)
+        } else {
+            await this.showTextAnimation(this.text, finalText, sfx)
+        }
+    }
+
+    getCharacterSfx(sfx?): [Sound, number]{
+        if (sfx === 'none'){
+            // if character voice configured as none, don't make any sound
+            sfx = null;
+        } else if (!sfx && this.defaultSfx){
+            sfx = this.defaultSfx;
+        }
+        
         // how many characters to add per sfx played
         let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
 
         if (sfx && charPerSfx === 'auto'){
-            charPerSfx = Math.ceil(sfx.durationMS/textSpeed);
+            charPerSfx = Math.ceil(sfx.durationMS/this.game.userPreferences.get('textSpeed'));
         }
+        return [sfx, charPerSfx]
+    }
+
+    // Animate text appearing in the message box char per char
+    // Returns promise that resolves when text is fully displayed
+    async showTextAnimation(textObj: Phaser.Text, finalText: string, sfxConfig?): Promise<any>{
+        
+        // split in characters to add one by one
+        const characters = finalText.split('');
+        let [sfx, charPerSfx] = this.getCharacterSfx(sfxConfig)
         // sfx will only play when sfxCharCount === 0, and will reset when sfxCharCount === charPerSfx
         let sfxCharCount = 0;
+        // punctuation waiting time
+        let waitingFor = 0;
+        // character index
+        let charIdx = 0;
+        const sfxVolume = this.game.userPreferences.get('sfxv');
         return new Promise(async resolve=>{
             const completeText = (): void => {
                 // text finished showing, clear timeout
                 clearTimeout(this.textLoop);
                 // complete text in case of skipping
-                this.text.setText(finalText, true);
+                const completeText = this.text.text + finalText.substring(charIdx)
+                this.text.setText(completeText, true);
+                
                 // show ctc
                 if (this.ctc){
                     this.ctc.visible = true;
@@ -159,19 +195,14 @@ export default class MessageBox extends Sprite{
                         this.game.managers.audio.playSFX(this.config.ctc.sfx);
                     }
                 }
-                // finish promise
+                // text is fully displayed, finish promise
                 resolve(true);
             }
-
-
-            this.visible = true;
-            const transition = this.game.screenEffects.transition.get(this.config.transition);
-            await transition(null,this);
 
             if (sfx && charPerSfx === -1){
                 // play only once and mute
                 sfx.play();
-                sfx.volume = this.game.userPreferences.get('sfxv');
+                sfx.volume = sfxVolume;
                 sfx = null;
             }
             // skip text animation on click
@@ -189,6 +220,7 @@ export default class MessageBox extends Sprite{
                 // add next character
                 this.text.text += (characters[charIdx]);
 
+                // on Character handle
                 if (this.onCharacter){
                     this.onCharacter(characters,charIdx);
                 }
@@ -201,7 +233,7 @@ export default class MessageBox extends Sprite{
                         sfxCharCount=-1;
                     } else if (sfxCharCount === 0){
                         sfx.play();
-                        sfx.volume = this.game.userPreferences.get('sfxv');
+                        sfx.volume = sfxVolume;
                     }
                     sfxCharCount++;
                 }
@@ -214,7 +246,7 @@ export default class MessageBox extends Sprite{
                 if (charIdx >= characters.length){
                     completeText();
                 }
-            }, textSpeed);
+            }, this.game.userPreferences.get('textSpeed'));
         })
     }
 
@@ -231,7 +263,7 @@ export default class MessageBox extends Sprite{
         if(!this.config.alwaysOn){
             await this.hide(transitionName)
         }
-        this.text.setText('', true);
+        // this.text.setText('', true);
         if (this.ctc){
             this.ctc.visible = false;
         }

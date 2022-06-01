@@ -1241,6 +1241,7 @@ config:
 	# Use text styles: bold italic and color
 	- text: (bold)This text is bold(end), (italic)and this is italic(end).
 	- text: This word is (color:#f593e6)colored(end)!
+	- text: This is a(pause: 500) very(pause: 750) dramatic(pause: click) pause!
 						</code></pre>
 						<strong>Play and stop</strong>
 						<pre><code class="language-yaml">
@@ -1460,6 +1461,25 @@ SCENE2:
 	- liz says: Hey! What are you doing here?
 	# display a message with say, changing the look
 	- liz says angry: We were all looking for you!
+						</code></pre>
+						<p>The text to be displayed can include a few style tags to modify how it will look in the box:</p>
+						<ul>
+						    <li><strong class="mr-1">(bold)text(end):</strong> Will make the text inside the tags appear in bold style.</li>
+						    <li><strong class="mr-1">(italic)text(end):</strong> Will make the text inside the tags appear in italic style</li>
+						    <li><strong class="mr-1">(color:#FF0000)(end):</strong> Will make the text inside the tags appear in the specified color. The color has to be a valid html color, either in hex format, or one of the allowed <a href="https://www.w3schools.com/tags/ref_colornames.asp"> html color names</a>.</li>
+						    <li><strong class="mr-1">(pause: click):</strong> Will add a <i>dramatic pause</i> at that point in the text. The rest of the text will be added after the player makes a click. It can also take a number for the amount of time to pause for, in miliseconds.</li>
+						</ul>
+						<pre><code class="language-yaml">
+  - deuzi says happy: Hello! Do you like my new (color:#f593e6)voice(end)? I've always wanted to be a singer, you know.
+  - jair says: Eh, I think... I think... It sounds really good.
+  - liz says angry: What? Who are you and what did you do with Jair?
+  - jair says angry: I just think it's pleasant to the ears, that's all. What, are you (italic)jealous(end)?
+  - deuzi says: "(bold)Hey!(end)(pause: click) No need to fight about such things, I think we all sound great."
+  - show jair: happy WITH CUT
+  - liz says normal: I don't want to fight, but don't you find weird Jair has something (italic)nice(end) to say for the first time, like, ever?
+  - deuzi says: Yes, it's weird,(pause: 1500) but I'm sure he'll find something nasty to say sooner or later.
+  - jair says angry: Tsk, that's what I get for being honest.
+  - endgame:
 						</code></pre>
 					</section><!--//section-->
 					<section class="docs-section" id="play-stop-actions">

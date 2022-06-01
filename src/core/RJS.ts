@@ -343,6 +343,19 @@ export default class RJS extends Game {
         }
     }
 
+    async asyncWait(time: number): Promise<any> {
+        return new Promise(resolve=>{
+            const stop = ()=>{
+                resolve(true)
+            }
+            if (time>0){
+                this.waitTimeout(time, stop)
+            } else {
+                this.waitForClick(stop)
+            }
+        })
+    }
+
     waitTimeout(time, callback?): void {
         this.control.nextAction = callback ? callback : this.resolveAction;
         if (this.control.skipping){

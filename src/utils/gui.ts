@@ -11,6 +11,33 @@ export function changeInputEnabled(displayObj,enabled): void{
 
 }
 
+export function extractPauses(text: string): [string, {index:number; time:number}[]] {
+  const tokens = tokenizeTextStyle(text, true);
+  const pauses: {
+    time: number;
+    index: number;
+  }[] = [];
+  let token: typeof tokens[number];
+  let result = '';
+  while(tokens.length){
+    token = tokens.shift();
+    if (token.text !== undefined) {
+      result += token.text;
+    } else {
+      const timeStr = token.tag.split(':')[1];
+      let time = -1;
+      if (!timeStr.includes("click")){
+        time = parseInt(timeStr)
+      }
+      pauses.push({
+        index: result.length,
+        time: time
+      })
+    }
+  }
+  return [result, pauses]
+}
+
 // sets text styles tags in a phaser text object (but NOT the text itself)
 // returns final text without tags, that has to be set to text object as textObj.text
 export function setTextStyles(text: string,textObj: Text): string {

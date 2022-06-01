@@ -176,8 +176,9 @@ testimages:
 
 testtext:
   # - play morningBGM:
-  - show bus_station:
+  - show bus_station: CONTINUE
   - show deuzi: happy
+  - deuzi says angry: "Lorem ipsum dolor sit amet,(pause: click) consectetur adipiscing elit... Aasdf qwer! asdfasdf."
   - choice:
     - deuzi says: Choose a partner!
     - Deuzilene:
@@ -187,7 +188,7 @@ testtext:
     - Deuzilene and (italic)Liz(end):
       - text: You chose both!
   - show liz: AT LEFT angry
-  - deuzi says angry:  Lorem ipsum dolor sit amet, consectetur adipiscing elit... Aasdf qwer! asdfasdf.
+  - deuzi says angry: "Lorem ipsum dolor sit amet,(pause: click) consectetur adipiscing elit... Aasdf qwer! asdfasdf."
   - liz says happy: asdf qwer asdf 
   - text:  Text with styles
   - text: This is (italic)italic(end), this is (bold)bold(end). This is (italic)italic (bold)and(end) bold(end).
