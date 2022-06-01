@@ -11,36 +11,36 @@ export function changeInputEnabled(displayObj,enabled): void{
 
 }
 
-export function extractPauses(text: string): [string, {index:number; time:number}[]] {
-  const tokens = tokenizeTextStyle(text, true);
-  const pauses: {
-    time: number;
-    index: number;
-  }[] = [];
-  let token: typeof tokens[number];
-  let result = '';
-  while(tokens.length){
-    token = tokens.shift();
-    if (token.text !== undefined) {
-      result += token.text;
-    } else {
-      const timeStr = token.tag.split(':')[1];
-      let time = -1;
-      if (!timeStr.includes("click")){
-        time = parseInt(timeStr)
-      }
-      pauses.push({
-        index: result.length,
-        time: time
-      })
-    }
-  }
-  return [result, pauses]
-}
+// export function extractPauses(text: string): [string, {index:number; time:number}[]] {
+//   const tokens = tokenizeTextStyle(text, true);
+//   const pauses: {
+//     time: number;
+//     index: number;
+//   }[] = [];
+//   let token: typeof tokens[number];
+//   let result = '';
+//   while(tokens.length){
+//     token = tokens.shift();
+//     if (token.text !== undefined) {
+//       result += token.text;
+//     } else {
+//       const timeStr = token.tag.split(':')[1];
+//       let time = -1;
+//       if (!timeStr.includes("click")){
+//         time = parseInt(timeStr)
+//       }
+//       pauses.push({
+//         index: result.length,
+//         time: time
+//       })
+//     }
+//   }
+//   return [result, pauses]
+// }
 
 // sets text styles tags in a phaser text object (but NOT the text itself)
 // returns final text without tags, that has to be set to text object as textObj.text
-export function setTextStyles(text: string,textObj: Text): string {
+export function setTextStyles(text: string,textObj: Text, findPauses: boolean = false): any {
   const tokens = tokenizeTextStyle(text);
   textObj.clearFontValues();
   textObj.clearColors();
@@ -50,6 +50,10 @@ export function setTextStyles(text: string,textObj: Text): string {
     style: string;
     color?: string;
   }[] = [];
+  const pauses: {
+    time: number;
+    index: number;
+  }[] = [];
   const stack: typeof styles = []
   let token: typeof tokens[number];
   let result = '';
@@ -58,20 +62,26 @@ export function setTextStyles(text: string,textObj: Text): string {
     if (token.text !== undefined) {
       result += token.text;
     } else {
-      const [style, color] = token.tag.split(':');
-      if (style === 'end') {
+      const [tag, arg] = token.tag.split(':');
+      if (tag === 'end') {
         // find the most recent unclosed style on the stack and close it
         const lastStyle = stack.pop();
         if (lastStyle) {
           lastStyle.end = result.length;
         }
+      } else if (tag === 'pause') {
+        let time = arg.includes("click") ? -1 : parseInt(arg);
+        pauses.push({
+          index: result.length,
+          time: time
+        })
       } else {
         // add new unclosed style onto the stack
         styles.push({
           start: result.length,
           end: -1,
-          style,
-          color,
+          style: tag,
+          color: arg,
         });
         stack.push(styles[styles.length-1]);
       }
@@ -91,7 +101,11 @@ export function setTextStyles(text: string,textObj: Text): string {
       textObj.addColor(textObj.fill, s.end);
     }
   })
-  return result;
+  if (!findPauses){
+    return result;
+  } else {
+    return [result, pauses]
+  }
 }
 
 

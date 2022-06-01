@@ -1,6 +1,6 @@
 import RJS from '../../core/RJS';
 import {Sprite,Sound} from 'phaser-ce';
-import {setTextStyles, extractPauses} from '../../utils/gui'
+import {setTextStyles} from '../../utils/gui'
 import Label from './Label'
 
 
@@ -102,10 +102,9 @@ export default class MessageBox extends Sprite{
     // when player clicks, message box is hid with transition and action ends
     async show(text: string,sfx?: string): Promise<any> {
         this.game.accessibility.text(text);
-        
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
-        let [textWithoutPauses, pauses] = extractPauses(text)
-        let finalText = setTextStyles(textWithoutPauses,this.text);
+        // will set text styles and return any pauses
+        let [finalText, pauses] = setTextStyles(text,this.text,true);
         if (this.game.control.skipping || this.game.userPreferences.get('textSpeed') < 10){
             this.text.setText(finalText, true);
             this.visible = true;
@@ -132,11 +131,9 @@ export default class MessageBox extends Sprite{
         this.visible = true;
         const transition = this.game.screenEffects.transition.get(this.config.transition);
         await transition(null,this);
-        console.log(pauses)
         if (pauses.length > 0) {
             let pauseStart = 0
             for(var i=0; i<pauses.length; i++){
-                console.log(pauses[i])
                 const textPart = finalText.substring(pauseStart, pauses[i].index)
                 await this.showTextAnimation(this.text, textPart, sfx);
                 pauseStart = pauses[i].index;
