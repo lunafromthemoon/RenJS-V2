@@ -430,7 +430,7 @@ interval:
   - deuzi says: Were you going to sleep already?
   - deuzi says: I know you're new in town, so I thought I could show you around a bit.
   - deuzi says: What do you think?
-  - interrupt 6:
+  - interrupt:
     - Isn't it a bit awkward???:
       - deuzi says angryC: What do you mean?
       - deuzi says: Because I'm your teacher?  
@@ -441,6 +441,7 @@ interval:
   - deuzi says: You probably know it already, but this is a small town.
   - deuzi says: There's not much to see, really.
   - deuzi says: But the cool kids all get together outside the store.
+  - interrup: hide
   - deuzi says: Have you been there already?
   - deuzi says: You can't miss it.
   - deuzi says: So, ready to go?

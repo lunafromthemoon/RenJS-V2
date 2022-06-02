@@ -227,6 +227,7 @@ export default class LogicManager implements LogicManagerInterface<Group> {
         await this.game.gui.hud.clear();
         this.currentChoices = [];
         this.showingText = false;
+        this.interrupting = null;
     }
 }
 

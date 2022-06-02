@@ -1257,11 +1257,12 @@ config:
 	      	- ACTIONS FOR OPTION2
 	    - Option 3 text !if(condition):
 	      	- ACTIONS FOR OPTION3
-  	- interrupt NUMBER:
+  	- interrupt:
 	    - Interrupt 1 text:
 	      	- ACTIONS FOR INTERRUPT1
 	    - Interrupt 2 text:
 	      	- ACTIONS FOR INTERRUPT2
+	- interrupt: hide
 						</code></pre>
 						<strong>Variables</strong>
 						<pre><code class="language-yaml">
@@ -1531,11 +1532,11 @@ SCENE2:
 						<h3>Interrupt</h3>
 						<p>An <strong>interrupt</strong> is like a <strong>choice</strong> action, but while the choice waits for the player to make a decision, the interrupt will display the option, but will not stop the game. If the player decides to <i>interrupt</i>, then the actions of the interrupt will be executed, before continuing.</p>
 						<p>The interrupt can include a number of actions to wait before disappearing (thus disallowing the player the interruption), but if the scene changes, any interrupt still showing will automatically disappear.</p>
-						<p>In the next example, the interrupt will be shown only for the next 6 actions.</p>
+						<p>In the next example, the interrupt will be shown until the "hide interrupt" action is called.</p>
 						<pre><code class="language-yaml">
   - deuzi says: I know you're new in town, so I thought I could show you around a bit.
   - deuzi says: What do you think?
-  - interrupt 6:
+  - interrupt:
     - Isn't it a bit awkward???:
       - deuzi says angryC: What do you mean?  Because I'm your teacher?
       - deuzi says happyC: We're almost the same age!
@@ -1543,6 +1544,7 @@ SCENE2:
       - deuzi says angryC: Then you'll see how awkward it is to be called professor and be treated like and old person.
       - deuzi says normalC: Anyway, as I was saying...
   - deuzi says: You probably know it already, but this is a small town.
+  - interrupt: hide
   - deuzi says: There's not much to see, really.
 						</code></pre>
 						<h3>Visual Choices</h3>

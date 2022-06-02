@@ -18,7 +18,7 @@ export default class StoryActionText extends StoryAction {
     // constructor(params, game, private isVisualChoice, private isInterrupt) {
     }
 
-    execute(): void {
+    async execute(): Promise<any> {
         if (this.isInterrupt && this.body === 'hide'){
             // interrupts remain in screen until interacted or hidden
             this.game.managers.logic.clearChoices();
@@ -28,6 +28,9 @@ export default class StoryActionText extends StoryAction {
         // stop skipping in player choice
         this.game.control.skipping = false;
         this.game.input.enabled = true;
+        if (this.game.managers.logic.interrupting){
+            await this.game.managers.logic.clearChoices();
+        }
         if (this.isInterrupt){
             this.game.managers.logic.interrupt(this.handlerId,[...this.body]);
         } else {
