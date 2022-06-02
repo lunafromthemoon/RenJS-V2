@@ -1,3 +1,10 @@
+## [2.9.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.9.0...v2.9.1) (2022-06-01)
+
+
+### Bug Fixes
+
+* pauses bug ([f99925e](https://github.com/lunafromthemoon/RenJS-V2/commit/f99925ea434f4907ab9ebeb06c585974234cb3ee))
+
 # [2.9.0](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.8.0...v2.9.0) (2022-06-01)
 
 
