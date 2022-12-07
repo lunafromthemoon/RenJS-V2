@@ -51,7 +51,7 @@ export default class RJSMenu extends Group {
     createImage(element: {x: number;y: number;asset: string}): Sprite {
         const spr: Sprite = this.game.add.sprite(element.x,element.y,element.asset,0);
         if (spr.animations.frameTotal){
-            spr.animations.add('do').play()
+            spr.animations.add('do').play(12,true)
         }
         return spr;
     }

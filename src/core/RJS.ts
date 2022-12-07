@@ -97,9 +97,6 @@ export default class RJS extends Game {
 
     launch (): void {
         this.preserveDrawingBuffer = true;
-
-        // this.state.add('loader', Loader)
-        // this.state.start('loader')
         this.state.add('bootstrap', Boot)
         if (this.config.i18n){
             // try to load previously chosen Language
@@ -132,6 +129,10 @@ export default class RJS extends Game {
 
         this.scale.refresh();
         this.screenReady = true;
+    }
+
+    phaserUpdateHandler(): void {
+        this.checkPlugins('onUpdateLoop');
     }
 
     async initStory(): Promise<any> {

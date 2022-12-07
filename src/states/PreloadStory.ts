@@ -119,6 +119,11 @@ class PreloadStory extends RJSState {
 
     }
 
+    update(): void {
+        this.game.phaserUpdateHandler()
+    }
+
+
     initGame(): void{
         this.loadingScreen?.destroy(this.game);
         this.game.gui.showMenu('main');

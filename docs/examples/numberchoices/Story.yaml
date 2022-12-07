@@ -1,0 +1,23 @@
+start:
+  - show store: CONTINUE
+  - show marco: normal
+  - marco says: Welcome to the Numbered Choices plugin example. Let me show you how it works.
+  - marco says happy: What's your favourite animal?
+  - choice:
+    - marco says normal: And here's the trick, you can use the keyboard numbers to choose an option.
+    - "Dogs":
+      - marco says: I like dogs too! That's why they are number 1.
+    - "Cats":
+      - marco says: Cats! Interesting choice.
+    - "Penguins":
+      - marco says: Unusual choice, but I can see the appeal.
+  - marco says: This plugin will automatically add numbers to the choices and bind them to the keyboard press, but only for the default choice box. 
+  - marco says: If you GUI has more choice boxes, you could modify this plugin to select the right choice box before adding the numbers.
+  - marco says: Did you know that players can also press the spacebar to continue after a text? Try it now!
+  - marco says: That means that with this plugin you can now create games that can be fully played just with a keyboard, isn't it cool?
+  - choice:
+    - Yeah! I love keyboards:
+      - marco says happy: Me too!
+    - I guess:
+  - marco says normal: Well, that was all! You can grab the plugin code and try it now with any of your games!
+  - endgame:

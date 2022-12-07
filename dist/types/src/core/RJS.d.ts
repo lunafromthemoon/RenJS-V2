@@ -31,6 +31,8 @@ export default class RJS extends Game {
     tools: any;
     screenReady: boolean;
     pluginsRJS: any;
+    phaserUpdateHandler: any;
+    phaserRenderHandler: any;
     addPlugin(name: string, cls: any): void;
     get renjsversion(): string;
     config: RJSGameConfig;

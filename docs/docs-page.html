@@ -1664,6 +1664,7 @@ SCENE2:
 							<li><strong>== (Equal)</strong>: The operation will be true if both values are equal.</li>
 							<li><strong><= (Less than or equal to)</strong>: The operation will be true if the left value is less than or equal to the right value.</li>
 							<li><strong>< (Less than)</strong>: The operation will be true if the left value is less than the right value.</li>
+							<li><strong>!= (Different)</strong>: The operation will be true if the values are different.</li>
 						</ul>
 						<p>As with the previous operations, parenthesis () are allowed.</p>
 						<pre><code class="language-yaml">
@@ -2080,6 +2081,11 @@ export default class Plugin implements PluginInterface {
 		// called when game ends, before returning to the main menu
 		// base plugin does nothing
 	}
+
+	onUpdateLoop(): void {
+		// called on every Phaser update loop: https://phaser.io/docs/2.6.2/Phaser.State.html#update
+	}
+
 }
 						</code></pre>
 						<p>This is the class definition of the <strong>RenJS Plugins</strong>. As you can see, the constructor receives a name and the <strong>game</strong> object, that will be later available to use from any of the handles. Then handles themselves are empty and do nothing unless you redefine them.</p>

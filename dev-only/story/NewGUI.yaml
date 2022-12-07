@@ -31,7 +31,8 @@ config:
       asset: asset19
       x: 40
       'y': 449
-      sfx: none
+      # sfx: none
+      sfx: textaudio
       text:
         x: 24
         'y': 24

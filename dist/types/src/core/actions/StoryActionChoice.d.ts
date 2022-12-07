@@ -12,5 +12,5 @@ export default class StoryActionText extends StoryAction {
     constructor(game: RJS, actionType: string, properties: {
         [key: string]: any;
     });
-    execute(): void;
+    execute(): Promise<any>;
 }

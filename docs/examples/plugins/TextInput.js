@@ -14,7 +14,7 @@ class TextInput extends RenJS.Plugin {
 	onLoad(slot,dataParsed){
 		for (const name of dataParsed.vars.names){
 			// add names to character objects
-			this.game.managers.character.characters[name].name = dataParsed.vars[`TextInputName_${name}`]
+			this.game.managers.character.characters[name].config.displayName  = dataParsed.vars[`TextInputName_${name}`]
 		}
 	}
 

@@ -216,7 +216,7 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         }
         if (this.game.config.debugMode){
             console.log('Executing action: '+storyAction.actionType);
-            console.log(Object.getOwnPropertyNames(storyAction));
+            console.log(storyAction);
         }
         await this.game.checkPlugins('onAction',[storyAction]);
         storyAction.execute();

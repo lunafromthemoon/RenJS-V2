@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <title>RenJS Examples - Title Card Plugin</title>
+	    <title>RenJS Examples - Numbered Choices Plugin</title>
 	    <!-- Meta -->
 	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,9 +37,6 @@
 	    <link id="theme-style" rel="stylesheet" href="../assets/css/tabs.css">
 	    <link id="theme-style" rel="stylesheet" href="../assets/css/theme.css">
 	    
-
-
-		
 	</head>
 
 
@@ -66,16 +63,17 @@
 		<section id="downloads" class="cta-section py-5 theme-bg-dark position-relative">
 			<div class="text-center">
 	   			<img src="../assets/images/renjs-title-white.svg" class="m-3 w-25">
-	   			<h1 class="title text-center text-white mb-5">Text Input Plugin</h1>
+	   			<h1 class="title text-center text-white mb-5">Numbered Choices Plugin</h1>
 	   		</div>
 			<div id="renjs-canvas"></div>
 		    <div class="container">
 			   <div class="docs-overview py-5">
+		    		
 		    		  <section class="accordion">
 					    <section class="accordion-tabs">
 					      <button class="accordion-tab accordion-active" data-actab-group="0" data-actab-id="0"><i class="fas fa-pen-alt"></i> Story.yaml</button>
-					      <button class="accordion-tab" data-actab-group="0" data-actab-id="1"><i class="fas fa-toolbox"></i> Setup.yaml</button>
-					      <button class="accordion-tab" data-actab-group="0" data-actab-id="2"><i class="fas fa-cog"></i> ShowTitle.js</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="1"><i class="fas fa-toolbox"></i> Configuration</button>
+					      <button class="accordion-tab" data-actab-group="0" data-actab-id="2"><i class="fas fa-cog"></i> NUMBERCHOICES.js</button>
 					    </section>
 					    <section class="accordion-content line-numbers">
 					      <article class="accordion-item accordion-active" data-actab-group="0" data-actab-id="0">
@@ -83,44 +81,46 @@
 					      	<div class="accordion-item__container">
 	    						<pre><code class="language-yaml">
 start:
-  - show room_night: CONTINUE
-  - show deuzi: normal AT CENTER WITH FADE
-  - deuzi says: Hey, I thought I would find you here. I'm Deuzilene. You're the new student, right?
-  - deuzi says: What's your name?
-  - call TextInput: name player Alex
-  - deuzi says happy: Nice to meet you {TextInputName_player}. 
-  - player says: Thank you, nice to meet you too Deuzilene.
-  - deuzi says: One more question, where do you come from?
-  - call TextInput: var hometown
-  - deuzi says normal: So, you're from {hometown}? I think there's another student from there too.
-  - deuzi says: I hope you'll meet them soon! Now you can go back to sleep.
+  - show store: CONTINUE
+  - show marco: normal
+  - marco says: Welcome to the Numbered Choices plugin example. Let me show you how it works.
+  - marco says happy: What's your favourite animal?
+  - choice:
+    - marco says normal: And here's the trick, you can use the keyboard numbers to choose an option.
+    - "Dogs":
+      - marco says: I like dogs too! That's why they are number 1.
+    - "Cats":
+      - marco says: Cats! Interesting choice.
+    - "Penguins":
+      - marco says: Unusual choice, but I can see the appeal.
+  - marco says: This plugin will automatically add numbers to the choices and bind them to the keyboard press, but only for the default choice box. 
+  - marco says: If you GUI has more choice boxes, you could modify this plugin to select the right choice box before adding the numbers.
+  - marco says: Did you know that players can also press the spacebar to continue after a text? Try it now!
+  - marco says: That means that with this plugin you can now create games that can be fully played just with a keyboard, isn't it cool?
+  - choice:
+    - Yeah! I love keyboards:
+      - marco says happy: Me too!
+    - I guess:
+  - marco says normal: Well, that was all! You can grab the plugin code and try it now with any of your games!
   - endgame:
 									</code></pre>
 							</div>
 					      </article>
-					      <article class="accordion-item" data-actab-group="0" data-actab-id="1">
+  					      <article class="accordion-item" data-actab-group="0" data-actab-id="1">
 					      	<h4 class="accordion-item__label"></h4>
 					      	<div class="accordion-item__container">
 	    						<pre><code class="language-yaml">
-
-backgrounds:
-  room_night: assets/backgrounds/room_night.jpg
-
-characters:
-  deuzi:
-    displayName: Deuzilene
-    color: "#ca90cf"
-    looks:
-      normal: assets/characters/Char3NormalSchool.png
-      happy: assets/characters/Char3HappySchool.png
-      angry: assets/characters/Char3AngrySchool.png
-  player:
-    color: "#FFFFFF"
-
-extra:
-  spritesheets:
-    confirmBtn: assets/gui/confirm.png 163 82
-
+transitions:
+  defaults: # Default transition when showing/hiding
+    characters: FADE
+    backgrounds: FADE
+    cgs: FADE
+    music: FADE
+  say: CUT 
+  visualChoices: FADE
+  # Set the NUMBERCHOICES transition to the text choices default transition
+  textChoices: NUMBERCHOICES
+  menus: FADE
 								</code></pre>
 							</div>
 					      </article>
@@ -128,127 +128,35 @@ extra:
 					      	<h4 class="accordion-item__label"></h4>
 					      	<div class="accordion-item__container">
 	    						<pre><code class="language-js">
-class TextInput extends RenJS.Plugin {
+class NUMBERCHOICES extends RenJS.Plugin {
 
-	async onCall(params) {
-		const str = params.body.split(' ');
-		await this.showTextInput(...str);
-		this.game.resolveAction();
-	}
+	boxes = null;
 
-	onStart(){
-		// keep track of which names are changed during game
-		this.game.managers.logic.vars.names = []
-	}
-
-	onLoad(slot,dataParsed){
-		for (const name of dataParsed.vars.names){
-			// add names to character objects
-			this.game.managers.character.characters[name].config.displayName  = dataParsed.vars[`TextInputName_${name}`]
-		}
-	}
-
-	showTextInput(propertyType,propertyName,defaultValue){
-		return new Promise(resolve=>{
-			// lock game scale so it won't resize while showing the text box, or it will look bad
-			this.game.lockScale = true;
-			// create html input
-			const input = this.createInputElement(defaultValue);
-
-			const confirmChange = async ()=>{
-				if (input.value != ""){
-					// play an sfx if you want
-					// this.game.managers.audio.playSFX('buttonsfx');
-					if (propertyType == 'var'){
-						this.game.managers.logic.vars[propertyName] = input.value;
-					}
-					if (propertyType == 'name' && this.game.managers.character.characters[propertyName]){
-						this.game.managers.logic.vars[`TextInputName_${propertyName}`] = input.value;
-						this.game.managers.logic.vars.names.push(propertyName);
-						// change also the character name to show in nameBoxes
-						this.game.managers.character.characters[propertyName].config.displayName = input.value;
-					}
-					
-					// hide everything
-					let tween = this.game.add.tween(input.style).to({opacity:0},750,Phaser.Easing.Linear.None,true);
-					await this.game.screenEffects.transition.FADEOUT(btn);
-					// destroy everything
-					btn.destroy();
-					input.remove();
-					// re activate hud
-					this.game.gui.hud.show();
-					// unlock scaling
-					this.game.lockScale = false;
-
-					// end action
-					resolve();
+	onInit(params) {
+		const choiceHandler = this.game.gui.hud.cHandlers.default;
+		this.game.screenEffects.transition['NUMBERCHOICES'] = (from, to, position, scaleX) => {
+			if (to){
+				this.boxes = {}
+				for (var i = 0; i < choiceHandler.boxes.length; i++) {
+					this.boxes[i] = choiceHandler.boxes[i]
+					this.boxes[i].label.changeText((i+1)+". "+this.boxes[i].label.text)
 				}
 			}
-
-			// confirm on enter
-			input.onkeydown = function(e){
-				if(e.keyCode==13){
-					confirmChange();
-				}
-				e.stopPropagation();
-			};
-			input.style.opacity = 0;
-			document.body.appendChild(input);
-			// create confirm button ass well
-			const btn = this.game.add.button(
-				this.game.world.centerX,
-				this.game.world.centerY+100,
-				"confirmBtn",
-				confirmChange,
-				this,1,0,2,0);
-			btn.anchor.set(0.5);
-
-			// deactivate the hud, so players won't mess up with it while inputing text
-			this.game.gui.hud.hide();
-			// fade in background and input element
-			this.game.screenEffects.transition.FADEIN(btn);
-			this.game.add.tween(input.style).to({opacity:1},750,Phaser.Easing.Linear.None,true);
-		})
-	}
-
-	createInputElement(defaultValue){
-		const input = document.createElement("input");
-		input.type = "text";
-		input.value = defaultValue ? defaultValue : ""
-		// add a css class to the input
-		// input.className = "canvas-input";
-		
-		// if you want max input text length, add it here
-		// input.setAttribute('maxlength', '10');
-
-		// the input element needs to be scaled along he game
-		const scale = this.game.scale.width/this.game.width;
-		const inputProps = {
-			x:100,
-			y:350,
-			width:600,
-			height:50,
-			fontSize:25
+			return this.game.screenEffects.transition.CUT(from, to, position, scaleX);
 		}
-		const canvas = this.game.canvas;
-		const canvasWidth = canvas.offsetWidth;
-		const canvasHeight = canvas.offsetHeight;
-		const topLeft = [(canvasWidth/2)-(this.game.scale.width/2)+canvas.offsetLeft, (canvasHeight/2)-(this.game.scale.height/2)+canvas.offsetTop]
-		input.style.position = "absolute";
-		input.style.left = (topLeft[0]+(inputProps.x*scale))+"px";
-		input.style.top = (topLeft[1]+(inputProps.y*scale))+"px";
-		input.style.width = (inputProps.width*scale)+"px";
-		input.style.height = (inputProps.height*scale)+"px";
-		input.style['font-size'] = (inputProps.fontSize*scale)+"px";
-		return input;
+		this.game.input.keyboard.onPressCallback = (pressed) =>{
+			if (!this.boxes) return;
+			const chosenBox = this.boxes[pressed-1]
+			if (!chosenBox) return;
+			this.boxes = null;
+			// dispatch box on click
+			chosenBox.onInputUp.dispatch();
+		}
 	}
 
-	async changeProperty(value,propertyType,propertyName){
-		
-	}
 }
 
-RenJSGame.addPlugin('TextInput',TextInput)
+RenJSGame.addPlugin('NUMBERCHOICES',NUMBERCHOICES)
 								</code></pre>
 							</div>
 					      </article>
@@ -270,7 +178,8 @@ RenJSGame.addPlugin('TextInput',TextInput)
 	<script src="../assets/js/prism.js"></script> 
 	<script type="text/javascript" src="../assets/js/tabs.js"></script>
 	<script src="/downloads/releases/renjs.js"></script>
-	<script src="textbox/boot.js"></script>
-	<script src="plugins/TextInput.js"></script>
+	<script src="numberchoices/boot.js"></script>
+    <!-- The midi player needs the tonejs libraries -->
+	<script src="plugins/NUMBERCHOICES.js"></script>
 
 </html>

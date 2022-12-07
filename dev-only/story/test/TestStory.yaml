@@ -4,7 +4,7 @@ start:
     - test images:
       - scene: testimages
     - test choices:
-      - asdfasdf
+      - scene: testLogic
     - test text:
       - scene: testtext
     - test ambients and effects:
@@ -286,26 +286,6 @@ testAaE:
 
 testLogic:
   - show school_morning: CONTINUE
-  - show deuzi:
-  - text: first choice
-  - interrupt:
-    - "I'm awake":
-      - deuzi says: Wait what was that.
-      - deuzi says: Was that my thought? I feel strange.
-  - deuzi says: I'm awake and I... I must be in the resting room.
-  - deuzi says: I hate this place.
-  # - interrupt: hide
-  - deuzi says: I think I should hate this place.
-  - deuzi says: I can't remember but I know I hate it. Like being watched.
-  - choice:
-    - "I should leave":
-      - deuzi says: I don't have any reason to stay.
-    - "I should look around":
-      - deuzi says: There isn't much here anyway...
-      - deuzi says: Maybe I should just leave, actually.
-  - text: The door is already open.
-
-asdf:
   - choice:
     - "A":
       - var firstChoice: A
