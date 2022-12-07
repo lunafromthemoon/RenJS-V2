@@ -104,7 +104,9 @@ export default class MessageBox extends Sprite{
         this.game.accessibility.text(text);
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
         // will set text styles and return any pauses
-        let [finalText, pauses] = setTextStyles(text,this.text,true);
+        const styles = setTextStyles(text,this.text,true);
+        let finalText = styles[0];
+        const pauses = styles[1];
         if (this.game.control.skipping || this.game.userPreferences.get('textSpeed') < 10){
             this.text.setText(finalText, true);
             this.visible = true;
