@@ -104,7 +104,9 @@ export default class MessageBox extends Sprite{
         this.game.accessibility.text(text);
         this.text.wordWrapWidth = this.config.text.style.wordWrapWidth;
         // will set text styles and return any pauses
-        let [finalText, pauses] = setTextStyles(text,this.text,true);
+        const styles = setTextStyles(text,this.text,true);
+        let finalText = styles[0];
+        const pauses = styles[1];
         if (this.game.control.skipping || this.game.userPreferences.get('textSpeed') < 10){
             this.text.setText(finalText, true);
             this.visible = true;
@@ -133,13 +135,14 @@ export default class MessageBox extends Sprite{
         await transition(null,this);
         if (pauses.length > 0) {
             let pauseStart = 0
-            for(var i=0; i<pauses.length; i++){
-                const textPart = finalText.substring(pauseStart, pauses[i].index)
+            let textPart: string;
+            for(const pause of pauses){
+                textPart = finalText.substring(pauseStart, pause.index)
                 await this.showTextAnimation(this.text, textPart, sfx);
-                pauseStart = pauses[i].index;
-                await this.game.asyncWait(pauses[i].time)
+                pauseStart = pause.index;
+                await this.game.asyncWait(pause.time)
             }
-            const textPart = finalText.substring(pauseStart)
+            textPart = finalText.substring(pauseStart)
             await this.showTextAnimation(this.text, textPart, sfx)
         } else {
             await this.showTextAnimation(this.text, finalText, sfx)
@@ -153,7 +156,7 @@ export default class MessageBox extends Sprite{
         } else if (!sfx && this.defaultSfx){
             sfx = this.defaultSfx;
         }
-        
+
         // how many characters to add per sfx played
         let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
 
@@ -166,10 +169,12 @@ export default class MessageBox extends Sprite{
     // Animate text appearing in the message box char per char
     // Returns promise that resolves when text is fully displayed
     async showTextAnimation(textObj: Phaser.Text, finalText: string, sfxConfig?): Promise<any>{
-        
+
         // split in characters to add one by one
         const characters = finalText.split('');
-        let [sfx, charPerSfx] = this.getCharacterSfx(sfxConfig)
+        const characterSfx = this.getCharacterSfx(sfxConfig)
+        let sfx = characterSfx[0];
+        const charPerSfx = characterSfx[1];
         // sfx will only play when sfxCharCount === 0, and will reset when sfxCharCount === charPerSfx
         let sfxCharCount = 0;
         // punctuation waiting time
@@ -182,9 +187,9 @@ export default class MessageBox extends Sprite{
                 // text finished showing, clear timeout
                 clearTimeout(this.textLoop);
                 // complete text in case of skipping
-                const completeText = this.text.text + finalText.substring(charIdx)
-                this.text.setText(completeText, true);
-                
+                const text = this.text.text + finalText.substring(charIdx)
+                this.text.setText(text, true);
+
                 // show ctc
                 if (this.ctc){
                     this.ctc.visible = true;
