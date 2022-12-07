@@ -187,8 +187,8 @@ export default class MessageBox extends Sprite{
                 // text finished showing, clear timeout
                 clearTimeout(this.textLoop);
                 // complete text in case of skipping
-                const completeText = this.text.text + finalText.substring(charIdx)
-                this.text.setText(completeText, true);
+                const text = this.text.text + finalText.substring(charIdx)
+                this.text.setText(text, true);
 
                 // show ctc
                 if (this.ctc){
