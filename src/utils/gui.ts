@@ -70,7 +70,7 @@ export function setTextStyles(text: string,textObj: Text, findPauses = false): a
           lastStyle.end = result.length;
         }
       } else if (tag === 'pause') {
-        let time = arg.includes("click") ? -1 : parseInt(arg);
+        const time = arg.includes('click') ? -1 : parseInt(arg);
         pauses.push({
           index: result.length,
           time: time
