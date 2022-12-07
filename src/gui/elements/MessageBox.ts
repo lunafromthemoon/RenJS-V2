@@ -153,7 +153,7 @@ export default class MessageBox extends Sprite{
         } else if (!sfx && this.defaultSfx){
             sfx = this.defaultSfx;
         }
-        
+
         // how many characters to add per sfx played
         let charPerSfx = this.game.storyConfig.charPerSfx ?  this.game.storyConfig.charPerSfx : 1;
 
@@ -166,7 +166,7 @@ export default class MessageBox extends Sprite{
     // Animate text appearing in the message box char per char
     // Returns promise that resolves when text is fully displayed
     async showTextAnimation(textObj: Phaser.Text, finalText: string, sfxConfig?): Promise<any>{
-        
+
         // split in characters to add one by one
         const characters = finalText.split('');
         let [sfx, charPerSfx] = this.getCharacterSfx(sfxConfig)
@@ -184,7 +184,7 @@ export default class MessageBox extends Sprite{
                 // complete text in case of skipping
                 const completeText = this.text.text + finalText.substring(charIdx)
                 this.text.setText(completeText, true);
-                
+
                 // show ctc
                 if (this.ctc){
                     this.ctc.visible = true;

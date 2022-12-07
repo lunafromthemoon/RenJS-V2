@@ -16,7 +16,7 @@ export default class ChoiceHandler extends Graphics {
         y: number;
         alignment: string; // centered|bottomUp|topDown
         separation: number;
-        
+
         transition?: string;
         sfx: string;
         text: any; // backwards compatibility
@@ -94,7 +94,7 @@ export default class ChoiceHandler extends Graphics {
         const chBox = new LabelButton(this.game,this.config);
         chBox.onClick = async ()=>{
             await this.hide();
-            resolve(index);   
+            resolve(index);
         }
         chBox.label.changeText(choice.choiceText)
         this.addChild(chBox);
@@ -115,7 +115,7 @@ export default class ChoiceHandler extends Graphics {
                     chBox.label[prop] = this.config.chosenStyle[prop]
                 }
             }
-            
+
         }
         return chBox;
     }
