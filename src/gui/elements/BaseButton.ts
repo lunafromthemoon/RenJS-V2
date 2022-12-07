@@ -28,13 +28,14 @@ export default class BaseButton extends Button {
 
     static getButtonFrames(total: number, pushed = false): number[]{
       // button frames -> over|out|down|up
-      const buttonFrames = {
-          1: {normal: [0,0,0,0],pushed:[1,1,1,1]},
-          2: {normal: [1,0,1,0],pushed:[3,2,3,2]},
-          3: {normal: [1,0,2,0],pushed:[4,3,5,3]},
-          4: {normal: [1,0,2,3],pushed:[5,4,6,7]},
-      }
-      return buttonFrames[total][pushed ? 'pushed' : 'normal']
+      const buttonFrames = [
+        {normal: [0,0,0,0],pushed:[1,1,1,1]},
+        {normal: [1,0,1,0],pushed:[3,2,3,2]},
+        {normal: [1,0,2,0],pushed:[4,3,5,3]},
+        {normal: [1,0,2,3],pushed:[5,4,6,7]},
+      ];
+
+      return buttonFrames[total - 1][pushed ? 'pushed' : 'normal']
     }
 
     onClick(): void{
