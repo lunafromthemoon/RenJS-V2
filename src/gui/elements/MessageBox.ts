@@ -133,7 +133,7 @@ export default class MessageBox extends Sprite{
         await transition(null,this);
         if (pauses.length > 0) {
             let pauseStart = 0
-            for(var i=0; i<pauses.length; i++){
+            for(let i=0; i<pauses.length; i++){
                 const textPart = finalText.substring(pauseStart, pauses[i].index)
                 await this.showTextAnimation(this.text, textPart, sfx);
                 pauseStart = pauses[i].index;
