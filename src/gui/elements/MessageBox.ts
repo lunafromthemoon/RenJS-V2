@@ -172,7 +172,9 @@ export default class MessageBox extends Sprite{
 
         // split in characters to add one by one
         const characters = finalText.split('');
-        let [sfx, charPerSfx] = this.getCharacterSfx(sfxConfig)
+        const characterSfx = this.getCharacterSfx(sfxConfig)
+        let sfx = characterSfx[0];
+        const charPerSfx = characterSfx[1];
         // sfx will only play when sfxCharCount === 0, and will reset when sfxCharCount === charPerSfx
         let sfxCharCount = 0;
         // punctuation waiting time
