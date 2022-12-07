@@ -1,3 +1,12 @@
+## [2.9.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.9.2...v2.9.3) (2022-12-07)
+
+
+### Bug Fixes
+
+* **eslint:** add missing radix to `parseInt` ([8d963bc](https://github.com/lunafromthemoon/RenJS-V2/commit/8d963bc7d174f66904ac11bca6272ae21d97d51d))
+* **eslint:** use `for of` instead of regular for loop ([5b41be4](https://github.com/lunafromthemoon/RenJS-V2/commit/5b41be495f749fa3895b8d8e2a0e38486f9c7f30))
+* **eslint:** use strict equality checks in `LabelButton` ([108369b](https://github.com/lunafromthemoon/RenJS-V2/commit/108369bca6e8a07c9cfa4a1264219973761be095))
+
 ## [2.9.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.9.1...v2.9.2) (2022-06-02)
 
 
