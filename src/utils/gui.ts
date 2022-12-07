@@ -40,7 +40,9 @@ export function changeInputEnabled(displayObj,enabled): void{
 
 // sets text styles tags in a phaser text object (but NOT the text itself)
 // returns final text without tags, that has to be set to text object as textObj.text
-export function setTextStyles(text: string,textObj: Text, findPauses = false): any {
+export function setTextStyles(text: string, textObj: Text, findPauses?: false): string;
+export function setTextStyles(text: string, textObj: Text, findPauses: true): readonly [string, { time: number; index: number; }[]];
+export function setTextStyles(text: string,textObj: Text, findPauses = false) {
   const tokens = tokenizeTextStyle(text);
   textObj.clearFontValues();
   textObj.clearColors();
@@ -104,7 +106,7 @@ export function setTextStyles(text: string,textObj: Text, findPauses = false): a
   if (!findPauses){
     return result;
   } else {
-    return [result, pauses]
+    return [result, pauses] as const
   }
 }
 
