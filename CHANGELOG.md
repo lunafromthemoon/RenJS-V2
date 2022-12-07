@@ -1,3 +1,10 @@
+## [2.9.2](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.9.1...v2.9.2) (2022-06-02)
+
+
+### Bug Fixes
+
+* interrupts where not working ([9800349](https://github.com/lunafromthemoon/RenJS-V2/commit/9800349830e8af8bae0439cd7442a14e826c2f7a))
+
 ## [2.9.1](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.9.0...v2.9.1) (2022-06-01)
 
 
