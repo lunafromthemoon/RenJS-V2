@@ -36,13 +36,13 @@ export default class LabelButton extends BaseButton {
         this.lastFrame = this.frame;
         if (this.config.label.overStyle){
             this.onInputOver.add(()=>{
-                if (this.lastFrame!=this.frame){
+                if (this.lastFrame !== this.frame){
                     this.lastFrame = this.frame;
                     this.label.changeStyle(this.config.label.overStyle)
                 }
             })
             this.onInputOut.add(()=>{
-                if (this.lastFrame!=this.frame){
+                if (this.lastFrame !== this.frame){
                     this.lastFrame = this.frame;
                     this.label.resetStyle()
                 }
@@ -50,13 +50,13 @@ export default class LabelButton extends BaseButton {
         }
         if (this.config.label.clickedStyle){
             this.onInputDown.add(()=>{
-                if (this.lastFrame!=this.frame){
+                if (this.lastFrame !== this.frame){
                     this.lastFrame = this.frame;
                     this.label.changeStyle(this.config.label.clickedStyle)
                 }
             })
             this.onInputUp.add(()=>{
-                if (this.lastFrame!=this.frame){
+                if (this.lastFrame !== this.frame){
                     this.lastFrame = this.frame;
                     this.label.resetStyle()
                 }
