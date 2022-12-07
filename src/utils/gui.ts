@@ -73,7 +73,7 @@ export function setTextStyles(text: string,textObj: Text, findPauses = false): a
         const time = arg.includes('click') ? -1 : parseInt(arg);
         pauses.push({
           index: result.length,
-          time: time
+          time
         })
       } else {
         // add new unclosed style onto the stack
