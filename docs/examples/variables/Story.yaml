@@ -23,7 +23,7 @@ start:
   - if ({firstNumber}>{secondNumber}):
     - text: "The first number ({firstNumber}) is bigger than the second one ({secondNumber})."
   - else:
-    - text: "The second number ({firstNumber}) is bigger than the first one ({secondNumber})."
+    - text: "The second number ({secondNumber}) is bigger than the first one ({firstNumber})."
   - var multi: "{firstNumber}*{secondNumber}"
   - text: "{firstNumber} times {secondNumber} is {multi}."
   - scene: choseAnimals
