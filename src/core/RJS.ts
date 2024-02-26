@@ -136,7 +136,11 @@ export default class RJS extends Game {
     }
 
     async initStory(): Promise<any> {
-        this.stage.backgroundColor = this.storyConfig.backgroundColor || 0;
+        if (this.storyConfig.backgroundColor) {
+            const color = typeof this.storyConfig.backgroundColor === 'string' ? this.storyConfig.backgroundColor : Phaser.Color.fromRGBA(this.storyConfig.backgroundColor).rgba;
+            this.canvas.style.backgroundColor = color
+        }
+        
         this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
 
         this.managers = {
