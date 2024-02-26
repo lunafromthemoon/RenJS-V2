@@ -1,3 +1,10 @@
+## [2.9.4](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.9.3...v2.9.4) (2024-02-26)
+
+
+### Bug Fixes
+
+* background color not being correctly set ([13e3490](https://github.com/lunafromthemoon/RenJS-V2/commit/13e3490d1aa76362abc170ca58a2e0184f2188ea))
+
 ## [2.9.3](https://github.com/lunafromthemoon/RenJS-V2/compare/v2.9.2...v2.9.3) (2022-12-07)
 
 
