@@ -82,7 +82,7 @@ function textToHtml(text: string): string {
  * Adds an accessible DOM layer on top of the game canvas
  * in order to support keyboard navigation and screen-reading
  */
-export default class Accessibility {
+export class Accessibility {
 	/** if debug is true, accessibility elements will be visible */
 	debug = false;
 
@@ -376,3 +376,5 @@ export default class Accessibility {
 		this.updateLayoutChoices();
 	}
 }
+
+export default Accessibility;

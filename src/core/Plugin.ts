@@ -4,11 +4,7 @@ export interface PluginInterface {
 }
 
 export default class Plugin implements PluginInterface {
-
-	protected game: RJS;
-	protected name: string
-
-	constructor(name, game){
+	constructor(protected name: string, protected game: RJS){
 		this.game = game;
 		this.name = name
 	}
