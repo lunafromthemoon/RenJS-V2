@@ -1,5 +1,5 @@
 import { Text } from 'phaser-ce';
-import { tokenizeTextStyle } from './textStyle';
+import { tokenizeTextStyle } from '@/utils/textStyle';
 
 export function changeInputEnabled(displayObj,enabled): void{
   if (displayObj.input){

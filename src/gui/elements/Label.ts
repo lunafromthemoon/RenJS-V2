@@ -1,6 +1,6 @@
-import RJS from '../../core/RJS';
+import RJS from '@/core/RJS';
 import {Text} from 'phaser-ce';
-import {setTextStyles} from '../../utils/gui'
+import {setTextStyles} from '@/utils/gui'
 
 
 export default class Label extends Text {

@@ -1,25 +1,25 @@
 import 'pixi'
 import 'p2'
 import Phaser, {Game, Graphics} from 'phaser-ce';
-import RJSControl from './RJSControl';
-import ExecStack from './ExecStack';
-import BackgroundManager from '../managers/BackgroundManager';
-import CharacterManager from '../managers/CharacterManager';
-import Accessibility, { AccessibilityConfig } from '../gui/a11y/Accessibility';
-import AudioManager from '../managers/AudioManager';
-import CGSManager from '../managers/CGSManager';
-import TextManager from '../managers/TextManager';
-import TweenManager from '../managers/TweenManager';
-import LogicManager from '../managers/LogicManager';
-import StoryManager from '../managers/StoryManager';
-import Ambient from '../screen-effects/Ambient';
-import Effects from '../screen-effects/Effects';
-import Transition from '../screen-effects/Transition';
-import RJSGUI from '../gui/RJSGUI';
-import {RJSGameConfig,StoryConfig} from './RJSGameConfig';
-import UserPreferences from './UserPreferences';
-import Boot from '../states/Boot';
-import LanguageChooser from '../states/LanguageChooser';
+import RJSControl from '@/core/RJSControl';
+import ExecStack from '@/core/ExecStack';
+import BackgroundManager from '@/managers/BackgroundManager';
+import CharacterManager from '@/managers/CharacterManager';
+import Accessibility, { AccessibilityConfig } from '@/a11y/Accessibility';
+import AudioManager from '@/managers/AudioManager';
+import CGSManager from '@/managers/CGSManager';
+import TextManager from '@/managers/TextManager';
+import TweenManager from '@/managers/TweenManager';
+import LogicManager from '@/managers/LogicManager';
+import StoryManager from '@/managers/StoryManager';
+import Ambient from '@/screen-effects/Ambient';
+import Effects from '@/screen-effects/Effects';
+import Transition from '@/screen-effects/Transition';
+import RJSGUI from '@/gui/RJSGUI';
+import {RJSGameConfig,StoryConfig} from '@/core/RJSGameConfig';
+import UserPreferences from '@/core/UserPreferences';
+import Boot from '@/states/Boot';
+import LanguageChooser from '@/states/LanguageChooser';
 import PACKAGE from '../../package.json';
 
 const version = PACKAGE.version;
@@ -140,7 +140,6 @@ export default class RJS extends Game {
             const color = typeof this.storyConfig.backgroundColor === 'string' ? this.storyConfig.backgroundColor : Phaser.Color.fromRGBA(this.storyConfig.backgroundColor).rgba;
             this.canvas.style.backgroundColor = color
         }
-        
         this.userPreferences = new UserPreferences(this,this.storyConfig.userPreferences);
 
         this.managers = {

@@ -1,5 +1,5 @@
-import RJS from '../../core/RJS';
-import { tokenizeTextStyle } from '../../utils/textStyle';
+import RJS from '@/core/RJS';
+import { tokenizeTextStyle } from '@/utils/textStyle';
 
 export interface AccessibilityBounds {
 	x: number;

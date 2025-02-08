@@ -1,4 +1,4 @@
-import RJS from '../core/RJS';
+import RJS from '@/core/RJS';
 
 export function preparePath(path: string, game: RJS): string {
     if (game.config.i18n?.current){
@@ -54,8 +54,6 @@ export function preloadExtra(asset: string, type: string, game: RJS): void{
         game.load[type](asset, preparePath(game.setup.extra[type][asset], game));
     }
 }
-
-
 
 export function guid(): string {
     return 'ss'.replace(/s/g, s4);

@@ -1,8 +1,8 @@
 import FontFaceObserver from 'fontfaceobserver';
-import {preparePath} from './utils';
-import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from './utils';
-import RJSState from './RJSState';
-import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
+import {preparePath} from '@/states/utils';
+import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from '@/states/utils';
+import RJSState from '@/states/RJSState';
+import RJSLoadingScreen from '@/elements/RJSLoadingScreen';
 
 class PreloadStory extends RJSState {
     loadingScreen?: RJSLoadingScreen

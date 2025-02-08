@@ -1,7 +1,7 @@
-import RJSScreenEffectInterface from './RJSScreenEffect';
-import { AudioManagerInterface } from '../managers/AudioManager';
+import RJSScreenEffectInterface from '@/screen-effects/RJSScreenEffect';
+import { AudioManagerInterface } from '@/managers/AudioManager';
 import Emitter = Phaser.Particles.Arcade.Emitter;
-import RJS from '../core/RJS';
+import RJS from '@/core/RJS';
 
 export default class Ambient implements RJSScreenEffectInterface {
     clearFunctions = []

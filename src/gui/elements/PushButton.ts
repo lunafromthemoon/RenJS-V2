@@ -1,5 +1,5 @@
-import RJS from '../../core/RJS';
-import BaseButton from './BaseButton';
+import RJS from '@/core/RJS';
+import BaseButton from '@/elements/BaseButton';
 
 export default class PushButton extends BaseButton {
 
