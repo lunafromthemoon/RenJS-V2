@@ -1,6 +1,6 @@
 import { Sprite } from 'phaser-ce';
-import RJS from '../core/RJS';
-import { RJSSpriteManagerInterface } from './RJSManager';
+import RJS from '@/core/RJS';
+import { RJSSpriteManagerInterface } from '@/managers/RJSManager';
 
 export default class BackgroundManager implements RJSSpriteManagerInterface {
     current?: Sprite;

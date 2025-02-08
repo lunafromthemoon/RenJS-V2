@@ -1,5 +1,5 @@
 import {Sprite,Sound} from 'phaser-ce';
-import MessageBox from '../gui/elements/MessageBox'
+import MessageBox from '@/elements/MessageBox'
 
 export interface CharacterInterface {
     keyName: string;

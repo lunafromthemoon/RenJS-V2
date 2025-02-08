@@ -1,4 +1,4 @@
-import RJS from '../../core/RJS';
+import RJS from '@/core/RJS';
 import {Sprite} from 'phaser-ce';
 
 export default class SaveSlot extends Sprite {

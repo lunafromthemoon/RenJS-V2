@@ -1,4 +1,4 @@
-import RJS from '../core/RJS';
+import RJS from '@/core/RJS';
 
 export class UserPreference {
     constructor(public value){}

@@ -6,26 +6,28 @@
     "strictFunctionTypes": true,
     "target": "es5",
     "sourceMap": true,
-//    "allowJs": true,
+    "baseUrl": "src",
+    //    "allowJs": true,
     "outDir": "dist/types",
     "declaration": true,
-//    "emitDeclarationOnly": true,
+    //    "emitDeclarationOnly": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": [
-      "ES2019",
-      "ES2017",
-      "ES2018",
-      "ES2016",
-      "ES2015",
-      "dom"
-    ]
+    "lib": ["ES2019", "ES2017", "ES2018", "ES2016", "ES2015", "dom"],
+    "paths": {
+      "@/*": ["*"],
+      "@/core/*": ["core/*"],
+      "@/actions/*": ["core/actions/*"],
+      "@/entities/*": ["entities/*"],
+      "@/gui/*": ["gui/*"],
+      "@/a11y/*": ["gui/a11y/*"],
+      "@/elements/*": ["gui/elements/*"],
+      "@/managers/*": ["managers/*"],
+      "@/screen-effects/*": ["screen-effects/*"],
+      "@/states/*": ["states/*"],
+      "@/utils/*": ["utils/*"]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "dev-only"
-  ],
-  "include": [
-    "src/**/*.ts"
-  ]
+  "exclude": ["node_modules", "dev-only"],
+  "include": ["src/**/*.ts"]
 }

@@ -1,5 +1,5 @@
 import StoryAction from './StoryAction';
-import RJS from '../RJS';
+import RJS from '@/core/RJS';
 
 export default class StoryActionText extends StoryAction {
 

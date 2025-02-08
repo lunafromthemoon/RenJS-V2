@@ -1,4 +1,4 @@
-import RJSState from './RJSState';
+import RJSState from '@/states/RJSState';
 
 export default class LanguageChooser extends RJSState {
 

@@ -1,14 +1,14 @@
 import jsyaml from 'js-yaml'
-import {loadStyle, preparePath} from './utils';
-import RJSState from './RJSState';
+import {loadStyle, preparePath} from '@/states/utils';
+import RJSState from '@/states/RJSState';
 import {Sprite} from 'phaser-ce';
-import PreloadStory from './PreloadStory';
-import RJSGUIByBuilder from '../gui/RJSGUIByBuilder';
-import RJSGUIByNewBuilder from '../gui/RJSGUIByNewBuilder';
-import RJS from '../core/RJS';
-import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
-import { AccessibilityConfig } from '../gui/a11y/Accessibility';
-import {StoryConfig} from '../core/RJSGameConfig';
+import PreloadStory from '@/states/PreloadStory';
+import RJSGUIByBuilder from '@/gui/RJSGUIByBuilder';
+import RJSGUIByNewBuilder from '@/gui/RJSGUIByNewBuilder';
+import RJS from '@/core/RJS';
+import RJSLoadingScreen from '@/gui/elements/RJSLoadingScreen';
+import { AccessibilityConfig } from '@/gui/a11y/Accessibility';
+import {StoryConfig} from '@/core/RJSGameConfig';
 
 class Boot extends RJSState {
     splash?: Sprite

@@ -1,5 +1,5 @@
-import RJS from '../core/RJS';
-import Character from '../entities/Character'
+import RJS from '@/core/RJS';
+import Character from '@/entities/Character'
 
 export interface TextManagerInterface {}
 

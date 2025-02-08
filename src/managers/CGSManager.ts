@@ -1,7 +1,7 @@
-import Transition from '../screen-effects/Transition';
-import {range} from '../utils/array';
-import RJS from '../core/RJS';
-import {RJSSpriteManagerInterface} from './RJSManager';
+import Transition from '@/screen-effects/Transition';
+import {range} from '@/utils/array';
+import RJS from '@/core/RJS';
+import {RJSSpriteManagerInterface} from '@/managers/RJSManager';
 
 const getObjectProperty = <T extends object, U extends keyof T>(obj: T, key: U) => obj[key];
 
