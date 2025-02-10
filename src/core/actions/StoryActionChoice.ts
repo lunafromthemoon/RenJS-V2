@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionText extends StoryAction {
+export class StoryActionChoice extends StoryAction {
 
     isVisualChoice: boolean
     isInterrupt: boolean
@@ -39,3 +39,4 @@ export default class StoryActionText extends StoryAction {
         // this action is resolved on its own
     }
 }
+export default StoryActionChoice

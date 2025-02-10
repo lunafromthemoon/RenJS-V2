@@ -1,7 +1,7 @@
 import RJS from '../../core/RJS';
 import {Button} from 'phaser-ce';
 
-export default class BaseButton extends Button {
+export class BaseButton extends Button {
 
     game: RJS;
 
@@ -43,3 +43,4 @@ export default class BaseButton extends Button {
     }
 
 }
+export default BaseButton

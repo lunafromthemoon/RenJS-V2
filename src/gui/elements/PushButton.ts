@@ -1,5 +1,5 @@
 import RJS from '../../core/RJS';
-import BaseButton from './BaseButton';
+import { BaseButton } from './BaseButton';
 
 export type PushButtonConfig = {
     x: number;
@@ -11,7 +11,7 @@ export type PushButtonConfig = {
     pushButton?: boolean;
     pushed?: boolean;
 }
-export default class PushButton extends BaseButton {
+export class PushButton extends BaseButton {
 
     pushed: boolean;
 
@@ -32,3 +32,4 @@ export default class PushButton extends BaseButton {
         this.setFrames(...BaseButton.getButtonFrames(this.animations.frameTotal/2,this.pushed));
     }
 }
+export default PushButton

@@ -13,7 +13,7 @@ export type SaveSlotConfig = {
         height: number;
     };
 }
-export default class SaveSlot extends Sprite {
+export class SaveSlot extends Sprite {
     thumbnail: Sprite
     game: RJS
 
@@ -45,6 +45,5 @@ export default class SaveSlot extends Sprite {
     	this.thumbnail.destroy();
     	super.destroy();
     }
-
-
 }
+export default SaveSlot

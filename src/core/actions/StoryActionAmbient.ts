@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionAmbient extends StoryAction {
+export class StoryActionAmbient extends StoryAction {
 
 	actor: string
 
@@ -15,3 +15,4 @@ export default class StoryActionAmbient extends StoryAction {
         this.resolve();
     }
 }
+export default StoryActionAmbient

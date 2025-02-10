@@ -1,1 +1,2 @@
-export default interface RJSScreenEffectInterface {}
+export interface RJSScreenEffectInterface {}
+export default RJSScreenEffectInterface

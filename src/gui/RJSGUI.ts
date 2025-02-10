@@ -14,7 +14,7 @@ export interface RJSGUIInterface {
 
 }
 
-export default class RJSGUI implements RJSGUIInterface {
+export class RJSGUI implements RJSGUIInterface {
     bindingActions = {};
 
     config: any
@@ -158,3 +158,4 @@ export default class RJSGUI implements RJSGUIInterface {
     }
 
 }
+export default RJSGUI

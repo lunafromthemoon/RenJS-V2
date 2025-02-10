@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionCall extends StoryAction {
+export class StoryActionCall extends StoryAction {
 
     actor: string
 
@@ -17,3 +17,4 @@ export default class StoryActionCall extends StoryAction {
       // custom action should know when it resolves
     }
 }
+export default StoryActionCall

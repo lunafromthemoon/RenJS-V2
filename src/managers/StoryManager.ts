@@ -34,7 +34,7 @@ export interface StoryManagerInterface<T> {
 }
 
 
-export default class StoryManager implements StoryManagerInterface<Group> {
+export class StoryManager implements StoryManagerInterface<Group> {
     behindCharactersSprites: Group;
     cgsSprites: Group
     characterSprites: Group;
@@ -222,3 +222,4 @@ export default class StoryManager implements StoryManagerInterface<Group> {
         storyAction.execute();
     }
 }
+export default StoryManager

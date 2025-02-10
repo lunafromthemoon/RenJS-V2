@@ -15,7 +15,7 @@ export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
 
 
 
-export default class CharacterManager implements CharacterManagerInterface {
+export class CharacterManager implements CharacterManagerInterface {
 
     characters: {[key: string]: any} = {};
     transition?: Transition
@@ -103,3 +103,4 @@ export default class CharacterManager implements CharacterManagerInterface {
     }
 
 }
+export default CharacterManager

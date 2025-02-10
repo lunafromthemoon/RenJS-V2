@@ -1,6 +1,6 @@
 import ExecStack from './ExecStack'
 
-interface RJSControlInterface {
+export interface RJSControlInterface {
     // game status controls
     paused: boolean;
     waitForClick: boolean;
@@ -15,7 +15,7 @@ interface RJSControlInterface {
     nextAction?: () => (void | Promise<any>);
 }
 
-export default class RJSControl implements RJSControlInterface {
+export class RJSControl implements RJSControlInterface {
     // game status controls
     skipping = false;
     unskippable = false;
@@ -30,3 +30,4 @@ export default class RJSControl implements RJSControlInterface {
     actionsCounter = 0;
     nextAction = null
 }
+export default RJSControl

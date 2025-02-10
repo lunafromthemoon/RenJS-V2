@@ -24,7 +24,7 @@ export interface AudioManagerInterface extends RJSManagerInterface {
     // audioLoaded: boolean;
 }
 
-export default class AudioManager implements AudioManagerInterface {
+export class AudioManager implements AudioManagerInterface {
     current: CurrentAudio = { bgm: null };
     active: ActiveAudio = { bgm: null };
 
@@ -134,7 +134,7 @@ export default class AudioManager implements AudioManagerInterface {
     }
 
     changeVolume(): void {
-        Object.entries(this.current).forEach(([type, sound]) => {
+        Object.entries(this.current).forEach(([, sound]) => {
             if (sound) {
                 sound.volume = this.game.userPreferences.get('bgmv');
             }
@@ -182,3 +182,4 @@ export default class AudioManager implements AudioManagerInterface {
 
 
 }
+export default AudioManager

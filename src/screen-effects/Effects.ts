@@ -5,7 +5,7 @@ import { Color } from 'phaser-ce';
 import RJS from '../core/RJS';
 import {setTextStyles} from '../utils/gui'
 
-export default class Effects implements RJSScreenEffectInterface {
+export class Effects implements RJSScreenEffectInterface {
 
     private game: RJS
     private audioManager: AudioManagerInterface
@@ -101,3 +101,4 @@ export default class Effects implements RJSScreenEffectInterface {
     }
 
 }
+export default Effects

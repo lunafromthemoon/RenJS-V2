@@ -13,7 +13,7 @@ export interface CGSManagerInterface extends RJSSpriteManagerInterface {
     hide(name: string, transitionName: string): Promise<void>;
 }
 
-export default class CGSManager implements CGSManagerInterface {
+export class CGSManager implements CGSManagerInterface {
 
     cgs: {[key: string]: any} = {};
     current: {[key: string]: any} = {};
@@ -193,3 +193,4 @@ export default class CGSManager implements CGSManagerInterface {
         return this.game.setup.cgs && actor in this.game.setup.cgs;
     }
 }
+export default CGSManager

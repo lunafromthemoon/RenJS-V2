@@ -18,7 +18,7 @@ export type NameBoxConfig = {
         lineSpacing: number;
     };
 }
-export default class NameBox extends Sprite {
+export class NameBox extends Sprite {
     id: string
     text: Label
     game: RJS
@@ -66,3 +66,4 @@ export default class NameBox extends Sprite {
     	super.destroy();
     }
 }
+export default NameBox;

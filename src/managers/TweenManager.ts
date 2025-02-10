@@ -10,7 +10,7 @@ export interface TweenManagerInterface {
 
 }
 
-export default class TweenManager implements TweenManagerInterface {
+export class TweenManager implements TweenManagerInterface {
     current: RJSTween[] = []
     private game: RJS
 
@@ -109,3 +109,4 @@ export default class TweenManager implements TweenManagerInterface {
         this.current = [];
     }
 }
+export default TweenManager
