@@ -21,7 +21,7 @@ export interface LogicManagerInterface<T> extends RJSManagerInterface {
     visualChoices?: T;
 }
 
-export default class LogicManager implements LogicManagerInterface<Group> {
+export class LogicManager implements LogicManagerInterface<Group> {
     choicesLog: {[key: string]: any[]};
     vars: {[key: string]: any} = {};
     currentChoices: Choice[] = [];
@@ -232,3 +232,4 @@ export default class LogicManager implements LogicManagerInterface<Group> {
 }
 
 
+export default LogicManager

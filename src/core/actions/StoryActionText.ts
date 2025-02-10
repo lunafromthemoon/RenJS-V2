@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionText extends StoryAction {
+export class StoryActionText extends StoryAction {
 
 	// protected params: {actor:string, look: string, boxId?: string, body: string}
     protected boxId: string
@@ -25,4 +25,4 @@ export default class StoryActionText extends StoryAction {
         this.resolve(transitioning);
     }
 }
-
+export default StoryActionText

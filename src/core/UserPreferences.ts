@@ -1,32 +1,8 @@
 import RJS from '../core/RJS';
+import RangedUserPreference from './RangedUserPreference';
+import UserPreference from './UserPreference';
 
-export class UserPreference {
-    constructor(public value){}
-
-    set(value): void { this.value = value;}
-
-    get(): any { return this.value }
-
-    toJSON(): any {return this.value}
-}
-
-export class RangedUserPreference extends UserPreference{
-
-    constructor(value: number, public min: number, public max: number, private inverted: boolean = false){
-        super(value)
-    }
-
-    set(value): void{
-        // value between 0 and 1
-        this.value = value*(this.max-this.min)+this.min
-    }
-
-    get(): void {
-        return this.inverted ? this.max - this.value : this.value;
-    }
-}
-
-export default class UserPreferences {
+export class UserPreferences {
     preferences: {
         textSpeed: RangedUserPreference;
         autoSpeed: RangedUserPreference;
@@ -87,3 +63,4 @@ export default class UserPreferences {
         localStorage.setItem('RenJSUserPreferences' + this.game.config.name,prefs);
     }
 }
+export default UserPreferences

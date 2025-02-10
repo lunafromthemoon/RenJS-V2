@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionEffect extends StoryAction {
+export class StoryActionEffect extends StoryAction {
 
     actor: string
     contAfterTrans: boolean
@@ -27,3 +27,4 @@ export default class StoryActionEffect extends StoryAction {
 
     }
 }
+export default StoryActionEffect

@@ -1,6 +1,7 @@
-export default interface RJSManagerInterface {
+export interface RJSManagerInterface {
     set(...args: any): any;
 }
+export default RJSManagerInterface
 
 export interface RJSSpriteManagerInterface extends RJSManagerInterface {
     set(...args: any): any;

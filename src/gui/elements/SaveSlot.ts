@@ -1,24 +1,25 @@
 import RJS from '../../core/RJS';
 import {Sprite} from 'phaser-ce';
 
-export default class SaveSlot extends Sprite {
+export type SaveSlotConfig = {
+    x: number;
+    y: number;
+    asset: string;
+    slot: number;
+    thumbnail: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+}
+export class SaveSlot extends Sprite {
     thumbnail: Sprite
     game: RJS
 
-    config: {
-        x: number;
-        y: number;
-        asset: string;
-        slot: number;
-        thumbnail: {
-            x: number;
-            y: number;
-            width: number;
-            height: number;
-        };
-    }
+    config: SaveSlotConfig;
 
-    constructor(game: RJS, config) {
+    constructor(game: RJS, config: SaveSlotConfig) {
         super(game, config.x, config.y,config.asset);
         this.game = game;
         this.config = config;
@@ -44,6 +45,5 @@ export default class SaveSlot extends Sprite {
     	this.thumbnail.destroy();
     	super.destroy();
     }
-
-
 }
+export default SaveSlot

@@ -2,28 +2,29 @@ import RJS from '../../core/RJS';
 import {Sprite,Color} from 'phaser-ce';
 import Label from './Label'
 
-export default class NameBox extends Sprite {
+export type NameBoxConfig = {
+    id: string;
+    asset: string;
+    x: number;
+    y: number;
+    transition?: string;
+    tintStyle?: string;
+    text: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+        style: any;
+        lineSpacing: number;
+    };
+}
+export class NameBox extends Sprite {
     id: string
     text: Label
     game: RJS
-    config: {
-        id: string;
-        asset: string;
-        x: number;
-        y: number;
-        transition?: string;
-        tintStyle?: string;
-        text: {
-            x: number;
-            y: number;
-            width: number;
-            height: number;
-            style: any;
-            lineSpacing: number;
-        };
-    }
+    config: NameBoxConfig;
 
-    constructor(game: RJS, config) {
+    constructor(game: RJS, config: NameBoxConfig) {
         super(game, config.x, config.y,config.asset);
         this.config = config;
         if (!this.config.transition){
@@ -65,3 +66,4 @@ export default class NameBox extends Sprite {
     	super.destroy();
     }
 }
+export default NameBox;
