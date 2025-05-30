@@ -1,0 +1,27 @@
+# Replacements for accessible button labels
+# the default labels will be the internal binding + menu/save slot keys
+buttons:
+  openMenu saveload: guardar/cargar
+  openMenu settings: opciones
+  start: iniciar
+  return: volver
+  skip: saltarse
+  changeLang: cambiar idioma
+  save 0: guardar 0
+  save 1: guardar 1
+  save 2: guardar 2
+  load 0: cargar 0
+  load 1: cargar 1
+  load 2: cargar 2
+# Replacements for accessible slider labels
+# the default labels will be the internal binding + user preference keys
+sliders:
+  changeUserPreference bgmv: volumen música
+  changeUserPreference sfxv: volumen sfx
+  changeUserPreference textSpeed: velocidad texto
+  changeUserPreference autoSpeed: velocidad auto
+# Replacements for accessible choice labels
+# the default labels will be the choice text, or in the case of visual choices, the cg key
+choices:
+  phone1: El teléfono de Liz
+  phone2: El teléfono de Deuzilene
