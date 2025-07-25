@@ -1,13 +1,13 @@
-import RJS from '../core/RJS';
+import RJS from '@/core/RJS';
 import {Graphics,Color, Button} from 'phaser-ce';
-import RJSMenu from './RJSMenu'
-import MessageBox from './elements/MessageBox'
-import BaseButton from './elements/BaseButton'
-import NameBox from './elements/NameBox'
-import ChoiceHandler from './elements/ChoiceHandler'
+import RJSMenu from '@/gui/RJSMenu'
+import MessageBox from '@/elements/MessageBox'
+import BaseButton from '@/elements/BaseButton'
+import NameBox from '@/elements/NameBox'
+import ChoiceHandler from '@/elements/ChoiceHandler'
 
-import { changeInputEnabled, hudSort } from '../utils/gui';
-import { AccessibilityBounds } from './a11y/Accessibility';
+import { changeInputEnabled, hudSort } from '@/utils/gui';
+import { AccessibilityBounds } from '@/a11y/Accessibility';
 
 export default class RJSHUD extends RJSMenu {
     mBoxes: {[key: string]: MessageBox} = {}

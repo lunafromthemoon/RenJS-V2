@@ -1,4 +1,4 @@
-import ExecStack from './ExecStack'
+import ExecStack from '@/core/ExecStack'
 
 interface RJSControlInterface {
     // game status controls

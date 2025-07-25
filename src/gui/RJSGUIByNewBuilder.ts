@@ -1,5 +1,5 @@
-import RJSGUI from './RJSGUI';
-import {GUIAsset} from './elements/GUIAsset';
+import RJSGUI from '@/gui/RJSGUI';
+import {GUIAsset} from '@/elements/GUIAsset';
 
 export default class RJSGUIByNewBuilder extends RJSGUI {
 

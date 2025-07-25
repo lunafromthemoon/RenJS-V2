@@ -1,7 +1,7 @@
-import {RJSSpriteManagerInterface} from './RJSManager';
-import Transition from '../screen-effects/Transition';
-import Character from '../entities/Character';
-import RJS from '../core/RJS';
+import {RJSSpriteManagerInterface} from '@/managers/RJSManager';
+import Transition from '@/screen-effects/Transition';
+import Character from '@/entities/Character';
+import RJS from '@/core/RJS';
 
 export interface CharacterManagerInterface extends RJSSpriteManagerInterface {
     characters: {[key: string]: any};

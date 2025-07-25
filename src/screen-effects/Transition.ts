@@ -1,6 +1,6 @@
-import RJSScreenEffectInterface from './RJSScreenEffect';
-import {TweenManagerInterface} from '../managers/TweenManager';
-import RJS from '../core/RJS';
+import RJSScreenEffectInterface from '@/screen-effects/RJSScreenEffect';
+import {TweenManagerInterface} from '@/managers/TweenManager';
+import RJS from '@/core/RJS';
 
 
 export default class Transition implements RJSScreenEffectInterface {

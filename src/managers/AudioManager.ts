@@ -1,5 +1,5 @@
-import RJSManagerInterface from './RJSManager';
-import RJS from '../core/RJS';
+import RJSManagerInterface from '@/managers/RJSManager';
+import RJS from '@/core/RJS';
 
 export type CurrentAudio = {
     [key: string]: Phaser.Sound | null;

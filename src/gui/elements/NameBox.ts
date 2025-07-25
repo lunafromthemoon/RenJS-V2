@@ -1,6 +1,6 @@
-import RJS from '../../core/RJS';
 import {Sprite,Color} from 'phaser-ce';
-import Label from './Label'
+import RJS from '@/core/RJS';
+import Label from '@/elements/Label';
 
 export default class NameBox extends Sprite {
     id: string

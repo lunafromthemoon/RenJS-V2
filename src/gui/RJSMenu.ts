@@ -1,11 +1,11 @@
-import RJS from '../core/RJS';
+import RJS from '@/core/RJS';
 import {Group,Sprite} from 'phaser-ce';
-import MaskSlider from './elements/MaskSlider'
-import SaveSlot from './elements/SaveSlot'
-import PushButton from './elements/PushButton'
-import BaseButton from './elements/BaseButton'
-import LabelButton from './elements/LabelButton'
-import Label from './elements/Label'
+import MaskSlider from '@/elements/MaskSlider'
+import SaveSlot from '@/elements/SaveSlot'
+import PushButton from '@/elements/PushButton'
+import BaseButton from '@/elements/BaseButton'
+import LabelButton from '@/elements/LabelButton'
+import Label from '@/elements/Label'
 
 export default class RJSMenu extends Group {
     id: string

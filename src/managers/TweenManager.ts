@@ -1,5 +1,5 @@
-import RJS from '../core/RJS';
-import RJSTween from '../core/RJSTween';
+import RJS from '@/core/RJS';
+import RJSTween from '@/core/RJSTween';
 
 export interface TweenManagerInterface {
     tween (sprite: any, tweenables: {[key: string]: any}, callback: () => void, time: number, start: boolean, delay?: number, unskippable?: boolean): RJSTween;

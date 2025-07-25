@@ -1,6 +1,6 @@
 import {Group} from 'phaser-ce';
-import RJS from '../core/RJS';
-import RJSManagerInterface from './RJSManager';
+import RJS from '@/core/RJS';
+import RJSManagerInterface from '@/managers/RJSManager';
 
 type Choice = {
     index: any,

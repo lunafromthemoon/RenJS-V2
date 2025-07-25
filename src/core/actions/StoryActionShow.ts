@@ -1,6 +1,6 @@
 import StoryAction from './StoryAction';
-import RJS from '../RJS';
-import {RJSSpriteManagerInterface} from '../../managers/RJSManager';
+import RJS from '@/core/RJS';
+import {RJSSpriteManagerInterface} from '@/managers/RJSManager';
 
 export default class StoryActionShow extends StoryAction {
 

@@ -1,4 +1,4 @@
-import RJSGUIByNewBuilder from './RJSGUIByNewBuilder';
+import RJSGUIByNewBuilder from '@/gui/RJSGUIByNewBuilder';
 import jsyaml from 'js-yaml'
 
 export default class RJSGUIByBuilder extends RJSGUIByNewBuilder {

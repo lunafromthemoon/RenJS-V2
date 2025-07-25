@@ -1,9 +1,9 @@
-import RJSScreenEffectInterface from './RJSScreenEffect';
-import {AudioManagerInterface} from '../managers/AudioManager';
-import {TweenManagerInterface} from '../managers/TweenManager';
+import RJSScreenEffectInterface from '@/screen-effects/RJSScreenEffect';
+import {AudioManagerInterface} from '@/managers/AudioManager';
+import {TweenManagerInterface} from '@/managers/TweenManager';
 import { Color } from 'phaser-ce';
-import RJS from '../core/RJS';
-import {setTextStyles} from '../utils/gui'
+import RJS from '@/core/RJS';
+import {setTextStyles} from '@/utils/gui'
 
 export default class Effects implements RJSScreenEffectInterface {
 

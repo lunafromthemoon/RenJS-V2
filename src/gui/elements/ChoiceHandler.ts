@@ -1,10 +1,7 @@
-import RJS from '../../core/RJS';
+import RJS from '@/core/RJS';
 import {Graphics,Button,Color} from 'phaser-ce';
-import BaseButton from './BaseButton';
-import LabelButton from './LabelButton';
-import {setTextStyles} from '../../utils/gui'
-import Label from './Label'
-import { AccessibilityBounds } from '../a11y/Accessibility';
+import LabelButton from '@/elements/LabelButton';
+import { AccessibilityBounds } from '@/a11y/Accessibility';
 
 export default class ChoiceHandler extends Graphics {
 

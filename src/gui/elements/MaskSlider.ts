@@ -1,5 +1,5 @@
 import { Group, Pointer, Sprite } from 'phaser-ce';
-import RJS from '../../core/RJS';
+import RJS from '@/core/RJS';
 
 export default class MaskedSlider extends Group {
     id: string;

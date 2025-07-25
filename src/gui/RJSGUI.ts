@@ -1,8 +1,8 @@
-import RJS from '../core/RJS';
-import {GUIAsset} from './elements/GUIAsset';
-import RJSMenu from './RJSMenu';
-import RJSHUD from './RJSHUD';
-import {setTextStyles} from '../utils/gui'
+import RJS from '@/core/RJS';
+import {GUIAsset} from '@/elements/GUIAsset';
+import RJSMenu from '@/gui/RJSMenu';
+import RJSHUD from '@/gui/RJSHUD';
+import {setTextStyles} from '@/utils/gui'
 
 export interface RJSGUIInterface {
     init();

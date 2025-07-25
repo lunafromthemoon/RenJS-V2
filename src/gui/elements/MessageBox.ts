@@ -1,7 +1,7 @@
-import RJS from '../../core/RJS';
+import RJS from '@/core/RJS';
 import {Sprite,Sound} from 'phaser-ce';
-import {setTextStyles} from '../../utils/gui'
-import Label from './Label'
+import {setTextStyles} from '@/utils/gui'
+import Label from '@/elements/Label'
 
 
 export default class MessageBox extends Sprite{

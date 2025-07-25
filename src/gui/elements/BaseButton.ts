@@ -1,4 +1,4 @@
-import RJS from '../../core/RJS';
+import RJS from '@/core/RJS';
 import {Button} from 'phaser-ce';
 
 export default class BaseButton extends Button {

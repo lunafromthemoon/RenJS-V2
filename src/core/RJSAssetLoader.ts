@@ -1,5 +1,5 @@
-import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from '../states/utils';
-import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
+import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadExtra} from '@/states/utils';
+import RJSLoadingScreen from '@/gui/elements/RJSLoadingScreen';
 import jsyaml from 'js-yaml'
 
 export default class RJSAssetLoader {

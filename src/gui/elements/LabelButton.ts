@@ -1,6 +1,6 @@
-import RJS from '../../core/RJS';
-import Label from './Label'
-import BaseButton from './BaseButton';
+import RJS from '@/core/RJS';
+import Label from '@/elements/Label'
+import BaseButton from '@/elements/BaseButton';
 
 export default class LabelButton extends BaseButton {
 
