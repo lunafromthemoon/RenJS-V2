@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionAudio extends StoryAction {
+export class StoryActionAudio extends StoryAction {
 
     actor: string
     actorType: string
@@ -50,3 +50,4 @@ export default class StoryActionAudio extends StoryAction {
         this.resolve()
     }
 }
+export default StoryActionAudio

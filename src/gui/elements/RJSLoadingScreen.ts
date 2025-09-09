@@ -1,7 +1,7 @@
 import {Sprite,Group,Tween} from 'phaser-ce';
 import RJS from '../../core/RJS';
 
-export default class RJSLoadingScreen {
+export class RJSLoadingScreen {
     container: Group
     loadingBar: Sprite
     loadingBarBg: Sprite
@@ -56,3 +56,4 @@ export default class RJSLoadingScreen {
         }
     }
 }
+export default RJSLoadingScreen

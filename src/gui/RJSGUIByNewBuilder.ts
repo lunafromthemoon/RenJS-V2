@@ -1,7 +1,7 @@
 import RJSGUI from './RJSGUI';
 import {GUIAsset} from './elements/GUIAsset';
 
-export default class RJSGUIByNewBuilder extends RJSGUI {
+export class RJSGUIByNewBuilder extends RJSGUI {
 
     initAssets(gui: any): void{
         // convert specific gui config to general one
@@ -26,3 +26,4 @@ export default class RJSGUIByNewBuilder extends RJSGUI {
     }
 
 }
+export default RJSGUIByNewBuilder

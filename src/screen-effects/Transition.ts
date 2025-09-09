@@ -3,7 +3,7 @@ import {TweenManagerInterface} from '../managers/TweenManager';
 import RJS from '../core/RJS';
 
 
-export default class Transition implements RJSScreenEffectInterface {
+export class Transition implements RJSScreenEffectInterface {
 
     static CUT = 'CUT'
     static FADE = 'FADE'
@@ -154,3 +154,4 @@ const setNewProperties = (sprite, position, scaleX): void => {
         sprite.scale.x = scaleX;
     }
 }
+export default Transition

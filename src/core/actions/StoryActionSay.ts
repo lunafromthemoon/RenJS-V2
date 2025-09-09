@@ -1,7 +1,7 @@
 import StoryActionText from './StoryActionText';
 import RJS from '../RJS';
 
-export default class StoryActionSay extends StoryActionText {
+export class StoryActionSay extends StoryActionText {
 
     actor: string
     look: string
@@ -28,3 +28,4 @@ export default class StoryActionSay extends StoryActionText {
         this.resolve(transitioning);
     }
 }
+export default StoryActionSay

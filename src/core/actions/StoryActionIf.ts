@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionEffect extends StoryAction {
+export class StoryActionIf extends StoryAction {
 
     condition: string
     branches: {ISTRUE: any; ISFALSE?: any}
@@ -27,3 +27,4 @@ export default class StoryActionEffect extends StoryAction {
     	this.resolve();
     }
 }
+export default StoryActionIf

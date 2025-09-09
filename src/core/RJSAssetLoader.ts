@@ -2,7 +2,7 @@ import {preloadBackground, preloadCGS, preloadAudio, preloadCharacter, preloadEx
 import RJSLoadingScreen from '../gui/elements/RJSLoadingScreen';
 import jsyaml from 'js-yaml'
 
-export default class RJSAssetLoader {
+export class RJSAssetLoader {
 
     assetsPerScene: {} = {}
     episodes: any[] = []
@@ -201,3 +201,4 @@ export default class RJSAssetLoader {
     }
 
 }
+export default RJSAssetLoader

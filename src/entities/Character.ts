@@ -17,7 +17,7 @@ export interface CharacterInterface {
     createLook(props: {look?: string;position?: {x: number;y: number};flipped?: any}): Sprite;
 }
 
-export default class Character implements CharacterInterface {
+export class Character implements CharacterInterface {
     config = {
         displayName: '',
         color: '#FFFFFF',
@@ -91,3 +91,4 @@ export default class Character implements CharacterInterface {
     }
 
 }
+export default Character

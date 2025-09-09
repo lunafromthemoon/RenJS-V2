@@ -1,8 +1,8 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
-import {RJSSpriteManagerInterface} from '../../managers/RJSManager';
+import {RJSSpriteManagerInterface} from '../../managers/';
 
-export default class StoryActionHide extends StoryAction {
+export class StoryActionHide extends StoryAction {
 
     actor: string
     actorType: string
@@ -39,3 +39,4 @@ export default class StoryActionHide extends StoryAction {
         this.resolve(transitioning,this.contAfterTrans);
     }
 }
+export default StoryActionHide

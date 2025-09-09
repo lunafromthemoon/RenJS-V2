@@ -3,12 +3,8 @@ import RJS from './RJS';
 export interface PluginInterface {
 }
 
-export default class Plugin implements PluginInterface {
-
-	protected game: RJS;
-	protected name: string
-
-	constructor(name, game){
+export class Plugin implements PluginInterface {
+	constructor(protected name: string, protected game: RJS){
 		this.game = game;
 		this.name = name
 	}
@@ -60,3 +56,4 @@ export default class Plugin implements PluginInterface {
 		// base plugin does nothing
 	}
 }
+export default Plugin

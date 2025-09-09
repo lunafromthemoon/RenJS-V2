@@ -1,10 +1,9 @@
 import RJS from '../../core/RJS';
 import {Sprite,Sound} from 'phaser-ce';
 import {setTextStyles} from '../../utils/gui'
-import Label from './Label'
+import { Label } from './'
 
-
-export default class MessageBox extends Sprite{
+export class MessageBox extends Sprite{
     text: Label
     ctc?: Sprite
     portrait?: Sprite
@@ -275,3 +274,4 @@ export default class MessageBox extends Sprite{
         }
     }
 }
+export default MessageBox

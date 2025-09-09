@@ -9,7 +9,7 @@ import ChoiceHandler from './elements/ChoiceHandler'
 import { changeInputEnabled, hudSort } from '../utils/gui';
 import { AccessibilityBounds } from './a11y/Accessibility';
 
-export default class RJSHUD extends RJSMenu {
+export class RJSHUD extends RJSMenu {
     mBoxes: {[key: string]: MessageBox} = {}
     nBoxes: {[key: string]: NameBox} = {}
     cHandlers: { [key: string]: ChoiceHandler } = {}
@@ -202,3 +202,4 @@ export default class RJSHUD extends RJSMenu {
     	this.destroy();
     }
 }
+export default RJSHUD

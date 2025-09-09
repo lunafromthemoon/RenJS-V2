@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionScene extends StoryAction {
+export class StoryActionScene extends StoryAction {
 
     scene: string
 
@@ -14,3 +14,4 @@ export default class StoryActionScene extends StoryAction {
         this.resolve(this.game.managers.story.startScene(this.scene));
     }
 }
+export default StoryActionScene

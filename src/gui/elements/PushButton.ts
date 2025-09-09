@@ -1,22 +1,23 @@
 import RJS from '../../core/RJS';
-import BaseButton from './BaseButton';
+import { BaseButton } from './BaseButton';
 
-export default class PushButton extends BaseButton {
+export type PushButtonConfig = {
+    x: number;
+    y: number;
+    asset: string;
+    sfx: string;
+    binding: string;
+    slot: string;
+    pushButton?: boolean;
+    pushed?: boolean;
+}
+export class PushButton extends BaseButton {
 
     pushed: boolean;
 
-    config: {
-        x: number;
-        y: number;
-        asset: string;
-        sfx: string;
-        binding: string;
-        slot: string;
-        pushButton?: boolean;
-        pushed?: boolean;
-    }
+    config: PushButtonConfig;
 
-    constructor(game: RJS, config) {
+    constructor(game: RJS, config: PushButtonConfig) {
         super(game, config);
         this.setPushed(config.pushed)
     }
@@ -31,3 +32,4 @@ export default class PushButton extends BaseButton {
         this.setFrames(...BaseButton.getButtonFrames(this.animations.frameTotal/2,this.pushed));
     }
 }
+export default PushButton

@@ -2,7 +2,7 @@ import { Sprite } from 'phaser-ce';
 import RJS from '../core/RJS';
 import { RJSSpriteManagerInterface } from './RJSManager';
 
-export default class BackgroundManager implements RJSSpriteManagerInterface {
+export class BackgroundManager implements RJSSpriteManagerInterface {
     current?: Sprite;
 
     constructor(private game: RJS) {
@@ -59,3 +59,4 @@ export default class BackgroundManager implements RJSSpriteManagerInterface {
     }
 }
 
+export default BackgroundManager

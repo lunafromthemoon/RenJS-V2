@@ -3,7 +3,7 @@ import {Text} from 'phaser-ce';
 import {setTextStyles} from '../../utils/gui'
 
 
-export default class Label extends Text {
+export class Label extends Text {
 
     styleChanges: {[key: string]: any} = {};
 
@@ -48,6 +48,5 @@ export default class Label extends Text {
         }
         this.styleChanges = {}
     }
-
-
 }
+export default Label

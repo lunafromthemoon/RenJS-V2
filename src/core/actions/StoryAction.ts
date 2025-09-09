@@ -5,7 +5,7 @@ export interface StoryActionInterface {
     execute();
 }
 
-export default class StoryAction implements StoryActionInterface {
+export class StoryAction implements StoryActionInterface {
 	dontHide?: boolean;
 
 	protected key: string
@@ -67,3 +67,4 @@ export default class StoryAction implements StoryActionInterface {
 		return argType === 'number' ? parseFloat(value) : value
 	}
 }
+export default StoryAction

@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionVar extends StoryAction {
+export class StoryActionVar extends StoryAction {
 
 	// protected params: {actor: string, body: string}
     actor: string
@@ -16,3 +16,4 @@ export default class StoryActionVar extends StoryAction {
         this.resolve()
     }
 }
+export default StoryActionVar

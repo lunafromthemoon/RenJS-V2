@@ -3,7 +3,7 @@ import { AudioManagerInterface } from '../managers/AudioManager';
 import Emitter = Phaser.Particles.Arcade.Emitter;
 import RJS from '../core/RJS';
 
-export default class Ambient implements RJSScreenEffectInterface {
+export class Ambient implements RJSScreenEffectInterface {
     clearFunctions = []
 
     private game: RJS
@@ -151,3 +151,4 @@ export default class Ambient implements RJSScreenEffectInterface {
     }
 }
 
+export default Ambient

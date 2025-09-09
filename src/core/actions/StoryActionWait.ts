@@ -1,6 +1,6 @@
 import StoryAction from './StoryAction';
 
-export default class StoryActionWait extends StoryAction {
+export class StoryActionWait extends StoryAction {
 
 	// protected params: {wait:string}
 
@@ -13,3 +13,4 @@ export default class StoryActionWait extends StoryAction {
         // this action is resolved on its own
     }
 }
+export default StoryActionWait

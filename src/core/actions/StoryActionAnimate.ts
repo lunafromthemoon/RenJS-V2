@@ -1,7 +1,7 @@
 import StoryAction from './StoryAction';
 import RJS from '../RJS';
 
-export default class StoryActionAnimate extends StoryAction {
+export class StoryActionAnimate extends StoryAction {
 
     actor: string
     contAfterTrans: boolean
@@ -18,3 +18,4 @@ export default class StoryActionAnimate extends StoryAction {
     	this.resolve(transitioning,this.contAfterTrans);
     }
 }
+export default StoryActionAnimate

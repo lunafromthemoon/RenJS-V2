@@ -1,8 +1,7 @@
 import RJS from '../../core/RJS';
-import Label from './Label'
-import BaseButton from './BaseButton';
+import { BaseButton, Label } from './'
 
-export default class LabelButton extends BaseButton {
+export class LabelButton extends BaseButton {
 
     game: RJS;
 
@@ -64,3 +63,4 @@ export default class LabelButton extends BaseButton {
         }
     }
 }
+export default LabelButton

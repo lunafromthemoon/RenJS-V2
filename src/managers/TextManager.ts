@@ -3,7 +3,7 @@ import Character from '../entities/Character'
 
 export interface TextManagerInterface {}
 
-export default class TextManager implements TextManagerInterface {
+export class TextManager implements TextManagerInterface {
 
     private game: RJS
 
@@ -61,3 +61,4 @@ export default class TextManager implements TextManagerInterface {
     }
 
 }
+export default TextManager

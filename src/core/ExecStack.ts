@@ -1,6 +1,6 @@
 import objectHash from 'object-hash';
 
-interface ExecItem {
+export interface ExecItem {
     c: number; // action counter
     total?: number; // total actions
     scope?: string; // base name of action, scene, if, choice etc
@@ -9,7 +9,7 @@ interface ExecItem {
     // interrupting?: any;
 }
 
-export default class ExecStack {
+export class ExecStack {
     private execStack: ExecItem[]  = [];
 
     constructor(stack?: [{c: number;total: number;scope: string;index: number}]){
@@ -104,3 +104,4 @@ export default class ExecStack {
     }
 
 }
+export default ExecStack
